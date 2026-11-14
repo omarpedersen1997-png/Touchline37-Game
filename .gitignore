@@ -35,3 +35,5 @@ generated-site-captures.js
 
 __pycache__/
 *.pyc
+
+.dev-data/
