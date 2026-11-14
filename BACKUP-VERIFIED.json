@@ -1,0 +1,377 @@
+{
+  "repositories": [
+    {
+      "repository": "omarpedersen1997-png/Touchline37-Website",
+      "url": "https://github.com/omarpedersen1997-png/Touchline37-Website",
+      "private": true,
+      "commit": "33bb3d9ac06708e654b48ac9c1919c1407f58ec5",
+      "allFilesVerified": 1355,
+      "originalFilesUnchanged": 398,
+      "externalAuthoringFilesPreserved": 902,
+      "zipBytes": 247873693,
+      "zipSha256": "4f44b4240cdb64ae3df53e9c522e136b0a9fbfb926712a4e1b5c8e4bd0098d93",
+      "zipDownloadedFromEmptyLfsCacheAndVerified": true,
+      "downloadPage": "https://github.com/omarpedersen1997-png/Touchline37-Website/blob/main/backup-archives/Touchline37-Website-Backup.zip",
+      "pagesEnabled": false,
+      "rootWorkflows": [],
+      "publishedReleases": 0,
+      "gitTreeExpected": "7d5b30f710232dad9ece365af2fa7dd201ab5dde",
+      "verifiedTreeQueryRef": "33bb3d9ac06708e654b48ac9c1919c1407f58ec5"
+    },
+    {
+      "repository": "omarpedersen1997-png/Touchline37-Game",
+      "url": "https://github.com/omarpedersen1997-png/Touchline37-Game",
+      "private": true,
+      "commit": "a49c998c6b7a997796e693327d7360b9a709c0bb",
+      "allFilesVerified": 1355,
+      "originalFilesUnchanged": 398,
+      "externalAuthoringFilesPreserved": 902,
+      "zipBytes": 247867032,
+      "zipSha256": "7aec050b2464c550bac5ada320506a54421780811101a40f57fb5a5b104411bd",
+      "zipDownloadedFromEmptyLfsCacheAndVerified": true,
+      "downloadPage": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/main/backup-archives/Touchline37-Game-Backup.zip",
+      "pagesEnabled": false,
+      "rootWorkflows": [],
+      "publishedReleases": 0,
+      "gitTreeExpected": "bcebaa79efd32f6a73fcd1bdbbee3af6ad1bb83f",
+      "verifiedTreeQueryRef": "a49c998c6b7a997796e693327d7360b9a709c0bb"
+    }
+  ],
+  "productionHttpAfter": {
+    "/": {
+      "status": 200,
+      "sha256": "9d56cc6336ff83c7aa13f9c524f6bd14922ae441329d59fd8dd03800cb8e54f8",
+      "bytes": 901239,
+      "unchanged": true
+    },
+    "/api/launch": {
+      "status": 200,
+      "sha256": "b2f417aa66d5bf2e78db3676e5dc87b1bc16aee1730dc97cf4c588741e1ecf6b",
+      "bytes": 190,
+      "configurationUnchanged": true
+    },
+    "/robots.txt": {
+      "status": 200,
+      "sha256": "e9c6f62179e94db1fdc17449b8f98dce212086f9adf2a5bc8f5b9e575a6c89fb",
+      "bytes": 126,
+      "unchanged": true
+    },
+    "/sitemap.xml": {
+      "status": 200,
+      "sha256": "ead2c3a5e518903385c6075c0fb216e61bc57bdecd8148d439a168692dbf6843",
+      "bytes": 323,
+      "unchanged": true
+    }
+  },
+  "savedSiteSourceCommitsInRecoveredHistory": [
+    {
+      "siteVersion": 55,
+      "commit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e"
+    },
+    {
+      "siteVersion": 54,
+      "commit": "fca0c8d3414c716b436996653c6efde131c77cb4"
+    },
+    {
+      "siteVersion": 53,
+      "commit": "68f4548d6ea96b26ceb2ee80a1d2366864cb0a65"
+    },
+    {
+      "siteVersion": 52,
+      "commit": "60026520e4d3eaf6d006ac0cd12a6509534a0b99"
+    },
+    {
+      "siteVersion": 51,
+      "commit": "e02ef382da48decf9340cf8852322c2c09ab4bd5"
+    },
+    {
+      "siteVersion": 50,
+      "commit": "21b64e9c2e3ed24fdfee5252a713d7d5428ad9dd"
+    },
+    {
+      "siteVersion": 49,
+      "commit": "c64bbec1fe97a5ed3f156045041584beccaae037"
+    },
+    {
+      "siteVersion": 48,
+      "commit": "ea4843f7037e71eb0e5582990ad56839dd527924"
+    },
+    {
+      "siteVersion": 47,
+      "commit": "2e292c4725d26ed7ca949d7e0547a50fd312adeb"
+    },
+    {
+      "siteVersion": 46,
+      "commit": "e889fccdb6bf0caea6ad6e25e801cc5ec9f51111"
+    },
+    {
+      "siteVersion": 45,
+      "commit": "3084903c0a4616c432339f89c6d152aa7da8a9f0"
+    },
+    {
+      "siteVersion": 44,
+      "commit": "4ec9d29075fd31010bfa64f8226c2e3fb789c819"
+    },
+    {
+      "siteVersion": 43,
+      "commit": "269f8ae4e63868bcadd3b7c98123cd3cf2ad7e8d"
+    },
+    {
+      "siteVersion": 42,
+      "commit": "280d9232fb81d642a96b6287d4deedd904f2c704"
+    },
+    {
+      "siteVersion": 41,
+      "commit": "4b02120afea224ad6308abd1a5327b1b86d5eaa6"
+    },
+    {
+      "siteVersion": 40,
+      "commit": "29cac91d6f1aaf135fc7aaa5825aff21fa22a5f0"
+    },
+    {
+      "siteVersion": 39,
+      "commit": "fc562c0cc6e5139527fae6817e7b669bbaaa7f75"
+    },
+    {
+      "siteVersion": 38,
+      "commit": "110f6a1c655e4c3962aecee730e8d747aa44158c"
+    },
+    {
+      "siteVersion": 37,
+      "commit": "73f92383707a0461c73530f3d377fd1624b94683"
+    },
+    {
+      "siteVersion": 36,
+      "commit": "6b3a77c0c72fd057e568802ea6e1f39e0a631fef"
+    },
+    {
+      "siteVersion": 35,
+      "commit": "b36c916c37380c689a9bf4a1b27e599178a001ef"
+    },
+    {
+      "siteVersion": 34,
+      "commit": "226a71ee757089fb646a67f8d71a31e6700a065c"
+    },
+    {
+      "siteVersion": 33,
+      "commit": "2b3b8f2a860cf45d89de96f3a2e0b17da4acaa3f"
+    },
+    {
+      "siteVersion": 32,
+      "commit": "f5fba61ddef582912e676c95641a34116b2cd5cd"
+    },
+    {
+      "siteVersion": 31,
+      "commit": "6d60d4a5455d90f748a376b09e7b84c1fe7b8f64"
+    },
+    {
+      "siteVersion": 30,
+      "commit": "cd17cd879eed1e7d25b579f3e89da611939a1ef7"
+    },
+    {
+      "siteVersion": 29,
+      "commit": "ba0b1014b439c129ef0d15e337a17295ee44ef1d"
+    },
+    {
+      "siteVersion": 28,
+      "commit": "295c082424e542156a868effeef43aef26d4266c"
+    },
+    {
+      "siteVersion": 27,
+      "commit": "481e947ab382a80f05c6c9380ac2b328f87f8d91"
+    },
+    {
+      "siteVersion": 26,
+      "commit": "071dcff80be682b57a9b3bfaefb717db3a092923"
+    },
+    {
+      "siteVersion": 25,
+      "commit": "13264e46f8e824bab93e2d5b34e77ca6d2c22918"
+    },
+    {
+      "siteVersion": 24,
+      "commit": "76570806e74082c87b9de5a1218622cf4c13b3a5"
+    },
+    {
+      "siteVersion": 23,
+      "commit": "2f48e1a5f10ab9346dd9a45a436f343939d6aff3"
+    },
+    {
+      "siteVersion": 22,
+      "commit": "97c8aee0dc3fa29bdf2c1d31bca85b78389e6791"
+    },
+    {
+      "siteVersion": 21,
+      "commit": "a1e799860dfc53d31de9f44b69ad30a1c643c08d"
+    },
+    {
+      "siteVersion": 20,
+      "commit": "372fdc36303bf6bbb0d9c3235f67e28b4ac6f0f2"
+    },
+    {
+      "siteVersion": 19,
+      "commit": "218f78d959add495430bdb01d95e8c1db5a97aa9"
+    },
+    {
+      "siteVersion": 18,
+      "commit": "709148303ebb0f25308183b01108121d7993b27f"
+    },
+    {
+      "siteVersion": 17,
+      "commit": "6d777cef8f05c3b5b9fc74d384215a0187f060be"
+    },
+    {
+      "siteVersion": 16,
+      "commit": "11ea0df615edbf785cbc68d0f345d3ef52f900c3"
+    },
+    {
+      "siteVersion": 15,
+      "commit": "8b983720ab479da7acf7e4922165ac5fdc1296b3"
+    },
+    {
+      "siteVersion": 14,
+      "commit": "228780104918f144b9ebbd873d84dc1171a4e15d"
+    },
+    {
+      "siteVersion": 13,
+      "commit": "18ec6e5c84d5d363de0eed6e603f005237b87943"
+    },
+    {
+      "siteVersion": 12,
+      "commit": "66f83040173e21d7a7720149b2ba19630fa3333e"
+    },
+    {
+      "siteVersion": 11,
+      "commit": "e05f2a676536c433f0b29f32b5f5fc099b712c77"
+    },
+    {
+      "siteVersion": 10,
+      "commit": "5a999d03e2b8ad70c9ad996d5df0499d49946cc2"
+    },
+    {
+      "siteVersion": 9,
+      "commit": "927967f894e82966a11f491c451b4848e1ebac9f"
+    },
+    {
+      "siteVersion": 8,
+      "commit": "562cc77b3c368310d4200f74e03d81b5eea1421c"
+    },
+    {
+      "siteVersion": 7,
+      "commit": "085f670b202af51faff3f375849d69c983c96fb0"
+    },
+    {
+      "siteVersion": 6,
+      "commit": "fc51944f4778b457f193b2b179725ded17edfbaf"
+    },
+    {
+      "siteVersion": 5,
+      "commit": "4390ef9f2003f1b71a1c9618698548399e28aef8"
+    },
+    {
+      "siteVersion": 4,
+      "commit": "237832fb79d8ad0036f592ed28e8f30faa823ec7"
+    },
+    {
+      "siteVersion": 3,
+      "commit": "9c8d70756359a40d002fe1568ea068ba6e92535c"
+    },
+    {
+      "siteVersion": 2,
+      "commit": "8e9fb3e7726d66c01080e1aa3ca431fb33273d53"
+    },
+    {
+      "siteVersion": 1,
+      "commit": "0a2f257452ce33c6070ebf8bc2fe360c40d3fdfc"
+    }
+  ],
+  "savedSiteSourceCommitsNotInRecoveredHistory": [],
+  "originalIntegrity": {
+    "originalFilesVerified": 402,
+    "changedOriginalFiles": [],
+    "originalHeadUnchanged": true,
+    "originalWorkingStatusUnchanged": true,
+    "originalApkSha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0"
+  },
+  "tests": {
+    "testsPassed": 487,
+    "testsFailed": 0,
+    "failures": [],
+    "sourceCommit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e",
+    "dependencies": "Preinstalled locked dependencies linked read-only for builds; no clean network install attempted.",
+    "nativeHtmlMatchesSignedApk": true,
+    "nativeHtmlSha256": "93e052db1c72039e4de9ec1104d773da943e9b59f0aa0e56eb9e94776578b2c5",
+    "releaseCheckPassed": true
+  },
+  "androidBuild": {
+    "command": "./gradlew --offline --no-daemon --console=plain :app:assembleRelease",
+    "exitCode": 0,
+    "signedUpdateBuilt": false,
+    "originalSigningKeyUsed": false,
+    "originalApkChanged": false,
+    "originalProjectPathUsedForBuild": false,
+    "sdk": "36",
+    "jdk": "21.0.13+9",
+    "unsignedApkExists": true,
+    "unsignedApkBytes": 5228069,
+    "unsignedApkHtmlMatchesOriginalSignedApk": true,
+    "unsignedApkSha256": "5e8968d39eaaecb0d2f1a95062eccdf22a8053f7615fd9803ab99f188207df1a"
+  },
+  "criticalLimits": {
+    "database": {
+      "provider": "Cloudflare D1 via Sites",
+      "binding": "DB",
+      "tables": [
+        "account_challenges",
+        "accounts",
+        "auth_attempts",
+        "clubs",
+        "sessions",
+        "support_messages"
+      ],
+      "schemaIncluded": true,
+      "actualRowsExported": false,
+      "reason": "No provider-level full snapshot/export tool available; authentication/session secrets and private user data must not enter source repositories."
+    },
+    "objectStorage": {
+      "provider": "Sites Cloudflare R2",
+      "binding": "BUCKET",
+      "objectListingOrSnapshotAvailable": false,
+      "actualBucketSnapshotExported": false,
+      "knownCurrentApkPreserved": true
+    },
+    "runtimeSecrets": {
+      "valuesExported": false,
+      "requiredNames": [
+        "AUTH_PEPPER"
+      ],
+      "optionalMailNames": [
+        "RESEND_API_KEY",
+        "MAIL_FROM"
+      ],
+      "restoreFromOwnerSecureSecretStore": true
+    },
+    "androidDeviceLocalData": {
+      "exported": false,
+      "note": "Device localStorage/manual recordings and session vault are not accessible from this workspace."
+    },
+    "signing": {
+      "existingKeystorePresent": true,
+      "path": "/workspace/android-tools/user/debug.keystore",
+      "copiedOrUploaded": false,
+      "certificateSha256": "968e6554f40e6cdc7e134c731c3ec42402c3fb9181f3e015b614da7d81d0204b"
+    }
+  },
+  "productionHosting": {
+    "siteVersionUnchanged": 55,
+    "lastUpdatedUnchanged": "2026-11-14T18:57:52.680331+00:00",
+    "domain": "playtouchline.dk",
+    "domainConfigurationUnchanged": true,
+    "domainLastUpdatedUnchanged": "2026-11-10T19:47:48.943588+00:00",
+    "dnsWritePerformed": false,
+    "deploymentPerformed": false,
+    "fullAuthoritativeDnsZoneVerified": false
+  },
+  "completeOperationalRecoveryVerified": false,
+  "scope": "Original source, assets, local history and compiled baseline APK are preserved and verified. Production data/secrets/signing material remain outside the source backup."
+}
