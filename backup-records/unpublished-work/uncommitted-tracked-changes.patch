@@ -1,0 +1,65 @@
+diff --git a/package.json b/package.json
+index da496a0..f8b3b25 100644
+--- a/package.json
++++ b/package.json
+@@ -4,7 +4,7 @@
+   "type": "module",
+   "scripts": {
+     "build": "node build.mjs",
+-    "test": "npm run build && node tests/arcade.test.mjs && node tests/football11.test.mjs && node tests/football-modern.test.mjs && node tests/football-pro.test.mjs && node tests/football-halves.test.mjs && node tests/football-contact.test.mjs && node tests/football-tactics.test.mjs && node tests/football-receiving.test.mjs && node tests/football-goals.test.mjs && node tests/native-request-policy.test.mjs && node tests/native-bridge.test.mjs && node tests/manual-save.test.mjs && node tests/match-camera-stable.test.mjs && node tests/stadium-visibility.test.mjs && node tests/pro-player.test.mjs && node tests/player-grounding.test.mjs && node tests/player-rendering.test.mjs && node tests/match-upgrade.test.mjs && node tests/match-scheduling.test.mjs && node tests/pitch-details.test.mjs && node tests/stadium-crowd.test.mjs && node tests/match-4k.test.mjs && node tests/match-clarity.test.mjs && node tests/manual-api.test.mjs && node tests/manual-session.test.mjs && node tests/manual-preferences.test.mjs && node tests/manual-scene.test.mjs && node tests/game-requests.test.mjs && node scripts/test-app-chrome.mjs && node scripts/test-app-orientation.mjs && node scripts/test-match-modes-ui.mjs && node scripts/test-manual-ui.mjs && node scripts/test-match-statistics.mjs && node tests/goal-replay.test.mjs && node tests/goal-presentation.test.mjs && node tests/game.test.mjs && node tests/api.test.mjs && node tests/auth.test.mjs && node tests/progression.test.mjs && node tests/launch.test.mjs && node tests/features.test.mjs && node tests/management.test.mjs && node scripts/test-management-ui.mjs && node tests/journey.test.mjs && node tests/clubstyle.test.mjs && node tests/expansion.test.mjs && node tests/competition.test.mjs && node tests/europe.test.mjs && node tests/player-career.test.mjs && node tests/player-journey.test.mjs && node tests/career-navigation.test.mjs && node tests/universe.test.mjs && node scripts/test-expansion-ui.mjs && node tests/site-assets.test.mjs && node tests/site-metadata.test.mjs && node tests/site-captures.test.mjs && node scripts/test-gallery-ui.mjs && node tests/restart-flow.test.mjs && node tests/launch-gate.test.mjs && node tests/private-download.test.mjs && node tests/artifact-storage.test.mjs && node scripts/test-launch-ui.mjs",
++    "test": "npm run build && node tests/arcade.test.mjs && node tests/football11.test.mjs && node tests/football-modern.test.mjs && node tests/football-pro.test.mjs && node tests/football-halves.test.mjs && node tests/football-contact.test.mjs && node tests/football-tactics.test.mjs && node tests/football-receiving.test.mjs && node tests/football-goals.test.mjs && node tests/native-request-policy.test.mjs && node tests/native-bridge.test.mjs && node tests/manual-save.test.mjs && node tests/match-camera-stable.test.mjs && node tests/stadium-visibility.test.mjs && node tests/pro-player.test.mjs && node tests/player-grounding.test.mjs && node tests/player-rendering.test.mjs && node tests/match-upgrade.test.mjs && node tests/match-scheduling.test.mjs && node tests/pitch-details.test.mjs && node tests/stadium-crowd.test.mjs && node tests/match-4k.test.mjs && node tests/match-clarity.test.mjs && node tests/manual-api.test.mjs && node tests/manual-session.test.mjs && node tests/manual-preferences.test.mjs && node tests/manual-scene.test.mjs && node tests/game-requests.test.mjs && node scripts/test-app-chrome.mjs && node scripts/test-app-orientation.mjs && node scripts/test-match-modes-ui.mjs && node scripts/test-manual-ui.mjs && node scripts/test-match-statistics.mjs && node tests/goal-replay.test.mjs && node tests/goal-presentation.test.mjs && node tests/game.test.mjs && node tests/api.test.mjs && node tests/auth.test.mjs && node tests/progression.test.mjs && node tests/launch.test.mjs && node tests/features.test.mjs && node tests/management.test.mjs && node scripts/test-management-ui.mjs && node tests/journey.test.mjs && node tests/clubstyle.test.mjs && node tests/expansion.test.mjs && node tests/competition.test.mjs && node tests/europe.test.mjs && node tests/player-career.test.mjs && node tests/player-journey.test.mjs && node tests/career-navigation.test.mjs && node tests/universe.test.mjs && node scripts/test-expansion-ui.mjs && node tests/site-assets.test.mjs && node tests/site-metadata.test.mjs && node tests/site-captures.test.mjs && node scripts/test-gallery-ui.mjs && node tests/restart-flow.test.mjs && node tests/launch-gate.test.mjs && node tests/private-download.test.mjs && node tests/artifact-storage.test.mjs && node tests/source-download.test.mjs && node scripts/test-launch-ui.mjs",
+     "android:sync": "npm run build && cap sync android",
+     "android:open": "cap open android",
+     "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+diff --git a/worker/artifact-storage.js b/worker/artifact-storage.js
+index 22c7e22..586d288 100644
+--- a/worker/artifact-storage.js
++++ b/worker/artifact-storage.js
+@@ -37,7 +37,7 @@ export async function approvedPrivateGrant(url, artifact, grant, now, fileName)
+   return difference === 0;
+ }
+ 
+-function byteRange(header, size) {
++export function byteRange(header, size) {
+   if (!header) return { start: 0, end: size - 1, status: 200 };
+   const match = /^bytes=(\d*)-(\d*)$/.exec(header);
+   if (!match || (!match[1] && !match[2])) return null;
+@@ -90,7 +90,7 @@ export async function storedApkResponse(request, bucket, artifact, storedFileNam
+   return new Response(request.method === 'HEAD' ? null : object.body, { status: range.status, headers });
+ }
+ 
+-async function exactBody(request, size) {
++export async function exactBody(request, size) {
+   if (!request.body) return null;
+   // One bounded allocation: no arrayBuffer(), tee(), or retained chunk list.
+   // WebCrypto can copy this once when hashing; even a 32 MiB APK fits the
+diff --git a/worker/index.js b/worker/index.js
+index e8cbef8..3c8b051 100644
+--- a/worker/index.js
++++ b/worker/index.js
+@@ -3,6 +3,8 @@ import{touchlineMarkSvg}from'../shared/brand-mark.js';
+ import{applySiteHead,publicSitePaths}from'../shared/site-metadata.js';
+ import{privateApkUploadRoute,storedApkResponse}from'./artifact-storage.js';
+ import{privateApkRoute}from'./private-download.js';
++import{sourceExportRoute}from'./source-download.js';
++import sourceExport from'../release/source-export.json' with {type:'json'};
+ import ownerApk from'../release/owner-apk.json' with {type:'json'};
+ import downloadArtifact from'../release/downloads/current.json' with {type:'json'};
+ import {launchInfo} from './launch.js';
+@@ -21,6 +23,7 @@ const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control
+ function imageBytes(value){if(typeof Uint8Array.fromBase64==='function')return Uint8Array.fromBase64(value);const raw=atob(value),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);return bytes;}
+ export default {async fetch(request,env){
+  const url=new URL(request.url);
++ const sourceDownload=await sourceExportRoute(request,url,env.BUCKET,sourceExport);if(sourceDownload)return sourceDownload;
+  const uploaded=await privateApkUploadRoute(request,url,env.BUCKET,downloadArtifact,ownerApk);if(uploaded)return uploaded;
+  const privateBuild=await privateApkRoute(request,url,env.BUCKET||launchApk,downloadArtifact,ownerApk);if(privateBuild)return privateBuild;
+  const launch=launchInfo();
+@@ -77,7 +80,7 @@ export default {async fetch(request,env){
+   }catch(error){const expected=error instanceof GameError||error instanceof EuropeError||error instanceof ExpansionError||error instanceof ClubStyleError||/Akademi|sælges|penge|kamp|Klubnavn|Klubnavnet|handling|opgradering|Spiller|Spiller|Spilleren|trup|tilgængelig|position|taktik|Mission/.test(error.message);return json({error:expected?error.message:'Kunne ikke gemme klubben. Prøv igen.'},expected?400:500);}
+  }
+  if(url.pathname==='/favicon.svg')return new Response(touchlineMarkSvg(),{headers:{'Content-Type':'image/svg+xml','Cache-Control':'public, max-age=86400'}});
+- if(url.pathname==='/robots.txt')return new Response('User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /play\nDisallow: /owner-builds/\nSitemap: https://playtouchline.dk/sitemap.xml\n',{headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'public, max-age=3600'}});
++ if(url.pathname==='/robots.txt')return new Response('User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /play\nDisallow: /owner-builds/\nDisallow: /owner-exports/\nSitemap: https://playtouchline.dk/sitemap.xml\n',{headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'public, max-age=3600'}});
+  if(url.pathname==='/sitemap.xml')return new Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+publicSitePaths.map(path=>'<url><loc>https://playtouchline.dk'+path+'</loc></url>').join('')+'</urlset>',{headers:{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600'}});
+  if(!['/','/privacy','/delete-account','/contact'].includes(url.pathname))return new Response('Ikke fundet',{status:404});
+  return new Response(applySiteHead(page,url.pathname),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin'}});

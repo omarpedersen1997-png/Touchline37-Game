@@ -1,0 +1,30 @@
+[
+  {
+    "file": "phone-da-01-live-1024x1536.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "sha256": "5540ccc6327a220c2d5a4cde9b90b235a97ca6b2cd70ef2698125c5d94e6d2cd"
+  },
+  {
+    "file": "phone-da-02-team-1024x1536.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "sha256": "ae509618d86849e37f719acfb1f03070821fb9fc054c3ea8efa215f955d51367"
+  },
+  {
+    "file": "phone-da-03-dna-1024x1536.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "sha256": "28024641d92ba526dcc692efac626015789c7758b1aacfb3aead4828871aea13"
+  },
+  {
+    "file": "phone-da-04-design-1024x1536.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "sha256": "1f16fae05f92ca1e2c8dee0769d17f62f75635a6561c5e9a64ab061c89a7a3dc"
+  }
+]

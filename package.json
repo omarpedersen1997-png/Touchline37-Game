@@ -1,0 +1,32 @@
+{
+  "name": "touchline-idle",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "npm run build && node tests/arcade.test.mjs && node tests/football11.test.mjs && node tests/football-modern.test.mjs && node tests/football-pro.test.mjs && node tests/football-halves.test.mjs && node tests/football-contact.test.mjs && node tests/football-tactics.test.mjs && node tests/football-receiving.test.mjs && node tests/football-goals.test.mjs && node tests/native-request-policy.test.mjs && node tests/native-bridge.test.mjs && node tests/manual-save.test.mjs && node tests/match-camera-stable.test.mjs && node tests/stadium-visibility.test.mjs && node tests/pro-player.test.mjs && node tests/player-grounding.test.mjs && node tests/player-rendering.test.mjs && node tests/match-upgrade.test.mjs && node tests/match-scheduling.test.mjs && node tests/pitch-details.test.mjs && node tests/stadium-crowd.test.mjs && node tests/match-4k.test.mjs && node tests/match-clarity.test.mjs && node tests/manual-api.test.mjs && node tests/manual-session.test.mjs && node tests/manual-preferences.test.mjs && node tests/manual-scene.test.mjs && node tests/game-requests.test.mjs && node scripts/test-app-chrome.mjs && node scripts/test-app-orientation.mjs && node scripts/test-match-modes-ui.mjs && node scripts/test-manual-ui.mjs && node scripts/test-match-statistics.mjs && node tests/goal-replay.test.mjs && node tests/goal-presentation.test.mjs && node tests/game.test.mjs && node tests/api.test.mjs && node tests/auth.test.mjs && node tests/progression.test.mjs && node tests/launch.test.mjs && node tests/features.test.mjs && node tests/management.test.mjs && node scripts/test-management-ui.mjs && node tests/journey.test.mjs && node tests/clubstyle.test.mjs && node tests/expansion.test.mjs && node tests/competition.test.mjs && node tests/europe.test.mjs && node tests/player-career.test.mjs && node tests/player-journey.test.mjs && node tests/career-navigation.test.mjs && node tests/universe.test.mjs && node scripts/test-expansion-ui.mjs && node tests/site-assets.test.mjs && node tests/site-metadata.test.mjs && node tests/site-captures.test.mjs && node scripts/test-gallery-ui.mjs && node tests/restart-flow.test.mjs && node tests/launch-gate.test.mjs && node tests/private-download.test.mjs && node tests/artifact-storage.test.mjs && node scripts/test-launch-ui.mjs",
+    "android:sync": "npm run build && cap sync android",
+    "android:open": "cap open android",
+    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+    "android:bundle": "npm run android:sync && cd android && ./gradlew bundleRelease",
+    "release:check": "npm run build && node scripts/release-check.mjs",
+    "web:draft": "node build.mjs --web-draft",
+    "web:test": "npm run web:draft && node tests/web-draft.test.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/app": "8.0.1",
+    "@capacitor/core": "8.6.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.0",
+    "esbuild": "^0.25.0"
+  },
+  "author": {
+    "name": "OPNext Games"
+  }
+}

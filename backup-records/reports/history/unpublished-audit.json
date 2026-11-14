@@ -1,0 +1,39 @@
+[
+  {
+    "path": "release/ONE-CLUB-ONE-DREAM-REVIEW.md",
+    "exists": true,
+    "bytes": 3014,
+    "findings": [],
+    "jsonKeys": null
+  },
+  {
+    "path": "release/source-export.json",
+    "exists": true,
+    "bytes": 406,
+    "findings": [],
+    "jsonKeys": [
+      "tokenHash",
+      "issuedAt",
+      "expiresAt",
+      "fileName",
+      "versionCode",
+      "sourceCommit",
+      "sha256",
+      "bytes"
+    ]
+  },
+  {
+    "path": "tests/source-download.test.mjs",
+    "exists": true,
+    "bytes": 10556,
+    "findings": [],
+    "jsonKeys": null
+  },
+  {
+    "path": "worker/source-download.js",
+    "exists": true,
+    "bytes": 4176,
+    "findings": [],
+    "jsonKeys": null
+  }
+]

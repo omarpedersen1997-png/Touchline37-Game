@@ -1,0 +1,10 @@
+{
+  "testsPassed": 487,
+  "testsFailed": 0,
+  "failures": [],
+  "sourceCommit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e",
+  "dependencies": "Preinstalled locked dependencies linked read-only for builds; no clean network install attempted.",
+  "nativeHtmlMatchesSignedApk": true,
+  "nativeHtmlSha256": "93e052db1c72039e4de9ec1104d773da943e9b59f0aa0e56eb9e94776578b2c5",
+  "releaseCheckPassed": true
+}

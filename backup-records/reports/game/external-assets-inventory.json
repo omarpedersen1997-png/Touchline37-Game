@@ -1,0 +1,4634 @@
+{
+  "originalRoot": "/workspace/football-asset-research",
+  "backupRelativeRoot": "backup-records/external-assets/football-asset-research",
+  "purpose": "Originale spillerforfatterprojekter, generator, parametre, rå eksport, model-/motion-/licensmateriale; ikke en ny funktion",
+  "selectedFiles": [
+    {
+      "path": "ara-params.ts",
+      "bytes": 32404,
+      "sha256": "f10559815623c7ded394fb3fb879ea8c5fe3dd2b3b82948c62a215d96da92f8d"
+    },
+    {
+      "path": "optimize_footballer.py",
+      "bytes": 4423,
+      "sha256": "0a1afc5f176a3b8259eb160d3224ac0a3744b23df306d09cf7e7364ea67a8b4a"
+    },
+    {
+      "path": "touchline-footballer-v2.gltf.json",
+      "bytes": 42664,
+      "sha256": "ae674cd8e47de52a0fbd4f38c99e44a1f2a69d641ded02f7a26adc3c854e0fb3"
+    },
+    {
+      "path": "optimize_footballer_v2.py",
+      "bytes": 5893,
+      "sha256": "844a8893bf5fa245fc59f97ba18ddb80a249c41eb71360388ceb50e9f64d9721"
+    },
+    {
+      "path": "ara-scripts-node-assets.ts",
+      "bytes": 481,
+      "sha256": "39488538726ea3463212f1dd592ec167d5612589b797fcd6fd28433a471ce8db"
+    },
+    {
+      "path": "touchline-footballer.blend1",
+      "bytes": 7725925,
+      "sha256": "79d0e01767a8885d2a82ef92f714f0c3d51118718495279b5215c80cba6abd0e"
+    },
+    {
+      "path": "footballer-mesh-info.json",
+      "bytes": 1458,
+      "sha256": "32b90148d472d1bbfabe90b99f505cf5fa59d92cf09682583baad71024aa6510"
+    },
+    {
+      "path": "quaternius.html",
+      "bytes": 19966,
+      "sha256": "4d31a8888b388ef4d951678f997d3662ae993f1a01e0e1a41a916135240f332e"
+    },
+    {
+      "path": "male-base-mesh.glb",
+      "bytes": 4498248,
+      "sha256": "86c7cdfa989924b45e2e5110c131a4a4e6251ceb4e71246be68e468f3a32ca86"
+    },
+    {
+      "path": "ara-scripts-build-assets.ts",
+      "bytes": 24048,
+      "sha256": "a24aa6785f4ffa4e509a9cd18aa97328f09b2f788913e551facecdbf616bf40b"
+    },
+    {
+      "path": "touchline-footballer-v2.blend1",
+      "bytes": 7704577,
+      "sha256": "bb9700646d61b0e139279b7f125077ec0a6ad056227f65667d657de944795edc"
+    },
+    {
+      "path": "touchline-footballer.glb",
+      "bytes": 1400032,
+      "sha256": "cdfd967f632f51de1b2d6fbb48d4953c32ab1b3ac56db07ab27601193052abd4"
+    },
+    {
+      "path": "ASSET-LICENSES.md",
+      "bytes": 5387,
+      "sha256": "607cd431b6bae34e8916aaca4019300a655ac445b04c018059125c5181129b69"
+    },
+    {
+      "path": "footballer-v2-bones.json",
+      "bytes": 9871,
+      "sha256": "b3a10823024c33ea2bc5925c7fb579c1d7fcdf1f7153180059f0f0486b53ba29"
+    },
+    {
+      "path": "makehuman-license.md",
+      "bytes": 3598,
+      "sha256": "edd99571ca62698f78c943fd4fffb159a413c315fa0d4819d3cec5cadaf8b4f1"
+    },
+    {
+      "path": "INTEGRATION.md",
+      "bytes": 3209,
+      "sha256": "2f2ec95bb178475ba832440680196cc20ee641fa8e39fd7ae027cf6900df961e"
+    },
+    {
+      "path": "ara-assets-license.txt",
+      "bytes": 1105,
+      "sha256": "a162297c51455256fc4fe5685cd821fcedda2f85e4a360417cf5613bf57312e0"
+    },
+    {
+      "path": "touchline-footballer.gltf.json",
+      "bytes": 42234,
+      "sha256": "12fedebaba2273506435fcb1ef8e1596ee02df6942e6a0fe95d3507ec96adb8f"
+    },
+    {
+      "path": "ara-package.json",
+      "bytes": 5858,
+      "sha256": "a938926f18b15f867ebe64b937c54553491112d69cdf67cb72fc1839b1364964"
+    },
+    {
+      "path": "footballer-v2-preview.png",
+      "bytes": 660004,
+      "sha256": "10182a657f4e4fd7754a778afc709606674ac8a1a7e96527f62b68880c8b2f35"
+    },
+    {
+      "path": "footballer-v2-mesh-info.json",
+      "bytes": 1456,
+      "sha256": "2e770893af0217adb34fc645761fac352c3f77432f27a713f058fe0cd3f3d6b7"
+    },
+    {
+      "path": "ara-scripts-setup-assets.ts",
+      "bytes": 5380,
+      "sha256": "38097965c821b33844cf8a13b082419f640f1e65b290ef5b2e37b4f098170319"
+    },
+    {
+      "path": "touchline-footballer-v2.blend",
+      "bytes": 7535881,
+      "sha256": "2f77f8f3a4e69af48cad4edfc158c65ef66ca4bc7637eddd359d2659fb267404"
+    },
+    {
+      "path": "footballer.params.json",
+      "bytes": 1104,
+      "sha256": "873120dbbc764eca0c412abdf488e03a4a3eb691fc88e467af5b9e48684ef65f"
+    },
+    {
+      "path": "touchline-footballer-v2.glb",
+      "bytes": 1369400,
+      "sha256": "d31843ec2e893e2e080f360010f9c380beb8f92fa85904b391b1770c2910c916"
+    },
+    {
+      "path": "ara-catalog.json",
+      "bytes": 68292,
+      "sha256": "36f1ab37ebe7e2f11d843f749cc84906ba59f4bdcfb480694cf83cb71df3c80f"
+    },
+    {
+      "path": "ara.json",
+      "bytes": 190836,
+      "sha256": "05743897183a80d44967642e408018b8bbd9380176ba31ddbb250db72e2d1005"
+    },
+    {
+      "path": "male-base-mesh.gltf.json",
+      "bytes": 84180,
+      "sha256": "a05da14c0d8d23ee19eb2711602d2a6c70cc04bd8c8fe17c926cbb43d727e3a5"
+    },
+    {
+      "path": "makehuman.json",
+      "bytes": 20320,
+      "sha256": "3e44eade2e1ee84f6f70d6463daa7356d25680900b19c8ff06fa960fa59b778f"
+    },
+    {
+      "path": "ara-docs-exporting.md",
+      "bytes": 3225,
+      "sha256": "9ee780a2420dae3d05712c71cb770824224c80d1477091c7baa0b585e02d374b"
+    },
+    {
+      "path": "touchline-motion.json",
+      "bytes": 239241,
+      "sha256": "8d95cb2eec29dcf242b594ff093640c4c367e282124ce6e869dccb965041c413"
+    },
+    {
+      "path": "footballer-preview.png",
+      "bytes": 667176,
+      "sha256": "cda8f22376841f3786a52be5be12b522f79d01c3b74f3edf7c16eb39d1758077"
+    },
+    {
+      "path": "ara-scripts-export-cli.ts",
+      "bytes": 2443,
+      "sha256": "d0989ee4c016ad92082d1a93ddbbe0770ec793bfa102b26dbc7bb9f63157faee"
+    },
+    {
+      "path": "touchline-footballer.blend",
+      "bytes": 7725925,
+      "sha256": "bd559dd0f97f21ce1536d990413838bbc27c894376357b7b728f54b782ab1401"
+    },
+    {
+      "path": "ara-src-core-assets.ts",
+      "bytes": 6631,
+      "sha256": "ce695925d2eab882045efdc845ef99f0bcbf3640e8fa13b25d6721a9739f3183"
+    },
+    {
+      "path": "footballer-bones.json",
+      "bytes": 9723,
+      "sha256": "ad9ba838502b3b762abe2d6ebe16f29c7527a08ab175dea17b966caabf72952e"
+    },
+    {
+      "path": "ara-readme.md",
+      "bytes": 10773,
+      "sha256": "58e13944e3d1e59a5e40d8920b70fc39a255242c88ac5e62cf4f73f874dff1b5"
+    },
+    {
+      "path": "footballer-v2.params.json",
+      "bytes": 1107,
+      "sha256": "c3ac470c094d1bf7c9f8686093bd3711dd601f121440fcca1b263914180d42ee"
+    },
+    {
+      "path": "deps/package-lock.json",
+      "bytes": 15446,
+      "sha256": "44e7bfcb29ccb47d2f1dc5937559b9ca6317cd510aaa52d5bd2813f7365ff0ae"
+    },
+    {
+      "path": "deps/package.json",
+      "bytes": 99,
+      "sha256": "4ee6d5b10e212c450844647eb598ce75b1312c75613631bd6dc056077d572667"
+    },
+    {
+      "path": "ara/.gitattributes",
+      "bytes": 141,
+      "sha256": "1238443cae0cf747c2c152ef170af823f62915ffe8595371b340d055cfecd113"
+    },
+    {
+      "path": "ara/package-lock.json",
+      "bytes": 82677,
+      "sha256": "a1a9b932e42fc21eda64ff1fbc8d46f50d6a118a15a1e68f9afa274a166015ed"
+    },
+    {
+      "path": "ara/CONTRIBUTING.md",
+      "bytes": 4570,
+      "sha256": "32da270b36c40a0b68a1871b9c17f0e1e5d1f8db7062f26afe46d889fcc15a6e"
+    },
+    {
+      "path": "ara/.editorconfig",
+      "bytes": 171,
+      "sha256": "d06b751c6b163f551c0614f72e5d184c443872655af6055dc888d1d7ccd39858"
+    },
+    {
+      "path": "ara/vite.config.ts",
+      "bytes": 1180,
+      "sha256": "98d00ee9db00f0369a1fd38e3bf2f35604c8e6420036d0356d95fccbf8c79bcb"
+    },
+    {
+      "path": "ara/index.html",
+      "bytes": 19486,
+      "sha256": "12b17e368c82651e8198ba06d23dee9556b20d74683567e387c79f1db8ca71db"
+    },
+    {
+      "path": "ara/studio-audio-check.html",
+      "bytes": 181,
+      "sha256": "1a88e1516f91b7d76437b7752d0baa70987b89e9a46a32601d48e00b280f676d"
+    },
+    {
+      "path": "ara/LICENSE",
+      "bytes": 1473,
+      "sha256": "754b660b91e415319d885438ce166fbeae06b6a57afbbfef311232aa15249d59"
+    },
+    {
+      "path": "ara/package.json",
+      "bytes": 5858,
+      "sha256": "a938926f18b15f867ebe64b937c54553491112d69cdf67cb72fc1839b1364964"
+    },
+    {
+      "path": "ara/README.md",
+      "bytes": 10773,
+      "sha256": "58e13944e3d1e59a5e40d8920b70fc39a255242c88ac5e62cf4f73f874dff1b5"
+    },
+    {
+      "path": "ara/CODE_OF_CONDUCT.md",
+      "bytes": 547,
+      "sha256": "aca36e187da21c111a51df86ec2beb08c0e626f670c3bfab5f977f135dc7b67b"
+    },
+    {
+      "path": "ara/.gitignore",
+      "bytes": 192,
+      "sha256": "ff70d7fd61e45fb59d20f26232333763b6cd2050366f72ebe9e0a8271dc7f22f"
+    },
+    {
+      "path": "ara/tsconfig.json",
+      "bytes": 416,
+      "sha256": "f2475562536baf7aa7ea9723bad4f2f16112957e8d033fff8e56c8ef26dbf0cd"
+    },
+    {
+      "path": "ara/gltf-check.html",
+      "bytes": 248,
+      "sha256": "1e0ad684d751f8ded32634cebe0abcf5afaa216e6f6047cb7c8662ec3291b8c2"
+    },
+    {
+      "path": "ara/.nvmrc",
+      "bytes": 3,
+      "sha256": "5378796307535df3ec8d8b15a2e2dc5641419c3d3060cfe32238c0fa973f7aa3"
+    },
+    {
+      "path": "ara/scripts/play-pose-check.ts",
+      "bytes": 2997,
+      "sha256": "75fd3b7a2d52f8440b0fbad6794c4ff46fdd541d45984bec604e56777c3fa9ac"
+    },
+    {
+      "path": "ara/scripts/fleet-review.ts",
+      "bytes": 2701,
+      "sha256": "06fea3b4ed5b9869a7d7326d4ed6a02d2dedee9d377979afa0bc579c9934c465"
+    },
+    {
+      "path": "ara/scripts/play-rifle-check.ts",
+      "bytes": 4587,
+      "sha256": "ab172a08cca69de7762ff948771ca2bd7ae05828ca381400f37af3bb50b9fe82"
+    },
+    {
+      "path": "ara/scripts/character-assist-check.ts",
+      "bytes": 5043,
+      "sha256": "cd823c9990480d2f4f20c1c94480985b4b5a16a04006f2c098b4b565b3ac1208"
+    },
+    {
+      "path": "ara/scripts/studio-vehicles-check.ts",
+      "bytes": 3950,
+      "sha256": "994c0b487b17a1197b6bdb765773943d7f16298e1d46db2706502e51e10971c7"
+    },
+    {
+      "path": "ara/scripts/play-drive-fleet-check.ts",
+      "bytes": 4439,
+      "sha256": "e1ab61ed8a6cd6c0404634aae4208444c105d4f8c6c007231c8bee1d34eba20c"
+    },
+    {
+      "path": "ara/scripts/build-studio-licenses.ts",
+      "bytes": 2011,
+      "sha256": "1f31e4fd3ef9bf0e44c312e03fcca65ce1710d88e9285c833b1ccee3e79fc33b"
+    },
+    {
+      "path": "ara/scripts/studio-tour-check.ts",
+      "bytes": 11144,
+      "sha256": "3cf9ebf0b472f8c231a519ba82e898046c4d03fdc961f947f2f8b67c0efa4227"
+    },
+    {
+      "path": "ara/scripts/play-air-pursuit-check.ts",
+      "bytes": 7904,
+      "sha256": "ee39ecaac1742392e72749f3be70d2d3263d78efa09872ec92aa7afe552dbdc6"
+    },
+    {
+      "path": "ara/scripts/ASSETS_LICENSE.txt",
+      "bytes": 1105,
+      "sha256": "a162297c51455256fc4fe5685cd821fcedda2f85e4a360417cf5613bf57312e0"
+    },
+    {
+      "path": "ara/scripts/helicopter-review.ts",
+      "bytes": 8542,
+      "sha256": "29f28e1ff060370b4b39111bc85bb4b9a10ef13e0d3166b23664d8bae33ad3f1"
+    },
+    {
+      "path": "ara/scripts/studio-timing-check.ts",
+      "bytes": 6353,
+      "sha256": "472c0a08997d331bd3860a1b16c4de55716735c83fe8d6a58f9e377a79d0e586"
+    },
+    {
+      "path": "ara/scripts/aerial-check.ts",
+      "bytes": 4989,
+      "sha256": "469be90fd587ba300a57b3c9efe24e2cbcde179408e46d1e68162691fdff2060"
+    },
+    {
+      "path": "ara/scripts/interaction-check.ts",
+      "bytes": 6846,
+      "sha256": "57ee7d2396399d65530f0768cbe71075ca45a5cd62e67a3cd5cfde05caae80af"
+    },
+    {
+      "path": "ara/scripts/play-arcade-check.ts",
+      "bytes": 22147,
+      "sha256": "c8fb988aa6163361857cddb89027551f7ce2db49773e130315eb117935eefac7"
+    },
+    {
+      "path": "ara/scripts/build-studio-reel.ts",
+      "bytes": 7403,
+      "sha256": "a1c4620b47945600c37329f264222b0531e5f19bc473fb357c4491ef06d1c9df"
+    },
+    {
+      "path": "ara/scripts/aerial-review.ts",
+      "bytes": 3678,
+      "sha256": "78306a3db140481180e6fec6fe555f2e892aeaec7543497ef98f7500dfe2086e"
+    },
+    {
+      "path": "ara/scripts/boarding-review.ts",
+      "bytes": 10500,
+      "sha256": "1e3fd18033e2f5254983f33bb45141a39a1f63b1b03a3bbccd9e1b67cb4d8914"
+    },
+    {
+      "path": "ara/scripts/gltf-check.ts",
+      "bytes": 4058,
+      "sha256": "a1e500e8b40a4649e5526a0539441c2c939715290bda5661ea2333886cdc9765"
+    },
+    {
+      "path": "ara/scripts/build-studio-music.ts",
+      "bytes": 2440,
+      "sha256": "6e3a1edb960d96cdd39e94ed4d69863b53f30f28dafc64f99d7da604f6f618af"
+    },
+    {
+      "path": "ara/scripts/builder-gown-thumbnails.ts",
+      "bytes": 5549,
+      "sha256": "205b670acd78ca065a511bf4fe6d7e0e59846b807898f39b1d4213d6fb5ba020"
+    },
+    {
+      "path": "ara/scripts/studio-example-capture.ts",
+      "bytes": 2106,
+      "sha256": "9fa1ebe1da6916b9e9aabb92d60e27af1ae89ceabb569f9f606013a1b9b16b9b"
+    },
+    {
+      "path": "ara/scripts/studio-vehicle-stage-review.ts",
+      "bytes": 15141,
+      "sha256": "a1f3e45d1eb0510d905967e68e8cb805e335089b1db11beae3111b6cb036408c"
+    },
+    {
+      "path": "ara/scripts/play-objectives-course-check.ts",
+      "bytes": 5805,
+      "sha256": "f421bd276a22fdf96f3d76b178dc00da95ef816175844e19a971e739b6b0b6ee"
+    },
+    {
+      "path": "ara/scripts/play-story-check.ts",
+      "bytes": 2978,
+      "sha256": "e24b1ed4371cc8b56d8a76c7199bd7116f311e83c0f6951b60b8d64410703a1e"
+    },
+    {
+      "path": "ara/scripts/export-cli.ts",
+      "bytes": 2443,
+      "sha256": "d0989ee4c016ad92082d1a93ddbbe0770ec793bfa102b26dbc7bb9f63157faee"
+    },
+    {
+      "path": "ara/scripts/studio-model-check.ts",
+      "bytes": 29139,
+      "sha256": "e164cbf3958ccae2b3c2b5e5789e179ce6bfbf996149d69fb0fef5f3051c74cf"
+    },
+    {
+      "path": "ara/scripts/fleet-check.ts",
+      "bytes": 4139,
+      "sha256": "22daaed0a826c10936e3e70014247fcebf551e6072963db71edbdbffa40c5053"
+    },
+    {
+      "path": "ara/scripts/play-cover-check.ts",
+      "bytes": 5492,
+      "sha256": "3d36d14f8265ce8dc35e43d7c019bb2b1132a2d74ea06614aecc06c6f760f34d"
+    },
+    {
+      "path": "ara/scripts/interaction-skin-check.ts",
+      "bytes": 4009,
+      "sha256": "3bada6cc1c6f92b2bdf118891bdcd41e6939f7ca7f00ce6afd2cda5c077251f4"
+    },
+    {
+      "path": "ara/scripts/play-locations-check.ts",
+      "bytes": 9902,
+      "sha256": "f66c1e34de05ee126b0db5561e1fbdd8d170cca60a7d03ae51c31fb530b1cbd1"
+    },
+    {
+      "path": "ara/scripts/mocap-takes.ts",
+      "bytes": 3774,
+      "sha256": "e85565235ba6bbf51a186e7dfbaa3b4c1dbe1cd3fb675bd8e7f97f97ddb08d79"
+    },
+    {
+      "path": "ara/scripts/play-traffic-check.ts",
+      "bytes": 6150,
+      "sha256": "f265fd64eda0ddfd3e1e514bb6a8abceb7a2d3dcc7a9b88b0a594d1bea8e9798"
+    },
+    {
+      "path": "ara/scripts/play-presentation-check.ts",
+      "bytes": 13014,
+      "sha256": "437ee264f8cbfb07d6ef1ca6f2a42bd36acb9485880e0d3c6e6d50f444660ef1"
+    },
+    {
+      "path": "ara/scripts/animation-improvement-check.ts",
+      "bytes": 8323,
+      "sha256": "512ae5a0c7e3ce573d95c0aa0fd98281732b026a8104ed308f4dede07c993303"
+    },
+    {
+      "path": "ara/scripts/play-side-quests-check.ts",
+      "bytes": 3606,
+      "sha256": "b96c6ae9840a406a09303ce6ceb0643f7f116b442e6f1f0b997338c3121009d3"
+    },
+    {
+      "path": "ara/scripts/studio-location-thumbnails.ts",
+      "bytes": 3789,
+      "sha256": "eda201f8025ac6d863d5d265e596c80746c568a8f63b2f2d58e59332e42819dc"
+    },
+    {
+      "path": "ara/scripts/play-export-check.ts",
+      "bytes": 3621,
+      "sha256": "0eb62e686c91b4a19e265f31be5b059dcafd8c874a4073a0e4fce4760b626ee7"
+    },
+    {
+      "path": "ara/scripts/build-mocap.ts",
+      "bytes": 1672,
+      "sha256": "8ad74f11d0f64323e330790f38c0a731d49d40aba57ab39a6c41f562de589678"
+    },
+    {
+      "path": "ara/scripts/studio-map-geometry.ts",
+      "bytes": 3411,
+      "sha256": "b9bab6e4d3076b07259bb50c45f8b6e5e44be686091468be175c3543006d70f0"
+    },
+    {
+      "path": "ara/scripts/studio-scenes-check.ts",
+      "bytes": 7647,
+      "sha256": "c0607cd60b201e5aa9f297641bbc89855b72af83f0eb53b49e16f4ef718c6d0c"
+    },
+    {
+      "path": "ara/scripts/play-rifle-pose-check.ts",
+      "bytes": 2748,
+      "sha256": "987d0b6dc1d49b3dc9c48da1daa9f8170f950a1b72b61396e57645e83412efc7"
+    },
+    {
+      "path": "ara/scripts/node-assets.ts",
+      "bytes": 481,
+      "sha256": "39488538726ea3463212f1dd592ec167d5612589b797fcd6fd28433a471ce8db"
+    },
+    {
+      "path": "ara/scripts/studio-audio-fixture.ts",
+      "bytes": 2708,
+      "sha256": "0803e0938434bd9b275afe22fd8d71d6681938e32c47de499b4ed6b054c90e71"
+    },
+    {
+      "path": "ara/scripts/play-atmosphere-check.ts",
+      "bytes": 2480,
+      "sha256": "30e8b09f4e6ceec81e72b77691e2ad27c4c727755cd26620c0011b7b31475671"
+    },
+    {
+      "path": "ara/scripts/vehicle-review.ts",
+      "bytes": 15194,
+      "sha256": "4b7e7d97cc8151ba50cbc77db012da03dbfc3f8907a6430ab8da6c9803477b5b"
+    },
+    {
+      "path": "ara/scripts/play-combat-pose-check.ts",
+      "bytes": 5430,
+      "sha256": "3f40bc55c12d0dc6905d2b1787aa8b2ce44fdf6d28a7d7175779f3e899dba722"
+    },
+    {
+      "path": "ara/scripts/play-access-check.ts",
+      "bytes": 5373,
+      "sha256": "76d72c7c588e91fa5308f2f936763b94e56f383c56419241611b269f78cd623d"
+    },
+    {
+      "path": "ara/scripts/boarding-foot-check.ts",
+      "bytes": 3472,
+      "sha256": "7475e7b07621c8821b4cd8058c3f75e185b26f027b1db6b233e39efdb0a1912f"
+    },
+    {
+      "path": "ara/scripts/armed-riding-check.ts",
+      "bytes": 6654,
+      "sha256": "e59d688f3904124021537ad0591af5ca0b2df3a2d892262f0b56f926197c6380"
+    },
+    {
+      "path": "ara/scripts/studio-effects-check.ts",
+      "bytes": 14219,
+      "sha256": "45db91e29fe03de0af8855164cc87d701462db165fb8c3da475cf28cd8be0b89"
+    },
+    {
+      "path": "ara/scripts/play-combat-check.ts",
+      "bytes": 13679,
+      "sha256": "65c0a5915bf4b380e02a3879810637546244cff6a54f9660d403641e210604bf"
+    },
+    {
+      "path": "ara/scripts/play-extraction-check.ts",
+      "bytes": 8846,
+      "sha256": "5fb1b7a823892e4034783ed116762dae53e5f4813823902641293882b74cadba"
+    },
+    {
+      "path": "ara/scripts/play-campaign-check.ts",
+      "bytes": 5994,
+      "sha256": "43027d650c7b92acef8c9205e51de570f96830ba5bc815c7740c5d8e19233b0a"
+    },
+    {
+      "path": "ara/scripts/parcel-check.ts",
+      "bytes": 3676,
+      "sha256": "1bb1ff4a72360a5575b1038b46506c21e91c5f77cdfa49d38f0b96a5c66c0e9d"
+    },
+    {
+      "path": "ara/scripts/play-driving-pose-check.ts",
+      "bytes": 5762,
+      "sha256": "81bc240ad6e8723c90d39abf707b86723fec3320a38e77781504592acd29ca66"
+    },
+    {
+      "path": "ara/scripts/studio-new-project-check.ts",
+      "bytes": 9382,
+      "sha256": "c0e424d4773855d48568e2a66ce9a3b22177559add00b781fe76ef659dff5af3"
+    },
+    {
+      "path": "ara/scripts/armed-riding-review.ts",
+      "bytes": 8032,
+      "sha256": "b335dc4494f6675f27c6d6a8f8cf09faa2a7d818c3e297a896025b84d2db3d2b"
+    },
+    {
+      "path": "ara/scripts/play-assist-check.ts",
+      "bytes": 5723,
+      "sha256": "b7a71b36fbf2a4141fe51c8f45f269191f7eae4c636013908ba6b1fe510fcea7"
+    },
+    {
+      "path": "ara/scripts/setup-assets.ts",
+      "bytes": 5380,
+      "sha256": "38097965c821b33844cf8a13b082419f640f1e65b290ef5b2e37b4f098170319"
+    },
+    {
+      "path": "ara/scripts/play-rescue-check.ts",
+      "bytes": 11784,
+      "sha256": "f99390708080e7700f6bc3585efb00fa27fea6138b9d0d678872043193b3cce1"
+    },
+    {
+      "path": "ara/scripts/vehicle-check.ts",
+      "bytes": 8450,
+      "sha256": "32fb9d7f4669175bde953325fd41a4b45e5d86172d04447d22fab5f33cdc056b"
+    },
+    {
+      "path": "ara/scripts/build-play-runtime.ts",
+      "bytes": 2881,
+      "sha256": "72414d8ede43de917c25dd874fe3753f95c4473dda9df4335cd38e45ed830d3b"
+    },
+    {
+      "path": "ara/scripts/play-city-expansion-check.ts",
+      "bytes": 7445,
+      "sha256": "2f2f4af06bd855676eed6c4fd595665e8cb860b6edb848f7220de1772c2935ac"
+    },
+    {
+      "path": "ara/scripts/play-boarding-access-check.ts",
+      "bytes": 4080,
+      "sha256": "86352012675c6090105bcb60df20eed1ab72d3299cacd8933afaeb2279547556"
+    },
+    {
+      "path": "ara/scripts/build-docs.ts",
+      "bytes": 9755,
+      "sha256": "e4416938430ad04547d2728984ba066288a4518e7e2789a00e8e95e8059e3981"
+    },
+    {
+      "path": "ara/scripts/play-grenades-check.ts",
+      "bytes": 8411,
+      "sha256": "1646de2ba0e1afbf1dab80a8cf0e911a8b0fb7343e114be93b0e4cead2f50d83"
+    },
+    {
+      "path": "ara/scripts/studio-cast-check.ts",
+      "bytes": 10322,
+      "sha256": "c0776b90fc3002ea31deafcbfc0d643b162cfb32d28093707267db0b86455497"
+    },
+    {
+      "path": "ara/scripts/passenger-contact-check.ts",
+      "bytes": 4458,
+      "sha256": "b0950bda02dd2acc04a9754bd508c6c9a6dd8ca74c59b4d67f5200fc79265bc2"
+    },
+    {
+      "path": "ara/scripts/stage-check.ts",
+      "bytes": 7291,
+      "sha256": "49100f36e07c11977cd056ab7214d537eb3b075717da39854409b95419473f00"
+    },
+    {
+      "path": "ara/scripts/blender_rig_check.py",
+      "bytes": 4262,
+      "sha256": "4a409842fd464aecb297f4628ad579c6e669e1f3c8ab3810f37b6b72286446f5"
+    },
+    {
+      "path": "ara/scripts/play-voice-import-check.ts",
+      "bytes": 1715,
+      "sha256": "deb8bef34970f0d8a300955ba1a34aef0a7de0c82dbdb67886429802650daba2"
+    },
+    {
+      "path": "ara/scripts/play-cover-pose-check.ts",
+      "bytes": 6818,
+      "sha256": "9262b4f0cc15cb9aba3877cc44fcb569f63a64ba9f1c2f783a99e76d2262939d"
+    },
+    {
+      "path": "ara/scripts/studio-spatial-check.ts",
+      "bytes": 14111,
+      "sha256": "022e945742ff575440e29e7be39bbb4b0d2d6f8d217fc07b7a55d6c342e8f434"
+    },
+    {
+      "path": "ara/scripts/play-traversal-check.ts",
+      "bytes": 5814,
+      "sha256": "a4c3893208b239e4a4903f78f05e0b00688fffc7cc32db59c951a28871716b4f"
+    },
+    {
+      "path": "ara/scripts/blender_check.py",
+      "bytes": 4473,
+      "sha256": "8746f5e5436dbbfa6bf9cdbe7f3a065e2fb50b67c33e8868cc6938183994b652"
+    },
+    {
+      "path": "ara/scripts/play-browser-check.ts",
+      "bytes": 198057,
+      "sha256": "0b00c6a93de4dee8815262192dc44f10b346fcdf712adb7f590f20db60ea2bf2"
+    },
+    {
+      "path": "ara/scripts/build-studio-maps.ts",
+      "bytes": 2978,
+      "sha256": "0970dcf0ef2f43baba4b720d94c939887f8ccb9b16e5cae84f9c7c124422c303"
+    },
+    {
+      "path": "ara/scripts/action-props-review.ts",
+      "bytes": 2549,
+      "sha256": "04c873cb1ba09320c7afa4388cf369908ca1216aee3eaada4d780c43ed0cad61"
+    },
+    {
+      "path": "ara/scripts/vehicle-export-check.ts",
+      "bytes": 3766,
+      "sha256": "453b5cb6c05829064eabbc262bbeb376b1b6e9a7809a6ac3bee09ddb4f3ea09e"
+    },
+    {
+      "path": "ara/scripts/studio-check.ts",
+      "bytes": 81502,
+      "sha256": "7acbf81bb12dce8ccd008d5fad5e8dfadab45bccd51a3308f4d11b7e699eb391"
+    },
+    {
+      "path": "ara/scripts/play-recovery-check.ts",
+      "bytes": 9417,
+      "sha256": "05782313ea422ff2aa25bd8df4b1a2584659e67b01463b3333ea854c931e5cad"
+    },
+    {
+      "path": "ara/scripts/mobile-builder-check.ts",
+      "bytes": 11425,
+      "sha256": "beee03fc1696dac52917d4d9a99343f897ad3fe56c7038b4b2e6ec53f6fac835"
+    },
+    {
+      "path": "ara/scripts/studio-shortcut-check.ts",
+      "bytes": 6544,
+      "sha256": "f9ca3d8b0647eaafb2ebe3b3a63548a9e2236f3b75634aaba10cab6adc816a89"
+    },
+    {
+      "path": "ara/scripts/studio-audio-check.ts",
+      "bytes": 23847,
+      "sha256": "e4d3d35e7d8941f83ac92987ff8ab3050d13149137a1d171d14d5c56924e2bcf"
+    },
+    {
+      "path": "ara/scripts/boarding-check.ts",
+      "bytes": 6481,
+      "sha256": "536fcea1a045eb597632cb147f87dd8d036973c33b68f2d1f7dda46c6e0c6cec"
+    },
+    {
+      "path": "ara/scripts/action-props-export-check.ts",
+      "bytes": 3000,
+      "sha256": "1cdb523052c5dbf55130da47296218387c1a258f2fa9716384744b44ce84cad6"
+    },
+    {
+      "path": "ara/scripts/helicopter-check.ts",
+      "bytes": 5646,
+      "sha256": "e8cea9ce60e363ad72e3681d6fb96c879dc56f883228bd5e0174db14d82c8c88"
+    },
+    {
+      "path": "ara/scripts/play-enemies-check.ts",
+      "bytes": 8869,
+      "sha256": "b47a46ce21a04ddfb56396d34a61bd042eff885ac748ef71be66223f33a46bcb"
+    },
+    {
+      "path": "ara/scripts/play-driving-check.ts",
+      "bytes": 11750,
+      "sha256": "22b5d1b523d8e2f9877150772ac1cc3636b95d9f73da6e2d1ff59525bc4ec0b3"
+    },
+    {
+      "path": "ara/scripts/build-studio-effects.ts",
+      "bytes": 2321,
+      "sha256": "11af593ca2978a961a0404110c57e73609187fa9318f37b85aeaa96ea0877a9a"
+    },
+    {
+      "path": "ara/scripts/play-check.ts",
+      "bytes": 7703,
+      "sha256": "50df3c7bedb45574ee0286f584852ca40b86b9ce8380da8ed2b3495e9f819dd7"
+    },
+    {
+      "path": "ara/scripts/studio-editing-check.ts",
+      "bytes": 16257,
+      "sha256": "46fd0efd8eff28dededbf058b6a4d0386456a8efdb0c9f00d5b94d3177a9b190"
+    },
+    {
+      "path": "ara/scripts/studio-spatial-review.ts",
+      "bytes": 12594,
+      "sha256": "ca549bdc22dd80e00069feb7d3bed613ffc0d4af1abf6b6f7bbb4e5adb670401"
+    },
+    {
+      "path": "ara/scripts/ui-check.ts",
+      "bytes": 28569,
+      "sha256": "bebd27172b6cbd8a1beb243c1129ff51ea0f3fc596b8d1643f15db32b9494d00"
+    },
+    {
+      "path": "ara/scripts/play-radio-check.ts",
+      "bytes": 1690,
+      "sha256": "2290d318e98bbfeec825456b9196871b8db524397ef35e3c2ba5ce93ed563b25"
+    },
+    {
+      "path": "ara/scripts/build-assets.ts",
+      "bytes": 24048,
+      "sha256": "a24aa6785f4ffa4e509a9cd18aa97328f09b2f788913e551facecdbf616bf40b"
+    },
+    {
+      "path": "ara/scripts/play-city-settings-check.ts",
+      "bytes": 5798,
+      "sha256": "d6b3add7ac724c68af93280dd5c87574b48c9c32771d8741a8d98d0cc652a261"
+    },
+    {
+      "path": "ara/scripts/blender_anim_check.py",
+      "bytes": 2767,
+      "sha256": "16215d5fba79f4fbf595b18fdd64b6a35a5420f81102c3d17fb300cacbd6f202"
+    },
+    {
+      "path": "ara/scripts/action-props-check.ts",
+      "bytes": 3755,
+      "sha256": "21925104f1bf605768b74540493c4a9ae39b18b9ea3a666d1228d20ba5de5f86"
+    },
+    {
+      "path": "ara/scripts/play-chain-check.ts",
+      "bytes": 8144,
+      "sha256": "a02c6052751459233e14886e3d11a54c17c48b94edf0d2991fc497e348440f22"
+    },
+    {
+      "path": "ara/scripts/play-progression-check.ts",
+      "bytes": 10375,
+      "sha256": "2f3076d83c4cac8d9f1230ef2904ae9082c42958e0aa87ae84c201e4519d2c20"
+    },
+    {
+      "path": "ara/scripts/selftest.ts",
+      "bytes": 34051,
+      "sha256": "774b27a1a9ec0912720ffebf9e255c7a88cdd82009dbce44b0f4b5041c5d8d10"
+    },
+    {
+      "path": "ara/scripts/export-touchline-motion.ts",
+      "bytes": 1112,
+      "sha256": "ca021c8c91c45e3956d69eb364e38a09827be538eccc3ebf4d27cd142f5c458b"
+    },
+    {
+      "path": "ara/scripts/animation-review.ts",
+      "bytes": 6993,
+      "sha256": "ae1703f7834007e56d4ba7063d443db0d90ba5efdd39bf433d82048ebc81fc04"
+    },
+    {
+      "path": "ara/scripts/setup-studio-speech.ts",
+      "bytes": 1361,
+      "sha256": "856d4b1baaa7edcba64e720c16ae6b6747cc308dea04f50172a241a2be451e06"
+    },
+    {
+      "path": "ara/scripts/fixtures/studio-shared-vehicles.ts",
+      "bytes": 2238,
+      "sha256": "030c595944c5777e61dd61440d5d8963cbdce17fb01b10440868215efe451d18"
+    },
+    {
+      "path": "ara/scripts/fixtures/studio-custom-film.ts",
+      "bytes": 2011,
+      "sha256": "d2e8152f0141c3f77af3314785400e98670ec45da437be0d0300f825045ca641"
+    },
+    {
+      "path": "ara/scripts/fixtures/studio-helicopter.ts",
+      "bytes": 1420,
+      "sha256": "615d56e6af9647b1c5295b46a68ba572e17ae2a5286475ff7b79517b9fe25097"
+    },
+    {
+      "path": "ara/scripts/reel/capture.ts",
+      "bytes": 3348,
+      "sha256": "244a730330069ad89782404d0ce51480ca4bfdca2b46bc6c51e28c418d4341ad"
+    },
+    {
+      "path": "ara/src/export/plan.ts",
+      "bytes": 13576,
+      "sha256": "b4d39fe75321a4fc44d6d25aad3202e66d15d20542e5c1c018dbd4cc89ee36cb"
+    },
+    {
+      "path": "ara/src/export/obj.ts",
+      "bytes": 2333,
+      "sha256": "ba0d3e14093a6f2bdca762f38e0719c8e62c8da995cef8f3512e6e9d06c1e3ad"
+    },
+    {
+      "path": "ara/src/export/fbx.ts",
+      "bytes": 27781,
+      "sha256": "5673d55db3e75072cce394afc7d490d705492c980ef8b818dff724f102219dec"
+    },
+    {
+      "path": "ara/src/export/index.ts",
+      "bytes": 8575,
+      "sha256": "f0bdc80f8f1fa8732788dabc3efa6a3c94fde43ba00ef3e1022374d12b3e9331"
+    },
+    {
+      "path": "ara/src/export/glb.ts",
+      "bytes": 11708,
+      "sha256": "a6d7cc23ae21e9793eadcbb06eef0f21b7e6c4b9568fc0df1933b7ab967982cb"
+    },
+    {
+      "path": "ara/src/studio/tour.css",
+      "bytes": 14441,
+      "sha256": "96cb0427c6f5f3e597af6b1b85159b5de61a5fb313d6f638d4e9d7397a82f26f"
+    },
+    {
+      "path": "ara/src/studio/seating.ts",
+      "bytes": 3017,
+      "sha256": "e95a3aff692ae504a40f6a9ace91f95f7133b7fdef3e28de8f573dc96b9dc6db"
+    },
+    {
+      "path": "ara/src/studio/aerial-motion.ts",
+      "bytes": 2553,
+      "sha256": "3c11096a17142bce5957f1de29a9fbc171fb3373768f5f33bbb7b9d1f40d41ab"
+    },
+    {
+      "path": "ara/src/studio/tour-demo.ts",
+      "bytes": 2836,
+      "sha256": "09ca224cc8a54c0291291349de3fcfab178aa564f82bf360b2b2fa61ac508bef"
+    },
+    {
+      "path": "ara/src/studio/tour.ts",
+      "bytes": 11051,
+      "sha256": "88fdfcf5b7cb5d8bfdf77950eed3b684090aea00554ee62b3ad7266ba338deb3"
+    },
+    {
+      "path": "ara/src/studio/timeline-resize.ts",
+      "bytes": 4566,
+      "sha256": "faea0c3a7ef149f18b658b727ae7f6d7c5dd49d70bb56221995050d406a811d6"
+    },
+    {
+      "path": "ara/src/studio/session.ts",
+      "bytes": 4460,
+      "sha256": "ce404a797329d11dd51d5a70e283b06da989fddb86dd01ea142302155974adb5"
+    },
+    {
+      "path": "ara/src/studio/main.ts",
+      "bytes": 77890,
+      "sha256": "1dc372e88cee6740e0d35e120c3237d1186a6dfb1c94e8f7cdf30a5991280e2d"
+    },
+    {
+      "path": "ara/src/studio/spatial-map-routes.ts",
+      "bytes": 4693,
+      "sha256": "393b0aa468fab6e2e1b1fa7593c715099e5278178321fd868936ff8b5fe81c3d"
+    },
+    {
+      "path": "ara/src/studio/vehicle-state.ts",
+      "bytes": 952,
+      "sha256": "fe1722b4d66674f295ce2f8549c699c056f0b9b88c9f0f8db68f77dcd176a904"
+    },
+    {
+      "path": "ara/src/studio/timeline-handles.ts",
+      "bytes": 9339,
+      "sha256": "46afb5c4271d24b3977118c5a30267c4bb05bd9fd5ec9a39cf59acaa0c5d2cbb"
+    },
+    {
+      "path": "ara/src/studio/style.css",
+      "bytes": 47600,
+      "sha256": "0bb986eed54ba92634f29c7c75dbe9b19b1e7aaa91fffb1f8145f94100704790"
+    },
+    {
+      "path": "ara/src/studio/spatial-ui.ts",
+      "bytes": 7697,
+      "sha256": "afa9e972a38ff3e455d6f0be7b1e3177a662caa3b162c0301ff7a003b6173882"
+    },
+    {
+      "path": "ara/src/studio/text.ts",
+      "bytes": 9384,
+      "sha256": "b8a496578b119edcac9e5153285d01289d45f63b9508cdcef1f1af2d4b241344"
+    },
+    {
+      "path": "ara/src/studio/location-maps.generated.json",
+      "bytes": 430342,
+      "sha256": "595bc421995cc0efa82e347e77ec965be1fde9e0db46fbd5d9adc7b7d05bc2a5"
+    },
+    {
+      "path": "ara/src/studio/spatial-geometry.ts",
+      "bytes": 5094,
+      "sha256": "e9580bf72e069fd75879d7a0f8a9c4035335db6415811669918a745753016567"
+    },
+    {
+      "path": "ara/src/studio/jet-flight.ts",
+      "bytes": 1669,
+      "sha256": "186e165ecbe01da7e72b2e18f6015675a3053f00ef80d3e899fbe5b30886f3ff"
+    },
+    {
+      "path": "ara/src/studio/vehicle-performance.ts",
+      "bytes": 3803,
+      "sha256": "de8b956986c29c8365fe0a6db650acb7c85cf85bfdebb9ffd388009fb4622bb5"
+    },
+    {
+      "path": "ara/src/studio/helicopter-flight.ts",
+      "bytes": 3064,
+      "sha256": "926d48fb953179b1317bf98c39c3455b070722875fae58d7c849a02523a8bee6"
+    },
+    {
+      "path": "ara/src/studio/spatial-report.ts",
+      "bytes": 11454,
+      "sha256": "402a75884a9dd96e2aeed90a6d217d74963c166fcb90ea2e728ff38872e04518"
+    },
+    {
+      "path": "ara/src/studio/tour-content.ts",
+      "bytes": 5010,
+      "sha256": "653c264b785d3ece2005bb0cbb4c57f86f820fd9c1f895faca6b6d093278c693"
+    },
+    {
+      "path": "ara/src/studio/spatial-maps.ts",
+      "bytes": 1332,
+      "sha256": "21d4d284f234aede71bf67822387f5ace57b8af1460e2eb1ac852aba99029bea"
+    },
+    {
+      "path": "ara/src/studio/catalog.ts",
+      "bytes": 13618,
+      "sha256": "5b48d09e9ccfe7e43c2eaf331ce044616c2ca4e60fd833e2c3bf3da4bad723e2"
+    },
+    {
+      "path": "ara/src/studio/assist-ui.ts",
+      "bytes": 3670,
+      "sha256": "8b2acb0f71fc22ce5caf3777a3a3cfdb257db766ed41c7e966f0bd705121d54c"
+    },
+    {
+      "path": "ara/src/studio/staging.ts",
+      "bytes": 2563,
+      "sha256": "7fbef2e8b9da084bcb7d418529fd6e93bdbef77b783344f2d968d81978a339ad"
+    },
+    {
+      "path": "ara/src/studio/text-ui.ts",
+      "bytes": 6926,
+      "sha256": "d722466616035769fe14134f249e9101a741f9d8c671ee118815e51143b5a6ae"
+    },
+    {
+      "path": "ara/src/studio/motion.ts",
+      "bytes": 1424,
+      "sha256": "063b605bdeb693c863d1d8cd447e5883e059da6cd0fca1ecfd659acd7586806d"
+    },
+    {
+      "path": "ara/src/studio/vehicle-seats.ts",
+      "bytes": 6618,
+      "sha256": "92cab4eb896e6019aa68f23220ccefa55c9a32fa449c3a3ffb0310e93488676f"
+    },
+    {
+      "path": "ara/src/studio/scene.ts",
+      "bytes": 15727,
+      "sha256": "97087def6e7b7b8b2541b5a728acec9d2b6dbaa57650ee7041eb6d9ea3025aac"
+    },
+    {
+      "path": "ara/src/studio/export.ts",
+      "bytes": 3205,
+      "sha256": "df77ed97a6c1fa349277a00569024ff150362e49179eff407456b9e0c642d25a"
+    },
+    {
+      "path": "ara/src/studio/sets.ts",
+      "bytes": 25421,
+      "sha256": "71ec3e0b6cfe66beeb4753fea7ec0a6e69ceedd33592729ed038eeea4433b06e"
+    },
+    {
+      "path": "ara/src/studio/assist.ts",
+      "bytes": 56118,
+      "sha256": "16282ab160c6b3f591f05d7c89d24fe92569ce143e8f44b22fe78fd6bd542f71"
+    },
+    {
+      "path": "ara/src/studio/spatial-types.ts",
+      "bytes": 1101,
+      "sha256": "7b7a0dc2df245f7996536e016b76b957ea88707c0564a32c9d766e03fd176eea"
+    },
+    {
+      "path": "ara/src/studio/actor.ts",
+      "bytes": 24935,
+      "sha256": "0c3ae2b31d90c4bd56ddefcf27b526bd5085806bec10245e05c6ab5ccded9438"
+    },
+    {
+      "path": "ara/src/studio/equipment.ts",
+      "bytes": 1496,
+      "sha256": "0cd1171efe9bac5888fe4ea8300d9b00b6909de0322f07aa59f28463dfd3acff"
+    },
+    {
+      "path": "ara/src/studio/vehicle-stage.ts",
+      "bytes": 11152,
+      "sha256": "2fe517fb200347c5bb33d5b9c05dc2f183f0addc9df17cf85db0b5be9cc71499"
+    },
+    {
+      "path": "ara/src/studio/parcel.ts",
+      "bytes": 1034,
+      "sha256": "e8b2bda548c524a284901ce5aebe2931d3442b8536b246c36ca89db75153c4f9"
+    },
+    {
+      "path": "ara/src/studio/orbit.ts",
+      "bytes": 8400,
+      "sha256": "6475ec5ce6e063ab61d4cd58ff70fc7ca5f2f584401a131f01ae85fe348d8d96"
+    },
+    {
+      "path": "ara/src/studio/animations.ts",
+      "bytes": 10685,
+      "sha256": "dd916bbe3229a1f1fe652037657545695b32ecc64bc018769cc4d4a1051520ef"
+    },
+    {
+      "path": "ara/src/studio/project.ts",
+      "bytes": 15973,
+      "sha256": "506c6061835cf8156cc629d8ff81d43cbac9fa3812db14eb0df8778d1f24dac5"
+    },
+    {
+      "path": "ara/src/studio/sets/builder.ts",
+      "bytes": 22844,
+      "sha256": "34270bd1e02c7a78c145d6f987930ce67a3439833df4155ad9477bd6eb69a6b0"
+    },
+    {
+      "path": "ara/src/studio/sets/original.ts",
+      "bytes": 5847,
+      "sha256": "a5ba5a466cc1c307ae7d50dff26e2d361455aa64bb8aa98373fbb31a0d0fb89b"
+    },
+    {
+      "path": "ara/src/studio/sets/outdoor-extension.ts",
+      "bytes": 2813,
+      "sha256": "63a24d66948d1b9d6e7984bd3c7ded0e9646e658fc50eb3408cc102e114f3dae"
+    },
+    {
+      "path": "ara/src/studio/sets/story/interiors.ts",
+      "bytes": 6604,
+      "sha256": "f92632f6337f8661a48e2258ea7fe28a2d0914b8031c16e1e82c8767643d90aa"
+    },
+    {
+      "path": "ara/src/studio/sets/story/details.ts",
+      "bytes": 6047,
+      "sha256": "0d50a4c5445f533439bb083aa63042f0a2abba03e0f094db237ace60df1f20da"
+    },
+    {
+      "path": "ara/src/studio/sets/story/civic.ts",
+      "bytes": 10866,
+      "sha256": "2b62f64424aac229e7beefc1e22fa47c56f6fe861155463693ecd68f50c4de84"
+    },
+    {
+      "path": "ara/src/studio/sets/story/exteriors.ts",
+      "bytes": 6856,
+      "sha256": "8087f35400ccfd9ea81d476d9d4c2d3659b46c9ead9e64cd21c278c3c4a136e8"
+    },
+    {
+      "path": "ara/src/studio/sets/story/index.ts",
+      "bytes": 893,
+      "sha256": "30f05a789133e0e3fb094e9fbbd4263ba8e582e1b4a7b10552ae860e9e4bdaa5"
+    },
+    {
+      "path": "ara/src/studio/audio/bundle.ts",
+      "bytes": 2707,
+      "sha256": "740535971e17e7fdc052ba8acbb1b80094ec23244ddfbfc439ba1cf35b20e325"
+    },
+    {
+      "path": "ara/src/studio/audio/music.ts",
+      "bytes": 1691,
+      "sha256": "347d17e90d2967003b041843c6db05434a32a2d0e20d3139b720b498caf58ccb"
+    },
+    {
+      "path": "ara/src/studio/audio/assets.ts",
+      "bytes": 4261,
+      "sha256": "baeb74018acda221352eb7b327a23db383105300c974eb979b4bfadf5279318f"
+    },
+    {
+      "path": "ara/src/studio/audio/ui.ts",
+      "bytes": 22149,
+      "sha256": "05dab0a5765231e4857017a27881cc3773c5e5e273b6562f73ed3e62e053ab45"
+    },
+    {
+      "path": "ara/src/studio/audio/effects.ts",
+      "bytes": 2042,
+      "sha256": "26fa7c386d2db3d13c593574f83ff42b3a6222f5188b08ef6fcece29635ff4ca"
+    },
+    {
+      "path": "ara/src/studio/audio/effects-ui.ts",
+      "bytes": 6708,
+      "sha256": "9363a8584928461c2f245f74fa29136b11a7a2fbb097fdc6f7522d828c750c3b"
+    },
+    {
+      "path": "ara/src/studio/audio/example.ts",
+      "bytes": 1912,
+      "sha256": "eb04ef3bc0272c2a1a1f181f2cab5449384839b67a0379838c5427b8ae357e88"
+    },
+    {
+      "path": "ara/src/studio/audio/schema.ts",
+      "bytes": 7803,
+      "sha256": "796a97b00ffef4556bd5da1618e489a87845a3af7f893c7d4f1868c859a546e7"
+    },
+    {
+      "path": "ara/src/studio/audio/tracks.ts",
+      "bytes": 3140,
+      "sha256": "6318ef47236235e4ead52d680819f85362ac20842a8631974747613a501355ce"
+    },
+    {
+      "path": "ara/src/studio/audio/tts.ts",
+      "bytes": 2816,
+      "sha256": "88cead71650af2fa3a49021de1436f8fc2690ab31a7e9ca3d8bc87d0c9baa3ed"
+    },
+    {
+      "path": "ara/src/studio/audio/tts-worker.ts",
+      "bytes": 7531,
+      "sha256": "b7edd0f994877877f6f3003820668dae733f9eb3520632b5f007dbe4bf2694e6"
+    },
+    {
+      "path": "ara/src/studio/audio/prepare.ts",
+      "bytes": 2491,
+      "sha256": "b759f9c372891d11c144c6f446b7bce846a295850b8633688df7323f260faf6b"
+    },
+    {
+      "path": "ara/src/studio/audio/mix.ts",
+      "bytes": 7736,
+      "sha256": "bf7ca692aaf107bb330cc4316e44c1f46590967a94d0921827544ef582604d21"
+    },
+    {
+      "path": "ara/src/studio/audio/effects-catalog.ts",
+      "bytes": 6436,
+      "sha256": "c5e6e494feb54389db90ef250c0f48eec36187bd5043a660ceeb5b65d8193d02"
+    },
+    {
+      "path": "ara/src/studio/examples/warehouse.ts",
+      "bytes": 20352,
+      "sha256": "48b8f53806b01cdb4925b4b556dfc6a16d6fb7d03b59bd3aefb8c546de797b0b"
+    },
+    {
+      "path": "ara/src/studio/examples/reel.ts",
+      "bytes": 12875,
+      "sha256": "d384ec44b3eba7c3f06d1ecfd8f799cbeae760509d6a9657e7dc95a6c3129ebb"
+    },
+    {
+      "path": "ara/src/app/character-file.ts",
+      "bytes": 677,
+      "sha256": "1a70fe809ce1763fad767f5097ee89e56e2e53c4bd36f291601b063fb8b08cb1"
+    },
+    {
+      "path": "ara/src/app/gltf-check.ts",
+      "bytes": 8312,
+      "sha256": "13825fe551ab2e50030c492d45767f40e206f21ea9e3a51b48310851bd7d217b"
+    },
+    {
+      "path": "ara/src/app/main.ts",
+      "bytes": 3790,
+      "sha256": "1061dace6a8aa95a0a6776dfb194dc983f3837e7bc4d7eb15d1ea3d06490f72b"
+    },
+    {
+      "path": "ara/src/app/viewer.ts",
+      "bytes": 18246,
+      "sha256": "a2b56a91633cfaa3388f1f04a89eea77d05eab8669678814615012520ac47751"
+    },
+    {
+      "path": "ara/src/app/style.css",
+      "bytes": 33018,
+      "sha256": "fb72c7fefb637a040c1bbfeb5c53ea6138b67b5b2a873043d0eca5d1451ff659"
+    },
+    {
+      "path": "ara/src/app/worker.ts",
+      "bytes": 2497,
+      "sha256": "35fcff183cf61272f0449b1e5c297ce5661e342265075e5af39b8a82c0b2a24a"
+    },
+    {
+      "path": "ara/src/app/engine.ts",
+      "bytes": 2669,
+      "sha256": "8000d6c9fbb25d1bc31029275e386da14cb6c6d2b1159ea9d05ce008bd11de07"
+    },
+    {
+      "path": "ara/src/app/bicycle.ts",
+      "bytes": 131,
+      "sha256": "7327730191d9521c1a961f202a61fcb7ad5ea5b8381486dcb1f4b3092c4999b5"
+    },
+    {
+      "path": "ara/src/app/share.ts",
+      "bytes": 6376,
+      "sha256": "712ba302e4aad80ab5d61d58240aa20bca132456631db035bfe11b2e738c7f70"
+    },
+    {
+      "path": "ara/src/app/character-assist.ts",
+      "bytes": 20168,
+      "sha256": "04ad07027ee4f8b51c3b1468b8e96d6c7da97163b13cc244d6d3313fe3b50a54"
+    },
+    {
+      "path": "ara/src/app/ui/dom.ts",
+      "bytes": 470,
+      "sha256": "11b0899edbfe4c9b81b582bb5e2acfaa8642fd7eea901c2ebfc49f0d14835ca3"
+    },
+    {
+      "path": "ara/src/app/ui/header.ts",
+      "bytes": 2892,
+      "sha256": "79baa614e53f37720b7a37963ce1b73a31a031d926500fa55707430f1f739644"
+    },
+    {
+      "path": "ara/src/app/ui/export-panel.ts",
+      "bytes": 12306,
+      "sha256": "f22d865517df760136f7fceaceb301f299e7414137a87e9a1f6e00e104628794"
+    },
+    {
+      "path": "ara/src/app/ui/quick-data.ts",
+      "bytes": 33235,
+      "sha256": "9e74141b793bc1bc4148d2eaa1497cc9abd806ecef057aa60e81d23a248cc2e5"
+    },
+    {
+      "path": "ara/src/app/ui/sidebar-clothing.ts",
+      "bytes": 8613,
+      "sha256": "f13c0ffb5dde99e5624f4946643c66d84b8f20b35ae6e832e6e4ce40cf197ad6"
+    },
+    {
+      "path": "ara/src/app/ui/context.ts",
+      "bytes": 565,
+      "sha256": "8069d5aa2a9da6f6ce1b196a4ae6a6b33bb09454e9fb5dbdbb30d16471ed5953"
+    },
+    {
+      "path": "ara/src/app/ui/responsive.ts",
+      "bytes": 196,
+      "sha256": "618f22c125fa77467ff93b4bb883add90ce0cad1e673ae1ea0860f9ea69a0251"
+    },
+    {
+      "path": "ara/src/app/ui/quick-build.ts",
+      "bytes": 29126,
+      "sha256": "90037f6483323ddedf9703fcd49e04720af2ad424db3367f7258db55d97036bd"
+    },
+    {
+      "path": "ara/src/app/ui/sidebar-looks.ts",
+      "bytes": 9020,
+      "sha256": "d46aa3e43a48e17e4a12809504c2798d9e6d7a8a73777aac096fe3072f36ec45"
+    },
+    {
+      "path": "ara/src/app/ui/animation.ts",
+      "bytes": 10578,
+      "sha256": "bfd93947add8f60284f8284374899c6540263318a7da8d977803eada9c642945"
+    },
+    {
+      "path": "ara/src/app/ui/share-dialog.ts",
+      "bytes": 4045,
+      "sha256": "fe480381494cb3392198818402dfcb45bb0e9dc20ef19ad9e7550bed9cc0ccf4"
+    },
+    {
+      "path": "ara/src/app/ui/generation.ts",
+      "bytes": 3640,
+      "sha256": "c280c3d1b64cd4a2454695d0dac6795c5f13ca03cf99e1f269225c94e0ddb2dd"
+    },
+    {
+      "path": "ara/src/app/ui/history.ts",
+      "bytes": 2270,
+      "sha256": "b0cfc05659dc48d9c18db41dba0bdfac17df494e01699dde55b4ce859f47c640"
+    },
+    {
+      "path": "ara/src/app/ui/store.ts",
+      "bytes": 3166,
+      "sha256": "688d5d9f6c3e17978c91e13787a9e3a8015784aad0e09e206487068b23bafb1e"
+    },
+    {
+      "path": "ara/src/app/ui/controls.ts",
+      "bytes": 4111,
+      "sha256": "8f5806cedcf578ce7cf0cb7a0a45c72f437efd4a276def830c4e86bbca14b434"
+    },
+    {
+      "path": "ara/src/app/ui/sidebar.ts",
+      "bytes": 5807,
+      "sha256": "3d4f47f491691006f32910447b87b88e0b2948080195ef9152200e98164ba212"
+    },
+    {
+      "path": "ara/src/app/ui/mobile-builder.ts",
+      "bytes": 8848,
+      "sha256": "eb3dc8d5125e05c3b00a9fa53870e6bdb1c7379224dc4cb2ea9bc293b73f7e33"
+    },
+    {
+      "path": "ara/src/app/ui/character-assist.ts",
+      "bytes": 3133,
+      "sha256": "cc5f190a79a5446323072cb56527f2bbcfe1e117c5457dcc770c11fbc99ea63c"
+    },
+    {
+      "path": "ara/src/app/assist/reference-picker.ts",
+      "bytes": 8033,
+      "sha256": "72413a1855693b8ebf8cd70d6281f4dbdf1bbd48f5c13ebdaa43bdbbfa589c30"
+    },
+    {
+      "path": "ara/src/app/assist/extract.ts",
+      "bytes": 2168,
+      "sha256": "537cd9414fc64cfe493e0b2231e6c719a1353f6fc278e4fd95563b8f191f437d"
+    },
+    {
+      "path": "ara/src/app/assist/panel.ts",
+      "bytes": 23881,
+      "sha256": "2fdb1dac31356a03bc290d87ea8f0f66cc0e45a1f50f6975543f009c9c025ab4"
+    },
+    {
+      "path": "ara/src/app/assist/panel.css",
+      "bytes": 16108,
+      "sha256": "4f83b1c6d495cbe3567b1631dda1a2ee5f41b887039fd56066537981641a8131"
+    },
+    {
+      "path": "ara/src/core/geometry.ts",
+      "bytes": 10442,
+      "sha256": "556dafa97d3d4f2514af4dc7dc3263d765da8cfdbcfe21b47286511be66e6333"
+    },
+    {
+      "path": "ara/src/core/face.ts",
+      "bytes": 15976,
+      "sha256": "f4d083e43a16d7e2dd1fa023a5b1e94b1497f66aee42e88c970e388c0d249328"
+    },
+    {
+      "path": "ara/src/core/pack.ts",
+      "bytes": 2359,
+      "sha256": "82982fb7143430a2a60730fde986d4669187d92bbc8434037830444d1de589f3"
+    },
+    {
+      "path": "ara/src/core/params.ts",
+      "bytes": 32404,
+      "sha256": "f10559815623c7ded394fb3fb879ea8c5fe3dd2b3b82948c62a215d96da92f8d"
+    },
+    {
+      "path": "ara/src/core/assets.ts",
+      "bytes": 6631,
+      "sha256": "ce695925d2eab882045efdc845ef99f0bcbf3640e8fa13b25d6721a9739f3183"
+    },
+    {
+      "path": "ara/src/core/skin-rough.ts",
+      "bytes": 5415,
+      "sha256": "218363cc9298d8a6465d6509b9b0a70e22d0d598e008f151efa1fae2f9e55f0d"
+    },
+    {
+      "path": "ara/src/core/math.ts",
+      "bytes": 3885,
+      "sha256": "7e84387aa59b352a99304e05898a3edf5d85564ea74521b09dfd6056b9339288"
+    },
+    {
+      "path": "ara/src/core/mesh.ts",
+      "bytes": 6654,
+      "sha256": "09ca04e2e5cd7344335ee3e44d506b0d86cc350dfa344ed2db4edaae8b4800c9"
+    },
+    {
+      "path": "ara/src/core/human.ts",
+      "bytes": 36416,
+      "sha256": "cae1223e3f7ad9aceeb1afd6ed810fc08cb8f006e09ced10301113aa60ffdf23"
+    },
+    {
+      "path": "ara/src/core/morph.ts",
+      "bytes": 3938,
+      "sha256": "549d4c7ae1a46d10e59c4eab1a5471b213b78e3e3d0af475101fd617b4a15cde"
+    },
+    {
+      "path": "ara/src/core/rig/rig.ts",
+      "bytes": 13806,
+      "sha256": "1680b4994b3fbb406ecaa40b7fa3785fb16d9afb69e4090a5f115cc9025a5b69"
+    },
+    {
+      "path": "ara/src/core/rig/socket.ts",
+      "bytes": 2058,
+      "sha256": "f867df920736b1404fb010c618c24523d5188b0a89baa12975faeae072cabb0f"
+    },
+    {
+      "path": "ara/src/core/rig/skeletons.ts",
+      "bytes": 5233,
+      "sha256": "6640e5087b69a658f181004729b2e23fe3ad7e9bfc4c2db1c7d8624f30acb8d5"
+    },
+    {
+      "path": "ara/src/core/rig/poses.ts",
+      "bytes": 1069,
+      "sha256": "be26cbcd3d6e6faaaeadb3bf69a53b73c1a37a588cb49b967af14af3eb8cebf3"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-stunt.ts",
+      "bytes": 1886,
+      "sha256": "b9525dbd3b473020a8b0cab4a9c15ae6ede4624532087a3c26bb3dd2d7a18779"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-horse.ts",
+      "bytes": 21035,
+      "sha256": "6281645d48e1c3b5d41f664e08e42ac55b72d17a03fcc42b091213a177fa76e7"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-water.ts",
+      "bytes": 7984,
+      "sha256": "c21931e55b8dfac215ea87bd76c5141c45a48617e8b7fb1e6da4d434c7433db2"
+    },
+    {
+      "path": "ara/src/core/props/blood.ts",
+      "bytes": 11452,
+      "sha256": "f8c468be71831c4755ffa89104c2fb9fabebbc3fb68693b3c1934b63a004840e"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-actions.ts",
+      "bytes": 3964,
+      "sha256": "8f4233a58ee0f49e70c7e813df1717a2f752dac898c3092786aeb823f18c794d"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-helicopter.ts",
+      "bytes": 7689,
+      "sha256": "0e131e3a93660459c6707c2640dc4f00f2f055f6e682a473ee0e24ec4f425bfc"
+    },
+    {
+      "path": "ara/src/core/props/vehicle.ts",
+      "bytes": 12496,
+      "sha256": "67280000e1180aefccdded0ae39a39ae21b81c7e2d94c2f422d09dff0e71bb99"
+    },
+    {
+      "path": "ara/src/core/props/parachute.ts",
+      "bytes": 5479,
+      "sha256": "363d43c6c380442606be51aa666e4b751d07f45c4d0c06b063c99453dec49373"
+    },
+    {
+      "path": "ara/src/core/props/vehicles.ts",
+      "bytes": 9707,
+      "sha256": "77d4e9448eb8a51499111be6c22d6b9d92298d3342b17368511947791cea372f"
+    },
+    {
+      "path": "ara/src/core/props/weapons.ts",
+      "bytes": 7517,
+      "sha256": "7d74781e864e2113521a76dedc62408a24d4e2117db3883fba88452bf85137be"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-special.ts",
+      "bytes": 12855,
+      "sha256": "aed9c025bb27e4b702fba030cfcb783794d4224ef47318e91261079a0c755db5"
+    },
+    {
+      "path": "ara/src/core/props/helicopter-layout.ts",
+      "bytes": 233,
+      "sha256": "22fd71e492c3b604d99f10f278e77aae01f19ae6ee8673fc56b0907f79dd25c2"
+    },
+    {
+      "path": "ara/src/core/props/horse-gait.ts",
+      "bytes": 739,
+      "sha256": "2061408f5895d7693d5c127f81c5ed691deaa932f7e2549729109052ba1d1eee"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-bodies.ts",
+      "bytes": 22961,
+      "sha256": "6b92eff1c8ed5acd9ff79519ebc9c6002dc81e0933416b9a10c33973b9ab9228"
+    },
+    {
+      "path": "ara/src/core/props/stage-props.ts",
+      "bytes": 5542,
+      "sha256": "2eb14b26dc899399e892e2ce722685ac19ccef6c8ece248d1ee214560570b0b7"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-kit.ts",
+      "bytes": 10704,
+      "sha256": "3288f0dfe8160f4fc5d0b4c3002bf01f16a1e771cc06e2a5b3639f163f41055e"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-motion.ts",
+      "bytes": 7872,
+      "sha256": "7ac96f343bad8507dcf33be41fa207e374de276c7f5190ef582ac5375e3c56f0"
+    },
+    {
+      "path": "ara/src/core/props/bicycle.ts",
+      "bytes": 11698,
+      "sha256": "5d1b2bc1f64b3039bdbb3fe24e70aed0c0d8eafe5da2c3a3de17ebf0b21ec833"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-doors.ts",
+      "bytes": 3940,
+      "sha256": "50278e5eb0928e15a1bbc5494f55430ad7ca150270ae86f68863f48b4c45ae4e"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-land.ts",
+      "bytes": 7500,
+      "sha256": "d027d1a410e0f635e7486ecc63a40a824bb584350badefcd0c2385733e01347d"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-car.ts",
+      "bytes": 23899,
+      "sha256": "0da7786c115e3876252a9ff98d18a51824248c057dffe0c4c3a906377ae543d8"
+    },
+    {
+      "path": "ara/src/core/props/carry.ts",
+      "bytes": 20587,
+      "sha256": "2a9d94c3849a6b31f61875becaca71581e085b3dcfba10eec9d678c7a087d803"
+    },
+    {
+      "path": "ara/src/core/props/vehicle-merge.ts",
+      "bytes": 1788,
+      "sha256": "a1dc08e4d35d959de44ce886f5413e9962038266ce6260fabc689cf5d83408f7"
+    },
+    {
+      "path": "ara/src/core/garments/beach.ts",
+      "bytes": 16994,
+      "sha256": "13764576483665f62df6370a0b700cc7894cbee68c56801a2bac8b4f3243550d"
+    },
+    {
+      "path": "ara/src/core/garments/suit.ts",
+      "bytes": 13708,
+      "sha256": "70f1177a28ea19b472363898ea6b72760dd383a7d12d3fad6be239e1e82b121c"
+    },
+    {
+      "path": "ara/src/core/garments/bags.ts",
+      "bytes": 8613,
+      "sha256": "63dd23b876fca3f72708f4c519c868b05bebcf0067905c8d1a1f33aecb716637"
+    },
+    {
+      "path": "ara/src/core/garments/body.ts",
+      "bytes": 7439,
+      "sha256": "57927fcff3ed2eb2ccce343cd5e6b3603f855e2f2002f9fc0b34c8107f23bb45"
+    },
+    {
+      "path": "ara/src/core/garments/textures.ts",
+      "bytes": 42649,
+      "sha256": "cfc36b7a77f37614ac938530dac825ef75bd40618aec8f114c58963d793d892d"
+    },
+    {
+      "path": "ara/src/core/garments/shell.ts",
+      "bytes": 10543,
+      "sha256": "ef913bd279643e95f6b5e2eb015b950f7faa93adffb3ff8c588ec96105abce18"
+    },
+    {
+      "path": "ara/src/core/garments/shirts.ts",
+      "bytes": 14204,
+      "sha256": "5ba34fd43b5316382a8624d444092db3cc6851af693ebd268a004f705ae3ea64"
+    },
+    {
+      "path": "ara/src/core/garments/street.ts",
+      "bytes": 22470,
+      "sha256": "0ba949eff094363cc9c738cb6332081d199430bdadd3cc1596575adca1087eac"
+    },
+    {
+      "path": "ara/src/core/garments/earpiece.ts",
+      "bytes": 3892,
+      "sha256": "0127b86e674cf1a02f97e71ab172af984c9c8614c04317d2de711d454a796444"
+    },
+    {
+      "path": "ara/src/core/garments/necklaces.ts",
+      "bytes": 22981,
+      "sha256": "bc636eac9b83aab026146b430e21da8c6b5284c24f372e034a3e6c2fa29b3a3c"
+    },
+    {
+      "path": "ara/src/core/garments/last.ts",
+      "bytes": 9929,
+      "sha256": "7e0f224ae603233133af8b4e8379be404e6faef87270f6f0cc308f3a80efe1b0"
+    },
+    {
+      "path": "ara/src/core/garments/wrist.ts",
+      "bytes": 7528,
+      "sha256": "8cefcd839390f7151cc93d4f5f79fdc98f99fd346cf001259a124b3904034bc0"
+    },
+    {
+      "path": "ara/src/core/garments/heels.ts",
+      "bytes": 11094,
+      "sha256": "e16f01d141b7aa6109bfb80053dc6ea267da5d5161c1c9c330a89e366c03a6d6"
+    },
+    {
+      "path": "ara/src/core/garments/drape.ts",
+      "bytes": 16117,
+      "sha256": "0ae8d381dab5a8b9e6aa2335310c7133a7fa0b0664586dc1ce2a889c297cb4ce"
+    },
+    {
+      "path": "ara/src/core/garments/catalog.ts",
+      "bytes": 47319,
+      "sha256": "3c905c5c5dd1c4dd8c5b42f8a33f0edc76271f2c794908b18933dd92c337b800"
+    },
+    {
+      "path": "ara/src/core/garments/prison.ts",
+      "bytes": 8656,
+      "sha256": "0f5fbe3c301bac002d4e804e3c90c3203710669d4b9787d61d138eef9bed3efd"
+    },
+    {
+      "path": "ara/src/core/garments/gulf.ts",
+      "bytes": 12994,
+      "sha256": "d17dd5df4ea775bafcd3f25282765196dfaca653fa07dab9b69ba9155e5f96ed"
+    },
+    {
+      "path": "ara/src/core/garments/gowns.ts",
+      "bytes": 23155,
+      "sha256": "e254fbd7b4305c6a28576481d9f2a1ec0c261f540f58c21b0fc87293f661cc95"
+    },
+    {
+      "path": "ara/src/core/garments/layering.ts",
+      "bytes": 9367,
+      "sha256": "7e22a5476eb38318381cdb62a10fccf21af1d3f8e46fe1d5d5c0f5b682a5af65"
+    },
+    {
+      "path": "ara/src/core/garments/ring.ts",
+      "bytes": 18391,
+      "sha256": "49b860d639e8d37e867de96e8b021a7dee77c946a316670211cdfce6ea963d67"
+    },
+    {
+      "path": "ara/src/core/garments/sets.ts",
+      "bytes": 5284,
+      "sha256": "6bc60b81c26ba4ea5ece11e3613c20efbb636779cd6420d43f977df860c61766"
+    },
+    {
+      "path": "ara/src/core/garments/kit.ts",
+      "bytes": 14270,
+      "sha256": "ab173ab34e8a7da783ed4cab02eea3276aaa9cf0129ba1b77d8b49a1f788cd2a"
+    },
+    {
+      "path": "ara/src/core/garments/sneakers.ts",
+      "bytes": 6464,
+      "sha256": "49b076e6a894e11754e56828bb28dc9891785afe44b7823c1b7f135212d9c16c"
+    },
+    {
+      "path": "ara/src/core/garments/index.ts",
+      "bytes": 6357,
+      "sha256": "7f5dc56b09468bb00e04810611409e8ecf3860bf29f728f0c2fb38c4ef19495b"
+    },
+    {
+      "path": "ara/src/core/garments/swimwear.ts",
+      "bytes": 21145,
+      "sha256": "c3db6ddf1372e54e75098150ba44daf525a82ed36bf9198196ec2f75234bb8b2"
+    },
+    {
+      "path": "ara/src/core/garments/yoruba.ts",
+      "bytes": 16756,
+      "sha256": "578b4ca2a07f721e2268323fb08b01b74e9a86d0de6c47bbbb70fb855dfbed83"
+    },
+    {
+      "path": "ara/src/core/garments/outfit-cut.ts",
+      "bytes": 5003,
+      "sha256": "3a57ad51e2207b47f72292df921ada28bdc0abe881fd2d6bb9d42a991c57f8e3"
+    },
+    {
+      "path": "ara/src/core/garments/dress-shoes.ts",
+      "bytes": 9224,
+      "sha256": "da274e519f6863e524f19403c27d0fdfd658c96c35a8676e44bb8bb7284f13e9"
+    },
+    {
+      "path": "ara/src/core/garments/sheriff.ts",
+      "bytes": 11539,
+      "sha256": "d3b3e7558b2e31690fdd5c6bdf821d0192fb1dd8a0f5f5ed1abbb617a8d088f8"
+    },
+    {
+      "path": "ara/src/core/garments/project.ts",
+      "bytes": 12302,
+      "sha256": "643596c2c4f82b7e91145e1936f8cdad09c7213f77587c5340d8a988bade318b"
+    },
+    {
+      "path": "ara/src/core/anim/stage.ts",
+      "bytes": 755,
+      "sha256": "b19f63dfeab960c834082bef9cedbcb22bd509b1dd78345db66d58293ba83566"
+    },
+    {
+      "path": "ara/src/core/anim/boarding.ts",
+      "bytes": 13135,
+      "sha256": "ba1f1d7246986185372279bb996ced07124a0bb887f793e912d7b2199060f71f"
+    },
+    {
+      "path": "ara/src/core/anim/evaluate.ts",
+      "bytes": 57201,
+      "sha256": "b6674b2084918e79afea082dfdb1b0263e221a3fd16bfaefaa98c28e5007035c"
+    },
+    {
+      "path": "ara/src/core/anim/groups.ts",
+      "bytes": 1209,
+      "sha256": "f54f73b1974ecffbc449669926e934809208343432fef67df50aaa54724cf472"
+    },
+    {
+      "path": "ara/src/core/anim/mocap.ts",
+      "bytes": 24872,
+      "sha256": "2c77cce9029622ee1722e27b5f8b7cb46ae035f21fc5173798034650b16380b4"
+    },
+    {
+      "path": "ara/src/core/anim/quat.ts",
+      "bytes": 2913,
+      "sha256": "d4963fe4ecd773c1d262c22a57b1b34e5239ef825c3524bb104b622f8e9fd96a"
+    },
+    {
+      "path": "ara/src/core/anim/riding-weapons.ts",
+      "bytes": 4172,
+      "sha256": "a544ae1e9c5883900d9dfc3245e3341d6486daa4b3bafd04b48c5cb61e1217aa"
+    },
+    {
+      "path": "ara/src/core/anim/clips/basic.ts",
+      "bytes": 1739,
+      "sha256": "2aa0429f209efcadcd8ed7ab564e96ced00e7c6a0130998dbe7740ccded404d2"
+    },
+    {
+      "path": "ara/src/core/anim/clips/melee.ts",
+      "bytes": 7605,
+      "sha256": "b2caaf482bc4c0543167b7334e8fc913da1526b80fae44e56f341f99c0d5b757"
+    },
+    {
+      "path": "ara/src/core/anim/clips/cover.ts",
+      "bytes": 8447,
+      "sha256": "bc8c04b48b4ebc7eddd32347c82a6a69066a7e8388be4ab161b803e1687df700"
+    },
+    {
+      "path": "ara/src/core/anim/clips/climbing.ts",
+      "bytes": 14259,
+      "sha256": "e7c5390b09c116be41569907b285dfdd418a9e7b05b742324540cb4c2e2344d1"
+    },
+    {
+      "path": "ara/src/core/anim/clips/everyday.ts",
+      "bytes": 10510,
+      "sha256": "ad3f4adf6fa29abfb4e93fa02792079eee82b96c89057d409f33e90be246e268"
+    },
+    {
+      "path": "ara/src/core/anim/clips/interaction.ts",
+      "bytes": 11623,
+      "sha256": "e7d64b2a7c15bf99353273926db0c99e40aefc6e8841cb0e11f7d3132dbdb4ad"
+    },
+    {
+      "path": "ara/src/core/anim/clips/gunshot.ts",
+      "bytes": 8742,
+      "sha256": "b0f0f6cedfd74f43901a244c27250ab384a5580ecc7bc26098daec0bff2a7105"
+    },
+    {
+      "path": "ara/src/core/anim/clips/vehicles.ts",
+      "bytes": 22981,
+      "sha256": "06180bea083a07ad1a7f18d3acfa165b59373684695bc8cc88b0f225497f2c3d"
+    },
+    {
+      "path": "ara/src/core/anim/clips/reactions.ts",
+      "bytes": 12250,
+      "sha256": "84d290ba1a6ea61192b0907750d611d895bf3112fa6cac1c6edc3a1024f090d6"
+    },
+    {
+      "path": "ara/src/core/anim/clips/types.ts",
+      "bytes": 6297,
+      "sha256": "ff83337a9b1d83447e620b017c3325976c89be466bf1d16b2c2f64d702b782d8"
+    },
+    {
+      "path": "ara/src/core/anim/clips/swimming.ts",
+      "bytes": 10043,
+      "sha256": "9210ed699cc4e53012ae3c890f3dde4d0e6740356d30bf557b0cd1a4495cf529"
+    },
+    {
+      "path": "ara/src/core/anim/clips/lying.ts",
+      "bytes": 1296,
+      "sha256": "afa0a752f6ae41624ae72c57e88a81b1fe090262e78dc722f6aebcdbb3cb6947"
+    },
+    {
+      "path": "ara/src/core/anim/clips/speech.ts",
+      "bytes": 2954,
+      "sha256": "9a638648bced83fc4b5c17fae2ee8f2a56b996c0594eac3535f04745e44d8e00"
+    },
+    {
+      "path": "ara/src/core/anim/clips/shooter.ts",
+      "bytes": 12676,
+      "sha256": "3c2f8ef2bc8d599c029a41efd380e375e1751eb57108b597a0990b830b23b26e"
+    },
+    {
+      "path": "ara/src/core/anim/clips/recorded.ts",
+      "bytes": 2629,
+      "sha256": "91af293e13b4c1cbaf2f3d2bc885083e53776fbd63ed716d096809de6a46c8b2"
+    },
+    {
+      "path": "ara/src/core/anim/clips/aerial.ts",
+      "bytes": 3592,
+      "sha256": "b7f5e7c7d6d6e312155bc7a930f72378d8d58696edc8b84727251449aa475f83"
+    },
+    {
+      "path": "ara/src/core/anim/clips/mocap-data.ts",
+      "bytes": 451615,
+      "sha256": "9df657c092ef3b8807ffe27af1f70f5457568df647031afd1d8e10cda0e707f8"
+    },
+    {
+      "path": "ara/src/core/anim/clips/gait.ts",
+      "bytes": 2526,
+      "sha256": "877e5313c382b3f7bbfd85814802d55671ca7a9bdda8997fff797398b6ef13fb"
+    },
+    {
+      "path": "ara/src/core/anim/clips/helpers.ts",
+      "bytes": 3796,
+      "sha256": "00dfb18adb578427edfe7ce2e4dfc0d4c7992b7ee40d9be3a1067395212aa5d9"
+    },
+    {
+      "path": "ara/src/core/anim/clips/index.ts",
+      "bytes": 4470,
+      "sha256": "f7dab59ac140a2bf5a193210654ee9bf97431ed65a9099ea1446204f8e85065c"
+    },
+    {
+      "path": "ara/src/core/anim/clips/dodge.ts",
+      "bytes": 3719,
+      "sha256": "079ff364040fe53897c3c030b6341b0a76fac6be23c56b6c425baf5ee53dc00a"
+    },
+    {
+      "path": "ara/src/core/anim/clips/actions.ts",
+      "bytes": 7850,
+      "sha256": "fd2ee3fbc0cfcc90012850e147bbefb22aff1a72834d9e12213c4fb64833e0a7"
+    },
+    {
+      "path": "ara/src/core/anim/clips/runner.ts",
+      "bytes": 4369,
+      "sha256": "32df83cde4c8429bf8dcc1e04afeb11342047d6b0a5ecb0ca267b9d0225740c6"
+    },
+    {
+      "path": "ara/src/core/anim/clips/combat.ts",
+      "bytes": 7722,
+      "sha256": "462729b46a354a9b8fb156214b4d2c60fc57cace2806a022d690503be29dd507"
+    },
+    {
+      "path": "ara/src/core/anim/clips/emotes.ts",
+      "bytes": 9807,
+      "sha256": "22b6f7fb642a0de2e970570a8a0886ace5a3cc25257e77544dcf104499bb44fe"
+    },
+    {
+      "path": "ara/src/core/anim/clips/faces.ts",
+      "bytes": 9629,
+      "sha256": "e7d5bd0f4b0f36834e4dd00d7a05fe3dc6c7b887979e5965b3ad75fc7fd89d51"
+    },
+    {
+      "path": "ara/src/core/looks/textures.ts",
+      "bytes": 2042,
+      "sha256": "90d416ae7ff321e5e7dec92dddc9d7e2e23023aab5fb8b0766e8a62ab5003864"
+    },
+    {
+      "path": "ara/src/core/looks/hair.ts",
+      "bytes": 25129,
+      "sha256": "425f0442506239c4febd62120279054d3e8e956524ef82c3455f9e26e2e1c25a"
+    },
+    {
+      "path": "ara/src/core/looks/jewelry.ts",
+      "bytes": 7307,
+      "sha256": "7f35eebe1e33689e846d5cfb3749f024333b4f69c5b9f31f262d53f704b14fae"
+    },
+    {
+      "path": "ara/src/core/looks/tattoos.ts",
+      "bytes": 9483,
+      "sha256": "dca39afd6ff92c599913e85f651a88cfe7a12e5bbcfab51c39652b6214b76c75"
+    },
+    {
+      "path": "ara/src/core/looks/index.ts",
+      "bytes": 8042,
+      "sha256": "c0d55aa986ccb1ba16fa68b8dde9b24dbe629a20b0b15ddd2446550a6f64c972"
+    },
+    {
+      "path": "ara/src/core/looks/overlay.ts",
+      "bytes": 11288,
+      "sha256": "048ed5fa86a2d6d34fdaa7c5e7952c88a010de322fef00b8ffa7e97bd1f143d7"
+    },
+    {
+      "path": "ara/src/core/looks/mouth.ts",
+      "bytes": 1677,
+      "sha256": "f88971d726660290d001bfc43089b577bcd16a8fdf18a661c9874a8c3680b305"
+    },
+    {
+      "path": "ara/src/landing/landing.ts",
+      "bytes": 3080,
+      "sha256": "785e9d2b7bf2eed2ea6652cbeacb6bfefd5bf361dc277a76a195fd0dc81e6afb"
+    },
+    {
+      "path": "ara/src/landing/landing.css",
+      "bytes": 13710,
+      "sha256": "57f8cfba1fa5ca9e1b243e9a71aeb734da821dc6046dc6118109f55a73005879"
+    },
+    {
+      "path": "ara/src/play/hit-reaction.ts",
+      "bytes": 1767,
+      "sha256": "b14531f98a27d931fc34bf6b40d727f3cadad318c304e58db793aeb3ccd5601e"
+    },
+    {
+      "path": "ara/src/play/story-view.ts",
+      "bytes": 7244,
+      "sha256": "ae0bb00e6bd7e49ed01d91483331d4ef6f873784b84a4ef37ccd82a54c02ff03"
+    },
+    {
+      "path": "ara/src/play/campaign.ts",
+      "bytes": 3310,
+      "sha256": "07e8caeb9ffa917a55d6c6c25d9c417b07e3fa17495b98e54e365ae30103a88f"
+    },
+    {
+      "path": "ara/src/play/pursuit.ts",
+      "bytes": 2669,
+      "sha256": "1954ee27a1cc99caae6c234a2717d6699d54bfab7371d169a7e1fc1b5f4eb081"
+    },
+    {
+      "path": "ara/src/play/passenger-view.ts",
+      "bytes": 4051,
+      "sha256": "f3648dd143a992daf3b3caa6ffe6946ee610cc099dcb681a187e4ad43bf64c0d"
+    },
+    {
+      "path": "ara/src/play/game-bundle.ts",
+      "bytes": 3497,
+      "sha256": "d7176ee8b7a68b23df2666793d049aa452c32cb210d23ade0e6790da8bf0fa2c"
+    },
+    {
+      "path": "ara/src/play/enemy-ai.ts",
+      "bytes": 8708,
+      "sha256": "5bd089281983b489a6a4ae567d53719da871ad9438785c4dc7050e53551e6646"
+    },
+    {
+      "path": "ara/src/play/character-pack-worker.ts",
+      "bytes": 312,
+      "sha256": "20949f86bf84a6f88e6306855bf0e7ad711052134e3959f1483442cb46ce431a"
+    },
+    {
+      "path": "ara/src/play/vehicle-surfaces.ts",
+      "bytes": 1651,
+      "sha256": "61527cfc10fcadd56e18ad670effe39c49e19ed1c5bc552f56a073e741f234c0"
+    },
+    {
+      "path": "ara/src/play/main.ts",
+      "bytes": 51092,
+      "sha256": "8e3cd23a04088551a744e619a1872f3b6ad7d788401a1c22f01d77aed5ea805b"
+    },
+    {
+      "path": "ara/src/play/engine-sound.ts",
+      "bytes": 1505,
+      "sha256": "bb2fd2879fb1c76c01d6f6c5914ce3623da1eb44e4c7763dfad5dd4fec16f205"
+    },
+    {
+      "path": "ara/src/play/music.ts",
+      "bytes": 3295,
+      "sha256": "e048201200039a13a3e3637d03968f3039433c65dad6e01bc693bdc6b67ee258"
+    },
+    {
+      "path": "ara/src/play/character-pack.ts",
+      "bytes": 2923,
+      "sha256": "171c8c331c2889fd1da5878af3912cd484027ccbf2921985ce76c24851ccaee8"
+    },
+    {
+      "path": "ara/src/play/presentation.ts",
+      "bytes": 2893,
+      "sha256": "4d6823fe53855d3ded10f54235dde13426e30fdca101c6c03a4ec9c6c12f30da"
+    },
+    {
+      "path": "ara/src/play/objectives.ts",
+      "bytes": 4356,
+      "sha256": "96ce4e67a47631505dac3de8172ff036653e67afe91464eff54e2772d1098607"
+    },
+    {
+      "path": "ara/src/play/motor.ts",
+      "bytes": 12445,
+      "sha256": "e2c82a907a5ecdef2cdbcc6574e04fb179c74c63b51ff9109f4923635bc09f13"
+    },
+    {
+      "path": "ara/src/play/atmosphere.ts",
+      "bytes": 3303,
+      "sha256": "3e853921d44a3914593b7383bfcef1d06906f9e9c0ea829961522e8f7934cbad"
+    },
+    {
+      "path": "ara/src/play/driving.ts",
+      "bytes": 9110,
+      "sha256": "a1ad336d9aa6a26b48605fa7a1bf733cfe767ea34db95fab266c8f0e89cb307b"
+    },
+    {
+      "path": "ara/src/play/voice-import.ts",
+      "bytes": 1904,
+      "sha256": "9b1573fbf90ef5e4ce770f0f9eaf0d1d4fd7be91c2a0d97d8184db91edab02cd"
+    },
+    {
+      "path": "ara/src/play/blood-view.ts",
+      "bytes": 1945,
+      "sha256": "27c9f91f0c181f632bf0fc16fcd5d4b7a46c783544fb6f9c0640220ecbe94b91"
+    },
+    {
+      "path": "ara/src/play/style.css",
+      "bytes": 34577,
+      "sha256": "78e271f5335b20c6f4d0f193f31038620c94cbbd13fc659ad31456aab3ccc88a"
+    },
+    {
+      "path": "ara/src/play/world.ts",
+      "bytes": 5795,
+      "sha256": "15c1b1b332afbb32f6587fae405b582a6cfc8c609ba5a998279f722f98d76bb3"
+    },
+    {
+      "path": "ara/src/play/traffic-view.ts",
+      "bytes": 10505,
+      "sha256": "cad77088af8b086ff38f41edc696c8b8bdadd31efe936f53d55d4ced1ad57e83"
+    },
+    {
+      "path": "ara/src/play/download-ui.ts",
+      "bytes": 3344,
+      "sha256": "6c2b285996c7ed14ec089a9a7572ecb82b9f7abd8d4737fdbcbb6d043166d3c6"
+    },
+    {
+      "path": "ara/src/play/pickup-view.ts",
+      "bytes": 1746,
+      "sha256": "2c057ddfd6f77b0129b1f098244a622bd71ab446ba5c5960482b9252234e8ab6"
+    },
+    {
+      "path": "ara/src/play/combat-animation.ts",
+      "bytes": 2842,
+      "sha256": "8b173baddcc8c85edb2c6f823ebad7e8df2f40b90875797409044da1b4bcb5dc"
+    },
+    {
+      "path": "ara/src/play/enemy-roles.ts",
+      "bytes": 1301,
+      "sha256": "9a1ade291b0cf0525cdca8d1ea93aec4c3990384e336905ca0c54183ac346c54"
+    },
+    {
+      "path": "ara/src/play/course.ts",
+      "bytes": 2429,
+      "sha256": "8df8c16e16b1846347672ded1ddfed69e2ab94bb02727ded5b862ec46318654a"
+    },
+    {
+      "path": "ara/src/play/air.ts",
+      "bytes": 4723,
+      "sha256": "5b0a1a537021d2dda1f74f7a22e83da14fbf64f3aeab85b6d6fa8577c291aa2f"
+    },
+    {
+      "path": "ara/src/play/grenade-view.ts",
+      "bytes": 6215,
+      "sha256": "706ea4dc5adff70f90b29f8d87f4431d2f8f3c83e88ebedd25a13f2eb5802b66"
+    },
+    {
+      "path": "ara/src/play/grenades.ts",
+      "bytes": 4967,
+      "sha256": "d123443e2121d018b4aea580f50f36284712e9237d9bffeb1f9135dcb697cfc1"
+    },
+    {
+      "path": "ara/src/play/camera.ts",
+      "bytes": 4711,
+      "sha256": "c552cc7788d927da34eee87bfca80bafed8f0bb7ca2965f63997f1be041ebba0"
+    },
+    {
+      "path": "ara/src/play/driving-view.ts",
+      "bytes": 6989,
+      "sha256": "7f5b32c70cc96473816523c46d31cc96db06359dd5404db6c4096fe327172f45"
+    },
+    {
+      "path": "ara/src/play/stance-animation.ts",
+      "bytes": 1721,
+      "sha256": "ba98cffef15a2b2c4814ebcc55c5bdd9c55f045b2ec5c9cd7571dd5033cc8146"
+    },
+    {
+      "path": "ara/src/play/standalone.ts",
+      "bytes": 3744,
+      "sha256": "e353fa71ebcf5970b7c470083d2c04f5330f0b32f1bacf3a5ba85030257e1387"
+    },
+    {
+      "path": "ara/src/play/weapons.ts",
+      "bytes": 1006,
+      "sha256": "5c82259cf9e45f9b5837cb3bb221556841ae36d2b13ce03dee0c35699563be68"
+    },
+    {
+      "path": "ara/src/play/combat-view.ts",
+      "bytes": 2381,
+      "sha256": "14909707981143a088323b2369493e48f0347bec7517f3c85137ce84ed9c258a"
+    },
+    {
+      "path": "ara/src/play/setup.css",
+      "bytes": 16769,
+      "sha256": "b27158c9b794b56c8b702b03b1baf8df2145b9815273c7a722ab31011e33324e"
+    },
+    {
+      "path": "ara/src/play/staging.ts",
+      "bytes": 1953,
+      "sha256": "2df80848b4f309303e4fe2fe89edb47469ef3889d0b858ebf793c056bd20a3f0"
+    },
+    {
+      "path": "ara/src/play/side-quests.ts",
+      "bytes": 2781,
+      "sha256": "f9bfc7e0a57ba58a18ce1463149147714b3e5abfa229eb950b5a19a9fe2b9571"
+    },
+    {
+      "path": "ara/src/play/audio.ts",
+      "bytes": 9756,
+      "sha256": "50f0a786eb7ef53490284585e00ee96f57c8e0677cf8f0d751014cb72ff23eb1"
+    },
+    {
+      "path": "ara/src/play/scene.ts",
+      "bytes": 37308,
+      "sha256": "0d401402d0f9a241cb7855cbbc8b9e07df2cb41b18e4fb72b9f995eb3b236382"
+    },
+    {
+      "path": "ara/src/play/environment.ts",
+      "bytes": 2515,
+      "sha256": "5c2992d895b8258deb2374f40c9ae596361c76fe1bb3e57a17cd5ea5b90a737f"
+    },
+    {
+      "path": "ara/src/play/assist.ts",
+      "bytes": 41024,
+      "sha256": "dacbee7eccc199317b352f61988b317601ef6fc41b8f3859274495a80718546e"
+    },
+    {
+      "path": "ara/src/play/media.ts",
+      "bytes": 2607,
+      "sha256": "7d6043f57770ca3e4414924e40feb45d2bd86877b2e1d66367022f7dc171f4f7"
+    },
+    {
+      "path": "ara/src/play/traversal-animation.ts",
+      "bytes": 1758,
+      "sha256": "9b24481027eb3c64dc851eccb8a603aea699c6ca5ad34d760ee2a2bf5dd9bc28"
+    },
+    {
+      "path": "ara/src/play/setup-ui.ts",
+      "bytes": 3877,
+      "sha256": "5c53f35ff803ce8b604d3c26da072f9064b3250241fd9131b33aa0b4bdfbe18a"
+    },
+    {
+      "path": "ara/src/play/cast.ts",
+      "bytes": 7759,
+      "sha256": "4f3fca76a4ddf64227d91348e173ce914c608e74548366bc7e0f3045d6b700da"
+    },
+    {
+      "path": "ara/src/play/export-game.ts",
+      "bytes": 11183,
+      "sha256": "18cd6db700c344d38dc84bac3308cd4c729c0ff7885b68acd9d387043cab1d2e"
+    },
+    {
+      "path": "ara/src/play/enemies.ts",
+      "bytes": 1977,
+      "sha256": "f3fc321abfd4aed38526c4d75ed80c4359748628113bd689cb11033fc261cbc2"
+    },
+    {
+      "path": "ara/src/play/traffic.ts",
+      "bytes": 9880,
+      "sha256": "db4e9ee8a86456e42c7c0b0ab96f15ae48e384dbf8857976227d32d194a1d544"
+    },
+    {
+      "path": "ara/src/play/radio.ts",
+      "bytes": 3564,
+      "sha256": "bf9a816c60cf16c92135b780333e62e74a33f4b52621257fa0d032e44aab92e0"
+    },
+    {
+      "path": "ara/src/play/loading.ts",
+      "bytes": 5267,
+      "sha256": "8d234af89cf95744c1483c4edf0eb3077d48bedae04fa39fd352e5773b73c491"
+    },
+    {
+      "path": "ara/src/play/project-bundle.ts",
+      "bytes": 2242,
+      "sha256": "56c41f6e3b008038902c3d114eb7608d7db6c961ba2a136bc4a3530bed7dd4be"
+    },
+    {
+      "path": "ara/src/play/objective-editor.ts",
+      "bytes": 4090,
+      "sha256": "8b56c635512082916cee19e91e1fdb35704b37270fc6d9aa0a34c6916a559b13"
+    },
+    {
+      "path": "ara/src/play/actor.ts",
+      "bytes": 12537,
+      "sha256": "b57c5881a27dd787dff2de554a7d8e41b113b27a63d49cfd5f31f4d8e6a0b143"
+    },
+    {
+      "path": "ara/src/play/story-editor.ts",
+      "bytes": 10632,
+      "sha256": "5b6271b2b430caa16de087c9f41e44da3c18d40fafcdf1cf6755551e8c8dbc46"
+    },
+    {
+      "path": "ara/src/play/runtime.ts",
+      "bytes": 99939,
+      "sha256": "963184f11a2b19a69de2f313a9cba74941292a83de5e5674ab1aa7eb12fe0b6e"
+    },
+    {
+      "path": "ara/src/play/passenger.ts",
+      "bytes": 2891,
+      "sha256": "e5196cdcfb14f462f6a7bd1d51d551433750201076be82761ad4dbfeee532e87"
+    },
+    {
+      "path": "ara/src/play/city.ts",
+      "bytes": 4465,
+      "sha256": "598c331828fa2bc1289c262d28fad02d1dbd3c0abf773c9a5813914a98122bbc"
+    },
+    {
+      "path": "ara/src/play/player.ts",
+      "bytes": 66159,
+      "sha256": "8d87963224b02b020e338d75c763b1daf369c6a18c60cebe129620f257a20812"
+    },
+    {
+      "path": "ara/src/play/companion.ts",
+      "bytes": 3600,
+      "sha256": "bd3b11ac3b49e1000b64544aebfd5c3dd0659547e46dc7bd3ce1edbd16e8d006"
+    },
+    {
+      "path": "ara/src/play/locations.ts",
+      "bytes": 9311,
+      "sha256": "292da205d5c9de7b4a4f61717e17b202801d371211672e2b4c68fcbfaf26928a"
+    },
+    {
+      "path": "ara/src/play/combat.ts",
+      "bytes": 7301,
+      "sha256": "f2cfd4c6d8d06e26f869e600b59edc2bd9d2c0c78883353813d2dfa59ac05822"
+    },
+    {
+      "path": "ara/src/play/air-view.ts",
+      "bytes": 5972,
+      "sha256": "267fbe8290f5d3d6973ff8d7e008d36867e075119e6204fe36fc3bae937b1350"
+    },
+    {
+      "path": "ara/src/play/vehicle-feel.ts",
+      "bytes": 1680,
+      "sha256": "12e9ad925308875cd0a94d91a7446ebd57965d12e2709a7ef4aa1670bfa67e4e"
+    },
+    {
+      "path": "ara/src/play/story.ts",
+      "bytes": 4214,
+      "sha256": "3533a2e2c1acbf0fe0dd92bbad0cbf6242fa0006faf468e59f9e043ca4a19a34"
+    },
+    {
+      "path": "ara/src/play/studio-film.ts",
+      "bytes": 2136,
+      "sha256": "5688d7df55c729a9f5ddd2578188e85a6bee2acb088d9350050efe7c64478580"
+    },
+    {
+      "path": "ara/src/play/progression.ts",
+      "bytes": 3825,
+      "sha256": "66241d1b72995465ed73efe2b99595b4fa93435b76be16df8ff689a301c1fb23"
+    },
+    {
+      "path": "ara/src/play/project.ts",
+      "bytes": 16812,
+      "sha256": "7c3d8305a5da3f03f7b54f04aeaa8f5d923cba3b20b703a8f3c30391ec9fc81a"
+    },
+    {
+      "path": "ara/src/play/mission.ts",
+      "bytes": 16826,
+      "sha256": "ad90142011360c5ca66f22e64884af423943db6f4f9fb86242d19b73ef0d2f98"
+    },
+    {
+      "path": "ara/src/play/arcade/modes.ts",
+      "bytes": 12534,
+      "sha256": "343d0546439dfc9a2cf5ca027a7016d9b66bf0c022a38fc389deae23308f3f36"
+    },
+    {
+      "path": "ara/src/play/arcade/feel.ts",
+      "bytes": 3707,
+      "sha256": "5873cda081d52742c0561c39d4de38ec9e0bc636148260621705974108f23477"
+    },
+    {
+      "path": "ara/src/play/arcade/market.ts",
+      "bytes": 2962,
+      "sha256": "b887778dd1c94f46362157f6ce3b44f1de598dd8b52df87f6214bd83da73d202"
+    },
+    {
+      "path": "ara/src/play/arcade/records.ts",
+      "bytes": 5363,
+      "sha256": "3bb028cfc613809157165fa00a41c3d32a8109d4d71c59e1b2c1808ab9dd261e"
+    },
+    {
+      "path": "ara/src/play/arcade/lighting.ts",
+      "bytes": 572,
+      "sha256": "cd5cfaacee3d48c855adfa02c9b9ff63d16f764f52530e4e599ff79f0faddccb"
+    },
+    {
+      "path": "ara/src/play/arcade/editor.ts",
+      "bytes": 25644,
+      "sha256": "ddcdccf65dfcbd030ad93776d6d7693ffbe410c5c1781b12ca455923dc4ab94c"
+    },
+    {
+      "path": "ara/src/play/arcade/icons.ts",
+      "bytes": 5101,
+      "sha256": "b5916ce63cc05d014766e741d19b134dc7fb7d55aa4e2e2d0d155d65eb46d7cb"
+    },
+    {
+      "path": "ara/src/play/arcade/sfx.ts",
+      "bytes": 8403,
+      "sha256": "de73e07081954598ad67a99c4a913d47bac05949d8529576f631b4c89cb9fc36"
+    },
+    {
+      "path": "ara/src/play/arcade/objects.ts",
+      "bytes": 3950,
+      "sha256": "00d80588e190ff7ee091d8ffdbe1192430484dadcc8d74ab6f0c3c969aef4581"
+    },
+    {
+      "path": "ara/src/play/arcade/track.ts",
+      "bytes": 12906,
+      "sha256": "0eea349bfc11e444ac2a1f8c690b7d88ed691902dd1a8e4512f3ca4662c0356c"
+    },
+    {
+      "path": "ara/src/play/arcade/runner-view.ts",
+      "bytes": 23526,
+      "sha256": "d9b0640400acaff4672e8ccf3e82714a198b1841e0c6771d0e112145cf91b87a"
+    },
+    {
+      "path": "ara/src/play/arcade/runner-objects.ts",
+      "bytes": 8008,
+      "sha256": "02564163afb7548a79ad61c7c8732f0748335e4be7061a60ea67589da73abde4"
+    },
+    {
+      "path": "ara/src/play/arcade/arcade.css",
+      "bytes": 22776,
+      "sha256": "38358fd3bb2eb0d89e94a0a606d21769b1ff134b5aadfd84b1c94c278e912bf9"
+    },
+    {
+      "path": "ara/src/play/arcade/weather.ts",
+      "bytes": 6624,
+      "sha256": "0b632036fde3a07274383ad378c02a5a524095f2a2be6eb597c3dc8a61500ff9"
+    },
+    {
+      "path": "ara/src/play/arcade/race.ts",
+      "bytes": 26561,
+      "sha256": "119892dad1491253cca59d97d29bc9db4991efb310280d095b15eeae83cc6336"
+    },
+    {
+      "path": "ara/src/play/arcade/hud.ts",
+      "bytes": 20636,
+      "sha256": "937b58c6d19df47576c8ea97f08ceeafafbe2f4f41eaccaa0895a3ae67d6c07a"
+    },
+    {
+      "path": "ara/src/play/arcade/race-view.ts",
+      "bytes": 28692,
+      "sha256": "dc6b20f8a93a2c28c6d83a412a53996c647a98563d6295cb0d3096af9b7d5da9"
+    },
+    {
+      "path": "ara/src/play/arcade/input.ts",
+      "bytes": 4251,
+      "sha256": "8aa9b7c27c961101e49bfe79e0ca4a8f468006db277d747ebcd9c11e9328b7c9"
+    },
+    {
+      "path": "ara/src/play/arcade/player.ts",
+      "bytes": 39165,
+      "sha256": "98e47604d33a2c35b3f3146686a3aa2fe7ae5ae4a5d629a0d4af6344b1695b00"
+    },
+    {
+      "path": "ara/src/play/arcade/runner.ts",
+      "bytes": 25146,
+      "sha256": "6ac42c08bfbcaa86687e9ad9d26f89e709fc96157c8731dc3feaa8578f61cb7b"
+    },
+    {
+      "path": "ara/src/play/arcade/medals.ts",
+      "bytes": 1999,
+      "sha256": "6a2561df95e145021da3c1617a63250ee88ed96dbaf7a5fb8fca25a47225e60b"
+    },
+    {
+      "path": "ara/studio/index.html",
+      "bytes": 32036,
+      "sha256": "29b50d3e12fcf41a9c2c7daf4e7ea0777e160740f46c8950032e389f67ad2698"
+    },
+    {
+      "path": "ara/app/index.html",
+      "bytes": 5356,
+      "sha256": "0dd11b5385b0f5cdac4e3834c4c873590b645f11467bd0716c31a91fdeb4ccb3"
+    },
+    {
+      "path": "ara/public/og.jpg",
+      "bytes": 135843,
+      "sha256": "54d9de20a7133c1643492e49ca73a85020edf4006e48fae807b6758bd1518c91"
+    },
+    {
+      "path": "ara/public/favicon.ico",
+      "bytes": 13294,
+      "sha256": "cd80f92f5ebcf65751e763cd89d48df43e93008ee0e200b802e5c831cda8ddf1"
+    },
+    {
+      "path": "ara/public/favicon.svg",
+      "bytes": 690,
+      "sha256": "710166742da7659433e557d85473cee31adb3278374da653c2e1d861d0922132"
+    },
+    {
+      "path": "ara/public/site.webmanifest",
+      "bytes": 502,
+      "sha256": "8c65708f27863d49e922d1481e3b4d4bd92ed805652248db3862e40fd860a566"
+    },
+    {
+      "path": "ara/public/icon-192.png",
+      "bytes": 8792,
+      "sha256": "06fe07a7fc7e8bf82659d11f6109d7debaba886fb6eb6145e8401e133ca58f04"
+    },
+    {
+      "path": "ara/public/_headers",
+      "bytes": 231,
+      "sha256": "1e5036a0cacdd414fd2e07d3419a3c1ea46b2b5b205be248d23d433ba0afd887"
+    },
+    {
+      "path": "ara/public/icon-512.png",
+      "bytes": 19737,
+      "sha256": "7952e5caf8d3f5abf473b31e13ac8df94d4eb602aa2adfd92d1ab9975176332b"
+    },
+    {
+      "path": "ara/public/apple-touch-icon.png",
+      "bytes": 8510,
+      "sha256": "5b3f63999c4809cb462f0bfc2fc8170bbc0986fa2377c7ad7a7256b861222cbf"
+    },
+    {
+      "path": "ara/public/robots.txt",
+      "bytes": 66,
+      "sha256": "c58ddacf61523a7990e27e38d3c019bf9d3511f0bd8c96e5fd68fbd8617d2b3c"
+    },
+    {
+      "path": "ara/public/sitemap.xml",
+      "bytes": 352,
+      "sha256": "980b5f41d63b98e8adafaddb4187b22a92ea55d760e682e48d755d8df2c307f4"
+    },
+    {
+      "path": "ara/public/third-party/speech/MODEL-LICENSE.txt",
+      "bytes": 15007,
+      "sha256": "0d944a9110fed9a9602d60e0423a272903e7bd21ab060490774efc77c2275e9f"
+    },
+    {
+      "path": "ara/public/third-party/speech/ONNXRUNTIME-LICENSE.txt",
+      "bytes": 1073,
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "ara/public/third-party/speech/NOTICE.txt",
+      "bytes": 1133,
+      "sha256": "1d3987c9b5dd4fef1c89b1c649ebed072d4f7dc79e45764151c112c5dae6d632"
+    },
+    {
+      "path": "ara/public/third-party/speech/SUPERTONIC-MIT.txt",
+      "bytes": 1070,
+      "sha256": "0dfe0d0ba84416fe3879d9a34f4909d8d0137c78d1e95834177b0414ac096fa2"
+    },
+    {
+      "path": "ara/public/third-party/speech/ONNXRUNTIME-NOTICES.txt",
+      "bytes": 338088,
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3"
+    },
+    {
+      "path": "ara/public/studio-location-previews/train-platform.webp",
+      "bytes": 15066,
+      "sha256": "ea4aa5f9a2a495ff3e4284520d92257e09774c729dc589e2f97d540c375d677e"
+    },
+    {
+      "path": "ara/public/studio-location-previews/street-cafe.webp",
+      "bytes": 17368,
+      "sha256": "8d447b4949a05efe2a7d485e89739a135916584dcb8620b21526c749d08efe0a"
+    },
+    {
+      "path": "ara/public/studio-location-previews/wedding-garden.webp",
+      "bytes": 11362,
+      "sha256": "0d972de0286b1e8528fb801500cec40631c1189e773a0a2059fce87fb2f1bd65"
+    },
+    {
+      "path": "ara/public/studio-location-previews/mountain-lake.webp",
+      "bytes": 25974,
+      "sha256": "7178dea6aaf8aefaa38850721cdc14e62ca5e14a0613f188917cdcf713343e27"
+    },
+    {
+      "path": "ara/public/studio-location-previews/hospital-room.webp",
+      "bytes": 11702,
+      "sha256": "51f4448e3865227ec1c45104f4f3553a97a77d3f2a9a9f16238598701f02f861"
+    },
+    {
+      "path": "ara/public/studio-location-previews/public-restroom.webp",
+      "bytes": 13714,
+      "sha256": "3bb6a739dbbb5c1aa75b4a990dfefc0512c90b1e51308aee57d9deb9dc77b407"
+    },
+    {
+      "path": "ara/public/studio-location-previews/laboratory.webp",
+      "bytes": 13902,
+      "sha256": "9e624f9b7d564d4543b96c13a370b07351302feea8e113a96749623b68fd9e94"
+    },
+    {
+      "path": "ara/public/studio-location-previews/apartment-loft.webp",
+      "bytes": 13446,
+      "sha256": "0461dcee1f07332ca84d280fdf9a0a0fe294a1493f5405e56d47778dc938d761"
+    },
+    {
+      "path": "ara/public/studio-location-previews/office.webp",
+      "bytes": 14340,
+      "sha256": "fb5a10a169b1e00ea52c9e240900324ceacdaa5fbb8fe55f281a005c59b1ec74"
+    },
+    {
+      "path": "ara/public/studio-location-previews/night-club.webp",
+      "bytes": 21652,
+      "sha256": "5e05ff65c3a48253a6b739e565d0d7f64f6cb047499baea0a7d0c6921a7179b5"
+    },
+    {
+      "path": "ara/public/studio-location-previews/yacht-deck.webp",
+      "bytes": 12304,
+      "sha256": "a079cc093753ac36d820ece143376353aaf03e36183b76a1008bac9b6e9e356f"
+    },
+    {
+      "path": "ara/public/studio-location-previews/black-box.webp",
+      "bytes": 5774,
+      "sha256": "6756d6cab3fa3dd1973f07229aa5dfcc21e65e641ad8e4ab9602b8b982a84e9a"
+    },
+    {
+      "path": "ara/public/studio-location-previews/spa.webp",
+      "bytes": 14462,
+      "sha256": "67ce3390224a2a258f33cde4969d838ad7935af6ceff80d07b0ab183d82cc1ad"
+    },
+    {
+      "path": "ara/public/studio-location-previews/private-bathroom.webp",
+      "bytes": 11586,
+      "sha256": "0debc877ee6765bde27365af6c1e4f87d7cfb92f36ea568481f6218b68035771"
+    },
+    {
+      "path": "ara/public/studio-location-previews/diner.webp",
+      "bytes": 12264,
+      "sha256": "069beac7f164b70f19c713af70ee5cf66d652d2f47bbf1e5ad3dd7af5196ef6c"
+    },
+    {
+      "path": "ara/public/studio-location-previews/harbour.webp",
+      "bytes": 14004,
+      "sha256": "c9d297aae9df9a300ccf8031a3fb2300bfe20c655a01537546ac42ec9905a859"
+    },
+    {
+      "path": "ara/public/studio-location-previews/bedroom-night.webp",
+      "bytes": 10336,
+      "sha256": "a5824448dbb664ad4d25e35bfaa9692c231f243a0fa2c51e6bbcf08dcaebbeed"
+    },
+    {
+      "path": "ara/public/studio-location-previews/military-base.webp",
+      "bytes": 13704,
+      "sha256": "1d36a92cc926d528b654be9e9dc0cb4ce3e5191bcd72b8ac5a0d181447c0b747"
+    },
+    {
+      "path": "ara/public/studio-location-previews/art-gallery.webp",
+      "bytes": 9366,
+      "sha256": "cc092de16ae8fc934841ae40bd9bf523d406589aec90034aaa4556affcc5ee9d"
+    },
+    {
+      "path": "ara/public/studio-location-previews/airport-lounge.webp",
+      "bytes": 9880,
+      "sha256": "504452c7d3b5d26698e3df7bd3c973e0d6b8ec510eafce2768dbffed7e2882f1"
+    },
+    {
+      "path": "ara/public/studio-location-previews/newsroom.webp",
+      "bytes": 13694,
+      "sha256": "b50413365613fe0a049196634320d5773e4867f2391e52402a9bd468d2b965a4"
+    },
+    {
+      "path": "ara/public/studio-location-previews/highway.webp",
+      "bytes": 26592,
+      "sha256": "82942b828d2595c0d42b086c4739e6a12c05e5c8a1b188d155f1cf94f04eb7fc"
+    },
+    {
+      "path": "ara/public/studio-location-previews/portrait.webp",
+      "bytes": 3756,
+      "sha256": "07dfafd23e105dd614a63a1ad125afc8c45cd3ecadfefd2b315c15b97cfee162"
+    },
+    {
+      "path": "ara/public/studio-location-previews/prison-yard.webp",
+      "bytes": 10638,
+      "sha256": "3038f3b6c5218499054e8c154fd408b18f93f247e8c2ecbba3bfd6fed7808144"
+    },
+    {
+      "path": "ara/public/studio-location-previews/beach.webp",
+      "bytes": 17208,
+      "sha256": "c5aebce300d068670c5108417e064a4bd3f20fd67ec268ae09986e0622ffa1b9"
+    },
+    {
+      "path": "ara/public/studio-location-previews/football-stadium.webp",
+      "bytes": 32942,
+      "sha256": "517c2397a52579e1bb54ea460b815e9b837812b430479b19f84537ab883b7d16"
+    },
+    {
+      "path": "ara/public/studio-location-previews/runway.webp",
+      "bytes": 10056,
+      "sha256": "a01ecc628cea514d68d8feefa664b934e4fab561d637417ae5ea2401ec2f2d0c"
+    },
+    {
+      "path": "ara/public/studio-location-previews/bedroom.webp",
+      "bytes": 11868,
+      "sha256": "f3edf715d4b9e8a55467bf356d14e9e5f5261b54e854f8049da06b9bf3c35f3b"
+    },
+    {
+      "path": "ara/public/studio-location-previews/boardroom.webp",
+      "bytes": 12082,
+      "sha256": "559b6b10a7148b0309c9bf9db5c170a913b71af433253306562c44d2b39eccb7"
+    },
+    {
+      "path": "ara/public/studio-location-previews/infinity-pool.webp",
+      "bytes": 12558,
+      "sha256": "5241e6810c074af5b0b802e1a9e587acb93d08516f6c4c1d79698ff4f4509621"
+    },
+    {
+      "path": "ara/public/studio-location-previews/hotel-lobby.webp",
+      "bytes": 17016,
+      "sha256": "0e9ed9da73d91ad85d86add68c091eae0d772a20abae291268b8b918563c554e"
+    },
+    {
+      "path": "ara/public/studio-location-previews/classroom.webp",
+      "bytes": 28488,
+      "sha256": "4240962dccd45948f3f0f6cf26b5ee4e8c89b8190e4f697581b81ec75400a208"
+    },
+    {
+      "path": "ara/public/studio-location-previews/kitchen.webp",
+      "bytes": 11772,
+      "sha256": "864dc9ee40833576e50b0fa8a03108a1cfc5cc1418c85b7c1c800aae496cf908"
+    },
+    {
+      "path": "ara/public/studio-location-previews/open-office.webp",
+      "bytes": 14812,
+      "sha256": "06342374055dc3bce998e3189fb838eef88f9abc4e7730d22e67a17371b3d052"
+    },
+    {
+      "path": "ara/public/studio-location-previews/living-room.webp",
+      "bytes": 16902,
+      "sha256": "6382c26edadb8c8cc069778f9c73dbccb02f553c28f5c6bfe56964f4f19fa69c"
+    },
+    {
+      "path": "ara/public/studio-location-previews/resort-pool.webp",
+      "bytes": 13588,
+      "sha256": "30ff8c1281d8135a91905a3b3f2c20a318d2f17f51e107fbd03dab2a0ce4c78a"
+    },
+    {
+      "path": "ara/public/studio-location-previews/cyclorama.webp",
+      "bytes": 1968,
+      "sha256": "305dc1efb7bdead11ff33b974b7aeb4e44ffd3af20cec7d34e9e61aea390257a"
+    },
+    {
+      "path": "ara/public/studio-location-previews/church.webp",
+      "bytes": 17990,
+      "sha256": "fb8862d327bd82628386f8741a7ef0da665644aa8ed16a2800b148e110780e77"
+    },
+    {
+      "path": "ara/public/studio-location-previews/boutique.webp",
+      "bytes": 16480,
+      "sha256": "8957029a1e10dfb786ff5d5fb2d02d9d70c27b57b58524e5ba80d0bae140bccb"
+    },
+    {
+      "path": "ara/public/studio-location-previews/fine-dining.webp",
+      "bytes": 14742,
+      "sha256": "beae282ef0e1dde9cdb7935cc389852caaac4fd4ed5528e09d8066c5b3ab001e"
+    },
+    {
+      "path": "ara/public/studio-location-previews/courtyard.webp",
+      "bytes": 8858,
+      "sha256": "3d52fafff8ce024706138fc3399ecc1b4c5e846614225388a3ad13a0fb66f799"
+    },
+    {
+      "path": "ara/public/studio-location-previews/rooftop-bar.webp",
+      "bytes": 13866,
+      "sha256": "2f878958fca96dd5dec9378bf4b411a1bd9d6c4a73282c98fe88eb3b395c70c4"
+    },
+    {
+      "path": "ara/public/studio-location-previews/recording-studio.webp",
+      "bytes": 12054,
+      "sha256": "fc0f4d6a5fcc7d9fcb672395385867e8ea5c516d49e5b476f4a19ba5e0a4444a"
+    },
+    {
+      "path": "ara/public/studio-location-previews/interrogation-room.webp",
+      "bytes": 7596,
+      "sha256": "2b36e3717ceb20ce074369d900777c7a36b408bda0ce16eca86e5b08aa8ab52b"
+    },
+    {
+      "path": "ara/public/studio-location-previews/home-library.webp",
+      "bytes": 23362,
+      "sha256": "9f8d3e18f87f9ca53053f53569716c438bd4ee6cac38f4649e8dd78cb0c1b76f"
+    },
+    {
+      "path": "ara/public/studio-location-previews/photo-loft.webp",
+      "bytes": 7564,
+      "sha256": "33736799fce82c0dcd8dd2772954ba0f334d189717fbd546e8eec880e53ea52e"
+    },
+    {
+      "path": "ara/public/studio-location-previews/sunset-beach.webp",
+      "bytes": 15682,
+      "sha256": "1873ba36b37aa08690d4150e70f0a6fa482449c510b4c1fb2fdc77040bfc833d"
+    },
+    {
+      "path": "ara/public/studio-location-previews/neon-street.webp",
+      "bytes": 18460,
+      "sha256": "daba58f0c9c479f34f5d6fb01c9c7604de82552ebea28b4be3d9dc2854843dea"
+    },
+    {
+      "path": "ara/public/studio-location-previews/desert-outpost.webp",
+      "bytes": 5970,
+      "sha256": "87b22e42c01c6418530faa897d3704bb94902741029d47e472691213517ec5c1"
+    },
+    {
+      "path": "ara/public/studio-location-previews/forest-trail.webp",
+      "bytes": 15056,
+      "sha256": "b0d28decf3ecc7c5e015fe0b6d41a66461989dcd65b6dd87d27cebf1a1702e61"
+    },
+    {
+      "path": "ara/public/studio-location-previews/back-alley.webp",
+      "bytes": 16464,
+      "sha256": "ed56d58b3636b4c9273b2ffc6e369e3f790b7a998f080da7622f0e5b608ed1ec"
+    },
+    {
+      "path": "ara/public/studio-location-previews/sports-court.webp",
+      "bytes": 12194,
+      "sha256": "67bab2bbf44528ee6241be8cce6b4880e501c0d51ab75bce261d008245a11a1c"
+    },
+    {
+      "path": "ara/public/studio-location-previews/city-rooftop.webp",
+      "bytes": 12798,
+      "sha256": "d8618a3261376ce69dcb1682f071e592b55be7921fbb89b447235c378a17d6ec"
+    },
+    {
+      "path": "ara/public/studio-location-previews/parking-garage.webp",
+      "bytes": 10556,
+      "sha256": "510b153528845f72c3ae70a5a0a9067f542bff66d8d78c6dce0743783884b66f"
+    },
+    {
+      "path": "ara/public/studio-location-previews/dining-room.webp",
+      "bytes": 14336,
+      "sha256": "cc95c0c9d49d0bfa480380d9aaa72f879bc395498a6d33b24a9333d81dbf57b6"
+    },
+    {
+      "path": "ara/public/studio-location-previews/campsite.webp",
+      "bytes": 19704,
+      "sha256": "1feac54c8c326f644c192eacbc240508582840a6033ec115aee34c21b26a728f"
+    },
+    {
+      "path": "ara/public/studio-location-previews/warehouse.webp",
+      "bytes": 10844,
+      "sha256": "86ba9ece83b8be167e9d18ec963e51aed713a5183563139d05baa6c2993ff0e9"
+    },
+    {
+      "path": "ara/public/studio-location-previews/coworking.webp",
+      "bytes": 16726,
+      "sha256": "18b1a3e1c7ec5527c09ef52aecc2a608ead719753c86d36cf89918e84a255460"
+    },
+    {
+      "path": "ara/public/studio-location-previews/alley.webp",
+      "bytes": 10686,
+      "sha256": "bbe7be00f3ea93e4d5d64fac1e0c2f4814b41c8a8592d7974a27e2b8fd68f948"
+    },
+    {
+      "path": "ara/public/studio-location-previews/police-station.webp",
+      "bytes": 16204,
+      "sha256": "745cf9674f5b80942680ad6ccec15ec58af3d4e3233b1f7b0f82ae5737118766"
+    },
+    {
+      "path": "ara/public/studio-location-previews/subway.webp",
+      "bytes": 7064,
+      "sha256": "02e788cffe6a8d3954c8c85f4ea5296b578b4150e302c6389edb3c815cf5fee9"
+    },
+    {
+      "path": "ara/public/studio-location-previews/urban-park.webp",
+      "bytes": 10356,
+      "sha256": "90bad4b78165fdabc43a26d270533513812a65aa2b1e240cf0c555065bc84a71"
+    },
+    {
+      "path": "ara/public/studio-location-previews/prison-cell.webp",
+      "bytes": 11870,
+      "sha256": "efdfc8eb4d54819a2429876b01fa400594ec4df77d014a52bd44fe9e45ce5022"
+    },
+    {
+      "path": "ara/public/studio-location-previews/elevator.webp",
+      "bytes": 8376,
+      "sha256": "e7bb3208ddd9733db5ee902c93f9b08bf8a98f41624d4c8f506c380003c750eb"
+    },
+    {
+      "path": "ara/public/studio-location-previews/restaurant-terrace.webp",
+      "bytes": 15382,
+      "sha256": "7fffedaeef0bcee395e219d05622e17f69029c907898f43b0a9e119a0693d893"
+    },
+    {
+      "path": "ara/public/studio-location-previews/veranda.webp",
+      "bytes": 11928,
+      "sha256": "29a10321a1b6dc33a59f9b511e7d6bd610ef43536999b0d2563b2182449af752"
+    },
+    {
+      "path": "ara/public/quick-thumbs/aso_ebi-woman.png",
+      "bytes": 5716,
+      "sha256": "af298af1e1d79b6454b38c24b82bdbaf8ee58797b265bee459d2e210cdde7e74"
+    },
+    {
+      "path": "ara/public/quick-thumbs/dahomey-woman.png",
+      "bytes": 4254,
+      "sha256": "d7f3ec49dbdd7a91267796ce33b47d23b4a51995edbfedd19ac6fac0c8376472"
+    },
+    {
+      "path": "ara/public/quick-thumbs/beach-woman.png",
+      "bytes": 5282,
+      "sha256": "eb4a029a1d9d6ca6a99de28acc0cd6b8abe7d3d99f656dc230abcba0b5ac8001"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-mohawk.png",
+      "bytes": 11196,
+      "sha256": "656318102731e3bd271844e7f697723af46c1162f348548f943dc92631b0fa03"
+    },
+    {
+      "path": "ara/public/quick-thumbs/classic-man.png",
+      "bytes": 4422,
+      "sha256": "30d093ceda1ccb57e535b850500233bc0edf66dddbd1088815e236a575bbf966"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-bob01.png",
+      "bytes": 14056,
+      "sha256": "3feb2a4b54a5360a8593f0bda717402fb5488abaf32bc852b30fda29976fb99f"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-short03.png",
+      "bytes": 12554,
+      "sha256": "731f8646b20a20e2890ac2e3eb59b4ae2536bfc95624feb90b11156f86790dbb"
+    },
+    {
+      "path": "ara/public/quick-thumbs/cocktail_dress-woman.png",
+      "bytes": 7337,
+      "sha256": "c09c4629d7696525ef29769f6a2bb65d96cefb43a051ea9df2d87b44e9278011"
+    },
+    {
+      "path": "ara/public/quick-thumbs/pastel-man.png",
+      "bytes": 3671,
+      "sha256": "7f6a1047f2a31f91e4cdf5e46406e5f40116e715a2cba8192dde27296e3ecff1"
+    },
+    {
+      "path": "ara/public/quick-thumbs/tee-woman.png",
+      "bytes": 3527,
+      "sha256": "5c1f7a6e7bc91aa8f27083921d5ca00a85b2500a3ab3f12ac1ff9d147100074a"
+    },
+    {
+      "path": "ara/public/quick-thumbs/clergy-man.png",
+      "bytes": 3858,
+      "sha256": "b5ad7734d489f20bf1250585a963c9f5d1c37ae58b1b8de83a4870114961331e"
+    },
+    {
+      "path": "ara/public/quick-thumbs/smart-woman.png",
+      "bytes": 4985,
+      "sha256": "3c8cd1870f7ea75b52801a17fc59d85d1b9e5f7238eef3c2f838f5d3764d236c"
+    },
+    {
+      "path": "ara/public/quick-thumbs/clergy-woman.png",
+      "bytes": 3452,
+      "sha256": "7fd6e564a7369c76cf9477b194a3297e4718584e3e054e6593b6014118e1375a"
+    },
+    {
+      "path": "ara/public/quick-thumbs/buba-man.png",
+      "bytes": 6099,
+      "sha256": "2fdef4e29bc12df43e6da523041ddd19f9da1751a9e385d5336719225ce64222"
+    },
+    {
+      "path": "ara/public/quick-thumbs/business-woman.png",
+      "bytes": 5065,
+      "sha256": "31df2f5453d8f910e755f1c5b245003e7c9fbd6842649262ef980c9e78edd167"
+    },
+    {
+      "path": "ara/public/quick-thumbs/smart-man.png",
+      "bytes": 6391,
+      "sha256": "f9d71a2a25c2841faf1ec947e5fdbdc1961514cfc07cdf753849686a1af4f49d"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-afro01.png",
+      "bytes": 13705,
+      "sha256": "5d84a4dc1c77ae53921032d4ea45ce8156e026c106c8e2f5b175bc5865fa817d"
+    },
+    {
+      "path": "ara/public/quick-thumbs/soldier-woman.png",
+      "bytes": 5744,
+      "sha256": "201f550d4cdba056343c7e850a3850bf5190f65aa427cb311428bb8203514ad5"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-ponytail01.png",
+      "bytes": 13639,
+      "sha256": "dda76d2a99cca33ef09657e5f2d60d13cb38dfbc809b69f1b9ecab4976c395f2"
+    },
+    {
+      "path": "ara/public/quick-thumbs/ankara_peplum-woman.png",
+      "bytes": 5444,
+      "sha256": "1969b90c16d95f2afdfc1ada797711b8b8332907f2aa63e00919e4d0d76c5974"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-braid01.png",
+      "bytes": 12210,
+      "sha256": "aada9dd1ad05323b9d23e2733f176c713c5e51de84215cf34f9b2e0acc74ab2a"
+    },
+    {
+      "path": "ara/public/quick-thumbs/sheriff-man.png",
+      "bytes": 5352,
+      "sha256": "ff1640e71f8e2fb8eb7ebc5d0bc4e893a688780c11b7e68bbc78f4d4391b0ad9"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-short04.png",
+      "bytes": 10988,
+      "sha256": "7c6e47b891f9997b1d4753b7c4f0b81d909a72b4a613c7cd963a911ca30e8620"
+    },
+    {
+      "path": "ara/public/quick-thumbs/sporty-man.png",
+      "bytes": 5673,
+      "sha256": "fde19f35dad547d1074ab3dc67fbf2c21f8065ce91463eed37fe2cca0ad40c28"
+    },
+    {
+      "path": "ara/public/quick-thumbs/maasai-man.png",
+      "bytes": 4884,
+      "sha256": "f0ff088bb01e978f0e70bf6890383c9c7b16399603ac08d827160129851d7fe1"
+    },
+    {
+      "path": "ara/public/quick-thumbs/survivor-woman.png",
+      "bytes": 5783,
+      "sha256": "c0724a1a918fb8a05c47892473907998497f02eaa3272fbdb4ae5d1d3aa4cd5f"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-buzz.png",
+      "bytes": 10991,
+      "sha256": "ce365aa2a708c320f4cc4970a92a659629fd8118d8a8b9f35ceab1122b2b166f"
+    },
+    {
+      "path": "ara/public/quick-thumbs/cyberpunk-woman.png",
+      "bytes": 4513,
+      "sha256": "d0986987e3a3749c935df93fa3d7cfd71795f181c4355ee9f2371fd74c60fb36"
+    },
+    {
+      "path": "ara/public/quick-thumbs/ankara_gown-woman.png",
+      "bytes": 4553,
+      "sha256": "3c374306da0291c7b6d6181598d042d182e2a214b50b3d6b527d5eed349b4ff4"
+    },
+    {
+      "path": "ara/public/quick-thumbs/street-woman.png",
+      "bytes": 4266,
+      "sha256": "b7cb2fafc1234a7b139e4a652be9e02600cf1385d80f774f8b812ec0bd2f5729"
+    },
+    {
+      "path": "ara/public/quick-thumbs/business-man.png",
+      "bytes": 4375,
+      "sha256": "4304ca2a002962cb8b75279106d1ff7aa3fca5f5876cf64f27eddb5b82ad59c5"
+    },
+    {
+      "path": "ara/public/quick-thumbs/pastel-woman.png",
+      "bytes": 3355,
+      "sha256": "110256bfe351b916fd49957d77922e9949da3f9a4d5201a8b053d973c37615b3"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-cornrows.png",
+      "bytes": 11514,
+      "sha256": "8575a2fc03ba8a93d362c3001d63b6fa30b887002f9f12ac63125c9f72b0d87f"
+    },
+    {
+      "path": "ara/public/quick-thumbs/frsc-woman.png",
+      "bytes": 4333,
+      "sha256": "54bf23736b89a9f8bb527998eabaf38ebc6af85ddb292cddf49d814038f47c3f"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-short02.png",
+      "bytes": 12736,
+      "sha256": "e121f9d48bca60e86a84d3fc72cb1b532282628e7e730b9d52ba7dfbbcaba52d"
+    },
+    {
+      "path": "ara/public/quick-thumbs/soldier-man.png",
+      "bytes": 6226,
+      "sha256": "2d3240e1ef65b4a6575c80850c6f223aa7bdda8b19a5246ce53d336a8d82e823"
+    },
+    {
+      "path": "ara/public/quick-thumbs/police-woman.png",
+      "bytes": 3743,
+      "sha256": "3f7e7ddd9c57410132d1706994d892848f69eae1c1c33b3067bbd5efadb616f7"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-bob02.png",
+      "bytes": 12682,
+      "sha256": "97983429c1e4d25d247fbbfe0088f5f5196246e03496f993e6a5d693bb132f15"
+    },
+    {
+      "path": "ara/public/quick-thumbs/zulu-man.png",
+      "bytes": 3943,
+      "sha256": "9f4837c9983e15d6bdba4e5302da50683d4c34e8470bda7cf8a37c6ed2cbc740"
+    },
+    {
+      "path": "ara/public/quick-thumbs/police-man.png",
+      "bytes": 3968,
+      "sha256": "75e6e978cfa67cfa0a1b29705a4d10722e14ad7a89e804c44677164bef4bb145"
+    },
+    {
+      "path": "ara/public/quick-thumbs/sporty-woman.png",
+      "bytes": 4519,
+      "sha256": "58179114e10b7b6c2144d9a9216b8cc05768e7b6187ee98a334f16203b15aae0"
+    },
+    {
+      "path": "ara/public/quick-thumbs/casual-man.png",
+      "bytes": 5775,
+      "sha256": "93c2bd902530c69256700317ab270ee7674f57d4127f9e3078e243321b0a3551"
+    },
+    {
+      "path": "ara/public/quick-thumbs/prisoner-woman.png",
+      "bytes": 5706,
+      "sha256": "d04b0692dc59b367406696faf62d50e6d7384bb6be3ffa8217f3ad0930199321"
+    },
+    {
+      "path": "ara/public/quick-thumbs/workwear-man.png",
+      "bytes": 6077,
+      "sha256": "34df561470fe3e7f764f08c0aa88245a78d47da877aca8468e025ca5dc6337cc"
+    },
+    {
+      "path": "ara/public/quick-thumbs/street-man.png",
+      "bytes": 4644,
+      "sha256": "2fb5cf93209bd785896e2cd540a523c29e324098499e85c5b54cb3efd9eff6e8"
+    },
+    {
+      "path": "ara/public/quick-thumbs/thobe-man.png",
+      "bytes": 4917,
+      "sha256": "8f89ad2d09bcb1f436911743c52c05dc9b211dcfc1aee4cdcd7b643c1c7dd8d0"
+    },
+    {
+      "path": "ara/public/quick-thumbs/casual-woman.png",
+      "bytes": 3543,
+      "sha256": "2c86785748e4cc64582876136ea8cf30167445af797989058a90aacf6126ad2e"
+    },
+    {
+      "path": "ara/public/quick-thumbs/adventurer-man.png",
+      "bytes": 5836,
+      "sha256": "de46cdcdb16b772b329a632d868564f8f6d8dcfa07c9832618005bfbb3ee6755"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-short01.png",
+      "bytes": 11716,
+      "sha256": "58e51171250aef40b99b7daf6affe2274b5c62de613d41b1c3449846bb7e0965"
+    },
+    {
+      "path": "ara/public/quick-thumbs/yoruba_warrior-man.png",
+      "bytes": 6444,
+      "sha256": "840899e2f1ecc3af77f652f517d251999e50bdcfda1ce28742827fca934e37a3"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-long01.png",
+      "bytes": 13410,
+      "sha256": "309ce93fe05f44d0534b31ce73163bd8448a16a2cb52ca62bc47ee51bd2f5cb6"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-box_braids.png",
+      "bytes": 11837,
+      "sha256": "59e23f5ae46f36124abc4095daa2253d6510a006a73c60d080cc7d58f3bfb315"
+    },
+    {
+      "path": "ara/public/quick-thumbs/tee-man.png",
+      "bytes": 5623,
+      "sha256": "888969b7108341f8e2d2f95df52f04bc4f010fb6bb001b3c7017a766aec32549"
+    },
+    {
+      "path": "ara/public/quick-thumbs/sheriff-woman.png",
+      "bytes": 5028,
+      "sha256": "761f9c17ea5fa82a125b28793c69efe52d8c8f9a3eac5423ea089b21ed222112"
+    },
+    {
+      "path": "ara/public/quick-thumbs/wedding-woman.png",
+      "bytes": 6986,
+      "sha256": "4cada5e33543085d7373bc9cbe16b52b57825681a8294e8859d94371c06bf295"
+    },
+    {
+      "path": "ara/public/quick-thumbs/hair-none.png",
+      "bytes": 10162,
+      "sha256": "33ffb97ea001fc67ec03b5b95647e170879e0fc5f9bfcded0e3ab430738de6ca"
+    },
+    {
+      "path": "ara/public/quick-thumbs/yoruba_warrior-woman.png",
+      "bytes": 5708,
+      "sha256": "b28045db9d11a3d1456a872690993e79af843be260bfbd62abc961af2f73d14f"
+    },
+    {
+      "path": "ara/public/quick-thumbs/buba-woman.png",
+      "bytes": 5464,
+      "sha256": "80d4cfa5e7fb92f31f9f249f69299c188eecd4147d544fd0c1d21d419dc56834"
+    },
+    {
+      "path": "ara/public/quick-thumbs/adventurer-woman.png",
+      "bytes": 5557,
+      "sha256": "5dd54d5f503f6164b711780eef578b7b5d63c6b28e9b5a3f9e7ca8629114eba0"
+    },
+    {
+      "path": "ara/public/quick-thumbs/cyberpunk-man.png",
+      "bytes": 4979,
+      "sha256": "7abf3f1fd37baa6ed8dd43d1b250e49fa802a1b8b8efd075afdefda222497ce9"
+    },
+    {
+      "path": "ara/public/quick-thumbs/prisoner-man.png",
+      "bytes": 6123,
+      "sha256": "b97336a1becc5c5f3a93d68adffe9d0f363727cdb09d9498a84b79ebc77a8fdb"
+    },
+    {
+      "path": "ara/public/quick-thumbs/frsc-man.png",
+      "bytes": 4420,
+      "sha256": "2a96164c84cec82f72e4ab25e47ac78602fa3adc2e77a1263a7e5e6d49188054"
+    },
+    {
+      "path": "ara/public/quick-thumbs/workwear-woman.png",
+      "bytes": 3417,
+      "sha256": "39ff3de92ddd05f39860995bd56e8034101c8d4554e5a289c00a8e180489e0b2"
+    },
+    {
+      "path": "ara/public/quick-thumbs/beach-man.png",
+      "bytes": 5304,
+      "sha256": "8547a3107db8e0adc12053fbe32019c7b743db2e14f2f214eb0ec376f33b5210"
+    },
+    {
+      "path": "ara/public/quick-thumbs/classic-woman.png",
+      "bytes": 4065,
+      "sha256": "84309e3b509ae5f959b8c7dd707eca8fc45abd0b8c34ebbc435c0d8f6ff7391a"
+    },
+    {
+      "path": "ara/public/quick-thumbs/survivor-man.png",
+      "bytes": 6445,
+      "sha256": "36313690d80a6b4bd0ecf86315f4f5b1190c2adafb2e6d49c286aaa1f694dd83"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/train-platform.webp",
+      "bytes": 4504,
+      "sha256": "051ac092faa9fdb545b8f7cd7e08a7a7b2986083dfdfeeaa5403ab11d58f8377"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/street-cafe.webp",
+      "bytes": 5904,
+      "sha256": "74a6688b132c406135590327d8608e84cd053fd97b8dcc96f893ea0904d48d5f"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/wedding-garden.webp",
+      "bytes": 3940,
+      "sha256": "c65bb4c2b1e3b93e408f24fa71c31178a2a4a886bd82601a7ae2691c8ff93014"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/mountain-lake.webp",
+      "bytes": 8460,
+      "sha256": "081ed98d06785fd7d2f14ec323e86a83ec9ab523fe99ed0ebe98a9e3b76fa81b"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/hospital-room.webp",
+      "bytes": 3926,
+      "sha256": "b47184722f4598a973da0d92257045797d7aba7cec4099b29afedd5fa9cdd93e"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/public-restroom.webp",
+      "bytes": 3872,
+      "sha256": "1f1f37488392bc0b2e7760dee72d1c67a1ea2181e8c06b42a008cee087ca40dd"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/laboratory.webp",
+      "bytes": 4676,
+      "sha256": "d2128d719c5976c036c4659044e2ea8c271bc51d84e73e04072eb515977eb47b"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/apartment-loft.webp",
+      "bytes": 4340,
+      "sha256": "5819a33facbfec48c89ffb93f39a3a45b5a21128fb1cf88a95afb355c32071be"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/office.webp",
+      "bytes": 4826,
+      "sha256": "ad0d2adb0a8d243b3c58f16b858d72d9e563546b72866077697ceed10fc2c981"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/night-club.webp",
+      "bytes": 6992,
+      "sha256": "18365f189fa522775b53692584ba3d1c737342c02f31a33fb06f7c40a7fbebb5"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/yacht-deck.webp",
+      "bytes": 2678,
+      "sha256": "c3735d6a549541aa479a2daa47c85d463bee6fb3ec6289fbdfca211f7b449847"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/black-box.webp",
+      "bytes": 2050,
+      "sha256": "5ba8a4ea1a5809c6ddacf552138943bb60a63c6c289b706b5cf563917ac45ff8"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/spa.webp",
+      "bytes": 4306,
+      "sha256": "59cec22da53b0f5389cfaf5c80ff8e8efcfe0bfe403e940da41d3dc6864dc3d3"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/private-bathroom.webp",
+      "bytes": 3220,
+      "sha256": "785e8fe6d3af8ed87affc6626dd8bd0b9ef7db4e10f10475342b98b5504a6d8d"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/diner.webp",
+      "bytes": 4334,
+      "sha256": "1405318b70f26ecb1ecb60fde0682a082ed33a473f7657e08ddabd9972aabec3"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/harbour.webp",
+      "bytes": 3470,
+      "sha256": "93d4c106345b191217cc7e9ad3f570ada1d3d744a041c6a9c2ee55db92201633"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/bedroom-night.webp",
+      "bytes": 3254,
+      "sha256": "74ae441338fd986cf727b5d12412ef8ae5d39d6e80746a28a851120530295068"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/military-base.webp",
+      "bytes": 3948,
+      "sha256": "4e3775eab2f865c1b61a3548c9876e06219bcc3cdf7e2dc0f5d8caa6bf5ab700"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/art-gallery.webp",
+      "bytes": 3076,
+      "sha256": "270bf878858e9040351e7e6f9dbd533f3231e552de37b98ec5bb8ed54700362f"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/airport-lounge.webp",
+      "bytes": 3022,
+      "sha256": "be093042f8d611398f3f6fa3bd0211e4e434da1493299d4a4a61c123f6e8aa82"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/newsroom.webp",
+      "bytes": 4492,
+      "sha256": "f428638311b84f05534ab73e93f95a81bc6720606680de786d7df89fd9b0c191"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/highway.webp",
+      "bytes": 7412,
+      "sha256": "afafdd68982e2661cb2aaa5b89ad30f85ec1a1bc4ef81b78ece40ba1d2f1afd1"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/portrait.webp",
+      "bytes": 1360,
+      "sha256": "485c5124ac735d755c4248d8c6579232b24e13f479983a7ad90d6b221a70a877"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/prison-yard.webp",
+      "bytes": 3076,
+      "sha256": "fc2a50f2028e103bd796b5ce2c3c05b0be946b495f056d93b1e2e151f3a3dcdf"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/beach.webp",
+      "bytes": 4238,
+      "sha256": "68a808f3b043dcabd0bfe94e3cb70a1b29c4fa2c4874617ffb4d8db7f04b4a25"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/football-stadium.webp",
+      "bytes": 7674,
+      "sha256": "b43f899839919d05c5fe4a43a921f201cc3fc0e800a30be1e27b2ff5f97ccd8d"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/runway.webp",
+      "bytes": 3466,
+      "sha256": "9e19478833e0601f2980d4f3337ca5b99be79bd457337b840e6968bd3195de65"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/bedroom.webp",
+      "bytes": 3380,
+      "sha256": "f0b1efaec3b3c07bf97083ad222f6df455a65d5855acd1f095e5e7eafd77276e"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/boardroom.webp",
+      "bytes": 3870,
+      "sha256": "0ebbd3276fe5d7504acb622caeaa30108c9ab44a17db5ce19e5a81c12bf1a38e"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/infinity-pool.webp",
+      "bytes": 3846,
+      "sha256": "11683841ff7147ed4405a849cd85ae59b3ab5a8711b476f2ac8195b601c382ae"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/hotel-lobby.webp",
+      "bytes": 4850,
+      "sha256": "383309d0bb76dadd1676739e1f06ec0ee6d804bd86003e66be31a2359ae4b18b"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/classroom.webp",
+      "bytes": 9296,
+      "sha256": "010a54e26c6a4ddad33e638a8347e13c14f6ab7fbd8814e3092fd9abb9fae3d2"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/kitchen.webp",
+      "bytes": 4040,
+      "sha256": "de46c4b4a1c12b0c2d2afa2efe0483eddb2ffc9032f348bbb98562c4088e7319"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/open-office.webp",
+      "bytes": 4892,
+      "sha256": "3a2f48f5a788be5032dfc507fe66f7a86925eef2eaa344fce50df64bad354041"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/living-room.webp",
+      "bytes": 4822,
+      "sha256": "9f7984df484193ad4c841b029c50dc1728b30e115c95fe67089ea8919f0ea20a"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/resort-pool.webp",
+      "bytes": 4090,
+      "sha256": "83827dce299cec7d6f88af09bc8a5a99a19d0f6c489f7dba9ea02e527094c7ea"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/cyclorama.webp",
+      "bytes": 628,
+      "sha256": "26486eadb2a690e7ba2e60db9c478ab9330202047bd227b5d5714eb92392bf1c"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/church.webp",
+      "bytes": 6078,
+      "sha256": "d04a67489a8fb7da70283e56992b9299d6480b9081c095e8ad3958f7e7996b0f"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/boutique.webp",
+      "bytes": 4538,
+      "sha256": "f0126994ef9f1aab44feee8a393b8884abb60056ec330b547a94b4095a1e3ce9"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/fine-dining.webp",
+      "bytes": 5050,
+      "sha256": "db5f1771b005c7afa3a5c181def97e479502127600ad3beb12919c2236c4ac51"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/courtyard.webp",
+      "bytes": 2856,
+      "sha256": "e4844ce10ccacd06d65579b703c20f3f470aef6c864d0704b6a6e0c28cd0392b"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/rooftop-bar.webp",
+      "bytes": 4394,
+      "sha256": "a37f90b6c58046e7a044a2c11ae8e91ba933dcf3ef8958c415ca86731faacc57"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/recording-studio.webp",
+      "bytes": 3974,
+      "sha256": "a2fe6cc931812a1d0c04ceb01c0b0076d6831287058007ec39a55042b80680e9"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/interrogation-room.webp",
+      "bytes": 2608,
+      "sha256": "ff300eecd0633b42588a5f9dfb8810e23dc05d0b87c94462535ab53112641067"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/home-library.webp",
+      "bytes": 6730,
+      "sha256": "be9d272d00129618ba428c5216240e214b80a1aaebe41ea763055e55f211fcd2"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/photo-loft.webp",
+      "bytes": 2458,
+      "sha256": "4808e1cbd976f050145d4807075850b0be58e5ba93d69f14b175153e5ec2883a"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/sunset-beach.webp",
+      "bytes": 3654,
+      "sha256": "e5f15e7e9e67c5e82fb602d0560a238d56f1dd131bfdbd89ae0793abb451001c"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/neon-street.webp",
+      "bytes": 6258,
+      "sha256": "8be246ad217cd65477fe354479cd23101ea58a6384df36c3a005e81a6c1362ab"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/desert-outpost.webp",
+      "bytes": 1530,
+      "sha256": "fcd83908dd903398fd324d5596ce89e3dd8a0efb5ce1c210f45a3f99d47c8a06"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/forest-trail.webp",
+      "bytes": 5400,
+      "sha256": "40cecf8fd59853cb9d7eb8a4ed78e4550bfb87f27a37e210e857c3cba3579849"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/back-alley.webp",
+      "bytes": 4638,
+      "sha256": "2ad52037e6b020404805b4c322d6d43381228e290da44e7bf3043de868ddc31a"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/sports-court.webp",
+      "bytes": 3892,
+      "sha256": "4d5a74bbd5e9dc7645f283daaadb15773ad332bf2d035f4cdd16ba9e7f59ef47"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/city-rooftop.webp",
+      "bytes": 4800,
+      "sha256": "c925d8f714b20dbb3bad55390431062534fc7c2ab56c8bca4df0c95f065fa8ac"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/parking-garage.webp",
+      "bytes": 3466,
+      "sha256": "b122564ac36bbf1af22b80e8b8ec7d1d25f6c258ab938788a38d810c34a47406"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/dining-room.webp",
+      "bytes": 4486,
+      "sha256": "e14c20ffc5fd72f306b993d276905ed9d6d38d7d96f19c7795077b76e9a71b6e"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/campsite.webp",
+      "bytes": 5940,
+      "sha256": "88d2071a3a12b67d1591bee049abe317aecc824331859c3af2ab9b829fe11c90"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/warehouse.webp",
+      "bytes": 3362,
+      "sha256": "f230946a936ca50995eed0907a16a723eb2d2fa0f1014747ccb30d278b602490"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/coworking.webp",
+      "bytes": 5434,
+      "sha256": "151306840ec8844dabc92b26eacaf978ce8a52e4802c935f98e6ede801d98f50"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/alley.webp",
+      "bytes": 3962,
+      "sha256": "a377d35dc1b21929ad9ace6ee0609fd299e10ca414ea90473294cfce446f4d76"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/police-station.webp",
+      "bytes": 5190,
+      "sha256": "06f98d4a6cde3a6038bb859b0ce88f2ee8f2da609a834313e850c9e78cadf039"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/subway.webp",
+      "bytes": 2294,
+      "sha256": "03c69a018c4c61f83b5243dd09c3abe6a92ede4fadb39c3bd4099e11d145696c"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/urban-park.webp",
+      "bytes": 3504,
+      "sha256": "1acbf60c5dd0e085d38b3300d2b62f0e8d2c6565b6f39203195d525431b43e85"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/prison-cell.webp",
+      "bytes": 3622,
+      "sha256": "cd747fa68cf2fac16409ede70a1ac1787b55116a1eca0d9e9dcbac8d47feebef"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/elevator.webp",
+      "bytes": 2894,
+      "sha256": "3030f14b22154065eb55258a025a022b74b90e94ee4b2d4743a49e63b75330b0"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/restaurant-terrace.webp",
+      "bytes": 5154,
+      "sha256": "67b5ed11e9e3f322cee641e833559e11b35bd07bbca1622a9cd40444b0679cb9"
+    },
+    {
+      "path": "ara/public/studio-location-thumbs/veranda.webp",
+      "bytes": 4002,
+      "sha256": "c5f59bd3be87d13d18aff72b304ca2e70c239af1f0ef6d4c5bbfba0687066641"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_thobe.png",
+      "bytes": 6521,
+      "sha256": "7b9dbafe3819be40e50bde8ac588a67b71c679427658cf11c2972ce85f728375"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_suit_tie.png",
+      "bytes": 6391,
+      "sha256": "fd00c265bbcdf79c79ccbe7b579cfd0197f20ce43a7e6486ebfaa5464e1726aa"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_ankara_gown.png",
+      "bytes": 7666,
+      "sha256": "1ee2bf8c6764a9796036277f48121b813a8da45e0fa13985a2fe569b667b5a29"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_gold_bikini.png",
+      "bytes": 6197,
+      "sha256": "5b1b1d01f028e0e46be1d29148e3a8dda3974eea6e8dfb1788110b05b04a7b54"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_aso_ebi.png",
+      "bytes": 6673,
+      "sha256": "f7c519990c76b11e4b87adb9eec2829cc7f1724593e367ad42a32ca7bf1f6f07"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_prison_jumpsuit.png",
+      "bytes": 7334,
+      "sha256": "54186f01954742eb0766c371c13afd4e2b3df641220fa2ebda2f5227ebee476e"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_wedding_gown.png",
+      "bytes": 4273,
+      "sha256": "6c5ef3b0298ce1498c31cce9b8398801ebc3de1b13ced16c658c28447e5ee29d"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_pantsuit.png",
+      "bytes": 6316,
+      "sha256": "e756b813936c732d2b8fa81721dccf250a1c449d0df014c825d8143b4c1b6366"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_pastel_suit.png",
+      "bytes": 7165,
+      "sha256": "ba9f87323329461387df2bbec13a418e13a86b2a7e3ca29e056aceb0fcbcf23e"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_clergy.png",
+      "bytes": 5809,
+      "sha256": "40d2ee8d3c1a05a02e50c088113bd1a8cfdd43f1fd462aa6b7a3d76c09293e1e"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_street_tee_jeans.png",
+      "bytes": 6263,
+      "sha256": "233f30cee0ac3f47c5e1334d1bb853f8b320809d3bf131ae181ba88442108413"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_ankara_peplum.png",
+      "bytes": 6260,
+      "sha256": "61272cba29afbe23f563f22c68a8cd080bace15b0c8d87883388c1e61ba07bcf"
+    },
+    {
+      "path": "ara/public/outfit-thumbs/set_cocktail_dress.png",
+      "bytes": 4095,
+      "sha256": "4cc6a28d154d43b94bc1b580a8c780f36ebbe65ef5d0760f714ec87655e41cf5"
+    },
+    {
+      "path": "ara/public/picker-thumbs/hat-none.png",
+      "bytes": 8060,
+      "sha256": "d71e6e2bcfcebfd95eb5a12a10acf0451efa26ad1ffac57b13d8eab2de4c99ab"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-flipflops.png",
+      "bytes": 9527,
+      "sha256": "ed22bec9ff18906a21ce656e6efa7175f1c62bbc98ed7b26180292c9c0a19568"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-combat_boots.png",
+      "bytes": 9110,
+      "sha256": "11ae61b78783872f5f531b76226ec04d613a7efc8309a248ccbf1fd20d0beafc"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-sandals.png",
+      "bytes": 10114,
+      "sha256": "2fce97c21bc478ffb2c236f77486f5231d8d62c4b06efa4f447a6750a46776a7"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-heels.png",
+      "bytes": 8685,
+      "sha256": "27e934a77485b5ecb359423f96c9ad23d777fe57972812c66ce2861ce659c013"
+    },
+    {
+      "path": "ara/public/picker-thumbs/separate-pieces.png",
+      "bytes": 3601,
+      "sha256": "d594f630d3711185320305854059da8331110c316786564ef37ca368c81deea8"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-oxfords.png",
+      "bytes": 9178,
+      "sha256": "6dd5eadbfa61042c66ee71eb6cf83e6b9f51d19cd32693250a47a1d7ceadff6a"
+    },
+    {
+      "path": "ara/public/picker-thumbs/hat-keffiyeh.png",
+      "bytes": 12920,
+      "sha256": "77fe017af936fa4d96609ed9a6508ed8ad0d7d42667f6f3a2c5a125599f19d76"
+    },
+    {
+      "path": "ara/public/picker-thumbs/skin-auto.png",
+      "bytes": 15812,
+      "sha256": "c8e72953800feeab2891a36767c1f8aa0d76043b78665d8165e69ae35f38ffb3"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-sneakers.png",
+      "bytes": 8489,
+      "sha256": "3dc860d0cfc0283bcccba8a87267d4db5d560d6110af31c126b493c3ca976a49"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-loafers.png",
+      "bytes": 9112,
+      "sha256": "6984ef1876a7bdd9cfe3478ddc70a5703c455d7b176ba6363716ad1d2a3cc468"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-none.png",
+      "bytes": 8332,
+      "sha256": "bba917344dc7f5c9e0f6f222919df2e8cc7eab7c28267000c83227a23846d4be"
+    },
+    {
+      "path": "ara/public/picker-thumbs/eyebrows-none.png",
+      "bytes": 10616,
+      "sha256": "81833060a31c5e0491a1185ce52c73ef1fed111aebe82d93c06aeedd682fdbff"
+    },
+    {
+      "path": "ara/public/picker-thumbs/hat-baseball_cap.png",
+      "bytes": 7080,
+      "sha256": "5af7870cfd78c63a0d4bc7cf79b704562e0944ba2ba1598ed5db5309a6cb50e3"
+    },
+    {
+      "path": "ara/public/picker-thumbs/eyelashes-none.png",
+      "bytes": 11051,
+      "sha256": "19167c06ff0fbdef914a89225fef47dc71070e9c94f2af185579f2f048d810c0"
+    },
+    {
+      "path": "ara/public/picker-thumbs/shoes-slides.png",
+      "bytes": 9871,
+      "sha256": "24c0baa0770b2f41d2560526b9cbf08b744a770bf59e7d128ab9a085ac6a0c50"
+    },
+    {
+      "path": "ara/public/assets/base.pack",
+      "bytes": 615072,
+      "sha256": "aaf3ce5024324ca4bf61eb0c4320b6e05cf44e4e7e3d3f58bd35b1375b0d664e"
+    },
+    {
+      "path": "ara/public/assets/targets.pack",
+      "bytes": 6498862,
+      "sha256": "6acc08e8f7efd5dabd101e75cc3dd3b3d9f050c9e77c72d73f39ac86ea7e889a"
+    },
+    {
+      "path": "ara/public/assets/catalog.json",
+      "bytes": 68292,
+      "sha256": "36f1ab37ebe7e2f11d843f749cc84906ba59f4bdcfb480694cf83cb71df3c80f"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_ice.png",
+      "bytes": 289512,
+      "sha256": "f08c63f993d4e9c3836507d5afa4f45b68f38a5cc3bcd8396a4f65438eec208e"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes06.jpg",
+      "bytes": 155532,
+      "sha256": "ab3fef824dafe0533c97965b216e8a568e9d8144198f214f52790e96cd6b7e93"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_blackbrown.png",
+      "bytes": 390465,
+      "sha256": "e47d93acd123ce949893aa344d07ac255719b0089f4fad394532eafdd41f4213"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_fedora01.jpg",
+      "bytes": 856032,
+      "sha256": "e044f56fefa3431784200a03a0ef2a01e655dafc66cdb9f0726a7d4302c53a7c"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_middleage_caucasian_male.jpg",
+      "bytes": 288490,
+      "sha256": "0a83b964addca94e6b4c46b49f69be0a23af4d7b44708ce4d128802f2efa17ef"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes04_normal.jpg",
+      "bytes": 163962,
+      "sha256": "e55822589767d4b5ac3dd2ea001af6bd3d050927db41f54d44d62c3f372af14a"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow005.png",
+      "bytes": 33554,
+      "sha256": "4e15321c904e21bbd477f5b01eb3bf5ffe0d2c482101ee4fc97f26120c51e213"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow012.png",
+      "bytes": 48694,
+      "sha256": "d9ac9449b2ac40677068475f69d5db8d6994cc504ab997cfca4ff0ae9b71963d"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_short04.png",
+      "bytes": 1489940,
+      "sha256": "288800441decd3976ea167a9c3857a7b0644b1d749792344323909d4d18a30b2"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow009.png",
+      "bytes": 79346,
+      "sha256": "55bf9972e04e20d8d8627af06be9313965276979e89f84769c3f0a2c97c2b15a"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_middleage_african_female.jpg",
+      "bytes": 210885,
+      "sha256": "492eab20bfc1dd4d8d97a75ac2ed23a1b8e5e9c3cff5aa9dd119af328b5619ce"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_lightblue.png",
+      "bytes": 289610,
+      "sha256": "db5722fbac49175d3fa465a558a33a398d663196900a1e078dda10941684c27d"
+    },
+    {
+      "path": "ara/public/assets/textures/eyelashes_eyelashes04.png",
+      "bytes": 71671,
+      "sha256": "b26e91c7aa75ce66549bba8dc4bcf63dfde4df7f3450f40399fe2bc72f677b19"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_casualsuit01.jpg",
+      "bytes": 340320,
+      "sha256": "98d7f712970af1b170d5c0ddfcff50963c9b8e3067967681fc0179ba9168d458"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow011.png",
+      "bytes": 26568,
+      "sha256": "49101967edc83a3011fe25e1b0529aa4b932a48702411f3582f1d0b4986a7b70"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_darkbrown.png",
+      "bytes": 396510,
+      "sha256": "59fca6997770354cb9a3eabe98590883688f4436727be0afbf1234a7d2a81e4d"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_asian_male.jpg",
+      "bytes": 270653,
+      "sha256": "23d0496c7894c7add36bcb96bbb7d597503efa878042125623523f3d42c1f192"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit04.jpg",
+      "bytes": 287651,
+      "sha256": "7d077654d864c31c0835035fc16672bc2cbdf969b2fd27101b0d36a405caedc1"
+    },
+    {
+      "path": "ara/public/assets/textures/teeth_teeth_shape02.png",
+      "bytes": 697030,
+      "sha256": "3b4e7c4e1cf36e2f825927892d8181204157b4752f5615a5ce1099f21f2b0802"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes04.jpg",
+      "bytes": 90347,
+      "sha256": "8bdd9ad0d73bde9d17cd7f2178ed50447a261302df9c73b0d706e51a9028175b"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_casualsuit01_normal.jpg",
+      "bytes": 239479,
+      "sha256": "0239e7a502f79e1c02cf3fc180cc1ff34a28b139fecd7feb86764b596c877a55"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_short03.png",
+      "bytes": 1031945,
+      "sha256": "8595fbb196cbc3fedf976892cddb7e0039a991b95a60fb46031138fbf48bfa99"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_old_african_male.jpg",
+      "bytes": 271385,
+      "sha256": "521fa44068b8e0591d6965c6b40c66487fdc5118d3a5b49288d3d489b130ff71"
+    },
+    {
+      "path": "ara/public/assets/textures/eyelashes_eyelashes02.png",
+      "bytes": 76926,
+      "sha256": "342774ee7bab8b0952c76821dd5324ecdea0a6ba6f76cb52d4bba002e8f79456"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_fedora01_normal.jpg",
+      "bytes": 31788,
+      "sha256": "4c38d5f8ee8a4f6528afd84b042bab297e19bf076b3e85a758f2414180aefca1"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_elegantsuit01_normal.jpg",
+      "bytes": 178187,
+      "sha256": "2f8615fbfcf1648f7f556c5b34ba85b62ed1012989cf40c0cb828ea5ac1c8256"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_elegantsuit01.jpg",
+      "bytes": 309476,
+      "sha256": "7bd28d38432ddbc2ce7c57fbf105b811da603bf980b3e7ee0ede4b30af73aa44"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow002.png",
+      "bytes": 39456,
+      "sha256": "edc68662595024f546f5404517ff84a73c1678049dceecb1a5aa0820bbdfd6b5"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_middleage_african_male.jpg",
+      "bytes": 221665,
+      "sha256": "5e1dadf59585f311b591f601c1a5c50857c81e18170ef0a1756f576bc95e7c66"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit02.jpg",
+      "bytes": 300930,
+      "sha256": "7d893075edcce3ec01e628abdf9e73e192acb906274d19413b982d8badc884fa"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_african_male.jpg",
+      "bytes": 208732,
+      "sha256": "0f2c15798eac2e8d787bc0387eca7077a929c524a60f9dbac913f74dcc64db1b"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_old_asian_female.jpg",
+      "bytes": 373194,
+      "sha256": "c8b88ef7bf32c1bea001a8ddf7cc2695fc7ece524f0350b1c155cd34710583a9"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow010.png",
+      "bytes": 34540,
+      "sha256": "b6dc6150b7a08967e7d33ce4b0f1825bc862d8faa69b5c8a8953d0b4c6c267e8"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_braid01.png",
+      "bytes": 1218926,
+      "sha256": "05ac7717ea9af80e5da0364e9a2ccf122f160af6474fee32c2297e35007e9dfd"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_short01.png",
+      "bytes": 1481193,
+      "sha256": "a71d3c7931f4cbfb32ca62c946f22a3566378d6104ed2f7b934aa91c80d4692d"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_caucasian_female.jpg",
+      "bytes": 311733,
+      "sha256": "b5bded96f4de3273e3b2022c960d60147ee6e18b0abd582c086a4d0a3f76a73b"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_green.png",
+      "bytes": 290864,
+      "sha256": "87533a1e33d4afa2e74979e786d858e597758010c9afdada89fc70e23b99d73c"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow001.png",
+      "bytes": 34504,
+      "sha256": "db8d5c28f21192bddfd00b4b80e4926c0d66687dfe89a880f1d826ffa7582ca6"
+    },
+    {
+      "path": "ara/public/assets/textures/eyelashes_eyelashes03.png",
+      "bytes": 76928,
+      "sha256": "6b15f432c79664958bcadb821a803a57dcd664d047b3dbc8c3165e059a79b4ed"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes02.jpg",
+      "bytes": 126058,
+      "sha256": "d46ce5a1157eeb036a7f619b0df7de6109a61bb0b834faa3719c77c1cb4531dd"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_caucasian_male2.jpg",
+      "bytes": 271908,
+      "sha256": "4f795f328a4f03c24693bd6614b2a36e28ccfd9e8ce21ea71bfa59e5872738dc"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit01.jpg",
+      "bytes": 286309,
+      "sha256": "0c0170c5316be8e0d89f4002432360bea5ad1c33e115c9c16df281c65cbc77ac"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit05_normal.jpg",
+      "bytes": 296993,
+      "sha256": "1a896dba1b4966aa4f9fc4e064e68a6fe8671447cf24a63daf1b9a8348bc8024"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_long01.png",
+      "bytes": 1205118,
+      "sha256": "7dbd3961b0afdad0424d81a5b04effa528c2ddc1bf2bb16f659a216dac4025d5"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes01.jpg",
+      "bytes": 134880,
+      "sha256": "c47f071bc9d62e97f78a127dbe993be350c3e59cd424c7bab6d19e3fcc6c86cd"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_sportsuit01_normal.jpg",
+      "bytes": 25299,
+      "sha256": "4f230e56e820cd97613c74fd73cf92510cf462d1fc5a1496cee30442d74f20ef"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_caucasian_male.jpg",
+      "bytes": 298357,
+      "sha256": "e85aafc3b6a3fadf49f7171f8f66003472bb958895fea9b54719bfa3f1b2917c"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_ponytail01.png",
+      "bytes": 1249229,
+      "sha256": "6600d726fd857dd0fe8c31bced078efc1dacc2a14d5a25c29bf84d776a4a1215"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes03.jpg",
+      "bytes": 43144,
+      "sha256": "c2baacb2c4f7e8e87ee4ba94da1539f0ed8827260a9b4dfdf191010744824cb0"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_bluegreen.png",
+      "bytes": 289517,
+      "sha256": "04a42fb7312144b4ae839c971cefc2a353de4da88f058de79121e8e6417c4b11"
+    },
+    {
+      "path": "ara/public/assets/textures/eyelashes_eyelashes01.png",
+      "bytes": 53144,
+      "sha256": "1ea7becc92b38bc18bf3c610cac1e67ad8f020d694f48246f5a592101406f0e6"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_afro01.png",
+      "bytes": 1890921,
+      "sha256": "664ab1ccc2483eda8e3a50cdd30e047a68965fc0887946af975ec6948c708dce"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_middleage_asian_male.jpg",
+      "bytes": 305178,
+      "sha256": "5821e455c9703031039f59c582ea1f444012b71e893b7e91f5439a8aa11fabd0"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_brownlight.png",
+      "bytes": 292436,
+      "sha256": "cd20f45d31fbd1a3dcfe711662a58fb21f868b272e56c23d0033e915dae63239"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow006.png",
+      "bytes": 14245,
+      "sha256": "372c5fbe78c564044fb1530f4eeed02edb1aae7e0bade8b77a46666180985860"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_brown.png",
+      "bytes": 287212,
+      "sha256": "5920c08cd42dc0d203ce01c35a3a4dad8a91dc5fefef2b8a2c5d4c32cb9c030d"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_worksuit01.jpg",
+      "bytes": 394120,
+      "sha256": "5e37f07cb681ca310bd0223f290f6f2661aadbcafa611f1d1c22ed540489ee3a"
+    },
+    {
+      "path": "ara/public/assets/textures/teeth_teeth_base.png",
+      "bytes": 697030,
+      "sha256": "3b4e7c4e1cf36e2f825927892d8181204157b4752f5615a5ce1099f21f2b0802"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_blue.png",
+      "bytes": 287728,
+      "sha256": "52292a4a2b7618842e5a7587730a0351f2242d877c4a9d20583716432eb42faa"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_casualsuit02_normal.jpg",
+      "bytes": 94635,
+      "sha256": "0da95ed0fd4e0fd2f6601f4d52482b2a36bebbec51d6ed249637e30ba8411282"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_middleage_caucasian_female.jpg",
+      "bytes": 272528,
+      "sha256": "2f3e9c71fd861175282d6c6241d92f37a6cdd7ffcb17406ab6f04ca7702736cd"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_old_caucasian_male.jpg",
+      "bytes": 429393,
+      "sha256": "c6f70bf547e5bb662c9715f2d7677e5627c4ef2e79eb6431ec1ecf2e5e2b3495"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_caucasian_female2.jpg",
+      "bytes": 248483,
+      "sha256": "2d50360ac45fe126a52920509f384fecb1a155348fd3394a7a7318b8c5dd3126"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes01_normal.jpg",
+      "bytes": 163962,
+      "sha256": "e55822589767d4b5ac3dd2ea001af6bd3d050927db41f54d44d62c3f372af14a"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_old_asian_male.jpg",
+      "bytes": 369052,
+      "sha256": "717459767f01143bd8e87de2ba4f3c10b71b988d2209ac9aae20ea57a3664dc5"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_shoes05.jpg",
+      "bytes": 133923,
+      "sha256": "1ab7afc761d0ae03c2ff6ef6e9006ae7a4f6aad3f2ebe36c4e03867ad3563e0d"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit03_normal.jpg",
+      "bytes": 544525,
+      "sha256": "bc407a6931b88896ab790114d9dfb14363b67e26cb922ee3c76ba81db41ce291"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_old_caucasian_female.jpg",
+      "bytes": 369134,
+      "sha256": "cbe5de357c54c607741737ac6217e41a193a3fae9a7f24a288e7e6e51a988576"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_african_female.jpg",
+      "bytes": 232415,
+      "sha256": "0c3061578631720404a47c1bc1b6df404ede92a1cbd65e759a51972379e84389"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit03.jpg",
+      "bytes": 482653,
+      "sha256": "71b898c74aa144fe099482be3876b81d26b1aa3d335f81e3d6562b5ba6d06451"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_sportsuit01.jpg",
+      "bytes": 170635,
+      "sha256": "dfc304aa62faac0f654586fc304c382afc427d015b0150de1a899c9f9eec7c45"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit04_normal.jpg",
+      "bytes": 259992,
+      "sha256": "3b5131d4c3bbd6a6b29522354b69959131c6bdf97cb62ac2ba715dce7b036755"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_worksuit01_normal.jpg",
+      "bytes": 357204,
+      "sha256": "1071ad4e9e6b73cb1fd4b858a7bd67467906cddb1cda630773bf213ba3adced2"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit05.jpg",
+      "bytes": 290664,
+      "sha256": "a0088c0bbdc10281931f0cb146267e8bc981a06cccf82cb32cd488f0b121fbbd"
+    },
+    {
+      "path": "ara/public/assets/textures/tongue_tongue01.jpg",
+      "bytes": 46643,
+      "sha256": "295c683ee7e13b012880e10cd663e79f7b163d0ee6e78a088069a9ccd87b8a14"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_female_casualsuit02.jpg",
+      "bytes": 687149,
+      "sha256": "4b8465eb88347cfd76cb42db4f5d045a5676a908606314a958ca0b8b907e0906"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_grey.png",
+      "bytes": 296430,
+      "sha256": "e48de1fccac99fe26cd2d0f77ded74ec3ce8d3632b829f7659bfb115c620f8c7"
+    },
+    {
+      "path": "ara/public/assets/textures/teeth_teeth_shape03.png",
+      "bytes": 697030,
+      "sha256": "3b4e7c4e1cf36e2f825927892d8181204157b4752f5615a5ce1099f21f2b0802"
+    },
+    {
+      "path": "ara/public/assets/textures/eyes_deepblue.png",
+      "bytes": 289472,
+      "sha256": "e5d12cbc9d2ac1f7a1d33fab1be19def6f451edd97cacd2092e49838a6bfb83e"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow003.png",
+      "bytes": 41030,
+      "sha256": "3e2588f2258864796d4bb75a7f9663b70d7664f5fbcccb6c49a5b058d1356f6c"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_short02.png",
+      "bytes": 1434693,
+      "sha256": "ac7030b3a4c563631104c5f5dcd302d643355f1bfb6438e1f945ace334802127"
+    },
+    {
+      "path": "ara/public/assets/textures/teeth_teeth_shape04.png",
+      "bytes": 697030,
+      "sha256": "3b4e7c4e1cf36e2f825927892d8181204157b4752f5615a5ce1099f21f2b0802"
+    },
+    {
+      "path": "ara/public/assets/textures/teeth_teeth_shape05.png",
+      "bytes": 697030,
+      "sha256": "3b4e7c4e1cf36e2f825927892d8181204157b4752f5615a5ce1099f21f2b0802"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_elegantsuit01.jpg",
+      "bytes": 100404,
+      "sha256": "873ba7af2985ea1bfffe0f0a1da839829897d4b8bfee2d3722d83c5da9100c92"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_old_african_female.jpg",
+      "bytes": 225946,
+      "sha256": "e1b04decbb027bf39e207975f59c606cf96772371d35c75a7d84de33d159da91"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit06.jpg",
+      "bytes": 228016,
+      "sha256": "6aefbd131df6d5b5eafae88d91256810e4650f3d256decb4de8ba5c5ace503be"
+    },
+    {
+      "path": "ara/public/assets/textures/teeth_teeth_shape01.png",
+      "bytes": 697030,
+      "sha256": "3b4e7c4e1cf36e2f825927892d8181204157b4752f5615a5ce1099f21f2b0802"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_bob01.png",
+      "bytes": 1529093,
+      "sha256": "f114e1eaf009889415b3c849a723acbf3e98caf4dbce9e9d7083a187c84c8b9b"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow007.png",
+      "bytes": 16898,
+      "sha256": "d0fe1b2291d49edbf1d4ae8ba555b7e07eede074620a12fc75e7a79ba239cffd"
+    },
+    {
+      "path": "ara/public/assets/textures/hair_bob02.png",
+      "bytes": 1041224,
+      "sha256": "3a13b6bd1a1b3cf5ab984c52c7e622c395294d679b33d2882ba7055960b54b2e"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_fedora_cocked_normal.jpg",
+      "bytes": 31788,
+      "sha256": "4c38d5f8ee8a4f6528afd84b042bab297e19bf076b3e85a758f2414180aefca1"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_young_asian_female.jpg",
+      "bytes": 251777,
+      "sha256": "e17ba0a86f4a2c37f118dcf00a272da614109eae4ff1a337260a07d8f89f5314"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit02_normal.jpg",
+      "bytes": 256043,
+      "sha256": "beae8ae83b5e68c4066e38acd8068f3518d4bd151e6814f3dedfb3566275455c"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow008.png",
+      "bytes": 44540,
+      "sha256": "9ee0eb32c9c92866d16599ff5194955c4e1b15b5a370eff6dc6dcd4eba7f4ffa"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit06_normal.jpg",
+      "bytes": 299288,
+      "sha256": "cd19112c2497a1523f2744ed43d300288a9065fa41066c71b69abd9408586efb"
+    },
+    {
+      "path": "ara/public/assets/textures/eyebrows_eyebrow004.png",
+      "bytes": 37160,
+      "sha256": "45c3b99ad904839c2a5fbc4667f5be870a1c57cd9deea57c187fc602a93972f3"
+    },
+    {
+      "path": "ara/public/assets/textures/skin_middleage_asian_female.jpg",
+      "bytes": 239490,
+      "sha256": "722e215262a3d33ec23f3a0006fffad8091acdcdabdd7146c30faf05d592c489"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_male_casualsuit01_normal.jpg",
+      "bytes": 253748,
+      "sha256": "e09780b1ab00cbd4daaf92ef70227f73e98f2987f7876eb7326ec6af9000ba55"
+    },
+    {
+      "path": "ara/public/assets/textures/outfit_fedora_cocked.jpg",
+      "bytes": 856032,
+      "sha256": "e044f56fefa3431784200a03a0ef2a01e655dafc66cdb9f0726a7d4302c53a7c"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyelashes_eyelashes03.pack",
+      "bytes": 6737,
+      "sha256": "345f271e37ecfb878a7f4686058ed2c50a7f304d230c37e51b80c169a91a60d1"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_short03.pack",
+      "bytes": 45681,
+      "sha256": "d551621a5f114c3fa49051b4f7d4adc4847aad910aac3a08442e1fb3ef6824fd"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_short02.pack",
+      "bytes": 78822,
+      "sha256": "c189e4881d593b07ab78320fbdc3c0a811bfb5e9370d176cf9418280df8dc6b4"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow004.pack",
+      "bytes": 4848,
+      "sha256": "fd5549169e8c6a81f1adfdadba4b6ee8fcb0159d451a9f6c79fb352c353aac60"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_elegantsuit01.pack",
+      "bytes": 329939,
+      "sha256": "9a000bc84bf60214ebcd79062aa4384985a7682397fcbe0962a19d3cce6da68e"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow007.pack",
+      "bytes": 4701,
+      "sha256": "db90755903f2a489fe31b9a42c44ac5b601927d5b3f11e089afb330569293446"
+    },
+    {
+      "path": "ara/public/assets/proxies/tongue_tongue01.pack",
+      "bytes": 5671,
+      "sha256": "566dc4992b9632fc0586be6c39f5c5576d23a599517dd876750fd4fef2b74469"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_female_generic.pack",
+      "bytes": 329833,
+      "sha256": "500faabde1900019276fbdf6a7f1b4be1529f89bbcb2fdc5e8711f46b87f8a6f"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_casualsuit01.pack",
+      "bytes": 363339,
+      "sha256": "f0bb29ede0f8bd388da76dd5fa31b772f80f83fc3e17d7faf6c8b7bbf743d719"
+    },
+    {
+      "path": "ara/public/assets/proxies/shoes_shoes01.pack",
+      "bytes": 60182,
+      "sha256": "d287ecde4f4532dbf40075ae6cafe9b5e41206f0c08fc75d39c20a7d3be467d5"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyelashes_eyelashes01.pack",
+      "bytes": 5311,
+      "sha256": "5bafda2ee631bae6b46fd6e14f5b752e9541b9e5a53a49999312d696b3a0b627"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_male_muscle_13290.pack",
+      "bytes": 366561,
+      "sha256": "704badb4a92e8a5255002fac4a4fc3390119ef1cddf80f8272a4c30657410675"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_bob01.pack",
+      "bytes": 196297,
+      "sha256": "6096188952380d3001331cffccd3b91ed35b5e0ed01dbad52b71c24856af8ced"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_male1591.pack",
+      "bytes": 63536,
+      "sha256": "b1389feb739666f9bc64dc4250205338576d52758621f59d1f2f25f4a6d9738e"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyelashes_eyelashes04.pack",
+      "bytes": 7163,
+      "sha256": "a232a11df5dc5e86af93a1349be8a56f18f79d206a5f0e22e66d63e81279cbb7"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow009.pack",
+      "bytes": 4973,
+      "sha256": "e01ef96f7e9f639ff12115d9fa1fb8205c62cb5e6662040ff495b85b5665b5b9"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow011.pack",
+      "bytes": 4875,
+      "sha256": "4c824fa009161c58701b6532b52c42973c47ede12c14970c888a45263da8f597"
+    },
+    {
+      "path": "ara/public/assets/proxies/hat_fedora01.pack",
+      "bytes": 29346,
+      "sha256": "b5fa86ee3ee510b0ca8957f578e3a5c7da4ef3d4f7e07e2649f20cb7e4927e23"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_braid01.pack",
+      "bytes": 153631,
+      "sha256": "9ff92a432b8caf27560a8ea16c80730961ed4aacd3e39ac2e4edb261eee2b43d"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_casualsuit06.pack",
+      "bytes": 169399,
+      "sha256": "4ff81258e321686b80f7cfe87de2eba51c9dc8e6a5e03c73e6b817a2eaf18697"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_female1605.pack",
+      "bytes": 64960,
+      "sha256": "8ba439ac6a4bb81b1ec078d0474ab894ba79434457c65a8e70ec314449eaaf57"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow002.pack",
+      "bytes": 4825,
+      "sha256": "4108c5258a81de84b1f7070ca700da5dc3de5381d8ff035458697c82dee174c9"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyes_high-poly.pack",
+      "bytes": 34811,
+      "sha256": "3b460002b494c86aeb441235c0d54a1728b4df8775b8bf1bb9d488882c27759f"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_afro01.pack",
+      "bytes": 63594,
+      "sha256": "aa80d1d5b17ab0e231af49d3ec626520f1e01084e7fd7edd2788d73c2b0cba0b"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_female_elegantsuit01.pack",
+      "bytes": 101283,
+      "sha256": "9e8fce779a756fb031063c7987cbacd1255b372f49ee5db1fe068a0d2ed9f863"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyes_low-poly.pack",
+      "bytes": 2319,
+      "sha256": "1a496e23a82a7b19ad729748391bb67395fa0d096b4e71e911d9e7df4be7a9ff"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_casualsuit05.pack",
+      "bytes": 144959,
+      "sha256": "77e79edc0e4febcb20fbc970e55f46d58b511e9cb4375c9c2dcc0c7940706389"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow003.pack",
+      "bytes": 4846,
+      "sha256": "548fd280ef2292097163d701db1372b486189bdad01d97938fbff491e9a7724f"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_short04.pack",
+      "bytes": 34523,
+      "sha256": "89e2041b0be087ada0d5d67234241c27dfdef1529010b78f5ffbe0d109fd98ee"
+    },
+    {
+      "path": "ara/public/assets/proxies/teeth_teeth_shape03.pack",
+      "bytes": 124275,
+      "sha256": "6487cd1ccdef34a6bca02da2ad16c6f44ad751307a8752f7106d2085060c57a0"
+    },
+    {
+      "path": "ara/public/assets/proxies/teeth_teeth_shape04.pack",
+      "bytes": 124295,
+      "sha256": "6a7245cfe8ceecbe132dfe0a5c442320bb64d84e0e83696c685eb8a2fda067c1"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_ponytail01.pack",
+      "bytes": 139467,
+      "sha256": "58110f7b26ec0381705e76e94f70507f292f2a5d9f95facaaf573c055bcf7489"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_proxy741.pack",
+      "bytes": 31464,
+      "sha256": "4ab0ab2f8d6e05ca5412596dc14946e15dd28d3a81d0897e8399a257db502b78"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_female_sportsuit01.pack",
+      "bytes": 88437,
+      "sha256": "58cb518420383da8b7f5560d39caa3329b24b2a9120af437cebb5c4735d367d3"
+    },
+    {
+      "path": "ara/public/assets/proxies/shoes_shoes04.pack",
+      "bytes": 60182,
+      "sha256": "de822ea41c8867f6cab7c5cb971b148128cb2c4cac96ab595a70e92f0da2c335"
+    },
+    {
+      "path": "ara/public/assets/proxies/shoes_shoes06.pack",
+      "bytes": 52800,
+      "sha256": "630de2477ec19ecc718ec28dc71747301d73a9b6f1f41c9b3738a19bd55e00ef"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_female_casualsuit01.pack",
+      "bytes": 106320,
+      "sha256": "1d0d47894b74fca6820de1e9e5e5ba881398499da37170f9d67dc38809e35e91"
+    },
+    {
+      "path": "ara/public/assets/proxies/teeth_teeth_shape01.pack",
+      "bytes": 124300,
+      "sha256": "58e289258b3e75ef11b1c4f0d47696fdc5c7d818d4ced439f2bcd6fa986b109a"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_casualsuit04.pack",
+      "bytes": 80499,
+      "sha256": "c7b5854ba540dbdf71ace4099be269ecce2c908ed8131f7b0be0ac350a744e83"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow008.pack",
+      "bytes": 4852,
+      "sha256": "440ce47a4745807778b7ce2a619ccc277c747aba57bd6869f54f939a5dfc5a22"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow001.pack",
+      "bytes": 4874,
+      "sha256": "c6a5c0d28dfa7e18fd9951dd20f43e2ba9d358892c9bf2139cb3e92b90a6cfb2"
+    },
+    {
+      "path": "ara/public/assets/proxies/teeth_teeth_shape05.pack",
+      "bytes": 124304,
+      "sha256": "e52ad18f31ab145968249f7c96cd5d60426c46e56a86ea6b964ffbe246fa9ea0"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_short01.pack",
+      "bytes": 112251,
+      "sha256": "87c0b98acb2064974fcce29bb67a839c5f93271cf43509326c2dcaba58ed3023"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow010.pack",
+      "bytes": 4859,
+      "sha256": "bee81ee13549d6f233085d23433d03864f3e986c87b184750880c4b61306ee6b"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_male_generic.pack",
+      "bytes": 344897,
+      "sha256": "a6c306ac199367527b7bccdf8fb2d444f011a24da52602ef4577afbc2fdfe562"
+    },
+    {
+      "path": "ara/public/assets/proxies/shoes_shoes03.pack",
+      "bytes": 73406,
+      "sha256": "7272f86b1818853a5d6679068b1d19f0b3b1335deb36600a7afd6ce1ec0e74fc"
+    },
+    {
+      "path": "ara/public/assets/proxies/teeth_teeth_shape02.pack",
+      "bytes": 124360,
+      "sha256": "5bd32d6250818fec4bacec18619c5c93de225fc9067a0f0093ff41a8bddf3263"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyelashes_eyelashes02.pack",
+      "bytes": 6463,
+      "sha256": "3ea2df6da072946d98f8d6b69a03a97b0bb1c69ae21f704406e5a7939b4fb57c"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_casualsuit03.pack",
+      "bytes": 118443,
+      "sha256": "e847a4ab5c486026269709cd01b95fc2a356ad290394a817bf8b120355574901"
+    },
+    {
+      "path": "ara/public/assets/proxies/shoes_shoes02.pack",
+      "bytes": 52799,
+      "sha256": "55836c0d1db8a9bb95d806337a4546af6087b22fc5b6f9669a4bb4652232ffed"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_bob02.pack",
+      "bytes": 69836,
+      "sha256": "65d57886e25c72d2ed631595b1f6e0cca1283d881ce7b05320a5c65812c8237c"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_female_casualsuit02.pack",
+      "bytes": 127034,
+      "sha256": "30c6a63025a2eebb944db358b5a64618299d31ba5e209acab2cf85ea32de48dc"
+    },
+    {
+      "path": "ara/public/assets/proxies/shoes_shoes05.pack",
+      "bytes": 52800,
+      "sha256": "7ae1bfaa206c3cd4e2681f48913d6a52cf9692ea4e43b17bddd34a0fb9315cc4"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_worksuit01.pack",
+      "bytes": 163203,
+      "sha256": "bfa637425b418d76662f178f901253edd4160aa8bd16d187b987a5cab586a2e8"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow005.pack",
+      "bytes": 4797,
+      "sha256": "25a42c8c71fd1f36cadccd6710395fec7fb011f3aa4ff631ca0b52490e05855f"
+    },
+    {
+      "path": "ara/public/assets/proxies/body_female_muscle_13442.pack",
+      "bytes": 389689,
+      "sha256": "8a228127d796ba9d8aa5c78c6b322ae21595edd0b3a82d3cb57bb95386ceddf7"
+    },
+    {
+      "path": "ara/public/assets/proxies/teeth_teeth_base.pack",
+      "bytes": 124255,
+      "sha256": "67ca3e31dd5092f704ca01d9f187697ea7035b75bdaa2867d86bc4f39f7ea166"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow006.pack",
+      "bytes": 4729,
+      "sha256": "28c1d8ad7b7496e52c8933c731fa6052ceeb7a34a965e2d152606c5e7513662e"
+    },
+    {
+      "path": "ara/public/assets/proxies/hair_long01.pack",
+      "bytes": 116084,
+      "sha256": "df26e9c41c74b27f60f276f64f06e662721aaa60587fa9cf15cbb63140b1bd15"
+    },
+    {
+      "path": "ara/public/assets/proxies/eyebrows_eyebrow012.pack",
+      "bytes": 4950,
+      "sha256": "7b7fc32c22ba3b8cc13e7f42024efb2dc8c4f83aa78489bf65238af09f0fc47c"
+    },
+    {
+      "path": "ara/public/assets/proxies/outfit_male_casualsuit02.pack",
+      "bytes": 99270,
+      "sha256": "6ee7d6f3aa3f14bc1a9367807f74cad176936f23f11822f2bc0f8799cbaa5108"
+    },
+    {
+      "path": "ara/public/assets/proxies/hat_fedora_cocked.pack",
+      "bytes": 29380,
+      "sha256": "a7d7f226f4feaac9ed5aeb2334a4aebf80a21be375bd6e4812f317b0512b79ea"
+    },
+    {
+      "path": "ara/.github/PULL_REQUEST_TEMPLATE.md",
+      "bytes": 240,
+      "sha256": "1d06090e73cccaf79495502241490ae3112372b666480ac7fa24012c92575214"
+    },
+    {
+      "path": "ara/.github/workflows/ci.yml",
+      "bytes": 1170,
+      "sha256": "21fe0eeef84fab6f38f0dd98cecfd2da5893b3d536d79beea35c34011786fafb"
+    },
+    {
+      "path": "ara/.github/workflows/pages.yml",
+      "bytes": 1272,
+      "sha256": "19abb1121071d09dd568057b41d85d7b5ab2a08347a12abe3a1d7edfdd30886e"
+    },
+    {
+      "path": "ara/.github/ISSUE_TEMPLATE/feature_request.md",
+      "bytes": 410,
+      "sha256": "ec9c517e9e138438363061ef8a51fb4ade34ea60c05e73b404a98dca9cd4fe00"
+    },
+    {
+      "path": "ara/.github/ISSUE_TEMPLATE/config.yml",
+      "bytes": 27,
+      "sha256": "13064e7bea658e01e718b414fbb7b3b244f36411fe25ee2055c151f7b534547a"
+    },
+    {
+      "path": "ara/.github/ISSUE_TEMPLATE/bug_report.md",
+      "bytes": 521,
+      "sha256": "62e896a3da02188f9614f370c4bf1f6c89d428f33c8994f01b0f25a2776fab7e"
+    },
+    {
+      "path": "ara/docs/self-hosting.md",
+      "bytes": 7976,
+      "sha256": "8554e769fac29d4ff4016e63741491be8fab6c8f29d2f5769ffd0b0c64819528"
+    },
+    {
+      "path": "ara/docs/animations.md",
+      "bytes": 24971,
+      "sha256": "27ec19db18aec2dc8d1b80ae9c268d783672b586aef75ebe96d5f66b138684c3"
+    },
+    {
+      "path": "ara/docs/faces.md",
+      "bytes": 4300,
+      "sha256": "2fff4814e20edf00fa53e75043010f2b9dc48e57416c519cef0eef5bf9fec9eb"
+    },
+    {
+      "path": "ara/docs/play.md",
+      "bytes": 30681,
+      "sha256": "b698b80939fc534d95b2c90fa3920ea1857b5ed6b2b548d5c91fe3f64c78bd2a"
+    },
+    {
+      "path": "ara/docs/engines.md",
+      "bytes": 2102,
+      "sha256": "5176045a3d461fbdbd1c05872c29bcd37b836016a436798b06ed72ea2615a17c"
+    },
+    {
+      "path": "ara/docs/studio-location-maps.md",
+      "bytes": 7576,
+      "sha256": "f4c3f2a7e1ab5890084abccf5e8de6ed9192913e8967b329ce87936441686970"
+    },
+    {
+      "path": "ara/docs/exporting.md",
+      "bytes": 3225,
+      "sha256": "9ee780a2420dae3d05712c71cb770824224c80d1477091c7baa0b585e02d374b"
+    },
+    {
+      "path": "ara/docs/characters.md",
+      "bytes": 13342,
+      "sha256": "cd590f31268a887027f82afb1eda165bee47894c29d484f0fea3bae00282c3cf"
+    },
+    {
+      "path": "ara/docs/README.md",
+      "bytes": 1612,
+      "sha256": "90a20b289b5b074e8f4e2692f6b636c4fe893453b2e5f4311f15f98dab2000e4"
+    },
+    {
+      "path": "ara/docs/rigging.md",
+      "bytes": 2287,
+      "sha256": "48e503a04c76bcf54aed00d471f39d7a12abe7361398340e15b1277815d1da75"
+    },
+    {
+      "path": "ara/docs/architecture.md",
+      "bytes": 12968,
+      "sha256": "574d82368787285e5c32e74fbb6fab65368bea928763dd090bd5b0cc388aad94"
+    },
+    {
+      "path": "ara/docs/play-expansion.md",
+      "bytes": 14287,
+      "sha256": "4189287764a0313652e4410484744872cdb7862a2c45484260c16e852e989f2d"
+    },
+    {
+      "path": "ara/docs/studio.md",
+      "bytes": 32501,
+      "sha256": "30e4392ef765067bd0704ad9dd3e2f0508c713a91df4f87538bbdc885bfa74b5"
+    },
+    {
+      "path": "ara/docs/plans/vehicle-actions.md",
+      "bytes": 1846,
+      "sha256": "74ba50b31725bb7f3ed1e6d3a83c8e0321144f811675c60ae222c6336a4d9ed6"
+    },
+    {
+      "path": "ara/docs/examples/parachute-descent.ara-studio.json",
+      "bytes": 1440,
+      "sha256": "b69b34a1b6838e725ee0f201a44d4812f0d8b12be363c60b7f885b724e61ada3"
+    },
+    {
+      "path": "ara/play/index.html",
+      "bytes": 43083,
+      "sha256": "56b584898450851fa997849109e899ea108e72dae05f7ebc9224e6b6acc4c5ae"
+    },
+    {
+      "path": "ara/play/standalone.html",
+      "bytes": 13546,
+      "sha256": "5d20b4687fbcdbf570dd68dc91a27a9ff7b1e2700fd1eecc6678d3a9007a2dd8"
+    },
+    {
+      "path": "out/touchline_footballer_v2.glb",
+      "bytes": 5557868,
+      "sha256": "140779e8bec96cb97b8cf6d8baf0493a7aa87de6869a664c1df100041dd2175f"
+    },
+    {
+      "path": "out/touchline_footballer.glb",
+      "bytes": 5721108,
+      "sha256": "3113e6fdf0479610ccfd14cd560a81e67c55a4d9a4a1e968cd0b51c5413e595c"
+    },
+    {
+      "path": "out/raw.gltf.json",
+      "bytes": 24168,
+      "sha256": "a354e0d0c9d8f6750c96274dd8b920ed42559a8ea9db5804ee65e79157a265ec"
+    },
+    {
+      "path": "out/footballer-raw.blend",
+      "bytes": 11249537,
+      "sha256": "4e6c3adca15c479cf0c6e7fe42efc338a3760aa4d099743422674eb6a3b065e9"
+    }
+  ],
+  "selectedFileCount": 902,
+  "selectedBytes": 120566112,
+  "excludedPaths": [
+    {
+      "path": "deps/node_modules/",
+      "reason": "Git-metadata, installerede afhængigheder eller cache/genereret værktøjsoutput"
+    },
+    {
+      "path": "ara/.git/",
+      "reason": "Git-metadata, installerede afhængigheder eller cache/genereret værktøjsoutput"
+    },
+    {
+      "path": "ara/public/media/",
+      "reason": "Tredjeparts-generatorens demonstrations-/marketingmedier, ikke Touchlines spilleraktiver eller CLI-kilde"
+    },
+    {
+      "path": "ara/docs/media/",
+      "reason": "Tredjeparts-generatorens demonstrations-/marketingmedier, ikke Touchlines spilleraktiver eller CLI-kilde"
+    }
+  ],
+  "symlinksNotFollowed": [
+    {
+      "path": "ara/node_modules",
+      "target": "../deps/node_modules"
+    }
+  ],
+  "textCredentialPatternScan": {
+    "scannedFiles": 488,
+    "findings": [],
+    "scope": "Mønstersøgning i tekst; binære Blender-/GLB-filer hashregistreret, ikke fuldt analyseret for indlejrede metadata"
+  },
+  "generator": {
+    "repository": "https://github.com/olatunde85/3d-gen",
+    "baselineCommit": "3a9fca61fc1ea081a2d252fcdd588023d1c10587",
+    "localChanges": [
+      " M src/core/garments/catalog.ts",
+      " M src/core/garments/sneakers.ts",
+      "?? scripts/export-touchline-motion.ts"
+    ],
+    "license": "MIT; karakterdata separatCC0/CMU-proveniens jf licensfiler"
+  },
+  "importantAuthoringFiles": [
+    "touchline-footballer.blend",
+    "touchline-footballer.blend1",
+    "touchline-footballer-v2.blend",
+    "touchline-footballer-v2.blend1",
+    "out/footballer-raw.blend",
+    "footballer.params.json",
+    "footballer-v2.params.json",
+    "optimize_footballer.py",
+    "optimize_footballer_v2.py",
+    "touchline-motion.json",
+    "ara/src/core/garments/catalog.ts",
+    "ara/src/core/garments/sneakers.ts",
+    "ara/scripts/export-cli.ts",
+    "ara/public/assets/base.pack",
+    "ara/public/assets/targets.pack",
+    "ara/public/assets/catalog.json",
+    "ara/LICENSE",
+    "ara/scripts/ASSETS_LICENSE.txt",
+    "makehuman-license.md",
+    "ara-assets-license.txt",
+    "ASSET-LICENSES.md",
+    "INTEGRATION.md",
+    "deps/package.json",
+    "deps/package-lock.json",
+    "ara/scripts/export-touchline-motion.ts"
+  ],
+  "gameAssetMatches": [
+    {
+      "researchPath": "touchline-footballer-v2.glb",
+      "gameAsset": "assets/game/football-pro.glb",
+      "sha256Matches": true,
+      "researchSha256": "d31843ec2e893e2e080f360010f9c380beb8f92fa85904b391b1770c2910c916",
+      "gameSha256": "d31843ec2e893e2e080f360010f9c380beb8f92fa85904b391b1770c2910c916"
+    },
+    {
+      "researchPath": "touchline-motion.json",
+      "gameAsset": "assets/game/football-motion.json",
+      "sha256Matches": true,
+      "researchSha256": "8d95cb2eec29dcf242b594ff093640c4c367e282124ce6e869dccb965041c413",
+      "gameSha256": "8d95cb2eec29dcf242b594ff093640c4c367e282124ce6e869dccb965041c413"
+    }
+  ],
+  "blendHeaders": [
+    {
+      "path": "touchline-footballer.blend",
+      "headerHex": "424c454e4445522d76343033",
+      "startsWithBlenderMagic": true,
+      "readableBytes": 7725925
+    },
+    {
+      "path": "touchline-footballer.blend1",
+      "headerHex": "424c454e4445522d76343033",
+      "startsWithBlenderMagic": true,
+      "readableBytes": 7725925
+    },
+    {
+      "path": "touchline-footballer-v2.blend",
+      "headerHex": "424c454e4445522d76343033",
+      "startsWithBlenderMagic": true,
+      "readableBytes": 7535881
+    },
+    {
+      "path": "touchline-footballer-v2.blend1",
+      "headerHex": "424c454e4445522d76343033",
+      "startsWithBlenderMagic": true,
+      "readableBytes": 7704577
+    },
+    {
+      "path": "out/footballer-raw.blend",
+      "headerHex": "424c454e4445522d76343033",
+      "startsWithBlenderMagic": true,
+      "readableBytes": 11249537
+    }
+  ],
+  "selectedSourceNote": "Filerne beholdes i deres lokale arbejdsudgave. Det omfatter to ændrede Ara-generatorfiler og det lokale motion-eksportscript, som ikke findes i generatorens HEAD."
+}

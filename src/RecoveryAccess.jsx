@@ -1,0 +1,2 @@
+import React from'react';
+export default function RecoveryAccess({status,onOpen}){const ready=status==='ready';return <div className="recovery-access"><button type="button" className="forgot-password" disabled={!ready} onClick={onOpen}>Glemt adgangskoden?</button>{!ready&&<p className="recovery-status" role="status">{status==='off'?'Nulstilling via mail er endnu ikke aktiveret.':status==='error'?'Mailnulstilling kan ikke hentes lige nu.':'Henter status for mailnulstilling…'}</p>}</div>}

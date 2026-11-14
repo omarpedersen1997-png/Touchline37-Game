@@ -1,0 +1,7 @@
+/* Browser-only adaptations. Native safe-area/layout rules remain unchanged. */
+.web-game .app-shell,.web-game .auth-page{min-height:100dvh}
+.web-game .page-heading>div,.web-game .main-shell{min-width:0}
+.web-game .modal-backdrop{overflow-y:auto;overscroll-behavior:contain}
+.web-game .modal{overscroll-behavior:contain}
+@media(max-width:760px){.web-game input,.web-game textarea,.web-game select{font-size:16px}.web-game .page-heading h1{overflow-wrap:anywhere}}
+@media(max-height:560px){.web-game .modal-backdrop,.web-game .match-backdrop{align-items:flex-start;padding-top:10px;padding-bottom:10px}.web-game .modal,.web-game .match-dialog{max-height:calc(100dvh - 20px)}}

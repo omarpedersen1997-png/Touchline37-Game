@@ -1,0 +1,15 @@
+# Build 34 — physical contacts, more pitch detail and lower frame workload
+
+New played matches use engine 7. Engines 1–6 remain immutable and replayable; an already-active match keeps its old rules. New matches remain two 120-second halves with a 10-second interval and the same 5000-input codec and three-minute upload grace.
+
+Tackles no longer award ownership from the old 1.75m/2.65m circles. They have a 100ms visible wind-up and require swept relative grounded foot contact. A successful strike pokes the ball loose. Foot pickups require close low contact; chest-height balls are not magnetically owned, while genuine torso shot blocks deflect and goalkeeper hands/parries use separate bounded contact rules. Collision checks use the carried ball after player movement. lastContact retains player, point, tick and within-tick time. A conservative visual contact guard also prevents extrapolating the displayed ball through an unresolved nearby collision; open-play prediction remains. API 7 replays and duplicate completion remain canonical and pay once.
+
+The fixed TV Pro/TV lens moves approximately 10% closer in engine 7. Ball-follow bounds, camera heading and no game-driven zoom remain. Camera/roof/field sightlines cover engine 7.
+
+Pitch detail adds corner flags, D/corner arcs and spots, technical markings, feathered goal-mouth wear, bench seats, equipment, camera operators and staff: five static submissions/4076 triangles. Static stadium pieces batch by shared material while retaining exact world-space geometry and clipping. The audience uses 32 separately drawn clothing/skin/face variants on four-triangle crossed cards and four stand batches. Near-camera stands are skipped before vertex submission. A Sharp centre-field sample including the new detail reduces environment submission counts from 71 to 14 and submitted environment triangles from 419142 to 15490. These are workload counts, not measured phone FPS.
+
+Sharp retains its native-resolution image and filtering, with detailed geometry on the controlled player/nearest opponent and efficient textured rigs for distant players. Live 2048 shadow-map passes are reserved for explicit 4K; Sharp uses shared soft contact shadows. The worst-case 22-player geometry in Sharp falls from 565774 to 242434 triangles, with no second live-shadow pass. Explicit 4K retains full-team geometry and live shadows. Graphics settings show a measured submitted-frame rate rather than an invented target value.
+
+Validation:399 automated tests plus 3 web-draft checks passed. Contact tests reproduce the old bug and cover near misses, swept timing, tackle wind-up, keepers, posts, goal lines, restarts, bounded personal matches and deterministic full replays. Native packaging, HTML equality, signing, private HTTPS delivery and live server match timing/replay checks are performed separately. Public web/APK opening remains January 1; menus/site design is locked.
+
+No supported browser/CUA or physical-phone GPU path is available here. Geometry/shader contract tests and CPU workload budgets do not certify the final phone image, sustained FPS, thermal behaviour or touch experience.

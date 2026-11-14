@@ -1,0 +1,53 @@
+{
+  "bundleBytes": 107101458,
+  "bundleSha256": "05c0d53b298cecf338612f6d81191b2dae2f744566be8c1d1a766df6b7849ad8",
+  "localUnpublishedFiles": [
+    {
+      "path": "package.json",
+      "bytes": 3270,
+      "sha256": "556ea66b8eea3f58b6a74563ca42a330bed0b16fee8a7ffec249bbfe8688436d"
+    },
+    {
+      "path": "uncommitted-tracked-changes.patch",
+      "bytes": 9526,
+      "sha256": "824ec5bfe5c6fab23be88871dd2aab25ab77a0f0ebb6ca58bea2795d78616956"
+    },
+    {
+      "path": "worker/source-download.js",
+      "bytes": 4176,
+      "sha256": "1ef380f9b81ce4341e621b660480911f30f2a22b4b4b48eb7528ad5713ef28f5"
+    },
+    {
+      "path": "worker/artifact-storage.js",
+      "bytes": 8399,
+      "sha256": "2e17df04978e6dfe4a7d291fbc5d3f7c674c026cb8d236eec3631e0264d0f0b0"
+    },
+    {
+      "path": "worker/index.js",
+      "bytes": 9300,
+      "sha256": "70476af6c64fec569e26fb52d27114fb5f71997dab2ba1c163d6007a8f297e4b"
+    },
+    {
+      "path": "release/ONE-CLUB-ONE-DREAM-REVIEW.md",
+      "bytes": 3014,
+      "sha256": "c38e88fa0b0ef4ed97a23ce78d245beb282e0f6e449f6688a3fdb4a4291d37af"
+    },
+    {
+      "path": "release/source-export.json",
+      "bytes": 406,
+      "sha256": "8bcc3076d92051d86fe0c903f6f145f435268c1d547b3aacc0108c538664836f"
+    },
+    {
+      "path": "tests/source-download.test.mjs",
+      "bytes": 10556,
+      "sha256": "80380fc125e50b0d4ac5e0355b9b4f98ea05177998e570293e9b0c31d216ecca"
+    }
+  ],
+  "originalSigningMaterial": [
+    {
+      "path": "/workspace/android-tools/user/debug.keystore",
+      "present": true,
+      "includedInBackup": false
+    }
+  ]
+}

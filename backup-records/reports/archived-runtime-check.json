@@ -1,0 +1,32 @@
+{
+  "localPayload": "touchline-match37.tar.gz",
+  "siteVersion": 55,
+  "paths": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "9d56cc6336ff83c7aa13f9c524f6bd14922ae441329d59fd8dd03800cb8e54f8",
+      "matchesLiveBefore": true
+    },
+    {
+      "path": "/api/launch",
+      "status": 200,
+      "sha256": "bcaa053f0a633f386260b24335e669e81735cd1267ac9381597d1a6afd0c39a3",
+      "matchesLiveBefore": false,
+      "configurationMatches": true,
+      "note": "Clock fields are dynamic."
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "sha256": "e9c6f62179e94db1fdc17449b8f98dce212086f9adf2a5bc8f5b9e575a6c89fb",
+      "matchesLiveBefore": true
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "sha256": "ead2c3a5e518903385c6075c0fb216e61bc57bdecd8148d439a168692dbf6843",
+      "matchesLiveBefore": true
+    }
+  ]
+}

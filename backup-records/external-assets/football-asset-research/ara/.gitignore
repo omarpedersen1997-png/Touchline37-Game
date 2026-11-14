@@ -1,0 +1,13 @@
+node_modules
+dist
+out
+vendor
+public/assets
+out/
+.DS_Store
+
+# Original Studio recordings (see docs/self-hosting.md#studio)
+music-for-ara/
+sound-for-ara/
+new-sound-effects/
+newer-sound-effects/

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "required": true,
+  "versionCode": 37,
+  "apkSha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+  "screenshots": [
+    {
+      "id": "match",
+      "src": "/assets/captures/match-37-b3da8abedb4c.jpg",
+      "title": "Træd ind på banen.",
+      "description": "En aktuel 11 mod 11-kamp i 4K fra appens fælles webvisning.",
+      "alt": "Touchlines aktuelle 3D-kamp med spillerne, banen, resultattavlen og berøringsstyring, optaget direkte i 4K fra webvisningen.",
+      "width": 3840,
+      "height": 2160,
+      "sha256": "17a0e32718a092b7ae0a80beaeaf699b3333cb6f00515a11efaaa0a861aa17c1",
+      "capturedAt": "2026-11-14T18:53:59.010291+00:00",
+      "provenance": {
+        "method": "Chromium screenshot of exact signed APK web UI",
+        "renderedApkSha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+        "nativePageSha256": "93e052db1c72039e4de9ec1104d773da943e9b59f0aa0e56eb9e94776578b2c5",
+        "pixelProcessing": "none (direct browser JPEG capture)",
+        "format": "image/jpeg",
+        "quality": 98,
+        "runtime": "isolated real Worker API and SQLite",
+        "viewport": {
+          "width": 960,
+          "height": 540,
+          "deviceScaleFactor": 4
+        },
+        "renderProfile": "Chromium web UI (not an installed Android device screenshot)",
+        "frameCapture": "Paused genuine rendered frame, direct CDP viewport capture at configured 4x device scale; native canvas 3840x2160"
+      }
+    },
+    {
+      "id": "clubhouse",
+      "src": "/assets/captures/clubhouse-37-b3da8abedb4c.jpg",
+      "title": "Dit klubhus.",
+      "description": "Klubbens næste kamp og overblik i den aktuelle webvisning.",
+      "alt": "Touchlines klubhus i bredformat, optaget direkte i 4K fra den aktuelle webvisning.",
+      "width": 3840,
+      "height": 2160,
+      "sha256": "40f3a90684b4fb682ac1473de8d3c9519ce02054f183fa59f220bad787a8ee08",
+      "capturedAt": "2026-11-14T18:53:27.729828+00:00",
+      "provenance": {
+        "method": "Chromium screenshot of exact signed APK web UI",
+        "renderedApkSha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+        "nativePageSha256": "93e052db1c72039e4de9ec1104d773da943e9b59f0aa0e56eb9e94776578b2c5",
+        "pixelProcessing": "none (direct browser JPEG capture)",
+        "format": "image/jpeg",
+        "quality": 98,
+        "runtime": "isolated real Worker API and SQLite",
+        "viewport": {
+          "width": 960,
+          "height": 540,
+          "deviceScaleFactor": 4
+        },
+        "renderProfile": "Chromium web UI (not an installed Android device screenshot)"
+      }
+    },
+    {
+      "id": "team",
+      "src": "/assets/captures/team-37-b3da8abedb4c.jpg",
+      "title": "Dit hold. Din plan.",
+      "description": "Startopstilling, formation og taktik i appens webvisning.",
+      "alt": "Touchlines holdvisning i bredformat, optaget direkte i 4K fra den aktuelle webvisning.",
+      "width": 3840,
+      "height": 2160,
+      "sha256": "93851d49d04a80c40733c6c6a9182c4ef766df7202c8b588ff27189460ad7706",
+      "capturedAt": "2026-11-14T18:53:37.239695+00:00",
+      "provenance": {
+        "method": "Chromium screenshot of exact signed APK web UI",
+        "renderedApkSha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+        "nativePageSha256": "93e052db1c72039e4de9ec1104d773da943e9b59f0aa0e56eb9e94776578b2c5",
+        "pixelProcessing": "none (direct browser JPEG capture)",
+        "format": "image/jpeg",
+        "quality": 98,
+        "runtime": "isolated real Worker API and SQLite",
+        "viewport": {
+          "width": 960,
+          "height": 540,
+          "deviceScaleFactor": 4
+        },
+        "renderProfile": "Chromium web UI (not an installed Android device screenshot)"
+      }
+    },
+    {
+      "id": "center",
+      "src": "/assets/captures/center-37-b3da8abedb4c.jpg",
+      "title": "Klubbens retning.",
+      "description": "Klubbens udvikling og DNA i den aktuelle webvisning.",
+      "alt": "Touchlines klubcenter i bredformat, optaget direkte i 4K fra den aktuelle webvisning.",
+      "width": 3840,
+      "height": 2160,
+      "sha256": "100c3d6cb08bf5ffd2d16aa284d30c607e163c6bd36155dc16dc876370496225",
+      "capturedAt": "2026-11-14T18:53:40.552456+00:00",
+      "provenance": {
+        "method": "Chromium screenshot of exact signed APK web UI",
+        "renderedApkSha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+        "nativePageSha256": "93e052db1c72039e4de9ec1104d773da943e9b59f0aa0e56eb9e94776578b2c5",
+        "pixelProcessing": "none (direct browser JPEG capture)",
+        "format": "image/jpeg",
+        "quality": 98,
+        "runtime": "isolated real Worker API and SQLite",
+        "viewport": {
+          "width": 960,
+          "height": 540,
+          "deviceScaleFactor": 4
+        },
+        "renderProfile": "Chromium web UI (not an installed Android device screenshot)"
+      }
+    }
+  ]
+}

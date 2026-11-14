@@ -1,0 +1,1101 @@
+{
+  "baselineCommit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e",
+  "isShallow": false,
+  "commitCount": 67,
+  "refs": [
+    {
+      "ref": "refs/heads/feature/manual-play-3d",
+      "commit": "295c082424e542156a868effeef43aef26d4266c"
+    },
+    {
+      "ref": "refs/heads/main",
+      "commit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e"
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "commit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e"
+    }
+  ],
+  "commits": [
+    {
+      "commit": "c71fbb7b617e95f23c737dc5a9fc7fc0a206430e",
+      "date": "2026-11-14T18:55:30Z",
+      "subject": "Improve goals, grounded celebrations and match replays in engine 10"
+    },
+    {
+      "commit": "fca0c8d3414c716b436996653c6efde131c77cb4",
+      "date": "2026-11-14T13:04:13Z",
+      "subject": "Finish landscape controls and publish verified current-version 4K app views"
+    },
+    {
+      "commit": "5608c2c2d26d2549f41f4fbd85e3a911fa8fac95",
+      "date": "2026-11-14T06:49:00Z",
+      "subject": "Ground player movement, improve through passes and adapt the app to landscape"
+    },
+    {
+      "commit": "68f4548d6ea96b26ceb2ee80a1d2366864cb0a65",
+      "date": "2026-11-13T20:27:38Z",
+      "subject": "Add live tactics, real goal replays and statistics with reliable native saves"
+    },
+    {
+      "commit": "60026520e4d3eaf6d006ac0cd12a6509534a0b99",
+      "date": "2026-11-13T14:48:09Z",
+      "subject": "Guard visual ball prediction around unresolved contacts"
+    },
+    {
+      "commit": "e02ef382da48decf9340cf8852322c2c09ab4bd5",
+      "date": "2026-11-13T14:38:34Z",
+      "subject": "Refresh private build33 download grant"
+    },
+    {
+      "commit": "21b64e9c2e3ed24fdfee5252a713d7d5428ad9dd",
+      "date": "2026-11-13T10:21:59Z",
+      "subject": "Fix physical ball contacts, enrich pitch and reduce match workload"
+    },
+    {
+      "commit": "c64bbec1fe97a5ed3f156045041584beccaae037",
+      "date": "2026-11-13T09:58:02Z",
+      "subject": "Improve match clarity with native resolution and surface filtering"
+    },
+    {
+      "commit": "ea4843f7037e71eb0e5582990ad56839dd527924",
+      "date": "2026-11-13T09:04:22Z",
+      "subject": "Reduce match rendering work and stabilize frame pacing"
+    },
+    {
+      "commit": "2e292c4725d26ed7ca949d7e0547a50fd312adeb",
+      "date": "2026-11-13T08:24:28Z",
+      "subject": "Add two-minute halves, closer ball camera and focused player detail"
+    },
+    {
+      "commit": "e889fccdb6bf0caea6ad6e25e801cc5ec9f51111",
+      "date": "2026-11-13T07:53:32Z",
+      "subject": "Clear stadium camera sightlines and reduce mobile rendering load"
+    },
+    {
+      "commit": "3084903c0a4616c432339f89c6d152aa7da8a9f0",
+      "date": "2026-11-13T02:11:09Z",
+      "subject": "Stabilize match camera lens and refine broadcast presentation"
+    },
+    {
+      "commit": "4ec9d29075fd31010bfa64f8226c2e3fb789c819",
+      "date": "2026-11-13T00:20:08Z",
+      "subject": "Finish professional football clock presentation"
+    },
+    {
+      "commit": "269f8ae4e63868bcadd3b7c98123cd3cf2ad7e8d",
+      "date": "2026-11-13T00:14:22Z",
+      "subject": "Rebuild football matches with landscape HUD and rigged human players"
+    },
+    {
+      "commit": "280d9232fb81d642a96b6287d4deedd904f2c704",
+      "date": "2026-11-12T19:15:57Z",
+      "subject": "Optimize match rendering with 4K output and instanced players"
+    },
+    {
+      "commit": "4b02120afea224ad6308abd1a5327b1b86d5eaa6",
+      "date": "2026-11-12T18:51:08Z",
+      "subject": "Reuse passing preview GPU buffer during held actions"
+    },
+    {
+      "commit": "29cac91d6f1aaf135fc7aaa5825aff21fa22a5f0",
+      "date": "2026-11-12T18:48:01Z",
+      "subject": "Upgrade playable matches with pro camera and analog football engine"
+    },
+    {
+      "commit": "fc562c0cc6e5139527fae6817e7b669bbaaa7f75",
+      "date": "2026-11-12T14:00:48Z",
+      "subject": "Provide an expiring private HTTPS APK download with resume support"
+    },
+    {
+      "commit": "110f6a1c655e4c3962aecee730e8d747aa44158c",
+      "date": "2026-11-12T13:49:51Z",
+      "subject": "Add portrait-led squad and career screens with functional transfer filters"
+    },
+    {
+      "commit": "73f92383707a0461c73530f3d377fd1624b94683",
+      "date": "2026-11-12T09:12:10Z",
+      "subject": "Rebuild football game menu and immersive match view with original slate palette"
+    },
+    {
+      "commit": "6b3a77c0c72fd057e568802ea6e1f39e0a631fef",
+      "date": "2026-11-12T08:45:58Z",
+      "subject": "Make dark green background visibly stronger with a fixed viewport fade"
+    },
+    {
+      "commit": "b36c916c37380c689a9bf4a1b27e599178a001ef",
+      "date": "2026-11-12T08:38:28Z",
+      "subject": "Use a dark green background with a subtle green fade across app and site"
+    },
+    {
+      "commit": "226a71ee757089fb646a67f8d71a31e6700a065c",
+      "date": "2026-11-12T05:42:23Z",
+      "subject": "Smooth match animation and verify deployed eleven-a-side replay flows"
+    },
+    {
+      "commit": "2b3b8f2a860cf45d89de96f3a2e0b17da4acaa3f",
+      "date": "2026-11-12T05:38:12Z",
+      "subject": "Rebuild green stadium and add eleven-a-side playable matches with broadcast controls"
+    },
+    {
+      "commit": "f5fba61ddef582912e676c95641a34116b2cd5cd",
+      "date": "2026-11-12T05:10:59Z",
+      "subject": "Complete light career entry and final football APK"
+    },
+    {
+      "commit": "9b2429fe9ac11f61631238f685500a90ad3df2ee",
+      "date": "2026-11-12T05:08:16Z",
+      "subject": "Rebuild Touchline around a bright football matchday identity"
+    },
+    {
+      "commit": "6d60d4a5455d90f748a376b09e7b84c1fe7b8f64",
+      "date": "2026-11-12T04:48:52Z",
+      "subject": "Redesign Touchline app layout and matching launch website"
+    },
+    {
+      "commit": "cd17cd879eed1e7d25b579f3e89da611939a1ef7",
+      "date": "2026-11-11T22:09:47Z",
+      "subject": "Make simulation prominent and optimize app requests, graphics and navigation"
+    },
+    {
+      "commit": "ba0b1014b439c129ef0d15e337a17295ee44ef1d",
+      "date": "2026-11-11T21:23:00Z",
+      "subject": "Polish manual match dialogs and club colors after live replay checks"
+    },
+    {
+      "commit": "295c082424e542156a868effeef43aef26d4266c",
+      "date": "2026-11-11T21:16:43Z",
+      "subject": "Add playable 3D arcade matches with touch controls and validated rewards"
+    },
+    {
+      "commit": "481e947ab382a80f05c6c9380ac2b328f87f8d91",
+      "date": "2026-11-11T20:35:55Z",
+      "subject": "Keep legacy transfers unchanged and enforce advanced career rules server-side"
+    },
+    {
+      "commit": "51e9725a53e1519bfeaf739f10a86a2978ddc074",
+      "date": "2026-11-11T20:34:27Z",
+      "subject": "Show complete elite contract requirements before players commit"
+    },
+    {
+      "commit": "071dcff80be682b57a9b3bfaefb717db3a092923",
+      "date": "2026-11-11T20:27:08Z",
+      "subject": "Deepen player careers with match plans, coach objectives and earned contracts"
+    },
+    {
+      "commit": "13264e46f8e824bab93e2d5b34e77ca6d2c22918",
+      "date": "2026-11-11T19:38:20Z",
+      "subject": "Restore original OPNext Games quote"
+    },
+    {
+      "commit": "839f9755e997221571d320f09ed1a76871b081fe",
+      "date": "2026-11-11T19:34:38Z",
+      "subject": "Record approved activation and preserved January release gate"
+    },
+    {
+      "commit": "76570806e74082c87b9de5a1218622cf4c13b3a5",
+      "date": "2026-11-11T19:30:18Z",
+      "subject": "Record real Android login rendering before controlled feature rollout"
+    },
+    {
+      "commit": "d681fc5de24486e71d5eb3efcee5173108ab8652",
+      "date": "2026-11-11T19:25:59Z",
+      "subject": "Record Android validation blocker and strengthen release metadata check"
+    },
+    {
+      "commit": "5219c0f26beee04ab7ac3c621ec9fd3ffdfc6c83",
+      "date": "2026-11-11T19:22:25Z",
+      "subject": "Finish website overhaul and package tested code13 candidate"
+    },
+    {
+      "commit": "65317daca2d2074706702a57880a5411e333defc",
+      "date": "2026-11-11T19:17:27Z",
+      "subject": "Checkpoint expanded careers, European competition and harder club progression"
+    },
+    {
+      "commit": "2f48e1a5f10ab9346dd9a45a436f343939d6aff3",
+      "date": "2026-11-11T18:50:58Z",
+      "subject": "Postpone Android and web launch to 1 January 2027"
+    },
+    {
+      "commit": "97c8aee0dc3fa29bdf2c1d31bca85b78389e6791",
+      "date": "2026-11-11T15:40:56Z",
+      "subject": "Show original app screenshots in an accessible website gallery"
+    },
+    {
+      "commit": "a1e799860dfc53d31de9f44b69ad30a1c643c08d",
+      "date": "2026-11-11T14:10:04Z",
+      "subject": "Prepare first public release with Friday countdown and gated APK and browser launch"
+    },
+    {
+      "commit": "f8023d1a98463e297d071c5c7c8b727d45fe49c5",
+      "date": "2026-11-11T06:20:05Z",
+      "subject": "Verify persisted restart flows and prepare private Danish Play phone artwork"
+    },
+    {
+      "commit": "372fdc36303bf6bbb0d9c3235f67e28b4ac6f0f2",
+      "date": "2026-11-11T06:00:42Z",
+      "subject": "Fix Android screenshot layout issues and selected formation contrast"
+    },
+    {
+      "commit": "218f78d959add495430bdb01d95e8c1db5a97aa9",
+      "date": "2026-11-11T05:02:13Z",
+      "subject": "Remove public test promotion and disable APK and handoff downloads"
+    },
+    {
+      "commit": "709148303ebb0f25308183b01108121d7993b27f",
+      "date": "2026-11-11T04:55:29Z",
+      "subject": "Refresh public website for Touchline 2.0 with app-derived illustrations"
+    },
+    {
+      "commit": "6d777cef8f05c3b5b9fc74d384215a0187f060be",
+      "date": "2026-11-11T04:48:11Z",
+      "subject": "Launch 2.0 club universe with DNA, research, board contracts and custom identity"
+    },
+    {
+      "commit": "11ea0df615edbf785cbc68d0f345d3ef52f900c3",
+      "date": "2026-11-11T04:33:47Z",
+      "subject": "Redesign clubhouse with modern 3D presentation and focused mobile overview"
+    },
+    {
+      "commit": "8b983720ab479da7acf7e4922165ac5fdc1296b3",
+      "date": "2026-11-11T02:24:10Z",
+      "subject": "Increase small app typography for easier reading on Android"
+    },
+    {
+      "commit": "228780104918f144b9ebbd873d84dc1171a4e15d",
+      "date": "2026-11-11T02:14:07Z",
+      "subject": "Polish Android with 3D arena, guided goals, navigation and two-step login"
+    },
+    {
+      "commit": "18ec6e5c84d5d363de0eed6e603f005237b87943",
+      "date": "2026-11-11T00:30:22Z",
+      "subject": "Add club management systems and Android 1.1.0 test release"
+    },
+    {
+      "commit": "06090b9d95e6720ad75989d250d3dd70a52d53ae",
+      "date": "2026-11-10T20:52:35Z",
+      "subject": "Document verified naming checks and unresolved brand requirements"
+    },
+    {
+      "commit": "66f83040173e21d7a7720149b2ba19630fa3333e",
+      "date": "2026-11-10T20:47:07Z",
+      "subject": "Add player sales, stadium progression and account mail flows; retire personal recovery codes"
+    },
+    {
+      "commit": "e05f2a676536c433f0b29f32b5f5fc099b712c77",
+      "date": "2026-11-10T20:10:44Z",
+      "subject": "Combine Android and web coming-soon status in one green field"
+    },
+    {
+      "commit": "5a999d03e2b8ad70c9ad996d5df0499d49946cc2",
+      "date": "2026-11-10T20:08:18Z",
+      "subject": "Match web coming-soon badge to lime Android action"
+    },
+    {
+      "commit": "927967f894e82966a11f491c451b4848e1ebac9f",
+      "date": "2026-11-10T19:57:20Z",
+      "subject": "Show coming soon status for unpublished web game"
+    },
+    {
+      "commit": "afa9f680f43fa4869339bfc8d3ead8665eac9a59",
+      "date": "2026-11-10T19:53:38Z",
+      "subject": "Prepare unpublished browser game draft with production isolation"
+    },
+    {
+      "commit": "562cc77b3c368310d4200f74e03d81b5eea1421c",
+      "date": "2026-11-10T19:46:39Z",
+      "subject": "Keep support email out of public Play handoff archive"
+    },
+    {
+      "commit": "7e3d27d135efae41c5b67d12d7bf13bfda1284e4",
+      "date": "2026-11-10T19:46:03Z",
+      "subject": "Prepare Play release materials and improve Android failure handling"
+    },
+    {
+      "commit": "085f670b202af51faff3f375849d69c983c96fb0",
+      "date": "2026-11-10T19:10:47Z",
+      "subject": "Fix packaged Android theme invalidated by partial font import removal"
+    },
+    {
+      "commit": "fc51944f4778b457f193b2b179725ded17edfbaf",
+      "date": "2026-11-10T19:06:39Z",
+      "subject": "Provide direct Android test APK download on public showcase"
+    },
+    {
+      "commit": "4390ef9f2003f1b71a1c9618698548399e28aef8",
+      "date": "2026-11-10T18:56:00Z",
+      "subject": "Prepare Android-only idle tycoon with public showcase and private support form"
+    },
+    {
+      "commit": "237832fb79d8ad0036f592ed28e8f30faa823ec7",
+      "date": "2026-11-10T13:46:50Z",
+      "subject": "Package Android client and add manager goals and account deletion"
+    },
+    {
+      "commit": "9c8d70756359a40d002fe1568ea068ba6e92535c",
+      "date": "2026-11-10T11:45:00Z",
+      "subject": "Replace game identity with email password accounts and secure sessions"
+    },
+    {
+      "commit": "8e9fb3e7726d66c01080e1aa3ca431fb33273d53",
+      "date": "2026-11-10T11:08:23Z",
+      "subject": "Improve match experience, readability and club progression"
+    },
+    {
+      "commit": "0a2f257452ce33c6070ebf8bc2fe360c40d3fdfc",
+      "date": "2026-11-10T05:37:42Z",
+      "subject": "Use supported D1 binding declaration"
+    },
+    {
+      "commit": "e939c7329e6f25f8fa49b746af7c2208605033fb",
+      "date": "2026-11-10T05:37:11Z",
+      "subject": "Build Touchline football idle game"
+    }
+  ],
+  "remote": {
+    "scheme": "https",
+    "hostname": "git.chatgpt-team.site",
+    "containsEmbeddedCredential": false
+  },
+  "reachableObjects": 1867,
+  "objectTypes": {
+    "commit": 67,
+    "tree": 577,
+    "blob": 1223
+  },
+  "scannedObjects": {
+    "commit": 67,
+    "blob": 1223
+  },
+  "textDocumentsScanned": 1754,
+  "textBytesScanned": 122973357,
+  "highConfidenceFindings": [],
+  "possibleEnvironmentAssignments": [],
+  "privateMaterialPaths": [],
+  "zipContainers": [
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.jar",
+      "object": "1b33c55baabb587c669f562ae36f953de2481846",
+      "bytes": 43764,
+      "members": 33,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0-Play-pakke.zip",
+      "object": "3c4713b522e1f29a45ea2cd203197c6389a97c09",
+      "bytes": 9473914,
+      "members": 29,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "9779ac52cd15440bc554dcd8ebb8e2e6d06785ef",
+      "bytes": 5236261,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.1-test.apk",
+      "object": "b98b7150003afac7e1b549058e4141dc14916139",
+      "bytes": 4659623,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.2-test.apk",
+      "object": "14bfa444595539073fbbbc363b7f9a11b941dd7b",
+      "bytes": 4295605,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.3-Play-pakke.zip",
+      "object": "929562714c824232a7194098fb3debe32c38ddda",
+      "bytes": 3100386,
+      "members": 13,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.3-test.apk",
+      "object": "962bc1e810b999c62d57b67c17becf286ecf185a",
+      "bytes": 4664294,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.4-Play-pakke.zip",
+      "object": "656c4170ad91bbea4e2b6a556c5b16e0db8651c0",
+      "bytes": 3108424,
+      "members": 15,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.4-test.apk",
+      "object": "97131880230405acd88dbfd5c39a99b5ccad67a5",
+      "bytes": 4961016,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.1.0-Play-pakke.zip",
+      "object": "24f414fa2ec07088ca0773b4c901d024ef175bad",
+      "bytes": 3118591,
+      "members": 16,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.1.0-test.apk",
+      "object": "28f9c5509f047b063b3eb6f7f08d0d803d16834f",
+      "bytes": 4690336,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.2.0-Play-pakke.zip",
+      "object": "9aa01f8ea7808c6db234b8284a46eb3de67a59c5",
+      "bytes": 3125284,
+      "members": 17,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.2.0-test.apk",
+      "object": "85f381df63cfefd3f8364a5b2b2a424c649b8b4a",
+      "bytes": 4317422,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.2.1-Play-pakke.zip",
+      "object": "b789d30d01079baad43cbd82fe1e50cd478820bb",
+      "bytes": 3125743,
+      "members": 18,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.2.1-test.apk",
+      "object": "8d3083ba83040c4db84b88c59264bc230085fd42",
+      "bytes": 4317314,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.3.0-Play-pakke.zip",
+      "object": "fc69692b975e73d526644ce654468232c4fcc147",
+      "bytes": 3132801,
+      "members": 19,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.3.0-test.apk",
+      "object": "4ac721eb9ed4c6f8eb5581e50c114d90548aa5bc",
+      "bytes": 4324406,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-2.0.0-Play-pakke.zip",
+      "object": "234ba1f6c5c6e66283b66e50864e8953a2f90113",
+      "bytes": 3150306,
+      "members": 20,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-2.0.0-test.apk",
+      "object": "b4ca1da07ad42e264bca5f0a3d724b3e8a3bf748",
+      "bytes": 4754677,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-2.0.1-Play-pakke.zip",
+      "object": "3661e337d4c0e55be85084a874160e654ba31469",
+      "bytes": 9469441,
+      "members": 27,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-2.0.1-test.apk",
+      "object": "ec8ca8182cb67b71a32bdf4d3e56819a1593bdcf",
+      "bytes": 4344078,
+      "members": 427,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "eb131deb7ee13b4499bb3e947cbb75fe1110a77d",
+      "bytes": 5232393,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "e142d09485f7fb58ccc2556f9a2b806cb1093951",
+      "bytes": 5232205,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "aa76a567bff58211ec9ac0981ba08773ad32abb0",
+      "bytes": 5178669,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "ad8cfee59559e2155e077a467564c498a7b0dbf8",
+      "bytes": 5167897,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "fe90bc6adcf1e45e4b7954b782ede34c09178000",
+      "bytes": 5167605,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "36a9d2f48a8128beacd228564b8e4f7895310084",
+      "bytes": 5160549,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "8606e89755a34eb86ca311e894596304ca22a269",
+      "bytes": 5160133,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "ba747bccfe6fc479c71374dc39c70c612a5409d2",
+      "bytes": 5158385,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "baded343b062688396324f14b50c4c7caa02abf2",
+      "bytes": 5150121,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "e29ae6c7d67447ed70c919b9b4bb709a439fc37c",
+      "bytes": 4684689,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "cdd849e413935fea3836150eaa2e639526c4565a",
+      "bytes": 4684389,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "a9f75eeb16138b83136b09aceb35fb9390efdadc",
+      "bytes": 4684337,
+      "members": 425,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "3ecd67fd4cb57b8f0a2f29b7d078e12d2be23209",
+      "bytes": 3764226,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "abe9cda7fbd9d8fcb1e48489373b703c48d6b2c5",
+      "bytes": 3758826,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "87c6a3c025927340e3094065cbdecf376f648767",
+      "bytes": 3758774,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "306b3117da26512ce86f1e37d4c045729da097d2",
+      "bytes": 3750378,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "f2e09b17060d58edfc826d08cb4f79897f2a0bb5",
+      "bytes": 3693082,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "deafbe6eb7d319a5a7260053e1e90763988969d6",
+      "bytes": 3580034,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "68f9c8c2fef3a49299d9800b414edd6af2bf6eb3",
+      "bytes": 3579878,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "a8564675f7498ddb718f10a87786f74b50919620",
+      "bytes": 3579874,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "2ee2ab5c16981ccbe8302a116ed899abb42c90f5",
+      "bytes": 3579830,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "d9aa07b6cf01a05bb49be96f48c9a225095fa57b",
+      "bytes": 3581062,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "5da0eff1c4ed8aca1847b45d58c24885c28a1106",
+      "bytes": 3580930,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "891936c11bcf214b12a80f851569a65ea86937e5",
+      "bytes": 3574138,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "15fb50162c1e78c10e8b754557778d1c847e1db4",
+      "bytes": 3551778,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "1430111d546fdcd0520af5c5259963bffb5dd4d4",
+      "bytes": 3546722,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "b2be24696016e8f8990897897182e8a3f56733e7",
+      "bytes": 3546738,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "561a27be188c15ee6f8d640f93905beb62496b65",
+      "bytes": 3395126,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "cdfd734504c5be184b4967df723f57787942fc7f",
+      "bytes": 3395042,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "254806685b61f81c223c00d10a589c372db586bb",
+      "bytes": 3387842,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.0.apk",
+      "object": "bd2c3d694d2f53659e178a49027f958dac4e6312",
+      "bytes": 3361590,
+      "members": 424,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-2.0.1-Play-pakke.zip",
+      "object": "db7cc6b1bd11a3d6b21998b6af897f27ebf40548",
+      "bytes": 3152000,
+      "members": 21,
+      "privateMaterialMemberNames": []
+    },
+    {
+      "path": "release/downloads/Touchline-1.0.3-Play-pakke.zip",
+      "object": "87b20754883759b59a5b200efe8b54cc97840ec1",
+      "bytes": 3100340,
+      "members": 13,
+      "privateMaterialMemberNames": []
+    }
+  ],
+  "limitations": [
+    "Pattern scan cannot prove absence of all possible secrets.",
+    "Excluded original .git config/reflogs/credentials must not be copied into transfer repositories.",
+    "Binary APK/AAB executable bytecode was not reverse-engineered; archive member names and text resources were checked."
+  ],
+  "rawPatternFindingsCount": 672,
+  "dismissedEmbeddedDataPatterns": [
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "9779ac52cd15440bc554dcd8ebb8e2e6d06785ef",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "b98b7150003afac7e1b549058e4141dc14916139",
+      "container": "release/downloads/Touchline-1.0.1-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "14bfa444595539073fbbbc363b7f9a11b941dd7b",
+      "container": "release/downloads/Touchline-1.0.2-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "962bc1e810b999c62d57b67c17becf286ecf185a",
+      "container": "release/downloads/Touchline-1.0.3-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "97131880230405acd88dbfd5c39a99b5ccad67a5",
+      "container": "release/downloads/Touchline-1.0.4-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "28f9c5509f047b063b3eb6f7f08d0d803d16834f",
+      "container": "release/downloads/Touchline-1.1.0-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "85f381df63cfefd3f8364a5b2b2a424c649b8b4a",
+      "container": "release/downloads/Touchline-1.2.0-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "8d3083ba83040c4db84b88c59264bc230085fd42",
+      "container": "release/downloads/Touchline-1.2.1-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "4ac721eb9ed4c6f8eb5581e50c114d90548aa5bc",
+      "container": "release/downloads/Touchline-1.3.0-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "b4ca1da07ad42e264bca5f0a3d724b3e8a3bf748",
+      "container": "release/downloads/Touchline-2.0.0-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "ec8ca8182cb67b71a32bdf4d3e56819a1593bdcf",
+      "container": "release/downloads/Touchline-2.0.1-test.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "eb131deb7ee13b4499bb3e947cbb75fe1110a77d",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "e142d09485f7fb58ccc2556f9a2b806cb1093951",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "aa76a567bff58211ec9ac0981ba08773ad32abb0",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "ad8cfee59559e2155e077a467564c498a7b0dbf8",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "fe90bc6adcf1e45e4b7954b782ede34c09178000",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "36a9d2f48a8128beacd228564b8e4f7895310084",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "8606e89755a34eb86ca311e894596304ca22a269",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "ba747bccfe6fc479c71374dc39c70c612a5409d2",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "baded343b062688396324f14b50c4c7caa02abf2",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "e29ae6c7d67447ed70c919b9b4bb709a439fc37c",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "cdd849e413935fea3836150eaa2e639526c4565a",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "a9f75eeb16138b83136b09aceb35fb9390efdadc",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "3ecd67fd4cb57b8f0a2f29b7d078e12d2be23209",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "abe9cda7fbd9d8fcb1e48489373b703c48d6b2c5",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "87c6a3c025927340e3094065cbdecf376f648767",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "306b3117da26512ce86f1e37d4c045729da097d2",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "f2e09b17060d58edfc826d08cb4f79897f2a0bb5",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "deafbe6eb7d319a5a7260053e1e90763988969d6",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "68f9c8c2fef3a49299d9800b414edd6af2bf6eb3",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "a8564675f7498ddb718f10a87786f74b50919620",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "2ee2ab5c16981ccbe8302a116ed899abb42c90f5",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "d9aa07b6cf01a05bb49be96f48c9a225095fa57b",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "5da0eff1c4ed8aca1847b45d58c24885c28a1106",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "891936c11bcf214b12a80f851569a65ea86937e5",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "15fb50162c1e78c10e8b754557778d1c847e1db4",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "1430111d546fdcd0520af5c5259963bffb5dd4d4",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "b2be24696016e8f8990897897182e8a3f56733e7",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "561a27be188c15ee6f8d640f93905beb62496b65",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "cdfd734504c5be184b4967df723f57787942fc7f",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "254806685b61f81c223c00d10a589c372db586bb",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    },
+    {
+      "kind": "aws_access_key_pattern",
+      "reason": "Substring entirely inside a data URL base64 payload; not an access-key literal.",
+      "object": "bd2c3d694d2f53659e178a49027f958dac4e6312",
+      "container": "release/downloads/Touchline-1.0.0.apk",
+      "path": "assets/public/index.html",
+      "count": 16
+    }
+  ],
+  "rawPatternClassification": "All candidate AWS patterns reviewed in their full source context; base64 matches counted separately."
+}

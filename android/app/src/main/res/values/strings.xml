@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Touchline Football Idle</string>
+    <string name="title_activity_main">Touchline Football Idle</string>
+    <string name="package_name">dk.touchline.footballidle</string>
+    <string name="custom_url_scheme">dk.touchline.footballidle</string>
+    <string name="developer_name">OPNext Games</string>
+    <string name="support_contact_url">https://playtouchline.dk/contact</string>
+</resources>

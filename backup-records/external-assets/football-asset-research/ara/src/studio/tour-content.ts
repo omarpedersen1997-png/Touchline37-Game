@@ -1,0 +1,39 @@
+import {SETS} from './catalog';
+/** Tour copy and targets follow the editor's actual controls; demonstrations never edit a film. */
+export const TOUR_STORAGE_KEY = 'ara.studio.tour.v1';
+export type TourDemo = 'welcome'|'sets'|'cast'|'drag'|'move'|'pose'|'orbit'|'timeline'|'camera'|'sound'|'assist'|'export';
+interface TourStep {
+  title:string; body:string; targets:string[]; demo:TourDemo;
+  keys?:{keys:string[];label:string}[];
+}
+export const TOUR_STEPS:readonly TourStep[] = [
+  {title:'Your set. Your cast. Your film.',demo:'welcome',targets:['#stage'],
+    body:'Choose a location, direct your characters, then make a film. This quick tour points out the tools and demonstrates the gestures. Your film stays untouched.'},
+  {title:'Find the right location',demo:'sets',targets:['#scene-search','#scene-category'],
+    body:`Search ${SETS.length} sets or choose a category, then pick a scene below. Changing location keeps your characters, actions and dialogue.`},
+  {title:'Meet your cast',demo:'cast',targets:['#cast-roster','.cast-actions','#character'],
+    body:'Add up to five characters. Choose a preset, or use + Custom to import character settings saved from the builder. Click a name to select them; Character builder edits their appearance. Equipment below gives the selected character a weapon or bag.'},
+  {title:'Select, drag, place',demo:'drag',targets:['#film'],
+    body:'Click a character: a gold ring marks your selection. Drag their body to move them. For another way to place them, use Click to place, or Shift-click the ground. Click empty background or press Escape to deselect.',
+    keys:[{keys:['Esc'],label:'Deselect character'}]},
+  {title:'Move a selected character',demo:'move',targets:['#blocking-settings'],
+    body:'Click a character in the preview, then use the arrow keys to move them relative to your view. The placement fields on the right let you enter precise coordinates.',
+    keys:[{keys:['↑','↓','←','→'],label:'Move selected character'}]},
+  {title:'Turn or lift your character',demo:'pose',targets:['#blocking-settings'],
+    body:'Click a character in the preview to select them. Hold Ctrl (or Command ⌘ on Mac) with Left/Right to turn, or Up/Down to raise or lower them.',
+    keys:[{keys:['Ctrl / ⌘','← / →'],label:'Turn left / right'},{keys:['Ctrl / ⌘','↑ / ↓'],label:'Raise / lower'}]},
+  {title:'Look around the set',demo:'orbit',targets:['#film'],
+    body:'Deselect first: the arrow keys now orbit the view. Drag empty background to look around; scroll or pinch to zoom. With the preview focused, + / − zoom and Home resets the angle.',
+    keys:[{keys:['Esc'],label:'Deselect first'},{keys:['↑','↓','←','→'],label:'Orbit when nothing is selected'},{keys:['+ / −','Home'],label:'Zoom / reset preview'}]},
+  {title:'Direct the performance',demo:'timeline',targets:['#tracks'],
+    body:'Each character has a timeline row; the camera has its own. Select an action block to search animations and change timing on the right. Drag a clip to reorder actions and shots or move text and audio in time, and drag its edges to shorten or extend it; Escape cancels. + Action adds a performance. Riding/driving actions choose their vehicle automatically; Move through the set and Travel speed control its movement. Review travelling clips: walls and props do not stop characters.'},
+  {title:'Choose your camera shots',demo:'camera',targets:['#add-shot'],
+    body:'Add a camera shot, then select its block in the camera row. Set the subject, framing and duration on the right. Enable Custom camera for this shot to give it its own angle, elevation, distance and movement. Orbit or zoom the preview to compose that shot. Film camera defaults apply to other shots; choose landscape or portrait there.'},
+  {title:'Give your film a voice',demo:'sound',targets:['#open-sound','#open-effects','#open-text'],
+    body:'Sound adds typed, recorded or uploaded dialogue and music. Use Generate all speech for scripted lines. Sound effects adds timed impacts or gunshots. Text & subtitles adds captions and comic bubbles that can follow a character.'},
+  {title:'Start with an idea',demo:'assist',targets:['#open-assist'],
+    body:'Assist gives you a guide to take to your AI assistant. Paste or open its JSON, review, then Build film. Try an example offers ready-made films, from a military base to a beach, and a warehouse comedy with voices. Undo brings your previous film back.'},
+  {title:'Play, save, share',demo:'export',targets:['#save-project','#open-export'],
+    body:'Preview with Space, expand with F, and undo with Ctrl/⌘ + Z while the preview is focused. Edit the title at the top. Save project keeps an editable copy and its recordings; New starts a fresh film, with the option to save first. Export film creates your MP4. Replay this tour from the left panel whenever you need it.',
+    keys:[{keys:['Space'],label:'Play / pause'},{keys:['F'],label:'Expand / show editor'},{keys:['Ctrl / ⌘','Z'],label:'Undo'}]},
+];

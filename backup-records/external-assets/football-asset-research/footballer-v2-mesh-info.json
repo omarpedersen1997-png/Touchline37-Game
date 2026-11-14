@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Buzz_cut",
+    "material": "Buzz cut",
+    "vertices": 12193,
+    "triangles": 1681
+  },
+  {
+    "name": "Skin",
+    "material": "Skin",
+    "vertices": 7790,
+    "triangles": 13952
+  },
+  {
+    "name": "Skin_details",
+    "material": "Skin details",
+    "vertices": 1273,
+    "triangles": 2172
+  },
+  {
+    "name": "Eyes",
+    "material": "Eyes",
+    "vertices": 552,
+    "triangles": 1060
+  },
+  {
+    "name": "Eyebrows",
+    "material": "Eyebrows",
+    "vertices": 126,
+    "triangles": 192
+  },
+  {
+    "name": "Football_Shorts",
+    "material": "Football Shorts",
+    "vertices": 897,
+    "triangles": 1560
+  },
+  {
+    "name": "Football_Shirt",
+    "material": "Football Shirt",
+    "vertices": 1230,
+    "triangles": 2146
+  },
+  {
+    "name": "Football_Socks",
+    "material": "Football Socks",
+    "vertices": 259,
+    "triangles": 402
+  },
+  {
+    "name": "Sneaker_leather",
+    "material": "Sneaker leather",
+    "vertices": 443,
+    "triangles": 805
+  },
+  {
+    "name": "Sneaker_midsole",
+    "material": "Sneaker midsole",
+    "vertices": 260,
+    "triangles": 278
+  },
+  {
+    "name": "Sneaker_outsole",
+    "material": "Sneaker outsole",
+    "vertices": 100,
+    "triangles": 92
+  },
+  {
+    "name": "Sneaker_laces",
+    "material": "Sneaker laces",
+    "vertices": 892,
+    "triangles": 870
+  },
+  {
+    "name": "Sneaker_leather.001",
+    "material": "Sneaker leather.001",
+    "vertices": 164,
+    "triangles": 219
+  }
+]

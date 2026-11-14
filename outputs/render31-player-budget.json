@@ -1,0 +1,18 @@
+[
+  {
+    "asset": "football-auto.glb",
+    "triangles": 9550,
+    "beforeMeshes": 13,
+    "afterMeshes": 7,
+    "beforePalettes": 13,
+    "afterPalettes": 1
+  },
+  {
+    "asset": "football-pro.glb",
+    "triangles": 25717,
+    "beforeMeshes": 13,
+    "afterMeshes": 7,
+    "beforePalettes": 13,
+    "afterPalettes": 1
+  }
+]

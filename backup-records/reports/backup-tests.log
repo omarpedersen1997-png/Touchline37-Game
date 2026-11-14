@@ -1,0 +1,1092 @@
+
+> test
+> npm run build && node tests/arcade.test.mjs && node tests/football11.test.mjs && node tests/football-modern.test.mjs && node tests/football-pro.test.mjs && node tests/football-halves.test.mjs && node tests/football-contact.test.mjs && node tests/football-tactics.test.mjs && node tests/football-receiving.test.mjs && node tests/football-goals.test.mjs && node tests/native-request-policy.test.mjs && node tests/native-bridge.test.mjs && node tests/manual-save.test.mjs && node tests/match-camera-stable.test.mjs && node tests/stadium-visibility.test.mjs && node tests/pro-player.test.mjs && node tests/player-grounding.test.mjs && node tests/player-rendering.test.mjs && node tests/match-upgrade.test.mjs && node tests/match-scheduling.test.mjs && node tests/pitch-details.test.mjs && node tests/stadium-crowd.test.mjs && node tests/match-4k.test.mjs && node tests/match-clarity.test.mjs && node tests/manual-api.test.mjs && node tests/manual-session.test.mjs && node tests/manual-preferences.test.mjs && node tests/manual-scene.test.mjs && node tests/game-requests.test.mjs && node scripts/test-app-chrome.mjs && node scripts/test-app-orientation.mjs && node scripts/test-match-modes-ui.mjs && node scripts/test-manual-ui.mjs && node scripts/test-match-statistics.mjs && node tests/goal-replay.test.mjs && node tests/goal-presentation.test.mjs && node tests/game.test.mjs && node tests/api.test.mjs && node tests/auth.test.mjs && node tests/progression.test.mjs && node tests/launch.test.mjs && node tests/features.test.mjs && node tests/management.test.mjs && node scripts/test-management-ui.mjs && node tests/journey.test.mjs && node tests/clubstyle.test.mjs && node tests/expansion.test.mjs && node tests/competition.test.mjs && node tests/europe.test.mjs && node tests/player-career.test.mjs && node tests/player-journey.test.mjs && node tests/career-navigation.test.mjs && node tests/universe.test.mjs && node scripts/test-expansion-ui.mjs && node tests/site-assets.test.mjs && node tests/site-metadata.test.mjs && node tests/site-captures.test.mjs && node scripts/test-gallery-ui.mjs && node tests/restart-flow.test.mjs && node tests/launch-gate.test.mjs && node tests/private-download.test.mjs && node tests/artifact-storage.test.mjs && node scripts/test-launch-ui.mjs
+
+
+> build
+> node build.mjs
+
+▲ [WARNING] Ignoring this import because "src/match-statistics.css" was marked as having no side effects [ignored-bare-import]
+
+    src/MatchStatistics.jsx:3:7:
+      3 │ import './match-statistics.css';
+        ╵        ~~~~~~~~~~~~~~~~~~~~~~~~
+
+▲ [WARNING] Ignoring this import because "src/match-statistics.css" was marked as having no side effects [ignored-bare-import]
+
+    src/MatchStatistics.jsx:3:7:
+      3 │ import './match-statistics.css';
+        ╵        ~~~~~~~~~~~~~~~~~~~~~~~~
+
+Built separate Android assets, marketing and server-gated scheduled release.
+✔ arcade replay is deterministic, bounded, finite and round-trips packed controls (37.502257ms)
+✔ malformed, oversized and reserved controls cannot become a valid replay (0.986301ms)
+✔ personal positions retain the same controlled player rather than silently controlling teammates (34.472753ms)
+✔ a manual league game waits for a validated replay, ignores forged scores and pays once (25.058373ms)
+✔ expired hands-on games are recorded as an explicit 0–3 forfeit with no reward (0.651919ms)
+✔ simulated games keep their existing duration and settlement behaviour (0.358829ms)
+✔ manual personal games use the player position and validate contributions without changing club standings (10.48758ms)
+✔ only one personally controlled game can run at a time across the two careers (0.644468ms)
+✔ an expired personal manual career match records zero salary, XP and contribution (0.588745ms)
+✔ personal reading and fitness affect physical interceptions and sprint while identical snapshots stay deterministic (0.586732ms)
+✔ choosing the new manual mode activates energy rules even when a client omits the journey flag (0.369605ms)
+✔ club tactics are snapshotted and alter off-ball behaviour in the played mode (9.459266ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.440278
+✔ eleven-a-side replays are deterministic, bounded and include the real saved formation (113.562622ms)
+✔ legacy replay remains byte-for-byte identical so an already installed APK can finish its game (22.096855ms)
+✔ new club mode opts into 11 players and the server validates the replay and pays only once (27.01338ms)
+✔ eleven-a-side personal careers retain their own position including keeper and finish server-side (71.490296ms)
+✔ stadium tiers stay outside the field and all structures fit the base at every stage (6.176606ms)
+✔ WebGL stadium uses tiered seating, one instanced crowd, complete goal nets and finite geometry (15.714661ms)
+✔ broadcast controls follow screen axes and camera plans stay finite at every field edge (1.360022ms)
+✔ close camera keeps the controlled player visible on portrait and landscape screens without reversing input (2.153554ms)
+✔ articulated player geometry is finite, has usable textured numbers and releases its generated maps (5.824678ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 281.174798
+✔ modern recording preserves all 32 directions, analog speeds and button combinations in a compact validated packet (4.656679ms)
+✔ modern matches reproduce every tick exactly on replay and retain the legacy default protocols (69.089221ms)
+✔ analog acceleration, braking and changing direction have momentum rather than instant velocity changes (1.096326ms)
+✔ holding and releasing a shot changes power while charging alone never shoots (1.047614ms)
+✔ charged passes loft the ball, ground passes stay low, and assistance avoids an obstructed lane (0.790888ms)
+✔ touchline exits award possession to the other team and preserve a dead-ball pause (0.394032ms)
+✔ the last touch distinguishes corners and goal kicks instead of bouncing the ball off invisible walls (0.393642ms)
+✔ a goal is counted once, awards a personal contribution and resets the pitch (0.273711ms)
+✔ all formations and personal positions remain finite and inside the pitch across varied full matches (81.396199ms)
+✔ modern local recordings resume exactly, neutralize absent time and clear permanently after upload (26.391245ms)
+✔ camera preferences migrate only once and screen-relative analog control follows the fixed pro heading (0.782806ms)
+✔ pro camera frames the action at common phone aspect ratios and keeps screen-right aligned with the attack (1.947615ms)
+✔ pro framing keeps a distant controlled player and the ball visible during long passes on a tall phone (0.986712ms)
+✔ a timed tackle takes possession and counts once, while a held button cannot spam tackles (0.263566ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 203.469848
+✔ v5 keeps the 60-second 20Hz packet, adds through passes, and reserves the high bit (4.679068ms)
+✔ full v5 replay reproduces every state field without changing the previous engine (142.940177ms)
+✔ analog movement accelerates, brakes, and turns with momentum; sprint uses fitness (8.068818ms)
+✔ teammates offer separate support lanes and defenders assign one presser (2.788578ms)
+✔ directional pass assistance chooses the open lane instead of the obstructed runner (0.458399ms)
+✔ ground, lofted, and through passes release toward different receiving spaces (3.070601ms)
+✔ completed personal passes count once and first touches keep the ball at a moving foot (3.020806ms)
+✔ charging alone retains possession and shot release changes power and visible follow-through (6.230427ms)
+✔ goalkeepers anticipate an incoming trajectory, dive, and parry a driven shot into live play (8.27677ms)
+✔ a personal goalkeeper catches a low shot, earns one save, and stays position-locked (18.772554ms)
+✔ manual goalkeeper dives have a direction and a short movement animation (3.217732ms)
+✔ a tackle shows its lunge even on a miss and held buttons cannot repeat it (0.994413ms)
+✔ touchlines and the last touch award throw-ins, corners and goal kicks with dead-ball pauses (2.82955ms)
+✔ goals use height at the goal line and shots rebound from the frame (1.390529ms)
+✔ all formations and personal positions finish full matches finite, bounded, and position-locked (375.731661ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 593.279557
+✔ v6 runs two 120-second halves around a 10-second interval and ends once (334.796023ms)
+✔ long recording has strict padded codec and deterministic complete replay (453.476486ms)
+✔ resuming during the interval preserves its remaining time and finishes at 250 seconds (310.324787ms)
+✔ closer fixed lens keeps the ball inside the frame even when the controlled player is far away (3.756891ms)
+✔ ball is at least six CSS pixels in the closer gameplay lens, independent of output resolution (0.222745ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1114.609833
+✔ engine7 preserves duration, codec, replay determinism and immutable engine6 (775.631613ms)
+✔ opponents cannot take the ball from the old 1.75m automatic tackle circle (16.674102ms)
+✔ manual tackle starts its visible action before contact and cannot steal from 2.65m (0.766521ms)
+✔ standing auto tackle requires real foot reach, waits for the strike and leaves a loose ball (0.569144ms)
+✔ protected restarts and skill touches cannot be taken by an intersecting tackle (0.654713ms)
+✔ loose ground ball is received only at a foot; distant and chest-height balls remain loose (1.204659ms)
+✔ relative sweeps detect fast valid touches and reject paths that only meet at different times (0.160031ms)
+✔ a fast pass crossing the visible foot is intercepted while a near miss is not magnetized (0.395313ms)
+✔ real torso contact deflects a shot without granting chest possession; goalkeeper hands remain valid (0.454813ms)
+✔ keepers still anticipate and parry driven shots while a personal keeper catches a low shot once (3.157542ms)
+✔ goal-line height, posts and last-touch restarts remain correct after contact changes (1.122746ms)
+✔ full contact-aware personal matches stay finite, bounded and locked to the selected role (859.795489ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1680.071451
+✔ engine8 accepts only seven enumerated tactical commands without growing the uint16 packet (5.410726ms)
+✔ formation commands during the interval change only home anchors, keeping identities and actual positions (162.059316ms)
+✔ a live formation command consumes a normal neutral tick and never teleports a player or changes the opposition shape (0.642895ms)
+✔ attacking and defensive live commands produce different supporting runs with the same seed and initial carrier (20.081549ms)
+✔ recorded tactical/formation changes replay deterministically through both halves and are ignored after full time (482.921552ms)
+✔ engine7 contact results remain exactly reproducible when engine8 has no tactical commands (564.889553ms)
+✔ lastGoal retains one real line-crossing snapshot before kickoff rather than a fabricated goal scene (3.618875ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1255.909483
+✔ engine9 keeps old matches immutable, the 2-minute halves, tactical commands and packet size (4.941882ms)
+✔ stationary, running and diagonal receivers reach a through ball in stride at physical foot contact (28.187092ms)
+✔ short and wide through balls reproduce engine8 overshoots and now reach their intended teammate (32.970206ms)
+✔ unopposed short, wide and diagonal receiving runs remain reachable across 180 position/velocity combinations (220.450764ms)
+✔ ordinary ground passes still meet stationary and moving teammates without forced airborne captures (3.564503ms)
+✔ a real opponent foot in the lane can intercept the through ball before its intended receiver (0.684879ms)
+✔ missed and high balls remain free outside the unchanged foot contact volume (0.596055ms)
+✔ personal career receiving never overrides the joystick or transfers control to another player (0.970578ms)
+✔ recorded receiving and tactical inputs replay deterministically through both halves (496.648467ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 800.778764
+✔ engine10 preserves the two 120-second halves and old uint16 control protocol (4.855532ms)
+✔ a scored ball keeps the real crossing, scorer, assist and player positions instead of teleporting to kickoff (9.10248ms)
+✔ the ball hits the correct net, loses energy and never becomes a live second goal during celebrations (7.949298ms)
+✔ only the scorer and nearby teammates gather continuously before a deliberate protected kickoff (5.989135ms)
+✔ roof and side net contacts stay within the real goal volume and report their surface (4.303463ms)
+✔ woodwork is not a goal and an own goal never invents an attacking scorer or assist (0.677618ms)
+✔ a controlled opponent collection ends a stale shot before a subsequent own-goal crossing (1.036997ms)
+✔ a goal on the halftime or final whistle cannot carry a stale celebration or kickoff into the next period (1.16511ms)
+✔ goal flows with tactics and personal controls replay exactly on the server through both halves (530.833977ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 579.226645
+✔ real Android transport policy accepts complete engine8 uploads and enforces byte/route boundaries (1016.625663ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1021.765511
+✔ actual native plugin uploads a complete engine8 recording and rejects oversize before opening HTTPS (1221.02414ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1226.350999
+✔ failed upload preserves the exact recording through reopen; only a matching canonical ack clears it (562.593499ms)
+✔ personal history acknowledgement belongs to this recording and not a later task or another match (0.240512ms)
+✔ critical save waits for a competing write and its failures do not swallow the save (0.641323ms)
+✔ account reset cancels a queued result before it can send under the next account (0.180551ms)
+✔ retry policy stops permanent validation/auth/size failures and bounds automatic delay (0.845259ms)
+✔ old pending tape is not erased on reopen after its former three-minute expiry (373.316628ms)
+✔ legacy pending challenges migrate once and new tactical challenges allow a full day to recover (7.085741ms)
+✔ opening a different match retains a complete old-version upload for recovery instead of silently deleting it (327.972559ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1288.098615
+✔ TV Pro and TV retain one lens throughout a real match including shots, passes and player switches (184.908751ms)
+✔ long balls, possession changes, goal resets and control changes do not trigger zoom (0.499731ms)
+✔ only a viewport change can refit the lens; returning to landscape restores its original framing (0.301723ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 191.669775
+✔ camera-side roof/stands cannot obstruct field sightlines, including both photographed touchline extremes (82.530938ms)
+✔ Auto model cuts triangle load by more than half while preserving the rig; detailed4K asset remains available (4.053718ms)
+✔ performance migration starts previous4K users in Auto once and respects a later explicit4K choice (0.383816ms)
+✔ steady30fps does not trigger unnecessary Auto blur while sustained15fps signals frame pressure (0.694333ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100.159192
+✔ shipped footballer has genuine skinned human geometry, clothes and valid rigged locomotion (53.866302ms)
+✔ locomotion tracks have unit quaternions and all required body joints (6.274253ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65.821077
+✔ actual boot soles remain on the pitch throughout idle, walk, run and their transitions in both shipped LODs (206.790965ms)
+✔ a planted running foot has low ground-relative drift at normal playing speed (32.298056ms)
+✔ cadence follows rendered displacement and freezes during a held replay frame (20.695651ms)
+✔ goal celebrations keep real boots grounded, and approaching teammates continue to walk (27.461442ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 296.261314
+✔ both shipped LODs reduce submissions and bone palettes without removing triangles, mapped skin or clothing (89.134956ms)
+✔ players share immutable clothing geometry but retain independent materials, bones and animation (18.349157ms)
+✔ hidden animation advances its clock and skips pose work; re-entry samples a current valid pose (9.785126ms)
+✔ only visible players and moving effects update their matrices; static and hidden branches retain cached transforms (2.485162ms)
+✔ frame pacing sustains the target under uneven screen callbacks and skips missed draws after stalls (1.907304ms)
+✔ animated human bounds remain conservative and culling keeps partial bodies at the edge of the frame (23.048465ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.958622
+✔ Sharp retains native output policy but reduces team vertex workload and eliminates the second shadow pass (3.573557ms)
+✔ batched static stadium retains world-space triangles, colours and clipping with fewer draw submissions (7.272111ms)
+✔ contact shadows have a soft radial edge and opaque centre with a single shared texture (0.975815ms)
+✔ v7 lens is about ten percent closer and keeps the ball in frame without dynamic zoom (3.489771ms)
+✔ settings FPS reports actual cadence and stalls instead of repeating the target rate (0.237447ms)
+✔ visual prediction cannot display a fast ball past an unresolved opponent contact (0.983748ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.751439
+✔ fixed-step phase keeps constant-speed targets even across 20Hz physics and 30Hz drawing (0.972671ms)
+✔ detail warming creates nothing during request and respects idle budget, deduplication and one rig per callback (1.100623ms)
+✔ unwanted detail work is skipped and disposed callbacks cannot create late rigs (0.313932ms)
+✔ routine saves coalesce with a bounded idle timeout and final flush is synchronous (1.417388ms)
+✔ save scheduling has a timer fallback while disposal cancels pending background work (0.200441ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.209724
+✔ match details add exactly five static submissions with a bounded geometry budget in every quality mode (59.709894ms)
+✔ corner flags, penalty spots and technical areas line up with the existing field and dugouts (15.002551ms)
+✔ props stay below adult height and wear lies underneath the white field markings (8.511372ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 88.916428
+✔ 4864 seated spectators retain adult placement and textured detail within four batches and four triangles per person (120.960382ms)
+✔ cutaway skips whole camera-side audience batches before submitting vertices and preserves instance data (11.940147ms)
+✔ atlas UV selection is per-instance while the normal Three map and clipping shader paths remain available (1.033202ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149.553549
+✔ 4K renders an actual 3840-pixel long edge on portrait and landscape instead of merely relabelling sharp (1.572161ms)
+✔ GPU limits clamp both dimensions and never claim 4K when unavailable (0.196765ms)
+✔ automatic render scaling lowers work while sharp and explicit4K ignore the automatic pressure scale (0.345038ms)
+✔ 4K quality persists and modern v4 keeps analog controls and a validated camera preference (0.503957ms)
+✔ TV framing fixes the photographed player-at-the-edge defect without reversing screen axes (3.308839ms)
+✔ football uses finite rounded black/white panel geometry at a readable natural scale without a wire cage (7.717359ms)
+✔ new spacing engine is deterministic and keeps v3 recordings byte-for-byte equivalent to their original engine (133.954953ms)
+✔ spacing solves near-overlapping bodies and bounds every player across a full match (39.402485ms)
+✔ new club and personal games opt into v4 while older requests keep their exact engine version (8.909861ms)
+✔ v4 sessions still encode exact server replays and never restore a v3 recording into a v4 game (202.594035ms)
+✔ a deliberate skill action protects and animates a short dribble, costs energy and cannot be spammed (0.620602ms)
+✔ animated player batching cuts draw submissions without losing the articulated world transforms or number textures (51.328225ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 457.777029
+✔ Sharp uses native phone density rather than the previous 2x cap and supersamples low-DPR views (1.582857ms)
+✔ Auto retains at least one render pixel per CSS pixel unless the GPU itself is smaller (0.23972ms)
+✔ Auto lowers sustained overload, ignores brief stutters and recovers after sustained spare time (2.907877ms)
+✔ new and upgraded v6 matches start Sharp once while 4K, fallback and later explicit Auto choices survive (0.32605ms)
+✔ oblique-surface filtering preserves colour spaces, UVs and shared texture identity and respects GPU limits (1.865201ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.629166
+✔ real API isolates recordings by account and validates timing/body before persisting a finish (50.810277ms)
+✔ concurrent API finishes settle a replay and its rewards once even with different retry IDs (42.597403ms)
+✔ manual cup and Europe games settle their own competition and leave league fixtures intact (29.321946ms)
+✔ an expired manual game is not converted to a simulated reward or re-opened by late upload (4.111064ms)
+✔ personal manual API completion pays once and cannot overwrite a subsequent training task (19.085392ms)
+✔ personal forfeits pay no salary and a rejected concurrent start does not create a phantom match (1.049025ms)
+✔ modern 20Hz recordings fit the real request limit, reject old codecs, and settle the canonical score once (127.535843ms)
+✔ modern personal matches preserve position locking and reward actual replay contributions (84.410978ms)
+✔ v4 skill recordings validate through the real API and pay the replay once (116.455312ms)
+✔ v6 long packets obey the 250-second deadline, replay canonical scores and pay only once (652.313308ms)
+✔ v6 personal matches keep the same two-half deadline and account separation (293.7518ms)
+✔ v7 contact-engine club and personal recordings are validated by the API without changing older protocols (1132.756289ms)
+✔ tactical uploads accept recorded commands, return a matching acknowledgement and permit recovery after the old deadline (3588.540817ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6150.820799
+✔ touch directions map to the eight field directions with a neutral dead zone (1.051019ms)
+✔ recording survives closing the scene and replays exactly like the server (39.075689ms)
+✔ background time and missing local recordings cannot be filled with retroactive chosen inputs (24.131926ms)
+✔ unavailable, corrupt or expired local storage does not break an active game (0.580451ms)
+✔ successful upload clears the recording permanently even when scene cleanup tries to save again (5.01412ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77.214521
+✔ graphics and camera survive reopen with validated settings and inaccessible storage stays harmless (11.185449ms)
+✔ keyboard direction overrides touch and opposing held keys yield a neutral movement (0.591359ms)
+✔ game shortcuts leave focused menus/buttons, modified shortcuts and editable content alone (0.315805ms)
+✔ camera upgrade preserves graphics quality, chooses the new close camera once, and retains a later explicit choice (0.198629ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.68284
+✔ finished simple pitch redraws after resize without an animation loop and releases its observer on exit (3.396761ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9.853758
+✔ overlapping refresh triggers share one request and a completed refresh can run again (1.255305ms)
+✔ the write lock takes effect synchronously and foreground polls do not add a competing read (0.917668ms)
+✔ account reset invalidates pending response guards and an old finally cannot unlock a newer write (0.208493ms)
+✔ reset prevents queued operations from starting and old read cleanup preserves a new read (0.464858ms)
+✔ failed requests release only their own locks and propagate errors for the existing error UI (0.956366ms)
+✔ background polling stops; simulated matches refresh quickly and manual matches use the idle cadence (0.157867ms)
+✔ a successful write invalidates a delayed read error and old cleanup cannot erase the following refresh (0.310546ms)
+✔ starting a write prevents an older queued refresh from fetching at all (1.122996ms)
+✔ critical save errors reach the match, ordinary failures notify once and stale-account errors do neither (0.269114ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.461914
+✔ every navigation destination remains reachable through both sidebar and More after regrouping (18.991362ms)
+✔ mobile navigation preserves the four familiar routes, shows More selected for career and opens its dialog (2.92319ms)
+✔ personal header keeps its own wallet semantics and season action; club context uses real squad totals (20.985706ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 49.122061
+✔ portrait handsets remain blocked when their keyboard shrinks the viewport into a wide rectangle (1.246542ms)
+✔ landscape phones and tablets can use the app while tall desktop windows still show the rotation cover (0.268503ms)
+✔ portrait markup hides and makes the mounted app inert without discarding its child state (11.739761ms)
+✔ portrait input guard releases held controls, blocks game shortcuts and restores focus and listeners on rotation (0.578549ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20.545906
+✔ both match modes are clear native buttons, simulation appears first and exposes its own handler (12.193112ms)
+✔ clubhouse simulation and manual choices lead to different real server match paths (10.15968ms)
+✔ pokal and European choices explicitly keep simulation and manual control separate (7.622611ms)
+✔ an active personal manual game disables club manual only and explains that simulation remains possible (59.080994ms)
+✔ player career exposes the 45-second simulation even when club manual control is unavailable (14.818222ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.981927
+✔ manual match presents usable controls, explicit arcade scope and graphics fallback without importing DOM into replay (20.646831ms)
+✔ archived match displays canonical result instead of invented footage and labels forfeits (7.774299ms)
+✔ manual live banner invites resuming without showing a false server zero-zero score (0.877097ms)
+✔ personal manual mode resumes without a simulated timeline and keeper has its own action labels (30.070505ms)
+✔ new sessions show 11-a-side with a broadcast camera and radar while older sessions keep their true format (12.341594ms)
+✔ match view offers three labelled touch actions over an immersive field with an exit and a resumable save (6.756557ms)
+✔ modern matches default to TV Pro, explain screen-right attack and retain both exit and fallback controls (5.882259ms)
+✔ v4 exposes4K, four distinct touch actions and retains accessible exits and fallbacks (9.16108ms)
+✔ professional match has a football clock, depth-pass control and landscape guidance (9.40081ms)
+✔ two-half match labels agree with its actual server duration and retain the football clock (16.74936ms)
+✔ tactical matches expose real plan changes, formation choices and retained-upload guidance (14.568898ms)
+✔ archived match statistics use server counters in the result view (2.63173ms)
+✔ goal broadcasts identify the actual scorer and assist, then replace the banner with the conceding-team kickoff (0.855094ms)
+✔ own goals do not invent a scorer or assist and names remain escaped in the goal broadcast (0.305649ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.079311
+✔ possession percentages use the actual recorded possession ticks and do not invent an even split (1.941365ms)
+✔ legacy home-only passing and tackling counters never become invented away or combined totals (7.396331ms)
+✔ new engine side-specific counters show actual differences without duplicating legacy counters (1.15924ms)
+✔ invalid or absent measurements stay bounded and cannot produce NaN, Infinity or a fabricated value (2.031389ms)
+✔ statistics use accessible row/column headers and personal contributions appear only when requested (5.305423ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24.70383
+✔ an actual engine8 goal retains its genuine crossing and pre-kickoff poses for replay (28.979398ms)
+✔ interpolation uses captured positions, shortest-facing turns and a held genuine endpoint without mutating match data (4.23069ms)
+✔ rolling history and completed goal clips stay bounded throughout a long scoring match (90.338697ms)
+✔ score-only changes, already-present goals and background gaps cannot invent footage (0.996827ms)
+✔ legacy engines show honest build-up footage rather than synthesizing a missing goal crossing (0.947412ms)
+✔ finish flushes the last goal once, captures are ignored afterward, and reset starts a new recording (1.141534ms)
+✔ replay does not smooth a captured restart teleport into fictional ball travel (1.643056ms)
+✔ new goal replays retain real net follow-through and never interpolate the later kickoff reset (4.873024ms)
+✔ missing tail footage and halftime cuts end on the last observed real ball position (2.621916ms)
+✔ net follow-through adds only a bounded tail to each retained clip during a high-scoring match (74.594355ms)
+✔ an actual engine10 goal replay shows its physical ball reaching the net and stopping before kickoff (55.054556ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 283.641502
+✔ only stationary selected teammates celebrate, never dead-ball freezes or opponents (1.157317ms)
+✔ historical goal snapshots allow their own cheer but never a later corner or halftime (0.162103ms)
+✔ goal camera remains over the goal and preserves the chosen lens when control switches (1.257858ms)
+✔ ball subframes remain inside real net contact bounds without mutating physics (0.30705ms)
+✔ actual goal grids ripple locally only at the struck net, with front anchors pinned (3.207895ms)
+✔ the whole-pitch camera retains its fixed overview during a goal (0.233461ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.606643
+✔ offline income is capped at eight hours and accrued once (1.240372ms)
+✔ upgrade purchases debit server price and duplicate action is ignored (1.309285ms)
+✔ insufficient funds and invalid upgrades do not mutate state (0.453801ms)
+✔ transfer replaces weakest matching position and cannot be bought twice (0.624177ms)
+✔ active match persists, hides future goals and settles exactly once (3.103398ms)
+✔ season awards promotion once and starts new season (0.626481ms)
+✔ club names are validated and trimmed (0.2061ms)
+✔ old match format keeps its original duration and goal visibility (0.841523ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18.033668
+✔ API rejects anonymous and cross-origin writes (30.215148ms)
+✔ API creates independent clubs and persists purchases and names (20.339666ms)
+✔ concurrent repeated requests debit one purchase (14.251704ms)
+✔ HTML has Danish metadata and a responsive marketing page (6.550318ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.781122
+✔ registration stores salted password hashes, creates secure session and isolates game (79.52692ms)
+✔ email is normalized, duplicates prevented, invalid email and short passwords rejected (42.773182ms)
+✔ login uses credentials, creates distinct sessions and logout revokes only that browser (54.564116ms)
+✔ incorrect password and unknown account return the same message (52.977582ms)
+✔ expired and malformed sessions cannot read a saved club (18.87036ms)
+✔ personal recovery is retired, old codes are invalidated without deleting accounts or sessions (35.478572ms)
+✔ auth writes require same origin and do not accept malformed or oversized input (1.906083ms)
+✔ repeated login attempts are throttled (177.818306ms)
+✔ missing server secret fails closed without exposing configuration (1.516728ms)
+✔ native Android origin can log in and authenticate game requests (36.291031ms)
+✔ account deletion requires session, password and explicit confirmation (35.601617ms)
+✔ account deletion removes only its owner, club and sessions (87.314806ms)
+✔ public privacy and account deletion pages load without a session (9.634389ms)
+✔ eight-character passwords register and authenticate; seven are rejected for registration and changes (174.305139ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 817.662655
+Balance sample (2,000 games each): {"start":{"points":1.543,"goals":2.0405,"winRate":0.4125},"strong":{"points":2.278,"goals":2.0395,"winRate":0.687},"defense":{"points":1.554,"goals":1.5515,"winRate":0.397},"attack":{"points":1.62,"goals":2.4955,"winRate":0.4515}}
+✔ round robin has every pair once, ten games per club, no simultaneous fixture (1.700554ms)
+✔ full season standings have ten games per team and conserved goals (2.259864ms)
+✔ new scout talents are stable in a season, refresh next season, and can be purchased (1.898682ms)
+✔ tactic is saved, validated, and locked during a match (4.603955ms)
+✔ ratings remain bounded and max training cannot waste currency (0.324838ms)
+✔ stronger teams earn materially more points; defensive play reduces goals (181.813081ms)
+✔ 36 second matches reveal only elapsed events (1.340503ms)
+✔ buying seasonal talent reassigns a duplicate shirt number (0.455454ms)
+✔ milestone rewards require real progress and cannot be claimed twice (1.136687ms)
+✔ daily goals count completed games, reset at UTC midnight and award once (2.071962ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 206.433807
+✔ contact persists privately, normalizes reply address and returns receipt without sending mail (38.913521ms)
+✔ contact rejects cross-origin, malformed input, missing consent and honeypot (5.496786ms)
+✔ native contact allowed, atomic rate cap blocks sixth message and resets after expiry (5.412368ms)
+✔ contact expires old records without returning existing messages publicly (1.840394ms)
+✔ game rejects nonobject and oversized JSON before any club mutation (5.363996ms)
+✔ public bundle contains marketing only; private email and game actions excluded; sharing artwork is native 4K PNG (40.542297ms)
+✔ career tracks match results and transfers once without inventing old history (6.729307ms)
+✔ 100 seeded careers of 100 matches preserve progression, finances and result invariants (5057.927057ms)
+✔ unreleased APK and handoff archives cannot be downloaded from the public website (1.388135ms)
+✔ packaged Android theme starts with a valid root rule and keeps required colors (16.718037ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5189.044761
+✔ selling exchanges player for a weaker academy replacement, credits server value once and keeps formation (3.744933ms)
+✔ selling is locked during matches and cannot create profit by buying and reselling (0.971949ms)
+✔ stadium milestones are stable for old saves and advance at 3, 6, 10 without altering income rules (5.216339ms)
+✔ password change requires credentials, revokes all old sessions and preserves club (146.327752ms)
+✔ mail features fail closed when no provider is configured and cannot change email (36.465202ms)
+✔ mail verification uses hashed expiring single-use token and keeps it out of response (22.055703ms)
+✔ email changes require password and verification, keep saved club and invalidate old sessions (86.866594ms)
+✔ expired and wrong verification codes cannot change the account (22.893541ms)
+✔ mail reset obscures account existence, changes password once without issuing a personal recovery code (55.690054ms)
+✔ mail provider failure removes unusable challenge without changing account (20.183806ms)
+✔ support forwards only when configured and keeps a ticket if delivery fails (2.773505ms)
+✔ recipient mail limit prevents repeated verification messages (23.23219ms)
+✔ concurrent duplicate sale requests credit one transaction through SQLite compare-and-swap (22.458167ms)
+✔ selling every starter preserves all positions and unique replacements without repeat academy income (0.713652ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 456.511727
+✔ old saves gain management defaults without changing accounts, money, players or baseline income (7.091435ms)
+✔ formations preserve all eleven identities and goalkeeper, apply out-of-position penalties and reject prototype keys (2.521797ms)
+✔ purchases retain replaced players, bench substitutions are reversible and goalkeepers cannot move into the outfield (0.672289ms)
+✔ full bench prevents purchases without debiting money; selling a reserve frees space without a replacement (0.385509ms)
+✔ individual training charges the server price, improves selected player only and never exceeds potential (0.415464ms)
+✔ coach improves team strength and discounts development, salary is deducted once through net offline accrual (0.404868ms)
+✔ scout reduces academy time, graduates wait for server time and cannot be claimed twice (0.526731ms)
+✔ academy upgrades affect future programs and full bench cannot lose a completed prospect (0.403106ms)
+✔ tickets trade attendance for price, capacity caps turnout and net contribution is frozen per match (0.923367ms)
+✔ supporters and reputation respond once to match result and campaign cooldown prevents repeated spending (0.461032ms)
+✔ cup requires two league matches and cup wins do not alter league accounting (1.182085ms)
+✔ cup trophy and payouts settle once; eliminated cup cannot be replayed (0.580081ms)
+✔ cup draws use penalties without leaking the winner while live and count as a daily win (0.815985ms)
+✔ new season resets only cup bracket and league while keeping staff, youth, supporters and training (0.598148ms)
+✔ simultaneous duplicate academy start and graduation requests debit and award once in persisted API state (41.991221ms)
+Management simulation: { leagueGames: 4000, cupGames: 706, total: 4706 }
+✔ twenty careers of twenty seasons preserve lineups, bounded economies and separate cup/league totals (98.707626ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 163.795188
+✔ management views render a migrated legacy club with no undefined controls or invalid numbers (34.163617ms)
+✔ completed academy and cup penalty result render actionable graduation and correct cup outcome (98.589759ms)
+✔ arena stages render finite geometry and named camera controls without a WebGL dependency (193.998252ms)
+✔ login initially asks only for email, and journey offers an earned reward before an unready milestone (7.087874ms)
+✔ club hub exposes one clear match action, three destinations and current public club metrics (34.806662ms)
+✔ club hub resumes active games and highlights ready academy; player art uses unique resource ids (37.879366ms)
+✔ live header control exposes score and opponent, stays out of dialog focus and disappears without a match (1.27162ms)
+✔ football game menu routes its cup, career, Europe and squad tiles to existing destinations (17.237006ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 431.304423
+✔ advanced milestones require real progress, expose bounded progress and pay once (3.115468ms)
+✔ old clubs gain new goals without losing their previous claims; action retries cannot duplicate new rewards (2.961257ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13.328806
+✔ legacy style reads return independent defaults without mutating saves (1.989208ms)
+✔ valid cosmetic changes save canonical keys only and cannot alter club finances or strength (0.480762ms)
+✔ malicious enum and arbitrary style properties are rejected atomically (1.349126ms)
+✔ motto is bounded, plain text and preserves ordinary Danish punctuation (0.507862ms)
+✔ styles remain isolated across clubs and caller mutation cannot change saved cosmetics (0.169976ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.249292
+✔ legacy clubs gain neutral expansion defaults without changing saved data or historical credits (5.794672ms)
+✔ first DNA choice is free, changes charge once, same choice and prototype keys cannot waste money, match locks apply (2.133064ms)
+✔ community identity increases fans only on completed wins, including cup penalties, without duplication (1.535216ms)
+✔ research validates resources/prerequisites and pays once; completion never grants an unfinished or duplicate node (0.603186ms)
+✔ research points are awarded once at settlement for league and cup, never for starts, reads or retries (1.157578ms)
+✔ commerce adds only bounded pre-wage gross bonus, and past income accrues before completion without retroactive credit (0.511408ms)
+✔ development and academy research compose with staff and DNA, respect caps and leave active youth snapshots unchanged (1.023607ms)
+✔ contracts count only deltas after acceptance, cap progress and use settled cup career wins correctly (0.498698ms)
+✔ contract cooldown persists beyond action cache and permits other types while graduates use claimed talents (1.087362ms)
+✔ contracts survive season resets and extra goal progress never awards beyond the frozen server reward (4.0014ms)
+✔ SQLite concurrency debits research and grants completion/contract rewards once; invalid actions return 400 (52.447674ms)
+✔ all research remains bounded over a long mixed league/cup career without changing formation or old reward snapshots (7.655487ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.951246
+✔ new seasons use bounded rising opposition and targets while the first two leagues retain their original match tuning (9.606536ms)
+✔ every promotion licence requires exactly its published existing facility levels and reacts at each boundary (0.674533ms)
+✔ capped squads can build the exact training facility required by their licence and stop at that requirement (9.36914ms)
+✔ qualifying points alone cannot bypass a missing licence; exact requirements promote once without deleting assets (4.379216ms)
+✔ legacy mid-season saves retain original opposition, 18-point goal and no licence until their next season (1.533964ms)
+✔ legacy active first matches preserve their snapshot and freeze old rules for the rest of that season (0.85907ms)
+✔ a legacy top-flight season never backfills a new title and transitions cleanly to the championship rules (0.777007ms)
+✔ new top-flight titles require rank one and the point target, award a fixed reward once and archive actual results (0.989116ms)
+✔ season history is capped at twenty summaries while title counts persist across all seasons (4.358576ms)
+✔ SQLite concurrent settlement cannot duplicate a new league title, cash reward or season record (35.972533ms)
+Competition balance: 40,000 simulated matches [
+  { tier: 0, qualified: 0.939, titles: 0, points: 22.867 },
+  { tier: 6, qualified: 0.739, titles: 0, points: 22.596 },
+  { tier: 7, qualified: 0.333, titles: 0, points: 19.846 },
+  { tier: 8, qualified: 0.218, titles: 0.203, points: 18.18 }
+]
+✔ seeded production match simulations make the upper leagues materially harder while capped squads can still qualify (346.42688ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 421.923178
+✔ European defaults never backfill historical qualification or mutate a public legacy read (5.576615ms)
+✔ qualification requires a completed top-flight top-three result with twenty points and is consumed once (5.871248ms)
+✔ actual completed Superliga seasons grant qualification while ordinary group fixtures do not alter it (2.618373ms)
+✔ three independent group games produce a real four-club table and top-two knockout qualification (3.01016ms)
+✔ group draws remain draws; losing the group ends the campaign and blocks replay without new qualification (1.128425ms)
+✔ a new earned qualification waits safely while an unfinished campaign keeps its own group and entry season (0.6856ms)
+✔ knockout penalties are hidden until completion, count as wins or losses and never become league draws (1.162256ms)
+✔ winning all three knockout ties gives one trophy and one fixed final bonus without altering league or domestic cup (0.974253ms)
+✔ all European actions respect the one-active-match lock without consuming a pending entry (0.776135ms)
+✔ European campaign history stays bounded while completed campaigns and titles persist (17.138488ms)
+✔ SQLite retries consume one entry and settle a European final once, with typed errors for replay attempts (48.107156ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.461206
+✔ career creation is optional and never replaces an existing club or squad (2.614005ms)
+✔ career validates names, roles, identifiers and unavailable actions without inventing a player (0.663667ms)
+✔ completed training grants XP and focus mastery once while all active work is mutually exclusive (0.417017ms)
+✔ skill allocation changes playing strength, consumes earned points and obeys the 99 cap (0.424908ms)
+✔ the public view hides every future match outcome and pays only after the full match duration (1.421585ms)
+✔ goalkeepers have meaningful saves and clean sheets without fabricated outfield goals (0.473902ms)
+✔ a personal winning season awards once and rolls into a fresh season without altering club standings (4.111715ms)
+✔ contracts unlock through level, matches, season boundaries and personal finances (12.080121ms)
+✔ level 50 and attribute bounds stay finite during a long saved career (21.469022ms)
+✔ view mutation cannot change the saved career and old clubs migrate with no fabricated career (0.435694ms)
+✔ saving and reopening an active match retains the original outcome rather than rerolling it (0.572229ms)
+✔ developing attributes measurably improves match results against the same seeded opponents (3.095319ms)
+✔ authenticated API hides career outcomes and concurrent refreshes settle one personal wage (48.937027ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 101.892805
+✔ old APK careers keep their existing energy-free flow until the new client activates the extension (4.052465ms)
+✔ advanced actions activate their rules even when a caller omits the client marker (0.521773ms)
+✔ energy, recovery and time boundaries prevent unlimited matches and never spend the manager balance (0.739591ms)
+✔ offline recovery is capped, uses elapsed time and never reveals or mutates saved results through a view (0.83882ms)
+✔ match plans have measurable tradeoffs in personal goals, assists and energy against the same seeds (23.220992ms)
+✔ goalkeeper plans affect saves without turning a goalkeeper into a scorer (0.466831ms)
+✔ live highlights disclose only elapsed goals, agree with the final score and survive a saved match (3.712495ms)
+✔ position objectives reward completed work once and cannot be claimed by an old goal id (1.22553ms)
+✔ end-of-season auto rewards are explicit, archived, bounded and cannot pay twice (0.741724ms)
+✔ top contracts depend on earned objectives, trust and recent performance as well as level (1.49828ms)
+✔ choosing a contract role changes real pay, training costs and workload, not just the label (0.565158ms)
+✔ authenticated concurrent objective claims persist one reward and manager accounts stay separate (49.327849ms)
+✔ training and resting do not erase the match form used to earn a contract (0.719561ms)
+✔ long modern careers bound all histories, retain records and never exceed trust or energy limits (48.374708ms)
+✔ elite contract form is reachable through development and recovery, rather than requiring impossible ratings (33.835302ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 175.867684
+✔ personal header uses personal money and personal destinations, not the manager club (0.922665ms)
+✔ club screens retain their live idle balance and facility/league navigation (0.175264ms)
+✔ career creation does not link to a nonexistent personal match or season (0.189745ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7.207674
+✔ parallel club style and DNA changes preserve both features, roster and other account isolation (37.174648ms)
+✔ style validation is atomic and rejects injection without applying submitted economy fields (5.923716ms)
+✔ legacy save gains expansion defaults once without resetting career, identity or existing mission claims (13.324852ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.490876
+✔ strategic center renders legacy-normalized DNA and an accessible three-tab navigation (38.02512ms)
+✔ research panel renders branches, server resource prices and a matured project without waiting for ready poll (14.300846ms)
+✔ research can use accrued projected money despite a stale available flag (9.130272ms)
+✔ board cards label goals correctly and reopen elapsed cooldown using current time (16.377004ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.960574
+✔ integrated center exposes strategy and customization with safe legacy defaults and accessible controls (41.960615ms)
+✔ saved customization follows the club hub and vector assets use unique ids (59.861388ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.621122
+✔ late league goal explains actual target and all facility requirements before season end (15.430043ms)
+✔ championship requires first place as well as points; legacy goals keep their previous target (4.272115ms)
+✔ season archive and completed-match result distinguish a title, promotion and missing licence (302.67887ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 344.722716
+✔ European qualification is transparent before entry and qualified entry respects an active club match (13.571371ms)
+✔ group campaign shows all clubs, fixtures and the next European action; tabs expose controlled navigation (7.174415ms)
+✔ European knockout penalty results are not described as league draws and titles appear in career (281.442924ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 318.074035
+✔ optional player career creates a named player in one of four positions without changing the club (9.311453ms)
+✔ career view presents real development, separate money, match, training and contract requirements (10.608462ms)
+✔ active career activity exposes progress without future outcomes and disables starting more work (12.417578ms)
+✔ goalkeeper career shows saves and clean sheets while a capped level avoids invalid experience progress (8.656991ms)
+✔ real server career view renders the current season goal, mastery and the full contract requirements (12.298349ms)
+✔ completed career activity shows its result and earnings immediately; capped training stays disabled (12.828145ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.429733
+✔ the real modern career exposes plans, personal objectives, fitness and earned contract roles (27.835593ms)
+✔ a running personal match renders only the elapsed scoreboard and its actual highlights (26.807258ms)
+✔ a tired player can find recovery and does not receive a fake match result for resting (28.887061ms)
+✔ contract roles stay readable and unavailable high-pressure roles cannot be selected (0.869195ms)
+✔ goal rewards, completed goals and automatic season payments have explicit outcome copy (27.463013ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 118.194221
+✔ refreshed clubhouse keeps its match action and three club shortcuts while exposing optional careers and Europe (104.89622ms)
+✔ career entry uses real saved progress and distinguishes running tasks from tasks ready to update (258.6339ms)
+✔ Europe entry describes earned places, ongoing knockout rounds and completed campaigns correctly (91.549296ms)
+✔ clubhouse resumes live European matches and formats negative income without contradictory signs (14.148858ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 475.064419
+✔ public website presents club management, separate player career and Europe with accurate gameplay copy (34.842425ms)
+✔ upcoming website shares one full countdown and never exposes game or download actions before server confirmation (17.088974ms)
+✔ website keeps original vector artwork, current match features and clear installation instructions (12.020742ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.804566
+✔ position, price, rating and budget filters use current market data without mutating its scout order (1.611099ms)
+✔ purchase explanation follows the correct position and blocks signed, unaffordable and mid-match choices (12.344739ms)
+✔ market screen exposes labelled real filters, canonical prices and an explanatory empty state (31.051282ms)
+✔ lineup shows all eleven real players and routes player details, recruitment and tactical management (6.87818ms)
+✔ fictional portrait selection remains stable across rerenders and handles accessible or decorative use (0.574082ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.486095
+✔ current 4K captures are served byte-for-byte with their verified dimensions and safe read-only headers (61.98622ms)
+✔ old low-resolution screenshots and legacy raster art are unavailable publicly (1.152922ms)
+✔ public app illustrations are exact static SVG assets with constrained content policy (24.312271ms)
+✔ showcase keeps game and unreleased downloads closed (26.973948ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 120.488537
+✔ each public document exposes one canonical URL and complete sharing metadata (57.153603ms)
+✔ search indexing documents list public information and exclude game, API and private build links (2.538422ms)
+✔ favicon uses the original shared Touchline vector and constrains markup options (0.690227ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70.358424
+✔ 4K policy accepts both orientations and rejects narrow, short or invented dimensions (1.359091ms)
+✔ verified capture output contains exact original file bytes and accessible UI metadata (30.341882ms)
+✔ every APK version or checksum change immediately hides old screenshots and fails required release verification (10.963195ms)
+✔ missing captures remain absent during development while an explicit release requirement blocks them (4.386067ms)
+✔ image dimensions and encoded pixels are checked instead of trusting the manifest (15.9076ms)
+✔ corruption, filename type and optional original file checksum cannot be silently accepted (24.362307ms)
+✔ capture routes reject traversal and duplicates, and symlinks cannot expose files outside the capture directory (4.153758ms)
+✔ capture approval is invalid if the local signed APK differs from the release checksum (3.70934ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 101.093898
+✔ website gallery exposes four original captures without opening a dialog on arrival (10.371666ms)
+✔ full screenshot view supplies its title, description, close and navigation controls (2.0174ms)
+✔ home excludes legacy screenshots while keeping release date and current match information (21.671496ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40.205991
+✔ disk restart preserves active match, unlocks DNA after settlement and never repeats match points or rewards (740.369648ms)
+✔ research survives an interrupted Worker and on-disk reload; completion and income bonus activate exactly once (695.075306ms)
+✔ saved club design survives repeated disk and Worker restarts, ignores stale save retries and stays private to its account (704.565374ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2144.814815
+✔ launch uses 1 January 2027 at 10:00 Copenhagen time and closes on invalid schedule or clock (14.10923ms)
+✔ postponement keeps both versions closed on the former launch date and across New Year midnight (24.914116ms)
+✔ before opening, routes stay closed and no client clock, query or environment override bypasses the server (8.305373ms)
+✔ at the exact boundary the playable page opens without changing API authentication (39.586701ms)
+✔ released APK bytes and clean filename match the approved local artifact; old and unknown releases stay closed (37.560072ms)
+✔ HEAD and method handling work before and after release without cacheable locked responses (2.113525ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.124221
+✔ capability returns exact APK bytes and a normal Android download filename without cache or indexing (26.758696ms)
+✔ guessed tokens, filenames and any time outside the exact 24-hour grant fail closed (2.794576ms)
+✔ grant cannot silently serve a different build, checksum or truncated file (1.483928ms)
+✔ HEAD and supported methods preserve the same access checks (1.437418ms)
+✔ Android downloads can resume ranges, open-ended offsets and suffixes without corrupting bytes (2.884963ms)
+✔ malformed and unsatisfiable byte ranges are rejected (2.242328ms)
+✔ handler leaves public release paths to their existing server gates (0.261583ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43.562803
+✔ authenticated upload stores only the approved APK under an immutable content-addressed key (31.115078ms)
+✔ uploads share the existing exact token, build and 24-hour expiry checks before touching storage (5.602444ms)
+✔ upload rejects unsupported methods, declared/body length mismatches and checksum changes without writes (4.919498ms)
+✔ upload enforces the 32 MiB cap and bounds streamed bodies before hashing or writing (5.853261ms)
+✔ chunked upload completes validation before the only storage write, and retries never overwrite (1.463929ms)
+✔ owner R2 downloads stream exact bytes with existing private headers, HEAD, ranges and authorization (5.151606ms)
+✔ R2 downloads fail closed for absent, truncated or mismatched objects and invalid ranges (5.170355ms)
+✔ public helper streams the same private object with a public download filename when its caller opens the gate (0.702164ms)
+✔ upload route leaves downloads and public paths untouched, and storage outages do not mutate release objects (0.787583ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67.26585
+✔ countdown reaches zero exactly at opening, keeps seconds rounded up and never shows negative time (1.30491ms)
+✔ release metadata validation rejects malformed clocks, schedule mismatches and external download URLs (0.301353ms)
+✔ client clocks cannot create launch links before server confirms; disconnected status keeps them closed (7.012942ms)
+✔ confirmed launch exposes Android and web actions while keeping Google Play distinct (0.669305ms)
+✔ password recovery is actionable only when the provider reports ready (1.209587ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16.233049
+✔ home resolution keeps native root, web game and public-document return markers separate (native) (0.790587ms)
+✔ document links retain selected topic and carry only a fixed play return marker (native) (0.267913ms)
+✔ login and initial game screen keep their logo and legal links on the expected route (native) (22.368463ms)
+✔ account deletion from browser documents returns to the saved game (native) (2.187035ms)
+✔ browser API calls keep same-origin sessions and return a readable network failure (native) (26.290473ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57.608196
+✔ home resolution keeps native root, web game and public-document return markers separate (web) (0.929626ms)
+✔ document links retain selected topic and carry only a fixed play return marker (web) (0.340942ms)
+✔ login and initial game screen keep their logo and legal links on the expected route (web) (22.83958ms)
+✔ account deletion from browser documents returns to the saved game (web) (2.567045ms)
+✔ browser API calls keep same-origin sessions and return a readable network failure (web) (29.497409ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.305572

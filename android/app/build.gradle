@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace = "dk.touchline.footballidle"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "dk.touchline.footballidle"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 37
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    def uploadKeyVariables = ["TOUCHLINE_KEYSTORE", "TOUCHLINE_STORE_PASSWORD", "TOUCHLINE_KEY_ALIAS", "TOUCHLINE_KEY_PASSWORD"]
+    if (uploadKeyVariables.any { System.getenv(it) } && !uploadKeyVariables.every { System.getenv(it) }) {
+        throw new GradleException("Upload signing requires all four TOUCHLINE signing environment variables.")
+    }
+    signingConfigs {
+        upload {
+            if (System.getenv("TOUCHLINE_KEYSTORE")) {
+                storeFile file(System.getenv("TOUCHLINE_KEYSTORE"))
+                storePassword System.getenv("TOUCHLINE_STORE_PASSWORD")
+                keyAlias System.getenv("TOUCHLINE_KEY_ALIAS")
+                keyPassword System.getenv("TOUCHLINE_KEY_PASSWORD")
+            }
+        }
+    }
+    buildTypes {
+        release {
+            if (System.getenv("TOUCHLINE_KEYSTORE")) signingConfig signingConfigs.upload
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        // Direct APK distribution retains the existing certificate for upgrades.
+        // The Play bundle keeps its independent owner-controlled upload signing.
+        sideload {
+            initWith release
+            signingConfig signingConfigs.debug
+            debuggable false
+            matchingFallbacks = ['release']
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+// A fresh default key would break updates for installed APK users.
+gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.toLowerCase().contains('sideload') }) {
+        if (!android.signingConfigs.debug.storeFile.isFile()) {
+            throw new GradleException('The existing APK signing store must be restored before building a sideload update.')
+        }
+    }
+}
