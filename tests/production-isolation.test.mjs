@@ -27,6 +27,10 @@ const workerOf = (local) => local.worker;
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const read = (path) => readFileSync(resolve(ROOT, path), 'utf8');
+// Det nye testprojekt har egen identitet/database. Kun denne ene origin er en
+// tilladt Sites-reference; andre Sites-/produktionsreferencer testes som før.
+const ISOLATED_TEST_ORIGIN = 'https://touchline37-engine11-test.glowingconch1.chatgpt.site';
+const productionReferencesIn = text => productionMarkersIn(text.replaceAll(ISOLATED_TEST_ORIGIN, 'ISOLATED_TEST_ORIGIN'));
 
 function filesUnder(dir, extensions) {
   const out = [];
@@ -49,8 +53,10 @@ test('testmiljøets kildekode indeholder ingen produktionsværter, -projekter el
   const files = [...filesUnder('dev', ['.mjs', '.js', '.json', '.md']), 'tests/production-isolation.test.mjs', 'tests/bundle-budget.test.mjs'];
   assert(files.length >= 5);
   for (const file of files) {
-    assert.deepEqual(productionMarkersIn(read(file)), [], `${file} refererer til produktion`);
+    assert.deepEqual(productionReferencesIn(read(file)), [], `${file} refererer til produktion`);
   }
+  assert.equal(productionReferencesIn(ISOLATED_TEST_ORIGIN).length, 0);
+  for (const marker of PRODUCTION_MARKERS) assert(productionReferencesIn(marker).includes(marker), 'Den konkrete testorigin må ikke frikende produktionsmarkører');
 });
 
 test('markørlisten dækker de produktionsadresser, der faktisk står i projektet', () => {
@@ -72,7 +78,7 @@ test('produktionens API-adresse findes kun i build.gradle (defaultConfig) og sp�
     'capacitor.config.json',
   ];
   const hits = files.filter((file) => {
-    const text = read(file).toLowerCase();
+    const text = read(file).replaceAll(ISOLATED_TEST_ORIGIN, 'ISOLATED_TEST_ORIGIN').toLowerCase();
     return apiMarkers.some((marker) => text.includes(marker));
   });
   // M4: produktionsadressen er flyttet til build.gradle (defaultConfig). I kildekoden findes
@@ -85,7 +91,7 @@ test('produktionens API-adresse findes kun i build.gradle (defaultConfig) og sp�
   assert(defaultConfig.includes(productionUrl), 'produktionsadressen hører kun til defaultConfig');
 });
 
-test('.openai/hosting.json bruges kun af den eksisterende build.mjs', () => {
+test('hosting.json læses kun af baselinebygningen og det fastlåste separate testprojekts værktøjer', () => {
   const files = [
     'build.mjs',
     ...filesUnder('src', ['.js', '.jsx']),
@@ -95,7 +101,12 @@ test('.openai/hosting.json bruges kun af den eksisterende build.mjs', () => {
     ...filesUnder('dev', ['.mjs']),
   ];
   const users = files.filter((file) => read(file).includes('hosting.json'));
-  assert.deepEqual(users, ['build.mjs']);
+  assert.deepEqual(users, ['build.mjs', 'dev/test-host/build.mjs', 'dev/test-host/prepare-site.mjs']);
+  for (const file of users.slice(1)) {
+    assert(read(file).includes('appgprj_6af9bc223af88191b6d68d7616afcc25'), 'Værktøjet skal være låst til det NYE projekt');
+    assert(read(file).includes('manifest.project_id !=='), 'En anden projektidentitet skal afvises');
+    assert(read(file).includes('manifest.r2 !== null'), 'Testværktøjer må ikke kopiere lagerbindings');
+  }
 });
 
 test('lokale testdata er udelukket fra Git', () => {

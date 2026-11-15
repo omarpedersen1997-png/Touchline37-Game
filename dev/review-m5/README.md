@@ -139,5 +139,5 @@ ufærdige. Der er ikke tilføjet erstatninger for disse funktioner.
 5. Mål FPS, varme, touch og kampgemning på ejerens telefon, og ret derefter de
    aftalte motor 11-fejl. Ændr ikke motor 1–10 eller det låste design.
 
-Ingen automatisk merge, deployment eller forbindelse til playtouchline.dk.
+Ingen automatisk merge, deployment eller forbindelse til den aktive hjemmeside.
 Denne gennemgang giver ikke en ny godkendelse til produktionsændringer.

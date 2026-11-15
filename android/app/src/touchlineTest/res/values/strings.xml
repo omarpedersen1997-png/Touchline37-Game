@@ -3,5 +3,6 @@
 <resources>
     <string name="app_name">Touchline TEST</string>
     <string name="title_activity_main">Touchline TEST</string>
+    <string name="support_contact_url">https://touchline37-engine11-test.glowingconch1.chatgpt.site</string>
     <string name="package_name">dk.touchline.footballidle.test</string>
 </resources>

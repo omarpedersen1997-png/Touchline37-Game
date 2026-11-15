@@ -149,6 +149,10 @@ public final class TouchlineApiBridgeTest {
             assertResolved(logout, 200, "{\"ok\":true}");
             check(Arrays.equals("{}".getBytes(StandardCharsets.UTF_8), last.sent.toByteArray()), "absent POST body remains an empty JSON object");
             check(SessionVault.cookie == null, "logout must clear native vault");
+            for (FakeConnection connection : connections) {
+                check(!connection.getURL().getPath().equals("/api/test-environment"), "production must never use a test handshake");
+                check(!connection.requestHeaders.containsKey("X-Touchline-Test-Engine"), "production must never send a test engine header");
+            }
             check(replies.isEmpty(), "all and only expected network interactions must execute");
             System.out.println("Actual native bridge passed engine8 club/career uploads, response/session round-trip and pre-network limits.");
         } finally { plugin.handleOnDestroy(); }

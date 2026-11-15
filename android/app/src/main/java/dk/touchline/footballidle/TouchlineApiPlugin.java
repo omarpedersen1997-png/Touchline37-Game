@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.net.ssl.HttpsURLConnection;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 @CapacitorPlugin(name = "TouchlineApi")
 public class TouchlineApiPlugin extends Plugin {
@@ -26,6 +28,46 @@ public class TouchlineApiPlugin extends Plugin {
     private final ExecutorService queue = Executors.newSingleThreadExecutor();
     private SessionVault vault;
     private String userAgent;
+    // Accessed only by the single-threaded request queue. Never persisted or shared
+    // with the production app: every new plugin instance verifies its own endpoint.
+    private boolean testEnvironmentVerified;
+
+    private void verifyTestEnvironment() throws Exception {
+        if (!BuildConfig.TOUCHLINE_TEST_BUILD || testEnvironmentVerified) return;
+        HttpsURLConnection check = null;
+        try {
+            check = (HttpsURLConnection) new URL(API + "/api/test-environment").openConnection();
+            check.setInstanceFollowRedirects(false);
+            check.setConnectTimeout(15000); check.setReadTimeout(20000);
+            check.setRequestMethod("GET");
+            check.setRequestProperty("Accept", "application/json");
+            check.setRequestProperty("User-Agent", userAgent);
+            check.setRequestProperty("Origin", "https://localhost");
+            check.setRequestProperty("X-Touchline-Test-Engine", "11");
+            // No session, authentication header or request body is sent during the
+            // handshake. Its Set-Cookie headers must not reach the session vault.
+            if (check.getResponseCode() != 200) throw new IllegalStateException("Test handshake status");
+            String contentType = check.getContentType();
+            if (contentType == null || !contentType.toLowerCase(java.util.Locale.ROOT).split(";", 2)[0].trim().equals("application/json"))
+                throw new IllegalStateException("Test handshake content type");
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            try (InputStream stream = check.getInputStream()) {
+                byte[] chunk = new byte[1024]; int count;
+                while ((count = stream.read(chunk)) != -1) {
+                    if (bytes.size() + count > 4096) throw new IllegalStateException("Test handshake too large");
+                    bytes.write(chunk, 0, count);
+                }
+            }
+            JSONTokener json = new JSONTokener(bytes.toString(StandardCharsets.UTF_8.name()));
+            Object parsed = json.nextValue();
+            if (!(parsed instanceof JSONObject) || json.nextClean() != 0) throw new IllegalStateException("Test handshake JSON");
+            JSONObject result = (JSONObject) parsed;
+            if (!Boolean.TRUE.equals(result.opt("isolated")) || !Integer.valueOf(11).equals(result.opt("engine")) ||
+                !"touchline37-engine11-test".equals(result.opt("environment")))
+                throw new IllegalStateException("Test environment not isolated");
+            testEnvironmentVerified = true;
+        } finally { if (check != null) check.disconnect(); }
+    }
     @Override public void load() { vault = new SessionVault(getContext()); userAgent = WebSettings.getDefaultUserAgent(getContext()); }
     @PluginMethod public void request(PluginCall call) {
         String path = call.getString("path", "");
@@ -49,6 +91,13 @@ public class TouchlineApiPlugin extends Plugin {
         queue.execute(() -> {
             HttpsURLConnection connection = null;
             try {
+                if (BuildConfig.TOUCHLINE_TEST_BUILD) {
+                    try { verifyTestEnvironment(); }
+                    catch (Exception error) {
+                        call.reject("Testmiljøet kunne ikke verificeres. Ingen loginoplysninger eller spilhandlinger er sendt.", "TEST_ENVIRONMENT_UNVERIFIED");
+                        return;
+                    }
+                }
                 connection = (HttpsURLConnection) new URL(API + path).openConnection();
                 connection.setInstanceFollowRedirects(false);
                 connection.setConnectTimeout(15000); connection.setReadTimeout(20000);
@@ -56,6 +105,7 @@ public class TouchlineApiPlugin extends Plugin {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("User-Agent", userAgent);
                 connection.setRequestProperty("Origin", "https://localhost");
+                if (BuildConfig.TOUCHLINE_TEST_BUILD) connection.setRequestProperty("X-Touchline-Test-Engine", "11");
                 String cookie = vault.read();
                 if (cookie != null) connection.setRequestProperty("Cookie", cookie);
                 if (method.equals("POST")) {

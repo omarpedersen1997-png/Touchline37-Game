@@ -4,11 +4,14 @@ apply plugin: 'com.android.application'
 // (.invalid), indtil ejeren har godkendt en separat testserver:
 //   gradle assembleTouchlineTest -PtouchlineTestApi=https://<testserver>
 def touchlineTestApi = (project.findProperty('touchlineTestApi') ?: 'https://touchline-test.invalid').toString().trim()
+// Kun dette særskilt oprettede testprojekt må bruge Sites-hosting. Ingen anden
+// Sites-adresse slipper gennem produktionsspærren; Java-broen kontrollerer også.
+def touchlineApprovedTestApi = 'https://touchline37-engine11-test.glowingconch1.chatgpt.site'
 def touchlineProductionMarkers = ['chatgpt.site', 'chatgpt-team.site', 'glowingconch1', 'playtouchline.dk']
 if (!touchlineTestApi.startsWith('https://') || touchlineTestApi.contains('"') || touchlineTestApi.contains('\\')) {
     throw new GradleException("touchlineTestApi skal være en https-adresse: ${touchlineTestApi}")
 }
-if (touchlineProductionMarkers.any { touchlineTestApi.toLowerCase().contains(it) }) {
+if (touchlineProductionMarkers.any { touchlineTestApi.toLowerCase().contains(it) } && touchlineTestApi != touchlineApprovedTestApi) {
     throw new GradleException("Testappen må aldrig pege på produktionsserveren: ${touchlineTestApi}")
 }
 
@@ -33,6 +36,11 @@ android {
     }
     buildFeatures {
         buildConfig = true
+    }
+    // Webindholdet i produktionsvarianterne er uændret. Testvarianten får kun
+    // en genereret overlayfil, hvor delings-/supportlinks bliver i testmiljøet.
+    sourceSets {
+        maybeCreate('touchlineTest').assets.srcDir(rootProject.file('../.dev-data/android-web'))
     }
     def uploadKeyVariables = ["TOUCHLINE_KEYSTORE", "TOUCHLINE_STORE_PASSWORD", "TOUCHLINE_KEY_ALIAS", "TOUCHLINE_KEY_PASSWORD"]
     if (uploadKeyVariables.any { System.getenv(it) } && !uploadKeyVariables.every { System.getenv(it) }) {
@@ -125,6 +133,9 @@ gradle.taskGraph.whenReady { graph ->
     if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.contains('TouchlineTest') }) {
         if (!android.signingConfigs.touchlineTest.storeFile?.isFile()) {
             throw new GradleException('Testnøglen mangler. Kør "npm run android:test-key" først.')
+        }
+        if (!rootProject.file('../.dev-data/android-web/public/index.html').isFile()) {
+            throw new GradleException('Testwebindhold mangler. Kør "node dev/prepare-test-apk.mjs" efter android:sync.')
         }
     }
     if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.toLowerCase().contains('sideload') }) {
