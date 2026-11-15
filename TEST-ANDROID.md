@@ -57,24 +57,28 @@ APK 37 er fortsat byte-identisk med hash
 Testudgaven kan ikke opdatere den app, fordi både app-id og certifikat er forskellige.
 Produktionsnøglen er ikke brugt, kopieret eller uploadet. Testnøglen er kun lokal.
 
-## Adgang afventer ejerens godkendelse
+## Godkendt testadgang
 
 API: https://touchline37-engine11-test.glowingconch1.chatgpt.site
 
 Projekt-ID: `appgprj_6af9bc223af88191b6d68d7616afcc25`.
-Serveren er fortsat privat med kun ejeren tilladt. Et native kald uden Sites-adgang
-gav HTTP 401. Den byggede APK indeholder ingen Sites-bypass-token og kan derfor
-endnu ikke passere platformens private adgangskontrol fra telefonen.
+Ejeren godkendte den 15. november 2026 offentlig netværksadgang til KUN denne nye
+testadresse. Sites-adgangen er ændret fra privat til offentlig, og handshake
+er verificeret med HTTP 200 uden Sites-token, cookie eller platformlogin.
+Den eksisterende APK behøver derfor ingen genbygning eller bypass-token.
 
-Før APK'en kaldes klar til installation og spil, skal ejeren udtrykkeligt godkende
-offentlig netværksadgang til KUN denne nye testadresse. Spillets API kræver stadig
-testlogin; ingen produktionskonto eller produktionsdata kan bruges her. Hverken
-det aktive domæne eller produktionsappens publikum skal ændres.
+Spillets API kræver fortsat testlogin: gæstekald til spillet giver 401, og andre
+konti end de tre fiktive testkonti afvises. Login til testkontoen og indlæsning af
+gemt motor 11-karriere er verificeret. Klargøringsruten giver stadig 404, og mail
+er deaktiveret. Bevis: `test-evidence/public-test-access.json`.
+
+Ingen produktionskonto eller produktionsdata kan bruges her. Det aktive domæne,
+produktionsappens publikum og den private websiteforhåndsvisning er uændrede.
 
 Testlogin udleveres særskilt til ejeren. Det genererede kodeord, testpepper,
 setuptokens, serviceadgang og signeringsnøgler findes ikke i Git eller APK'en.
 
-Når adgangen er godkendt: Åbn APK-filens side i det private GitHub-repository på
+Åbn APK-filens side i det private GitHub-repository på
 Android, log ind på GitHub og brug filens downloadknap. Åbn derefter filen fra
 Downloads/Filer, og tillad installation fra den app Android spørger om.
 Installer **Touchline TEST** ved siden af den eksisterende app.
