@@ -1,6 +1,6 @@
 // Byg KUN det særskilte testprojekt; dette må aldrig bygge originalens hosting.
 import { build } from 'esbuild';
-import { mkdir, readFile, cp } from 'node:fs/promises';
+import { mkdir, readFile, cp, rm } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,5 +35,7 @@ await build({
 });
 await mkdir(resolve(root, 'dist/.openai'), { recursive: true });
 await cp(resolve(root, '.openai/hosting.json'), resolve(root, 'dist/.openai/hosting.json'));
+// Ryd kun denne nye testkopis genererede schema-output før deterministisk kopi.
+await rm(resolve(root, 'dist/drizzle'), { recursive: true, force: true });
 await cp(resolve(root, 'drizzle'), resolve(root, 'dist/drizzle'), { recursive: true });
 console.log('Bygget særskilt motor 11-testserver med egen DB; ingen mail, R2, websitebilleder eller APK.');
