@@ -17,6 +17,7 @@ import {contactRoute} from './contact.js';
 import {authRoute,authenticatedUser,AuthError,validOrigin} from './auth.js';
 import {createGame,accrue,settle,apply,publicState} from './game.js';
 import page from '../generated-page.js';
+import {matchVersionInfo} from '../shared/engine-versions.js';
 const json=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store'}});
 function imageBytes(value){if(typeof Uint8Array.fromBase64==='function')return Uint8Array.fromBase64(value);const raw=atob(value),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);return bytes;}
 export default {async fetch(request,env){
@@ -71,7 +72,7 @@ export default {async fetch(request,env){
     if(action){const outcome=apply(state,action,now);if(outcome?.manualResult)result=outcome.manualResult;}
     state.version=row.version+1;
     const saved=await env.DB.prepare('UPDATE clubs SET state = ?, version = ? WHERE user_id = ? AND version = ? AND EXISTS (SELECT 1 FROM accounts WHERE id = ?)').bind(JSON.stringify(state),state.version,user,row.version,user).run();
-    if(saved.meta.changes===1)return json({state:publicState(state,now),offline:offline.seconds>=60?offline:null,result});
+    if(saved.meta.changes===1)return json({state:publicState(state,now),offline:offline.seconds>=60?offline:null,result,matchVersions:matchVersionInfo()});
    }
    return json({error:'Klubben blev opdateret i en anden fane. Prøv igen.'},409);
   }catch(error){const expected=error instanceof GameError||error instanceof EuropeError||error instanceof ExpansionError||error instanceof ClubStyleError||/Akademi|sælges|penge|kamp|Klubnavn|Klubnavnet|handling|opgradering|Spiller|Spiller|Spilleren|trup|tilgængelig|position|taktik|Mission/.test(error.message);return json({error:expected?error.message:'Kunne ikke gemme klubben. Prøv igen.'},expected?400:500);}

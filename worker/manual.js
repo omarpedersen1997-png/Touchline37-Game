@@ -1,5 +1,6 @@
 import {GameError} from './management.js';
 import {getArcadeRules,decodeInputs,replayArcade} from '../shared/arcade.js';
+import {isSupportedMatchVersion,configMatchVersion} from '../shared/engine-versions.js';
 export const MANUAL_GRACE_MS=180000;
 export const MANUAL_RECOVERY_MS=86400000;
 export function extendManualRecovery(active){
@@ -7,13 +8,14 @@ export function extendManualRecovery(active){
  if(m&&m.version>=6&&!m.recoveryWindow&&m.expiresAt===active.ends+MANUAL_GRACE_MS){m.expiresAt=active.ends+MANUAL_RECOVERY_MS;m.recoveryWindow=1;}
 }
 export function createManualChallenge(config,now){
- const version=[2,3,4,5,6,7,8,9,10].includes(config.matchVersion)?config.matchVersion:1,rules=getArcadeRules(version);
+ const version=configMatchVersion(config),rules=getArcadeRules(version);
  return {version,seed:crypto.randomUUID(),duration:rules.DURATION_MS,inputCount:rules.INPUT_COUNT,expiresAt:now+rules.DURATION_MS+(version>=6?MANUAL_RECOVERY_MS:MANUAL_GRACE_MS),recoveryWindow:1,config:structuredClone(config)};
 }
 export function playManualReplay(active,action,now){
  if(!active?.manual||active.id!==action.matchId)throw new GameError('Den spillede kamp er ikke længere aktiv.');
  extendManualRecovery(active);
- if(![1,2,3,4,5,6,7,8,9,10].includes(active.manual.version)||active.manual.version!==([2,3,4,5,6,7,8,9,10].includes(active.manual.config.matchVersion)?active.manual.config.matchVersion:1))throw new GameError('Kampversionen understøttes ikke.');
+ // En gemt kamp genafspilles altid med sin oprindelige motor; den omskrives aldrig.
+ if(!isSupportedMatchVersion(active.manual.version)||active.manual.version!==configMatchVersion(active.manual.config))throw new GameError('Kampversionen understøttes ikke.');
  if(now<active.ends)throw new GameError('Kampen er ikke færdigspillet endnu.');
  if(now>active.manual.expiresAt)throw new GameError('Fristen for at gemme kampen er udløbet.');
  let inputs;try{inputs=decodeInputs(action.inputs,active.manual.version)}catch{throw new GameError('Kampforløbet indeholder ugyldig styring.');}

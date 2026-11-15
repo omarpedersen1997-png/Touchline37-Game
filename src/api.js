@@ -1,11 +1,21 @@
 import{Capacitor,registerPlugin}from'@capacitor/core';
+import{requestWithRetry,NetworkError,OFFLINE_MESSAGE}from'./network.js';
 const NativeApi=registerPlugin('TouchlineApi');
 export const isAndroid=()=>Capacitor.getPlatform()==='android';
+const NATIVE_TIMEOUTS={GET:40000,POST:40000};// Android-broen har selv 15 s + 20 s; JS-grænsen ligger over den.
 export async function apiFetch(path,options={}){
- if(!isAndroid()){try{return await fetch(path,{credentials:'same-origin',cache:'no-store',...options})}catch(error){if(error?.name==='AbortError')throw error;throw Error('Forbindelsen til klubben blev afbrudt. Tjek dit internet, og prøv igen.')}}
+ const method=options.method||'GET',body=options.body||null;
+ if(!isAndroid()){
+  return requestWithRetry(signal=>fetch(path,{credentials:'same-origin',cache:'no-store',...options,signal}),{path,method,body,signal:options.signal});
+ }
  if(!/^\/api\/(auth\/(me|register|login|logout|delete|capabilities|change-password|change-email|request-verification|verify-email|request-reset|reset-password)|game|contact)$/.test(path))throw Error('Ukendt apphandling.');
- let response;try{response=await NativeApi.request({path,method:options.method||'GET',body:options.body||null});}catch(error){if(error?.code==='REQUEST_TOO_LARGE'){error.status=413;error.retryable=false;}throw error;}
- return new Response(response.body,{status:response.status,headers:{'Content-Type':'application/json'}});
+ return requestWithRetry(async()=>{
+  let response;try{response=await NativeApi.request({path,method,body});}catch(error){if(error?.code==='REQUEST_TOO_LARGE'){error.status=413;error.retryable=false;throw error;}throw new NetworkError(error?.message||OFFLINE_MESSAGE,{cause:error});}
+  const text=response.body??'';let json=true;if(text){try{JSON.parse(text)}catch{json=false}}
+  // Et ikke-JSON-svar (fx en fejlside) bliver til en læsbar fejl i stedet for et nedbrud.
+  if(!json)return new Response(JSON.stringify({error:OFFLINE_MESSAGE}),{status:response.status>=200&&response.status<300?502:response.status,headers:{'Content-Type':'application/json'}});
+  return new Response(response.body,{status:response.status,headers:{'Content-Type':'application/json'}});
+ },{path,method,body,signal:options.signal,timeouts:NATIVE_TIMEOUTS});
 }
 
 export const webGame=typeof __WEB_GAME__!=='undefined'&&__WEB_GAME__;

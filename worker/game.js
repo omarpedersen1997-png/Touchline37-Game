@@ -1,4 +1,5 @@
 import{prepareClubManual,playManualReplay,manualForfeit,extendManualRecovery}from'./manual.js';
+import{resolveRequestedMatchVersion}from'../shared/engine-versions.js';
 import{ensurePlayerCareer,settlePlayerCareer,playerCareerAction,playerCareerView}from'./player-career.js';
 import{ensureEurope,qualifyEurope,europeAction,europeView,validateEuropeMatch,settleEurope}from'./europe.js';
 import{ensureCompetition,licenceFor,oppositionFor,competitionView,trainingLicenceUpgrade}from'./competition.js';
@@ -112,7 +113,7 @@ export function apply(s,action,now=Date.now(),random=Math.random){
   }
   const gate=gateFor(s),knockout=cup||(europe&&europePlan.stage!=='group'),won=knockout?(home>away||(home===away&&random()<chance)):undefined,cupWon=cup?won:undefined,europeWon=europe&&knockout?won:undefined,penalties=knockout&&home===away?{home:won?5:4,away:won?4:5}:undefined;
   s.active={competition:europe?'europe':cup?'cup':'league',formation:s.formation,gate,...(cup?{cupWon,penalties,cupRound:s.cup.round}:{}),...(europe?{europeWon,penalties,europeStage:europePlan.stage,europeCampaignId:s.europe.campaign.id}:{}),id:action.id,opponent,opposition,tactic:s.tactic||'balanced',started:now,ends:now+36000,home,away,events,reward:Math.round((europe?(knockout?(europeWon?1200:500):home>away?1000:home===away?600:400):matchReward(s,home,away))+gate.net+(cup?(cupWon?[250,500,1200][s.cup.round]:100):0))};
-  if(action.control==='manual')prepareClubManual(s.active,{homeRating:strength(s),awayRating:opposition,tactic:s.tactic||'balanced',...([2,3,4,5,6,7,8,9,10].includes(action.manualVersion)?{matchVersion:action.manualVersion,formation:s.formation,stadiumStage:stadiumFor(s).stage}: {})},now);
+  if(action.control==='manual')prepareClubManual(s.active,{homeRating:strength(s),awayRating:opposition,tactic:s.tactic||'balanced',...(resolveRequestedMatchVersion(action.manualVersion)?{matchVersion:resolveRequestedMatchVersion(action.manualVersion),formation:s.formation,stadiumStage:stadiumFor(s).stage}: {})},now);
  }
  else throw Error('Ukendt handling.');
  s.actions=[...s.actions.slice(-49),action.id];

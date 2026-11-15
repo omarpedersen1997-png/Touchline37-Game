@@ -102,6 +102,79 @@ Referencen er taget med Chromium via Playwright 1.63. En anden browserversion ka
 
 `npm run tag:prepare` kontrollerer, at `main` stadig peger på baseline (`e9b04e6`), og at motorfilerne dér er de frosne. Derefter udskriver scriptet kommandoerne til tagget `bevaring/apk37`. Scriptet **opretter og pusher intet**. Tagget må først oprettes efter ejerens særskilte godkendelse.
 
+## Stabilitet og teknisk kvalitet (M3)
+
+### Kampmotorernes versioner (`shared/engine-versions.js`)
+
+Alle versionsregler står ét sted og bruges af `worker/game.js`, `worker/player-career.js`, `worker/manual.js`, `worker/index.js` og appen (`src/match-versions.js`).
+
+| Anmodning fra appen | Ny kamp får |
+|---|---|
+| Ingen version (meget gamle apps) | Motor 1, uændret fra baseline |
+| Version 2–10 (fx APK 37 = 10) | Den version |
+| Nyere version, som serveren ikke kender (fx 11) | Motor 10 (før M3: motor 1) |
+| Ugyldig værdi (tekst, decimaltal, 0) | Motor 1, uændret fra baseline |
+
+En gemt eller igangværende kamp genafspilles altid med sin oprindelige motor. Har en gemt kamp en ukendt version, afvises den med "Kampversionen understøttes ikke". Den omskrives aldrig til motor 10.
+
+`/api/game` sender nu `matchVersions: {supported:[1…10], latest:10}`. Feltet er en ren tilføjelse, og databasen er uændret. Appen beder om den nyeste version, som både den og serveren kender. Hvis serveren ikke sender feltet (en ældre server), antager appen motor 10.
+
+### Netværk (`src/network.js`)
+
+- **Tidsgrænser:** I webudgaven er der 15 s for hentning og 20 s for handlinger. Android-broen beholder sine egne 15 s + 20 s.
+- **Fejlsider:** Et svar, der ikke er JSON (fx en fejlside eller wifi-login), bliver til den eksisterende danske fejltekst i stedet for et nedbrud.
+- **Automatiske genforsøg:** Kun for `/api/game`, højst to ekstra forsøg med 0,4 s og 1,2 s pause, ved afbrudt forbindelse, tidsudløb eller 502/503/504.
+  - Handlinger sendes igen med **præcis samme indhold og handlings-id**. Serveren udfører et kendt id højst én gang, så der kommer aldrig dobbelte belønninger eller køb.
+  - Login, konto, adgangskode, sletning og kontakt gentages aldrig.
+- **Afbrydelser:** Kalderens egen afbrydelse (AbortError) og fejl som "for stor optagelse" sendes uændret videre.
+
+### Ydeevne (`npm run perf`)
+
+`dev/perf.mjs` måler i testmiljøet med en telefon-viewport i bredformat. Resultatet er medianen af 3 kørsler, og hver kørsel bruger en frisk database. Resultatet gemmes i `.dev-data/perf/latest.json`. Brug `--cpu 1` uden CPU-nedsættelse og `--runs 5` for flere kørsler.
+
+Målinger fra 15. november 2026:
+
+| Måling | Baseline (M2), CPU 4× | M3, CPU 4× | M3, CPU 1× |
+|---|---|---|---|
+| App-HTML | 5,49 MB | 5,49 MB | 5,49 MB |
+| DOMContentLoaded | 1.698 ms | 1.560 ms | 356 ms |
+| Loginformular synlig | 3.047 ms | 2.893 ms | 725 ms |
+| Login → klubskærm | 366 ms | 397 ms | 133 ms |
+| "Spil selv i 3D" → kamp tegnet | 6.624 ms | 7.077 ms | 3.961 ms |
+| Billedrate i 3D-kamp | 1,6 fps | 1,7 fps | 2 fps |
+| JS-heap efter opstart / login / 3D | 3,2 / 5,4 / 15,3 MB | 3,3 / 5,4 / 15,2 MB | 3,3 / 5,4 / 15,5 MB |
+| Eksterne forespørgsler | 0 | 0 | 0 |
+
+M3 ændrer ikke ydeevnen målbart. Forskellene ligger inden for måleusikkerheden.
+
+**Billedraten siger intet om telefoner:** Headless Chromium tegner WebGL i software (SwiftShader) i fuld opløsning. Billedraten er derfor ikke et mål for en Android-telefon. Rigtige tal kræver en test-APK på en fysisk enhed (M4).
+
+**Konkrete optimeringsmuligheder** (dokumenteret, ikke implementeret):
+1. **Indlæs 3D-modellerne først ved 3D-kamp.** 2,73 MB af app-HTML'ens 5,49 MB er de to GLB-modeller som base64. De parses ved hver opstart, også uden 3D. Som separate filer i `native-web/` kunne app-HTML'en blive ca. halvt så stor. Det ændrer indlæsningsmetoden og kræver godkendelse.
+2. **Kun én model pr. grafikvalg.** Lavdetaljemodellen (0,68 MB) og højdetaljemodellen (1,37 MB) indlæses begge.
+3. **Opstarten domineres af at parse ét stort script.** Med 4× CPU tager det ca. 2,9 s, før loginformularen er synlig. Mulighed 1 er det største enkeltskridt.
+4. **3D-start** (4–7 s her) bør måles på en rigtig telefon, før der optimeres.
+
+### Serverpakken (`npm run bundle:report`)
+
+`dev/bundle-report.mjs` viser serverpakkens dele. `tests/bundle-budget.test.mjs` fejler, hvis:
+- hele pakken overstiger 9,4 MB komprimeret, eller
+- en enkelt del vokser mere end 5 % i forhold til `tests/bundle-baseline.json`.
+
+Efter en bevidst, godkendt ændring opdateres referencen med `node dev/bundle-report.mjs --update-baseline`.
+
+Aktuelt: 16,27 MB ukomprimeret og 9,04 MB komprimeret. Den dokumenterede grænse er 10 MiB, men **den er ikke bekræftet**. Der er 1,45 MB (13,8 %) luft.
+
+| Del | Komprimeret | Andel |
+|---|---|---|
+| 4K-billeder til hjemmesiden | 6,28 MB | 69 % |
+| Spillets web-HTML (/play) | 2,18 MB | 24 % |
+| Hjemmesidens HTML | 0,32 MB | 4 % |
+| Hjemmesidens illustrationer | 0,19 MB | 2 % |
+| Serverkode og øvrigt | 0,06 MB | 1 % |
+
+**Risiko:** Lyd, flere modeller eller nye 4K-billeder kan få den næste server-deployment til at fejle. Den største lettelse ville være at hente 4K-billederne fra R2 i stedet for serverpakken. Det er en beslutning om hosting, som kræver ejerens godkendelse.
+
 ## Forhåndsvisning i Claude-appen
 
 Claude-appens forhåndsvisning går gennem en https-proxy. Testserveren bestemmer browserens adresse ud fra `X-Forwarded-Host`/`X-Forwarded-Proto`, `Forwarded` eller `Origin` på samme vært. Derfor virker spillets egen beskyttelse mod forespørgsler fra fremmede adresser uændret, og login lykkes gennem proxyen. `tests/dev-preview.test.mjs` afprøver login, indlæsning og gemning gennem en simuleret https-proxy og kontrollerer, at fremmede adresser stadig afvises.
