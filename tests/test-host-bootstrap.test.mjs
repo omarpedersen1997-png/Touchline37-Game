@@ -66,6 +66,61 @@ function fixture(t, { markerTable = true } = {}) {
   return { db, env, guard, request, init, changes };
 }
 
+// Observer udførte databasekald, så testen måler D1-rundture og kontrol før writes.
+function traceDatabase(db) {
+  const calls = [];
+  const wrap = (statement, sql) => ({
+    bind(...args) { return wrap(statement.bind(...args), sql); },
+    async all(...args) { calls.push({ sql, method: 'all' }); return statement.all(...args); },
+    async first(...args) { calls.push({ sql, method: 'first' }); return statement.first(...args); },
+    async run(...args) { calls.push({ sql, method: 'run' }); return statement.run(...args); },
+  });
+  return { calls, db: { prepare(sql) { return wrap(db.prepare(sql), sql); } } };
+}
+
+test('samlet databasekontrol bruger én forespørgsel og gentages før hver write', async (t) => {
+  const f = fixture(t), trace = traceDatabase(f.db);
+  const bindings = { ...f.env, DB: trace.db };
+  const untouched = f.changes();
+  assert.equal((await f.request('/', { bindings })).status, 200);
+  assert.equal(trace.calls.length, 1, 'status på tom DB må kun behøve én samlet kontrol');
+  assert.equal(trace.calls[0].method, 'all');
+  assert.equal(f.changes(), untouched);
+
+  trace.calls.length = 0;
+  assert.equal((await f.init({ bindings })).status, 200);
+  let writes = 0;
+  for (let i = 0; i < trace.calls.length; i++) {
+    if (/^\s*SELECT\b/i.test(trace.calls[i].sql)) continue;
+    writes++;
+    const before = trace.calls[i - 1];
+    assert(before && before.method === 'all' && before.sql.includes('UNION ALL')
+      && before.sql.includes('touchline_test_environment'), 'hver write skal have sin egen friske samlede kontrol');
+  }
+  assert(writes > 3, 'den rigtige klargøring skal udøve flere writes, inklusive sessions/rategrænser');
+  assert.equal((await f.request('/api/test-environment', { bindings })).status, 200);
+  assert.deepEqual(f.guard.blocked, []);
+});
+
+test('den begrænsede databasekontrol fanger en fjerde fremmed konto uden efterfølgende writes', async (t) => {
+  const f = fixture(t);
+  assert.equal((await f.init()).status, 200);
+  for (let index = 0; index < 10; index++) {
+    f.db.sqlite.prepare('INSERT INTO accounts(id,email,password_hash,password_salt,recovery_hash,created_at) VALUES (?,?,?,?,?,?)')
+      .run('outside-' + index, `outside-${index}@example.test`, 'hash', 'salt', '', 0);
+  }
+  assert.equal(f.db.sqlite.prepare('SELECT email FROM accounts ORDER BY rowid LIMIT 3').all()
+    .every(row => row.email.endsWith('@touchline.invalid')), true, 'de tre første rækker er alle tilladte');
+  const before = f.changes(), trace = traceDatabase(f.db), bindings = { ...f.env, DB: trace.db };
+  assert.equal((await f.request('/api/test-environment', { bindings })).status, 503);
+  assert.equal(trace.calls.length, 1);
+  assert.equal((await f.request('/api/game', { bindings, method: 'POST', headers: NATIVE, body: { type: 'tactic', key: 'attacking' } })).status, 503);
+  assert.equal((await f.init({ bindings })).status, 503);
+  assert.equal(f.changes(), before);
+  assert(trace.calls.every(call => /^\s*SELECT\b/i.test(call.sql)), 'ingen write må nå den fremmede database');
+  assert.deepEqual(f.guard.blocked, []);
+});
+
 test('forkert testidentitet, token og opsætningsflag giver ingen databasewrites', async (t) => {
   const f = fixture(t);
   const before = f.changes();

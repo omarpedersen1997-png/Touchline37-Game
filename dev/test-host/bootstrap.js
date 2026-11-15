@@ -26,16 +26,31 @@ export function hasTestHostConfiguration(request, env) {
 
 /** Kontrollér den eksisterende DB uden at oprette, flytte eller reparere noget. */
 export async function assertOnlyTestData(db) {
-  const markers = (await db.prepare('SELECT environment FROM touchline_test_environment').all()).results;
-  if (!Array.isArray(markers) || markers.length > 1 || markers.some((row) => row.environment !== ANDROID_TEST_ENVIRONMENT))
-    throw new Error('Ukendt miljømarkør.');
-  const accounts = (await db.prepare('SELECT id, email FROM accounts').all()).results;
-  if (!Array.isArray(accounts) || accounts.some((row) => !ALLOWED.has(row.email)))
-    throw new Error('Databasen indeholder andre konti.');
-  const orphan = await db.prepare(
-    'SELECT c.user_id FROM clubs c LEFT JOIN accounts a ON a.id = c.user_id WHERE a.id IS NULL LIMIT 1',
-  ).first();
-  if (orphan) throw new Error('Databasen indeholder andre klubber.');
+  // Et D1-kald erstatter tre serielle netværksture. Der kan højst være fire
+  // gyldige rækker: én unik miljømarkør og tre unikke tilladte e-mailadresser.
+  // Derfor kan LIMIT 8 ikke skjule en uvedkommende række efter gyldige data.
+  const rows = (await db.prepare(`
+    SELECT 'marker' AS kind, environment AS id, NULL AS email FROM touchline_test_environment
+    UNION ALL
+    SELECT 'account' AS kind, id, email FROM accounts
+    UNION ALL
+    SELECT 'orphan' AS kind, c.user_id AS id, NULL AS email
+      FROM clubs c LEFT JOIN accounts a ON a.id = c.user_id WHERE a.id IS NULL
+    LIMIT 8
+  `).all()).results;
+  if (!Array.isArray(rows)) throw new Error('Ukendt testdatabase.');
+  const markers = [], accounts = [];
+  for (const row of rows) {
+    if (row.kind === 'marker') {
+      if (row.id !== ANDROID_TEST_ENVIRONMENT) throw new Error('Ukendt miljømarkør.');
+      markers.push(row.id);
+    } else if (row.kind === 'account') {
+      if (!ALLOWED.has(row.email)) throw new Error('Databasen indeholder andre konti.');
+      accounts.push({ id: row.id, email: row.email });
+    } else if (row.kind === 'orphan') throw new Error('Databasen indeholder andre klubber.');
+    else throw new Error('Ukendt testdatabase.');
+  }
+  if (markers.length > 1) throw new Error('Ukendt miljømarkør.');
   return { accounts, initialized: markers.length === 1 };
 }
 

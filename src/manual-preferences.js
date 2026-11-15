@@ -6,13 +6,14 @@ export function localMatchStorage(){try{return globalThis.localStorage;}catch{re
 export function readMatchPreferences(storage=localMatchStorage(),version=1){
  let value;try{value=JSON.parse(storage?.getItem(key)||'null');}catch{}
  const known=['auto','sharp','4k','simple'].includes(value?.quality);
+ if(version>=11)return{quality:value?.mobilePerformanceSchema===1&&known?value.quality:['4k','simple'].includes(value?.quality)?value.quality:'auto',view:['pro','broadcast','stadium','follow'].includes(value?.view)&&value?.cameraSchema===4?value.view:'pro'};
  if(version>=6)return{quality:value?.claritySchema===1&&known?value.quality:['4k','simple'].includes(value?.quality)?value.quality:'sharp',view:['pro','broadcast','stadium','follow'].includes(value?.view)&&value?.cameraSchema===4?value.view:'pro'};
  if(version>=3)return{quality:version>=5&&['4k','sharp'].includes(value?.quality)&&value?.performanceSchema!==1?'auto':['auto','sharp','4k','simple'].includes(value?.quality)?value.quality:'auto',view:['pro','broadcast','stadium','follow'].includes(value?.view)&&value?.cameraSchema===(version>=5?4:3)?value.view:'pro'};
  return{quality:['auto','sharp','4k','simple'].includes(value?.quality)?value.quality:'auto',view:['broadcast','stadium','follow'].includes(value?.view)&&value?.cameraSchema===2?value.view:'follow'};
 }
 export function saveMatchPreferences(value,storage=localMatchStorage(),version=1){
  const preferences={quality:['auto','sharp','4k','simple'].includes(value.quality)?value.quality:'auto',view:(version>=3?['pro','broadcast','stadium','follow']:['broadcast','stadium','follow']).includes(value.view)?value.view:version>=3?'pro':'follow'};
- try{storage?.setItem(key,JSON.stringify({...preferences,claritySchema:version>=6?1:undefined,performanceSchema:1,cameraSchema:version>=5?4:version>=3?3:2}));}catch{}
+ try{storage?.setItem(key,JSON.stringify({...preferences,mobilePerformanceSchema:version>=11?1:undefined,claritySchema:version>=6?1:undefined,performanceSchema:1,cameraSchema:version>=5?4:version>=3?3:2}));}catch{}
 }
 export function matchControlMask(keys,controls,view='stadium',version=1){
  const held=(...names)=>names.some(name=>keys.has(name));

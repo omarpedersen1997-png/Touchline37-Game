@@ -20,12 +20,43 @@ test('Auto retains at least one render pixel per CSS pixel unless the GPU itself
 });
 
 test('Auto lowers sustained overload, ignores brief stutters and recovers after sustained spare time',()=>{
- const auto=createAutoResolutionController();let t=5000;for(let i=0;i<30;i++){auto.sample(1/15,t);t+=1000/15;}assert.equal(auto.scale,1,'startup/brief spike');
- for(let i=0;i<120;i++){auto.sample(1/15,t);t+=1000/15;}assert(auto.scale<1&&auto.scale>=.75);
- for(let i=0;i<12000;i++){auto.sample(1/15,t);t+=1000/15;}assert.equal(auto.scale,.75);
+ const auto=createAutoResolutionController();let t=5000;for(let i=0;i<8;i++){auto.sample(1/15,t);t+=1000/15;}assert.equal(auto.scale,1,'a brief shader/upload stutter must not resize the framebuffer');
+ for(let i=0;i<30;i++){auto.sample(1/15,t);t+=1000/15;}assert(auto.scale<.75&&auto.scale>=.5,'sustained load is reduced within the first few seconds');
+ for(let i=0;i<120;i++){auto.sample(1/15,t);t+=1000/15;}assert.equal(auto.scale,.5);
  const reduced=auto.scale;for(let i=0;i<120;i++){auto.sample(1/30,t);t+=1000/30;}assert.equal(auto.scale,reduced,'do not pump resolution every few frames');
  for(let i=0;i<1000;i++){auto.sample(i%50===0?.05:1/30,t);t+=1000/30;}assert.equal(auto.scale,1,'recover clarity after the load ends');assert(!auto.sample(NaN,t));
  const sharp=matchResolution({width:900,height:400,dpr:2.625,quality:'sharp',scale:.75}),unchanged=matchResolution({width:900,height:400,dpr:2.625,quality:'sharp',scale:1});assert.deepEqual(sharp,unchanged);
+});
+
+test('Auto observes render work behind paced draws and respects the actual requested cadence',()=>{
+ const slowWork=createAutoResolutionController({targetFps:30}),paced=createAutoResolutionController({targetFps:30}),highRefresh=createAutoResolutionController({targetFps:60});
+ for(let i=0;i<50;i++){
+  const now=i*1000/30;slowWork.sample(1/30,now,{renderMs:31});paced.sample(1/30,now,{renderMs:2});highRefresh.sample(1/30,now,{renderMs:2});
+ }
+ assert(slowWork.scale<1,'a nearly full render budget must adapt even if the draw loop is capped');
+ assert.equal(paced.scale,1,'intentional healthy 30Hz pacing must not be treated as a slow 60Hz frame');
+ assert(highRefresh.scale<1,'a 60Hz target should notice that only 30 frames are arriving');
+ const before=slowWork.scale;assert.equal(slowWork.sample(12,12000,{renderMs:1}),false);assert.equal(slowWork.scale,before,'a background gap must not force another reduction');
+});
+
+test('motor11 starts Auto once, retains explicit ultra/fallback and respects every subsequent choice',()=>{
+ let value;const storage={getItem:()=>value,setItem:(_,v)=>value=v};
+ assert.deepEqual(readMatchPreferences(storage,11),{quality:'auto',view:'pro'});
+ value=JSON.stringify({quality:'sharp',claritySchema:1,performanceSchema:1,cameraSchema:4,view:'broadcast'});
+ assert.deepEqual(readMatchPreferences(storage,11),{quality:'auto',view:'broadcast'});
+ for(const quality of['4k','simple']){value=JSON.stringify({quality});assert.equal(readMatchPreferences(storage,11).quality,quality);}
+ for(const quality of['sharp','auto','4k','simple']){saveMatchPreferences({quality,view:'follow'},storage,11);assert.deepEqual(readMatchPreferences(storage,11),{quality,view:'follow'});}
+ assert.equal(readMatchPreferences(undefined,10).quality,'sharp','legacy preference policy is preserved');
+});
+
+test('Nord-class high-DPR views reduce pixel work in Auto while keeping a CSS pixel floor and explicit sharp output',()=>{
+ const phone={width:1008,height:450,dpr:2.75};
+ const sharp=matchResolution({...phone,quality:'sharp'}),automatic=matchResolution(phone),pressured=matchResolution({...phone,scale:.5});
+ assert(automatic.width*automatic.height<sharp.width*sharp.height*.35);
+ assert(pressured.width*pressured.height<automatic.width*automatic.height*.5);
+ assert.equal(pressured.width,phone.width);assert.equal(pressured.height,phone.height);
+ assert.deepEqual(matchResolution({...phone,quality:'sharp',scale:.5}),sharp);
+ assert.equal(Math.max(...Object.values(matchResolution({...phone,quality:'4k',scale:.5})).filter(v=>typeof v==='number')),3840);
 });
 
 test('new and upgraded v6 matches start Sharp once while 4K, fallback and later explicit Auto choices survive',()=>{

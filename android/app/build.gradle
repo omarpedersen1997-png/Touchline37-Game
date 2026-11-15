@@ -99,6 +99,16 @@ android {
     }
 }
 
+// Kun den separate testapp opdateres. Produktionsvarianterne beholder kode 37.
+androidComponents {
+    onVariants(selector().withBuildType("touchlineTest")) { variant ->
+        variant.outputs.each { output ->
+            output.versionCode.set(38)
+            output.versionName.set("1.0.0-test-perf1")
+        }
+    }
+}
+
 repositories {
     flatDir{
         dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'

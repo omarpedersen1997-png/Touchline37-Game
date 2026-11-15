@@ -3,6 +3,7 @@ import{X,ArrowUpRight,Camera,RotateCcw,Settings2,Smartphone,MoveUpRight}from'luc
 import{playingTime,PLAY_MS}from'../shared/football-halves.js';
 import{matchResolutionLabel}from'./match-quality.js';
 import{createMatchFramePacer}from'./match-frame-pacer.js';
+import{matchRenderBudget}from'./match-render-budget.js';
 import{createIdleMatchSave}from'./match-scheduling.js';
 import{CLUB_COLORS,ClubBadge}from'./ClubStudio.jsx';
 import{createManualSession}from'./manual-session.js';
@@ -77,7 +78,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  useEffect(()=>{
   if(!match.manual||!showField)return;
   let disposed=false,raf=0,lastHud=0,lastSave=0,lastHudCount=-1,lastSavedCount=-1,lastGoalPhase=null,lastGoalTick=null,scene;
-  const host=canvas.current,drawDue=createMatchFramePacer(30),saves=createIdleMatchSave({save:()=>session.current?.save()});saveWork.current=saves;
+  const host=canvas.current,drawDue=createMatchFramePacer(matchRenderBudget(version,quality).targetFps||30),saves=createIdleMatchSave({save:()=>session.current?.save()});saveWork.current=saves;
   const lost=e=>{e.preventDefault();setQuality('simple');};
   setSceneLoading(true);setError('');setResolution(null);setFrameStats(null);
   const start=async()=>{
@@ -104,7 +105,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
       setComplete(s.complete);lastHud=t;lastHudCount=s.count;
      }
      if(s.count!==lastSavedCount&&(t-lastSave>1500||s.complete)){if(s.complete)saves.flush();else saves.request();lastSave=t;lastSavedCount=s.count;}
-     if(!document.hidden&&drawDue(t,s.complete)){scene.render(s.state,camera.current,s.complete);}
+     if(!document.hidden&&!overlayState.current.replay&&drawDue(t,s.complete)){scene.render(s.state,camera.current,s.complete);}
      if(live&&!s.complete)raf=requestAnimationFrame(frame);
     };
     raf=requestAnimationFrame(frame);
@@ -128,10 +129,10 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  useEffect(()=>{const retry=()=>{if(!document.hidden&&complete&&live&&saveState.retryable)setSaveState({phase:'idle',attempt:0,retryAt:0});};window.addEventListener('online',retry);document.addEventListener('visibilitychange',retry);return()=>{window.removeEventListener('online',retry);document.removeEventListener('visibilitychange',retry);};},[complete,live,saveState.retryable]);
  useEffect(()=>{if(replayClip)dialog.current?.querySelector('.match-replay-controls button')?.focus();},[replayClip]);
  useEffect(()=>{
-  if(!replayClip||sceneLoading)return;let raf=0,origin=0,stopped=false;const due=createMatchFramePacer(30);
+  if(!replayClip||sceneLoading)return;let raf=0,origin=0,stopped=false;const due=createMatchFramePacer(matchRenderBudget(version,quality).targetFps||30);
   const play=t=>{if(stopped)return;if(!origin)origin=t;const elapsed=Math.min(replayClip.durationMs,t-origin),frame=replayFrame(replayClip,elapsed);if(frame&&due(t))sceneRef.current?.render(frame,camera.current,true);if(elapsed<replayClip.durationMs)raf=requestAnimationFrame(play);};
   raf=requestAnimationFrame(play);return()=>{stopped=true;cancelAnimationFrame(raf);if(session.current)sceneRef.current?.render(session.current.state,camera.current,true);};
- },[replayClip,replayRun,sceneLoading]);
+ },[replayClip,replayRun,sceneLoading,quality]);
  const chooseTactic=command=>{if(!command||!live||complete)return;commands.current.push(command);};
  const gameStats=live?hud.stats:match.manualStats||hud.stats;
  const joystick=e=>{if(inputBlocked.current)return;const r=e.currentTarget.getBoundingClientRect(),dx=(e.clientX-r.left-r.width/2)/(r.width*.36),dy=(e.clientY-r.top-r.height/2)/(r.height*.36),len=Math.max(1,Math.hypot(dx,dy));controls.current.x=dx/len;controls.current.y=dy/len;if(thumb.current)thumb.current.style.transform=`translate(${dx/len*30}px,${dy/len*30}px)`;};
