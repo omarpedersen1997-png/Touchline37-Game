@@ -25,8 +25,15 @@ export const ENGINE = Object.freeze({
   passArrivalSpeed: [6.5, 11.5],
   supportInterval: 6,       // ticks mellem støttespilleres valg af position
   decisionTicks: [4, 7],    // boldholderens beslutningsrytme
-  keeperReaction: [5.5, .045],// reaktion i ticks: 5,5 − rating·0,045 (rating 40: 4, 60: 3, 80: 2)
-  fatigue: { sprintDrain: 1.4, recovery: 1.0, floor: .88 }
+  keeperReaction: [4.5, .04],// reaktion i ticks: 4,5 − rating·0,04 (rating 35: 3, 60: 2, 90: 1)
+  fatigue: { sprintDrain: 1.4, recovery: 1.0, floor: .88 },
+  // M5 del 2: taklinger og boldkontrol.
+  receiveProtection: 4,     // ticks efter en modtagelse, hvor bolden ikke kan tackles (motor 10: 7)
+  tackleReach: 1.3,         // computerens automatiske takling (motor 10: 1,15 m)
+  pokeSpeed: 1.6,           // bolden bliver nær forsvareren efter en vellykket takling
+  shield: .4,               // skærmning: hvor langt bolden lægges væk fra en nærgående modstander
+  aiSprint: 1.22,           // computerspillere kan sprinte (motor 10: aldrig), når de har energi til det
+  sprintEnergy: 35
 });
 const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 // Motor 11: Math.sqrt er korrekt afrundet efter IEEE-754 (samme resultat i alle JS-motorer) og langt hurtigere end Math.hypot.
@@ -514,6 +521,8 @@ function shapeTarget(s, team, i, own) {
   return { x: clamp(anchor[0] * sign * (own ? 1 : .74) + clamp(b.x * .35, -9, 9), -27, 27), y: clamp(lineT * f, -43.5, 43.5), band };
 }
 function paceFor(p, base) { return base * (ENGINE.fatigue.floor + (1 - ENGINE.fatigue.floor) * p.energy / 100); }
+/** Sprint for computerspillere: kun med nok energi; trætheden (tire) tærer på energien. */
+function sprintFor(p, base) { return paceFor(p, base) * (p.energy > ENGINE.sprintEnergy ? ENGINE.aiSprint : 1); }
 function tire(p, base) {
   const fast = length(p.vx, p.vy) > base * .85;
   p.energy = q(clamp(p.energy + (fast ? -ENGINE.fatigue.sprintDrain : ENGINE.fatigue.recovery) * dt, 0, 100));
@@ -584,7 +593,7 @@ function ai(s, team) {
         if (best !== null && p.possessionTicks > 3 && (bestValue > dribbleValue + (pressure > 5 ? .012 : .003) || p.possessionTicks > 34)) { kick(s, team, i, false, bestThrough ? THROUGH : 0, { target: best }); continue; }
       }
       const dx = p.dribbleX ?? 0, dy = p.dribbleY ?? f, open = pressure > 5;
-      move(p, clamp(p.x + dx * (open ? 9 : 6), -26, 26), clamp(p.y + dy * (open ? 9 : 6), -45.5, 45.5), pace * (open ? .96 : .91));
+      move(p, clamp(p.x + dx * (open ? 9 : 6), -26, 26), clamp(p.y + dy * (open ? 9 : 6), -45.5, 45.5), open ? sprintFor(p, base) * .94 : pace * .91);
     } else if (own) {
       const shape = shapeTarget(s, team, i, true);
       if (shape.band === 2) {
@@ -594,7 +603,7 @@ function ai(s, team) {
         else if (nearestOpponentDistance(s, team, carrier) > 3.5 && carrier.facingY * f > .3 && (s.tick + i) % ENGINE.supportInterval === 0 && random(s) < .45) p.run = 30;
         p.role = p.run > 0 ? 'run' : 'support';
         const ty = p.run > 0 ? Math.min(lastLine + 7, 44) : lineY;
-        move(p, clamp(shape.x * .9, -26, 26), clamp(ty * f, -43.5, 43.5), pace * (p.run > 0 ? 1 : .9), p.run === 0);
+        move(p, clamp(shape.x * .9, -26, 26), clamp(ty * f, -43.5, 43.5), p.run > 0 ? sprintFor(p, base) : pace * .9, p.run === 0);
       } else {
         p.role = 'support';
         if ((s.tick + i) % ENGINE.supportInterval === 0 || p.planX === undefined) { const spot = supportSpot(s, team, i, p, carrier, shape); p.planX = q(spot.x); p.planY = q(spot.y); }
@@ -610,7 +619,7 @@ function ai(s, team) {
         const goalSide = (p.x - opponentCarrier.x) * ux + (p.y - opponentCarrier.y) * uy > .3;
         if (p.tackle > 0) move(p, b.x + b.vx * .15, b.y + b.vy * .15, paceFor(p, (6.25 + skill * .021) * .9));
         else if (goalSide && reach < 2.6) move(p, b.x + b.vx * .2, b.y + b.vy * .2, pace);
-        else move(p, opponentCarrier.x + ux * 1.2 + opponentCarrier.vx * .3, opponentCarrier.y + uy * 1.2 + opponentCarrier.vy * .3, pace);
+        else move(p, opponentCarrier.x + ux * 1.2 + opponentCarrier.vx * .3, opponentCarrier.y + uy * 1.2 + opponentCarrier.vy * .3, reach > 3 ? sprintFor(p, base) : pace);
       } else if (i === coverer) {
         p.role = 'cover';
         // Tæt på eget mål: blokér skudlinjen mellem boldholderen og målets midte.
@@ -640,11 +649,11 @@ function ai(s, team) {
         move(p, clamp(tx, -27.5, 27.5), clamp(ty, -43.5, 43.5), pace * .9, true);
       }
     } else if (b.passTarget?.team === team && b.passTarget.index === i) {
-      p.role = 'receive'; const target = receiveIntercept(b, p, pace * 1.08);
-      const reach = distance(p, target), arrivalPace = Math.min(pace * 1.08, Math.max(b.receivePoint?.through ? pace * .45 : 0, Math.sqrt(40 * Math.max(0, reach - .04))));
+      p.role = 'receive'; const target = receiveIntercept(b, p, sprintFor(p, base));
+      const reach = distance(p, target), arrivalPace = Math.min(sprintFor(p, base), Math.max(b.receivePoint?.through ? pace * .45 : 0, Math.sqrt(40 * Math.max(0, reach - .04))));
       move(p, target.x, target.y, arrivalPace);
     } else if (i === presser && (b.z < 2 || distance(p, intercept) < 8)) {
-      p.role = 'recover'; move(p, intercept.x, intercept.y, pace);
+      p.role = 'recover'; move(p, intercept.x, intercept.y, sprintFor(p, base));
     } else {
       p.role = 'cover'; const shape = shapeTarget(s, team, i, b.lastTeam === team);
       move(p, shape.x, shape.y, pace * .8, true);
@@ -680,7 +689,7 @@ function noteContact(s,kind,team,index,point,extra={}){s.ball.lastTouchTick=s.ti
 function attemptTackle(s,team,index,manual=false){
  const p=s[team][index],b=s.ball;
  if(p.cooldown>0)return false;
- if(!manual&&(b.owner?.team!==other(team)||b.protected>0||distance(p,b)>1.15||b.z>CONTACT.footHeight))return false;
+ if(!manual&&(b.owner?.team!==other(team)||b.protected>0||distance(p,b)>ENGINE.tackleReach||b.z>CONTACT.footHeight))return false;
  animate(p,'tackle',manual?9:7);p.cooldown=manual?18:17;
  p.pendingTackle={manual,started:s.tick,resolved:false};
  s.lastAction={kind:'tackle',team,index,tick:s.tick,contact:false};
@@ -702,7 +711,9 @@ function resolveTackles(s,frame,previous){
  const{team,i,p,attempt,hit}=contact,owner=s[b.owner.team][b.owner.index],ownerPace=length(owner.vx,owner.vy),dx=hit.x-p.x,dy=hit.y-p.y,n=length(dx,dy)||1;
  // The tackle touches and knocks the ball loose; no opponent receives remote
  // ownership. A later physical foot/hand contact must win the loose ball.
- b.owner=null;b.x=hit.x;b.y=hit.y;b.z=Math.max(.22,hit.z);b.vx=dx/n*(2.7+ownerPace*.18)+p.vx*.2;b.vy=dy/n*(2.7+ownerPace*.18)+p.vy*.2;b.vz=.35;
+ // Motor 11: en ren takling stopper bolden nær forsvareren ("poke"), så den kan erobres
+ // naturligt med næste fodkontakt; ejerskab overdrages stadig aldrig på afstand.
+ b.owner=null;b.x=hit.x;b.y=hit.y;b.z=Math.max(.22,hit.z);b.vx=dx/n*(ENGINE.pokeSpeed+ownerPace*.08)+p.vx*.35;b.vy=dy/n*(ENGINE.pokeSpeed+ownerPace*.08)+p.vy*.35;b.vz=.2;
  b.lastTeam=team;b.lastTouch={team,index:i};b.protected=2;b.flight=0;b.curl=0;b.shot=false;b.passTarget=null;b.receivePoint=null;b.lastPassFrom=null;b.lastShooter=null;b.assist=null;
  attempt.resolved=true;p.possessionTicks=0;
  s.stats[team+'Tackles']++;
@@ -718,7 +729,7 @@ function receiveBall(s, team, index) {
     s.stats.completedPasses++; if (b.lastPassFrom.index === s.personalIndex) s.stats.userPasses++;
   }
   if (b.lastPassFrom?.team !== team) b.lastPassFrom = null;
-  b.owner = { team, index }; b.lastTeam = team; b.lastTouch = { team, index }; b.protected = p.keeper ? 16 : 7;
+  b.owner = { team, index }; b.lastTeam = team; b.lastTouch = { team, index }; b.protected = p.keeper ? 16 : ENGINE.receiveProtection;
   // A controlled collection ends the previous shot. A later dribble or own goal
   // must not be attributed to someone who shot before possession changed.
   b.shot=false;b.lastShooter=null;b.assist=null;
@@ -846,7 +857,17 @@ function carryBall(s) {
     const angle = (1 - s.skillTicks / 12) * Math.PI * 2, x = fx;
     fx = x * Math.cos(angle) - fy * Math.sin(angle); fy = x * Math.sin(angle) + fy * Math.cos(angle);
   }
-  const tx = p.x + fx * stride, ty = p.y + fy * stride, blend = .38 + skill * .003;
+  // Motor 11: skærmning. Under pres holdes bolden tættere og på den side, der vender
+  // væk fra den nærmeste modstander – mere jo bedre spilleren er.
+  let ox = 0, oy = 0, close = 1;
+  let rival = null, rivalDistance = 2.4;
+  for (const op of s[other(team)]) { const d = distance(op, p); if (!op.keeper && d < rivalDistance) { rivalDistance = d; rival = op; } }
+  if (rival) {
+    const ax = p.x - rival.x, ay = p.y - rival.y, ad = length(ax, ay) || 1, side = (ax * -fy + ay * fx) / ad >= 0 ? 1 : -1;
+    const amount = (2.4 - rivalDistance) / 2.4 * ENGINE.shield * clamp(skill / 75, .4, 1.2);
+    ox = -fy * side * amount; oy = fx * side * amount; close = 1 - amount * .35;
+  }
+  const tx = p.x + fx * stride * close + ox, ty = p.y + fy * stride * close + oy, blend = .38 + skill * .003;
   b.x += (tx - b.x) * blend; b.y += (ty - b.y) * blend;
   b.z = .22 + Math.max(0, Math.sin(b.touchPhase * Math.PI * 2)) * speed * .006;
   b.vx = p.vx; b.vy = p.vy; b.vz = 0; b.lastTeam = team; b.lastTouch = { team, index };

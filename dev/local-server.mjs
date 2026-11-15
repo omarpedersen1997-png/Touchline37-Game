@@ -12,7 +12,9 @@ import { assertSafeEnvironment, installNetworkGuard, LOCAL_HOSTS } from './isola
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const DEFAULT_DATA_DIR = resolve(ROOT, '.dev-data');
-export const DRAFT_SERVER = resolve(ROOT, 'web-draft', 'server.mjs');
+// Testserverens Worker: web-draft omsluttet af den lokale motorvælger (dev/local-worker-entry.js),
+// bygget af dev/build-local-worker.mjs. Indgår aldrig i produktionsbygningen.
+export const DRAFT_SERVER = resolve(ROOT, '.dev-data', 'build', 'local-worker.mjs');
 const MAX_BODY_BYTES = 1024 * 1024;
 
 /** Læser eller opretter en tilfældig testpepper. Den bruges aldrig i produktion. */
@@ -29,7 +31,7 @@ export function loadTestPepper(dataDir) {
 
 export async function loadDraftWorker(file = DRAFT_SERVER) {
   if (!existsSync(file)) {
-    throw new Error('web-draft/server.mjs mangler. Kør "npm run dev:server", som bygger den først.');
+    throw new Error('Den lokale test-Worker mangler. Kør "npm run dev:server", som bygger den først.');
   }
   return (await import(pathToFileURL(file).href)).default;
 }
