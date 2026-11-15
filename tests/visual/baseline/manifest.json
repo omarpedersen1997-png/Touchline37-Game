@@ -1,0 +1,39 @@
+{
+  "note": "Referencebilleder af Touchline-appen i testmiljøet. Opdateres kun med \"npm run visual:baseline\" efter godkendt designændring.",
+  "viewport": {
+    "width": 915,
+    "height": 412
+  },
+  "deviceScaleFactor": 2,
+  "playwright": "chromium via playwright 1.63.0",
+  "screens": {
+    "01-login": {
+      "bytes": 545726,
+      "sha256": "0128a8690e499696752152ae57350fdfb0747c1c54901766545460e6979210f3"
+    },
+    "02-klub": {
+      "bytes": 784613,
+      "sha256": "1ff7dde2b61e635c0c4304ff985ca3d835e1484feb0cdafc382051ee6356e9af"
+    },
+    "03-hold": {
+      "bytes": 363422,
+      "sha256": "37ce66538928ae5bf7bf4b53b4025d932b40028b9e27b9d9d069a67379f59315"
+    },
+    "04-kampe": {
+      "bytes": 384270,
+      "sha256": "937bdfe38e53f70254ec139bd2a138b4fc4ec0db6b653376b9719c9cc82016d8"
+    },
+    "05-center": {
+      "bytes": 289256,
+      "sha256": "529f6e7f6af935d2f68395c4966363d8eef7ff23a38ef43b26f566101635cf5c"
+    },
+    "06-mere": {
+      "bytes": 95703,
+      "sha256": "ff80d45de89817a3df10652b75325f606418f382bf10006b997b7e8c25cca30c"
+    },
+    "07-ny-klub": {
+      "bytes": 682882,
+      "sha256": "d99d53b3066f2d7250031d0c439eae0ede12ff49a7f3a28d1def9abf0ace6bb9"
+    }
+  }
+}

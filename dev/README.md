@@ -61,6 +61,40 @@ R2-lageret erstattes af et lager i hukommelsen, som tømmes ved genstart.
 
 Begge tests indgår i `npm test`.
 
+## Fastfrysning af baseline (M2)
+
+### Kampmotor 1–10
+
+`tests/engine-freeze.test.mjs` indgår i `npm test` og fejler, hvis:
+- en af motorfilerne 1–10 ændres med blot én byte. SHA256-værdierne er de samme som i baseline `c71fbb7` og `BACKUP-MANIFEST.json`,
+- dispatcheren i `shared/arcade.js` ikke længere sender version 1–10 til deres oprindelige motor,
+- en fast, deterministisk genafspilning pr. motor giver en anden sluttilstand eller slutstilling,
+- serverens dekodning af en gemt optagelse giver et andet resultat end klientens.
+
+Nye kampregler skal ligge i en ny motorfil (motor 11+). De frosne filer må aldrig ændres.
+
+### Design (referencebilleder)
+
+`tests/visual/baseline/` indeholder 7 referencebilleder af appen i bredformat (915 × 412, skalering 2):
+- login,
+- klub, hold, kampe, center og mere-menuen,
+- en ny klub.
+
+Billederne tages i testmiljøet med en frisk, midlertidig database.
+
+| Kommando | Funktion |
+|---|---|
+| `npm run visual:check` | Tager nye billeder og sammenligner dem med referencen. Afvigende pixels markeres i `.dev-data/visual/diff/`. |
+| `npm run visual:baseline` | Erstatter referencen. Må kun køres efter en godkendt designændring. |
+
+Sådan virker sammenligningen:
+- **Kun i testbrowseren:** Animationer slås fra under optagelsen. Klubsaldoen og gemmestatus skjules med fast bredde, fordi de ændrer sig med serverens ur. Selve appen ændres ikke.
+- **Grænse:** Højst 0,02 % af pixels må afvige, med en tolerance på 24 pr. farvekanal.
+- **Afprøvet:** En ny reference gav 0 afvigelser i tre rene kørsler i træk. Den opdagede ændrede hjørner, 1 px forskydning og ændrede farver.
+- **Beskyttet mod sletning:** `tests/visual-baseline.test.mjs` indgår i `npm test` og kontrollerer, at referencebillederne findes og matcher `manifest.json`.
+
+Referencen er taget med Chromium via Playwright 1.63. En anden browserversion kan tegne skrift en smule anderledes. I så fald tages en ny reference med `visual:baseline` på den uændrede `main`.
+
 ## Begrænsninger
 
 - **Kun webudgaven:** Testmiljøet kører webudgaven af spillet (`/play`), ikke Android-appen. En test-APK med eget app-id er en senere opgave (M4).
