@@ -8,10 +8,12 @@ import * as contact from './football-contact.js';
 import * as tactical from './football-tactics.js';
 import * as receiving from './football-receiving.js';
 import * as goals from './football-goals.js';
+// Motor 11 er registreret, men endnu ikke givet til nye kampe (se shared/engine-versions.js).
+import * as engine11 from './football-engine11.js';
 export const ARCADE_VERSION=10;
 export {STEP_MS,INPUT_MS,DURATION_MS,INPUT_COUNT,DIRECTIONS} from './arcade-v1.js';
 export const FIELD=football.FIELD;
-export function getArcadeRules(version=1){return version===10?goals:version===9?receiving:version===8?tactical:version===7?contact:version===6?halves:version===5?pro:version===4?spaced:version===3?modern:version===2?football:legacy;}
+export function getArcadeRules(version=1){return version===11?engine11:version===10?goals:version===9?receiving:version===8?tactical:version===7?contact:version===6?halves:version===5?pro:version===4?spaced:version===3?modern:version===2?football:legacy;}
 export function validateMask(mask,version=1){return getArcadeRules(version).validateMask(mask);}
 export function encodeInputs(inputs,version=1){return getArcadeRules(version).encodeInputs(inputs);}
 export function decodeInputs(value,version=1){return getArcadeRules(version).decodeInputs(value);}

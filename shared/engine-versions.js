@@ -11,6 +11,13 @@
 /** Alle motorversioner, som kan spilles og genafspilles. */
 export const SUPPORTED_MATCH_VERSIONS = Object.freeze([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
+/**
+ * Motorer under udvikling: registreret i shared/arcade.js og fuldt testet, men
+ * ALDRIG givet til nye kampe og ikke godkendt til genafspilning på serveren.
+ * Aktivering = flyt versionen til SUPPORTED_MATCH_VERSIONS (kræver ejerens godkendelse).
+ */
+export const EXPERIMENTAL_MATCH_VERSIONS = Object.freeze([11]);
+
 /** Den nyeste motor, som nye kampe kan få. */
 export const LATEST_MATCH_VERSION = SUPPORTED_MATCH_VERSIONS[SUPPORTED_MATCH_VERSIONS.length - 1];
 

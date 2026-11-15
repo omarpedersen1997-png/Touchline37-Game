@@ -2,13 +2,13 @@
   "note": "Reference for serverpakkens komponenter (komprimerede bytes). Opdateres kun med \"node dev/bundle-report.mjs --update-baseline\" efter en bevidst, godkendt ændring.",
   "components": {
     "webGame": {
-      "gzip": 2181080
+      "gzip": 2192468
     },
     "siteCaptures": {
       "gzip": 6280301
     },
     "sitePage": {
-      "gzip": 323380
+      "gzip": 323422
     },
     "siteArt": {
       "gzip": 194554
@@ -17,8 +17,8 @@
       "gzip": 38
     },
     "code": {
-      "gzip": 57736
+      "gzip": 67146
     }
   },
-  "totalGzip": 9037089
+  "totalGzip": 9057929
 }
