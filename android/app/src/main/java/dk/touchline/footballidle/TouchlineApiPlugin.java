@@ -19,7 +19,9 @@ import javax.net.ssl.HttpsURLConnection;
 
 @CapacitorPlugin(name = "TouchlineApi")
 public class TouchlineApiPlugin extends Plugin {
-    private static final String API = "https://touchline-idle-club.glowingconch1.chatgpt.site";
+    // Produktionsvarianterne får produktionsadressen fra BuildConfig (android/app/build.gradle).
+    // Testvarianten får sin egen adresse og spærres, hvis den peger på produktionen.
+    private static final String API = TouchlineEndpoint.resolve(BuildConfig.TOUCHLINE_API, BuildConfig.TOUCHLINE_TEST_BUILD);
     private static final String COOKIE = "__Host-touchline";
     private final ExecutorService queue = Executors.newSingleThreadExecutor();
     private SessionVault vault;
@@ -31,6 +33,9 @@ public class TouchlineApiPlugin extends Plugin {
         String body = call.getString("body");
         if (!TouchlineRequestPolicy.allowedRoute(path, method)) {
             call.reject("Ukendt apphandling."); return;
+        }
+        if (API == null) {
+            call.reject("Testappen er spærret mod produktionsserveren. Byg den med en separat testserver.", "TEST_ENDPOINT_BLOCKED"); return;
         }
         // Every UTF-8 character needs at least one byte. Bound the String
         // before allocating encoded bytes, then enforce the exact byte limit.

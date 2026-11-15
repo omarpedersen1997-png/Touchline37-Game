@@ -16,7 +16,7 @@ test('actual native plugin uploads a complete engine8 recording and rejects over
  try{
   const fixtureRoot='tests/java/bridge';
   const stubs=readdirSync(fixtureRoot,{recursive:true}).filter(file=>file.endsWith('.java')).map(file=>join(fixtureRoot,file));
-  const sources=['android/app/src/main/java/dk/touchline/footballidle/TouchlineApiPlugin.java','android/app/src/main/java/dk/touchline/footballidle/TouchlineRequestPolicy.java',...stubs];
+  const sources=['android/app/src/main/java/dk/touchline/footballidle/TouchlineApiPlugin.java','android/app/src/main/java/dk/touchline/footballidle/TouchlineRequestPolicy.java','android/app/src/main/java/dk/touchline/footballidle/TouchlineEndpoint.java',...stubs];
   const compile=spawnSync(java('javac'),['-encoding','UTF-8','-d',classes,...sources],{encoding:'utf8',timeout:30000});
   assert.equal(compile.status,0,compile.stderr||compile.error?.message);
   assert(existsSync(join(classes,'dk/touchline/footballidle/TouchlineApiPlugin.class')),'production plugin class must compile');

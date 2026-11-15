@@ -175,6 +175,63 @@ Aktuelt: 16,27 MB ukomprimeret og 9,04 MB komprimeret. Den dokumenterede grænse
 
 **Risiko:** Lyd, flere modeller eller nye 4K-billeder kan få den næste server-deployment til at fejle. Den største lettelse ville være at hente 4K-billederne fra R2 i stedet for serverpakken. Det er en beslutning om hosting, som kræver ejerens godkendelse.
 
+## Android-testapp "Touchline TEST" (M4)
+
+Byggevarianten `touchlineTest` i `android/app/build.gradle` laver en separat testapp:
+
+| | Touchline Football Idle (APK 37) | Touchline TEST |
+|---|---|---|
+| App-id | `dk.touchline.footballidle` | `dk.touchline.footballidle.test` |
+| Navn på telefonen | Touchline Football Idle | Touchline TEST |
+| Version | 1.0.0 (37) | 1.0.0-test (37) |
+| Server | Produktionsserveren (uændret) | Kun en separat testserver (`-PtouchlineTestApi`) |
+| Signering | Eksisterende nøgle (uændret) | Separat lokal testnøgle |
+| Logo, ikoner, design og spil | – | Uændret, kun navnet er ændret |
+
+Fordi app-id'et er forskelligt, installeres testappen **ved siden af** APK 37. Den kan aldrig opdatere eller overskrive APK 37, og den har sit eget login og sine egne data på telefonen.
+
+### Isolering fra produktion
+
+- **Ingen fast adresse i broen:** Produktionsadressen står ikke længere fast i `TouchlineApiPlugin.java`. Den kommer fra `BuildConfig`. Produktionsvarianterne (release, sideload og debug) får præcis den samme adresse som før fra `defaultConfig`.
+- **Gradle-spærre:** Bygningen af testappen stopper, hvis `touchlineTestApi` peger på en produktionsvært (`chatgpt.site`, `chatgpt-team.site`, `glowingconch1` eller `playtouchline.dk`) eller ikke er https.
+- **Java-spærre:** `TouchlineEndpoint.java` giver ingen adresse til testappen, hvis den alligevel er produktionslignende. Broen afviser så alle kald, før der åbnes en forbindelse.
+- **Standardadresse:** Uden en godkendt testserver peger testappen på `https://touchline-test.invalid`. Den adresse kan aldrig nås, så appen viser blot forbindelsesfejl.
+- **Tests:** `tests/android-test-variant.test.mjs` kontrollerer, at
+  - produktionsvarianterne har uændret app-id, version, server og signering,
+  - testvarianten har eget app-id, navn, nøgle og server,
+  - spærrelisterne i Gradle og Java er ens, og Java-spærren er afprøvet,
+  - testnøglen er separat og privat,
+  - ingen nøgler er sporet i Git,
+  - APK 37 er uændret.
+- **Uændret brotest:** `tests/native-bridge.test.mjs` afprøver fortsat produktionsbroen med den uændrede produktionsadresse.
+
+### Testnøgle
+
+```sh
+npm run android:test-key
+```
+
+Kommandoen opretter `.dev-data/android/touchline-test.jks` og et lokalt kodeord. Begge har filrettigheder 600 og ignoreres af Git. En eksisterende testnøgle overskrives aldrig, og produktionsnøglen bruges aldrig.
+
+### Bygning (når miljøet tillader det)
+
+```sh
+npm run android:test-key
+npm run android:test-apk -- -PtouchlineTestApi=https://<godkendt-testserver>
+```
+
+APK'en lægges i `android/app/build/outputs/apk/touchlineTest/`.
+
+**Status:** Bygningen er **ikke mulig i Claude-miljøet lige nu**. Netværkspolitikken blokerer `dl.google.com` (HTTP 403), som leverer både Android SDK og Googles Maven-lager med Android Gradle-pluginet. JDK 21 og Gradle 8.14.3 findes. Bygningen er afprøvet til konfigurationstrinnet, som stopper ved den blokerede adresse.
+
+### Installation på Android (når en test-APK findes)
+
+1. Åbn APK-filen på telefonen, fx fra Claude-appen eller Filer.
+2. Tillad installation fra den app, når Android spørger ("Installer ukendte apps").
+3. Tryk **Installer**. "Touchline TEST" vises ved siden af "Touchline Football Idle".
+4. Log ind med en testkonto, fx `test3@touchline.invalid` / `Touchline-test-3`. Det virker kun, når testappen er bygget mod en testserver med disse konti.
+5. Afinstallér: tryk længe på ikonet "Touchline TEST" og vælg **Afinstaller**. APK 37 påvirkes ikke.
+
 ## Forhåndsvisning i Claude-appen
 
 Claude-appens forhåndsvisning går gennem en https-proxy. Testserveren bestemmer browserens adresse ud fra `X-Forwarded-Host`/`X-Forwarded-Proto`, `Forwarded` eller `Origin` på samme vært. Derfor virker spillets egen beskyttelse mod forespørgsler fra fremmede adresser uændret, og login lykkes gennem proxyen. `tests/dev-preview.test.mjs` afprøver login, indlæsning og gemning gennem en simuleret https-proxy og kontrollerer, at fremmede adresser stadig afvises.

@@ -54,14 +54,14 @@ test('testmiljøets kildekode indeholder ingen produktionsværter, -projekter el
 });
 
 test('markørlisten dækker de produktionsadresser, der faktisk står i projektet', () => {
-  const plugin = read('android/app/src/main/java/dk/touchline/footballidle/TouchlineApiPlugin.java');
-  assert(productionMarkersIn(plugin).length >= 2, 'Markørerne skal kunne genkende den produktive API-adresse');
+  // M4: appens produktionsadresse står nu i build.gradle (defaultConfig).
+  assert(productionMarkersIn(read('android/app/build.gradle')).length >= 2, 'Markørerne skal kunne genkende den produktive API-adresse');
   assert(productionMarkersIn(read('worker/index.js')).length >= 1, 'Markørerne skal kunne genkende hjemmesidens domæne');
   assert(productionMarkersIn(read('.openai/hosting.json')).length >= 1, 'Markørerne skal kunne genkende Sites-projektet');
   assert.equal(new Set(PRODUCTION_MARKERS).size, PRODUCTION_MARKERS.length);
 });
 
-test('produktionens API-adresse findes kun i den eksisterende native bro', () => {
+test('produktionens API-adresse findes kun i build.gradle (defaultConfig) og spærrelisten', () => {
   const apiMarkers = PRODUCTION_MARKERS.filter((marker) => marker.includes('site') || marker.includes('conch'));
   const files = [
     ...filesUnder('src', ['.js', '.jsx']),
@@ -75,7 +75,14 @@ test('produktionens API-adresse findes kun i den eksisterende native bro', () =>
     const text = read(file).toLowerCase();
     return apiMarkers.some((marker) => text.includes(marker));
   });
-  assert.deepEqual(hits, ['android/app/src/main/java/dk/touchline/footballidle/TouchlineApiPlugin.java']);
+  // M4: produktionsadressen er flyttet til build.gradle (defaultConfig). I kildekoden findes
+  // kun spærrelisten i TouchlineEndpoint.java, som forhindrer testappen i at bruge den.
+  assert.deepEqual(hits, ['android/app/src/main/java/dk/touchline/footballidle/TouchlineEndpoint.java']);
+  const gradle = read('android/app/build.gradle');
+  const productionUrl = 'https://touchline-idle-club.' + ['glowing', 'conch1'].join('') + '.' + ['chatgpt', 'site'].join('.');
+  assert.equal(gradle.split(productionUrl).length - 1, 1, 'produktionsadressen står præcis ét sted i build.gradle');
+  const defaultConfig = gradle.slice(gradle.indexOf('defaultConfig {'), gradle.indexOf('buildFeatures {'));
+  assert(defaultConfig.includes(productionUrl), 'produktionsadressen hører kun til defaultConfig');
 });
 
 test('.openai/hosting.json bruges kun af den eksisterende build.mjs', () => {

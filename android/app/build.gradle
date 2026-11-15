@@ -1,5 +1,17 @@
 apply plugin: 'com.android.application'
 
+// Testserveren for "Touchline TEST". Standard er en adresse, der aldrig kan nås
+// (.invalid), indtil ejeren har godkendt en separat testserver:
+//   gradle assembleTouchlineTest -PtouchlineTestApi=https://<testserver>
+def touchlineTestApi = (project.findProperty('touchlineTestApi') ?: 'https://touchline-test.invalid').toString().trim()
+def touchlineProductionMarkers = ['chatgpt.site', 'chatgpt-team.site', 'glowingconch1', 'playtouchline.dk']
+if (!touchlineTestApi.startsWith('https://') || touchlineTestApi.contains('"') || touchlineTestApi.contains('\\')) {
+    throw new GradleException("touchlineTestApi skal være en https-adresse: ${touchlineTestApi}")
+}
+if (touchlineProductionMarkers.any { touchlineTestApi.toLowerCase().contains(it) }) {
+    throw new GradleException("Testappen må aldrig pege på produktionsserveren: ${touchlineTestApi}")
+}
+
 android {
     namespace = "dk.touchline.footballidle"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -9,6 +21,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 37
         versionName "1.0.0"
+        // Uændret produktionsserver for release, sideload og debug.
+        buildConfigField "String", "TOUCHLINE_API", "\"https://touchline-idle-club.glowingconch1.chatgpt.site\""
+        buildConfigField "boolean", "TOUCHLINE_TEST_BUILD", "false"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,11 +31,28 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
     def uploadKeyVariables = ["TOUCHLINE_KEYSTORE", "TOUCHLINE_STORE_PASSWORD", "TOUCHLINE_KEY_ALIAS", "TOUCHLINE_KEY_PASSWORD"]
     if (uploadKeyVariables.any { System.getenv(it) } && !uploadKeyVariables.every { System.getenv(it) }) {
         throw new GradleException("Upload signing requires all four TOUCHLINE signing environment variables.")
     }
     signingConfigs {
+        // Separat testnøgle. Den ligger lokalt i .dev-data/android (ignoreres af Git)
+        // og må aldrig bruges til produktion eller uploades.
+        touchlineTest {
+            def testKeyFile = rootProject.file('../.dev-data/android/touchline-test.jks')
+            def testKeyProps = rootProject.file('../.dev-data/android/touchline-test.properties')
+            if (testKeyFile.isFile() && testKeyProps.isFile()) {
+                def props = new Properties()
+                testKeyProps.withInputStream { props.load(it) }
+                storeFile testKeyFile
+                storePassword props.getProperty('storePassword')
+                keyAlias props.getProperty('keyAlias')
+                keyPassword props.getProperty('keyPassword')
+            }
+        }
         upload {
             if (System.getenv("TOUCHLINE_KEYSTORE")) {
                 storeFile file(System.getenv("TOUCHLINE_KEYSTORE"))
@@ -43,6 +75,18 @@ android {
             signingConfig signingConfigs.debug
             debuggable false
             matchingFallbacks = ['release']
+        }
+        // Separat testapp "Touchline TEST": eget applicationId, egen testnøgle og egen
+        // testserver. Kan installeres ved siden af APK 37 og kontakter aldrig produktionen.
+        touchlineTest {
+            initWith release
+            applicationIdSuffix ".test"
+            versionNameSuffix "-test"
+            signingConfig signingConfigs.touchlineTest
+            debuggable false
+            matchingFallbacks = ['release']
+            buildConfigField "String", "TOUCHLINE_API", "\"${touchlineTestApi}\""
+            buildConfigField "boolean", "TOUCHLINE_TEST_BUILD", "true"
         }
     }
 }
@@ -78,6 +122,11 @@ try {
 
 // A fresh default key would break updates for installed APK users.
 gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.contains('TouchlineTest') }) {
+        if (!android.signingConfigs.touchlineTest.storeFile?.isFile()) {
+            throw new GradleException('Testnøglen mangler. Kør "npm run android:test-key" først.')
+        }
+    }
     if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.toLowerCase().contains('sideload') }) {
         if (!android.signingConfigs.debug.storeFile.isFile()) {
             throw new GradleException('The existing APK signing store must be restored before building a sideload update.')

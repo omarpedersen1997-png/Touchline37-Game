@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Kun testvarianten "touchlineTest": navnet på telefonen. Øvrige tekster, ikon og design er uændrede. -->
+<resources>
+    <string name="app_name">Touchline TEST</string>
+    <string name="title_activity_main">Touchline TEST</string>
+    <string name="package_name">dk.touchline.footballidle.test</string>
+</resources>
