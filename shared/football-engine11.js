@@ -30,8 +30,13 @@ export const ENGINE = Object.freeze({
   // M5 del 2: taklinger og boldkontrol.
   receiveProtection: 4,     // ticks efter en modtagelse, hvor bolden ikke kan tackles (motor 10: 7)
   tackleReach: 1.3,         // computerens automatiske takling (motor 10: 1,15 m)
-  pokeSpeed: 1.6,           // bolden bliver nær forsvareren efter en vellykket takling
+  pokeSpeed: 1.6,
+  tackleBase: .34,
+  keeperSmother: .72,
+  keeperReach: 1.8,         // målmanden når længere ud med hænderne, når han kaster sig       // målmandens chance for at tage bolden fra en dribler i feltet          // grundchance i en takling-duel (justeres af rating, fart, målside og afstand)           // bolden bliver nær forsvareren efter en vellykket takling
   shield: .4,               // skærmning: hvor langt bolden lægges væk fra en nærgående modstander
+  blockRange: 5,            // forsvarere inden for 5 m af skytten blokerer bredere …
+  blockRadius: .62,         // … med ben og krop (motor 10: 0,43 m)
   aiSprint: 1.22,           // computerspillere kan sprinte (motor 10: aldrig), når de har energi til det
   sprintEnergy: 35
 });
@@ -493,8 +498,17 @@ function keeperAI(s, team, p) {
   const toX = b.x, toY = b.y - goalY, ballDistance = length(toX, toY) || 1;
   const carrier = b.owner?.team === other(team) ? s[other(team)][b.owner.index] : null;
   let r = ballDistance > 30 ? 4.2 : 2.2 + ballDistance * .06;
+  // En dribler helt tæt på målet: gå direkte i fødderne på ham (motor 10 lod ham drible i mål).
+  if (carrier && ballDistance < 9 && Math.abs(b.x) < 9) {
+    p.role = 'rush';
+    if (distance(p, b) < ENGINE.keeperReach && p.cooldown === 0 && b.protected === 0) attemptTackle(s, team, 0);
+    // Stil dig mellem bolden og målet (ikke bag angriberen), og kast dig i fødderne derfra.
+    const gx = 0 - b.x, gy = goalY - b.y, gl = length(gx, gy) || 1;
+    move(p, b.x + b.vx * .15 + gx / gl * .9, clamp(b.y + b.vy * .15 + gy / gl * .9, -46.8, 46.8), base + 2);
+    return;
+  }
   if (carrier && ballDistance < 17 && Math.abs(carrier.x) < 11 && laneDanger(s, other(team), carrier, { x: 0, y: goalY }) < .8) {
-    p.role = 'rush'; r = clamp(ballDistance * .5, 2.5, 9);
+    p.role = 'rush'; r = clamp(ballDistance * .45, 2.5, 6);
     if (distance(p, b) < 1.5 && p.cooldown === 0 && b.protected === 0) attemptTackle(s, team, 0);
   }
   move(p, clamp(toX / ballDistance * r, -3.6, 3.6), clamp(goalY + toY / ballDistance * r, -46.6, 46.6), base + (p.role === 'rush' ? 1.5 : 0), true);
@@ -689,8 +703,8 @@ function noteContact(s,kind,team,index,point,extra={}){s.ball.lastTouchTick=s.ti
 function attemptTackle(s,team,index,manual=false){
  const p=s[team][index],b=s.ball;
  if(p.cooldown>0)return false;
- if(!manual&&(b.owner?.team!==other(team)||b.protected>0||distance(p,b)>ENGINE.tackleReach||b.z>CONTACT.footHeight))return false;
- animate(p,'tackle',manual?9:7);p.cooldown=manual?18:17;
+ if(!manual&&(b.owner?.team!==other(team)||b.protected>0||distance(p,b)>(p.keeper?ENGINE.keeperReach:ENGINE.tackleReach)||b.z>CONTACT.footHeight))return false;
+ animate(p,'tackle',manual?9:7);p.cooldown=manual?18:p.keeper?8:17;
  p.pendingTackle={manual,started:s.tick,resolved:false};
  s.lastAction={kind:'tackle',team,index,tick:s.tick,contact:false};
  return true;
@@ -698,6 +712,24 @@ function attemptTackle(s,team,index,manual=false){
 function resolveTackles(s,frame,previous){
  const b=s.ball,candidates=[];
  if(!b.owner||b.protected>0)return false;
+ // Motor 11: computerens taklinger afgøres som en deterministisk duel i det øjeblik,
+ // benet når frem (windup), hvis bolden stadig er inden for rækkevidde: forsvarerens
+ // og boldholderens rating, boldholderens fart, placering på målsiden og skærmning.
+ for(const team of['home','away'])for(let i=0;i<s[team].length;i++){
+  const p=s[team][i],attempt=p.pendingTackle;
+  if(!attempt||attempt.manual||attempt.resolved||s.tick-attempt.started!==CONTACT.windup||b.owner.team!==other(team))continue;
+  attempt.resolved=true;
+  const reach=distance(p,b);if(reach>(p.keeper?ENGINE.keeperReach:ENGINE.tackleReach)+.35)continue;
+  const owner=s[b.owner.team][b.owner.index],ownerPace=length(owner.vx,owner.vy),f=forward(b.owner.team);
+  const goalSide=(p.y-owner.y)*f>.2,duel=(rating(s,team,i)-rating(s,b.owner.team,b.owner.index))*.01;
+  // Målmanden går i fødderne med hænderne og har en højere chance end en markspiller.
+  const chance=p.keeper?clamp(ENGINE.keeperSmother+duel-ownerPace*.015,.3,.9):clamp(ENGINE.tackleBase+duel-ownerPace*.025+(goalSide?.12:0)-Math.max(0,reach-.8)*.25,.08,.7);
+  if(random(s)<chance){
+   if(p.keeper){noteContact(s,'save',team,i,{x:b.x,y:b.y,z:b.z,t:0});s.stats[team+'Tackles']++;receiveBall(s,team,i);s.lastAction={kind:'smother',team,index:i,tick:s.tick};return true;}
+   candidates.push({team,i,p,attempt,duel:true,hit:{x:b.x,y:b.y,z:b.z,t:0}});
+  }
+ }
+ if(candidates.length)return pokeBall(s,candidates[0]);
  // Motor 11: målmanden kan også gå i fødderne på en fri angriber (indeks 0).
  for(const team of['home','away'])for(let i=0;i<s[team].length;i++){
   const p=s[team][i],attempt=p.pendingTackle,age=attempt?s.tick-attempt.started:-1;
@@ -708,12 +740,16 @@ function resolveTackles(s,frame,previous){
  }
  candidates.sort((a,c)=>a.hit.t-c.hit.t||a.i-c.i||(a.team==='home'?-1:1));
  const contact=candidates[0];if(!contact)return false;
- const{team,i,p,attempt,hit}=contact,owner=s[b.owner.team][b.owner.index],ownerPace=length(owner.vx,owner.vy),dx=hit.x-p.x,dy=hit.y-p.y,n=length(dx,dy)||1;
+ return pokeBall(s,contact);
+}
+function pokeBall(s,contact){
+ const b=s.ball;
+ const{team,i,p,attempt,hit,duel}=contact,owner=s[b.owner.team][b.owner.index],ownerPace=length(owner.vx,owner.vy),sign=duel?-1:1,dx=(hit.x-p.x)*sign,dy=(hit.y-p.y)*sign,n=length(dx,dy)||1;
  // The tackle touches and knocks the ball loose; no opponent receives remote
  // ownership. A later physical foot/hand contact must win the loose ball.
  // Motor 11: en ren takling stopper bolden nær forsvareren ("poke"), så den kan erobres
  // naturligt med næste fodkontakt; ejerskab overdrages stadig aldrig på afstand.
- b.owner=null;b.x=hit.x;b.y=hit.y;b.z=Math.max(.22,hit.z);b.vx=dx/n*(ENGINE.pokeSpeed+ownerPace*.08)+p.vx*.35;b.vy=dy/n*(ENGINE.pokeSpeed+ownerPace*.08)+p.vy*.35;b.vz=.2;
+ b.owner=null;b.x=hit.x;b.y=hit.y;b.z=Math.max(.22,hit.z);const poke=duel?ENGINE.pokeSpeed*.6:ENGINE.pokeSpeed+ownerPace*.08;b.vx=dx/n*poke+p.vx*.35;b.vy=dy/n*poke+p.vy*.35;b.vz=.2;
  b.lastTeam=team;b.lastTouch={team,index:i};b.protected=2;b.flight=0;b.curl=0;b.shot=false;b.passTarget=null;b.receivePoint=null;b.lastPassFrom=null;b.lastShooter=null;b.assist=null;
  attempt.resolved=true;p.possessionTicks=0;
  s.stats[team+'Tackles']++;
@@ -757,7 +793,8 @@ function ballContacts(s, previous, endpoint, endT = 1, frame = contactMotion(s))
     if(hands){const extension=p.dive>0?.4:.18;start={x:before.x+(p.dive>0?p.diveX:before.facingX)*extension,y:before.y+(p.dive>0?p.diveY:before.facingY)*extension};end={x:p.x+(p.dive>0?p.diveX:p.facingX)*extension,y:p.y+(p.dive>0?p.diveY:p.facingY)*extension};radius=p.dive>0?.78:.65;height=p.dive>0?2.35:1.95;}
     else{const attempt=p.pendingTackle,age=attempt?s.tick-attempt.started:-1,extended=attempt&&age>=CONTACT.windup&&age<=CONTACT.strikeEnd&&p.tackle>0,offset=extended?(attempt.manual?CONTACT.manualOffset:CONTACT.autoOffset):CONTACT.footOffset;start=footPosition(before,offset);end=footPosition(p,offset);radius=extended?(attempt.manual?CONTACT.manualRadius:CONTACT.autoRadius):CONTACT.footRadius;height=CONTACT.footHeight;}
     let hit=sweptContact(previous,endpoint,start,end,radius,height,endT);
-    if(!hit&&!hands&&b.shot){hit=sweptContact(previous,endpoint,before,p,.43,1.65,endT);block=!!hit;}
+    // Motor 11: en forsvarer tæt på skytten strækker ben og krop ind i skudlinjen (bredere blokering).
+    if(!hit&&!hands&&b.shot){const shooter=b.lastShooter&&s[b.lastShooter.team]?.[b.lastShooter.index],near=shooter&&b.lastShooter.team!==team&&distance(p,shooter)<ENGINE.blockRange;hit=sweptContact(previous,endpoint,before,p,near?ENGINE.blockRadius:.43,near?1.3:1.65,endT);block=!!hit;}
     // Motor 11: målmandens krop kan også stoppe et skud, der går lige på ham.
     if(!hit&&hands&&b.shot){hit=sweptContact(previous,endpoint,before,p,.45,1.9,endT);}
     if(hit)contacts.push({team,i,hands,block,...hit});

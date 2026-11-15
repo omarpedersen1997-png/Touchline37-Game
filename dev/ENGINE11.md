@@ -93,3 +93,75 @@ Testspilleren er en aggressiv bot i `tests/support/match-bot.mjs`. Den presser a
 4. **Regler.** Offside, frispark, kort, udskiftninger og kamplyd findes ikke endnu (planlagt i M5).
 5. **Ydelse.** Motor 11 er ca. 1,5 gange så tung som motor 10. Det er ikke målt på en Android-telefon.
 6. **Størrelse.** Motor 11 indgår i appens og serverens bygning (ca. +10 KB komprimeret hver). Referencen for serverpakkens størrelse (`tests/bundle-baseline.json`) er derfor opdateret bevidst.
+
+---
+
+# M5 del 2 – spilbar i testmiljøet, taklinger, boldkontrol og kalibrering
+
+## Spil motor 11 i det lokale testmiljø
+
+Motor 11 kan nu vælges i det lokale testmiljø **uden at ændre produktionskoden**:
+
+| Del | Fil | Rolle |
+|---|---|---|
+| Lokale versionsregler | `dev/engine-versions-local.js` | Kopi af reglerne, hvor motor 11 er tilladt |
+| Lokal Worker-bygning | `dev/build-local-worker.mjs` | Bygger testserverens Worker til `.dev-data/build/local-worker.mjs` og udskifter `shared/engine-versions.js` med den lokale udgave (esbuild-plugin) |
+| Motorvælger | `dev/local-worker-entry.js` | `/dev/motor11`, `/dev/motor10` og `/dev/status`. Med cookien `touchline-dev-engine=11` giver nye 3D-kampe motor 11. Kun starten af en kamp ændres |
+| Browserkontrol | `dev/check-engine11-view.mjs` | Spiller en motor 11-kamp i appens 3D-visning og tager et skærmbillede |
+
+**Produktionen påvirkes ikke.** `build.mjs`, `shared/engine-versions.js` og `worker/` er uændrede. Produktionsserveren giver fortsat motor 10, også hvis appen beder om 11 og har cookien. `tests/dev-engine11.test.mjs` kontrollerer:
+- at adapteren ikke findes i produktionsbygningen,
+- at produktionsserveren giver motor 10,
+- at en hel motor 11-kamp i testmiljøet valideres af den lokale server med præcis samme resultat som klienten.
+
+Appens eksisterende 3D-visning bruger kun "version ≥ N"-tjek, så motor 11 vises som motor 10. Designet er uændret og afprøvet i Chromium uden fejl.
+
+## Taklinger og boldkontrol
+
+| | Motor 10 / motor 11 del 1 | Motor 11 del 2 |
+|---|---|---|
+| Computerens takling | Afgøres kun af en 0,26 m fodkontakt med en bold i bevægelse (2,5 % af forsøgene ramte) | Deterministisk duel, når benet når frem (`tackleBase`): rating, boldholderens fart, målside og afstand |
+| Efter vundet takling | Bolden skydes væk fra forsvareren | Bolden bremses ind mod forsvareren ("poke"), så den erobres naturligt |
+| Beskyttelse efter modtagelse | 7 tick | 4 tick (`receiveProtection`) |
+| Rækkevidde for computerens takling | 1,15 m | 1,3 m (`tackleReach`) |
+| Skærmning | – | Under pres holdes bolden tættere og på den side, der vender væk fra modstanderen (afhænger af rating) |
+| Sprint for computerspillere | Aldrig | Med energi: pres, jagt på løs bold, modtagelse, dybdeløb og dribling i åbent rum (`aiSprint` 1,22) |
+| Blokering af skud | Kroppens radius 0,43 m | Forsvarere inden for 5 m af skytten blokerer med 0,62 m (ben og krop) |
+| Målmandens reaktion | (del 1: 3 tick ved rating 60) | 2 tick ved rating 60 (`keeperReaction` 4,5 − rating·0,04) |
+| Dribler i feltet | Målmanden lod angriberen drible bolden i mål | Målmanden stiller sig mellem bold og mål og kaster sig i fødderne (`keeperSmother`, `keeperReach`); griber bolden ved succes |
+
+## Svaghed fundet i motor 10 (ikke rettet, motoren er frosset)
+
+En spiller, der **aldrig skyder**, men kun dribler, scorer 2,9 mål pr. kamp i motor 10, fordi målmanden ikke går i fødderne på en dribler. I motor 11 er det rettet til 1,0 mål pr. kamp (testet i `tests/engine11-defending.test.mjs`).
+
+## Kalibrering (15. november 2026)
+
+### Testspiller mod computer, 2 × 24 kampe pr. styrkeforhold (seeds "big-A" og "big-B")
+
+| Motor | Styrke | Mål H–U | Sejre H/U/B | Skud | Konv. | Redn. | Afl. (lykkes H/U) | Takl. |
+|---|---|---|---|---|---|---|---|---|
+| 10 | 60/60 | 0,85–0,65 | 40/31/29 % | 6,8 | 22,1 % | 63 % | 205 (82/66 %) | 2,3 |
+| 11 | 60/60 | 1,65–0,25 | 81/19/0 % | 18,2 | 10,4 % | 70 % | 159 (77/77 %) | 4,3 |
+| 10 | 75/50 | 0,85–0,21 | 48/38/15 % | 7,2 | 14,9 % | 68 % | 209 (84/66 %) | 2,6 |
+| 11 | 75/50 | 2,38–0,08 | 94/6/0 % | 18,5 | 13,3 % | 69 % | 157 (79/77 %) | 6,9 |
+| 10 | 50/75 | 0,46–1,04 | 0/56/44 % | 4,7 | 32,2 % | 53 % | 206 (80/64 %) | 2,2 |
+| 11 | 50/75 | 1,25–0,14 | 69/27/4 % | 15,3 | 9,1 % | 72 % | 167 (77/78 %) | 3,4 |
+
+### Computer mod computer, motor 11, 48 kampe pr. styrkeforhold
+
+| Styrke | Mål H–U | Sejre H/U/B | Skud | Redn. | Afl. (lykkes) | Takl. |
+|---|---|---|---|---|---|---|
+| 60/60 | 0,75–0,83 | 25/40/35 % | 15,6 | 78 % | 145 (74,6 %) | 4,5 |
+| 75/50 | 0,81–0,44 | 35/48/17 % | 14,4 | 80 % | 145 (75,0 %) | 5,6 |
+| 50/75 | 0,65–0,96 | 17/42/42 % | 15,4 | 75 % | 143 (74,6 %) | 6,5 |
+
+### Konklusion
+
+- **Hold mod hold er fair og afhænger af styrke.** Begge hold bruger samme AI, og resultaterne er symmetriske.
+- **Testspilleren vinder stadig de fleste kampe i motor 11** (60/60: 81 %).
+- **Årsagen er analyseret:**
+  - Testspilleren presser altid bolden i fuld sprint og skyder ved enhver chance inden for 21 m (ca. 12 skud pr. kamp).
+  - Computerholdets angreb går i stå mod det konstante pres: 144 af 169 boldtab går til hjemmeholdets computerspillere efter forhastede afleveringer.
+  - Scoringsprocenten er realistisk (ca. 10 %) og lavere end i motor 10. Forskellen er altså mængden af chancer.
+  - Motor 10's tilsyneladende balance kom især fra, at målmanden dér lod computerens få skud gå ind (32 % ved 50/75) og ikke stoppede driblinger i mål.
+- **Botten er ikke et menneske.** Den endelige kalibrering bør derfor ske med rigtige spillere i testmiljøet, som nu er muligt. De relevante knapper står samlet i `ENGINE`.

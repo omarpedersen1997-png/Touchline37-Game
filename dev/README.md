@@ -232,6 +232,14 @@ APK'en lægges i `android/app/build/outputs/apk/touchlineTest/`.
 4. Log ind med en testkonto, fx `test3@touchline.invalid` / `Touchline-test-3`. Det virker kun, når testappen er bygget mod en testserver med disse konti.
 5. Afinstallér: tryk længe på ikonet "Touchline TEST" og vælg **Afinstaller**. APK 37 påvirkes ikke.
 
+## Kampmotor 11 i testmiljøet (M5)
+
+Åbn `/dev/motor11` i testmiljøet. Siden sætter en cookie, så nye 3D-kampe bruger kampmotor 11. `/dev/motor10` skifter tilbage, og `/dev/status` viser valget.
+
+Det virker kun i testmiljøet. Produktionsbygningen indeholder ikke motorvælgeren og giver altid motor 10. Detaljer står i `dev/ENGINE11.md`.
+
+`node dev/check-engine11-view.mjs` spiller en motor 11-kamp i appens 3D-visning og gemmer et skærmbillede i `.dev-data/engine11/`.
+
 ## Forhåndsvisning i Claude-appen
 
 Claude-appens forhåndsvisning går gennem en https-proxy. Testserveren bestemmer browserens adresse ud fra `X-Forwarded-Host`/`X-Forwarded-Proto`, `Forwarded` eller `Origin` på samme vært. Derfor virker spillets egen beskyttelse mod forespørgsler fra fremmede adresser uændret, og login lykkes gennem proxyen. `tests/dev-preview.test.mjs` afprøver login, indlæsning og gemning gennem en simuleret https-proxy og kontrollerer, at fremmede adresser stadig afvises.
