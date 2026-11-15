@@ -98,6 +98,9 @@ foregår i normale requesthandlers.
 
 Genbyg kun i en udviklingskopi med JDK 21, SDK 36 og de låste afhængigheder:
 
+JVM-brotestene bruger også en eksisterende `org.json`-JAR fra Gradlecache eller
+stien i `TOUCHLINE_TEST_JSON_JAR`. Testhjælperen downloader ingen pakker.
+
 ```sh
 npm test
 npm run android:test-key
