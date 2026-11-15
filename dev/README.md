@@ -193,7 +193,7 @@ Fordi app-id'et er forskelligt, installeres testappen **ved siden af** APK 37. D
 ### Isolering fra produktion
 
 - **Ingen fast adresse i broen:** Produktionsadressen står ikke længere fast i `TouchlineApiPlugin.java`. Den kommer fra `BuildConfig`. Produktionsvarianterne (release, sideload og debug) får præcis den samme adresse som før fra `defaultConfig`.
-- **Gradle-spærre:** Bygningen af testappen stopper, hvis `touchlineTestApi` peger på en produktionsvært (`chatgpt.site`, `chatgpt-team.site`, `glowingconch1` eller `playtouchline.dk`) eller ikke er https.
+- **Gradle-spærre:** Bygningen af testappen stopper, hvis `touchlineTestApi` peger på en produktionsvært eller ikke er https. Spærrelisten står i `touchlineProductionMarkers` i build.gradle og i `TouchlineEndpoint.java`, og den dækker Sites-værterne og hjemmesidens domæne.
 - **Java-spærre:** `TouchlineEndpoint.java` giver ingen adresse til testappen, hvis den alligevel er produktionslignende. Broen afviser så alle kald, før der åbnes en forbindelse.
 - **Standardadresse:** Uden en godkendt testserver peger testappen på `https://touchline-test.invalid`. Den adresse kan aldrig nås, så appen viser blot forbindelsesfejl.
 - **Tests:** `tests/android-test-variant.test.mjs` kontrollerer, at
