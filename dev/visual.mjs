@@ -24,9 +24,9 @@ export const DIFF_DIR = resolve(ROOT, '.dev-data', 'visual', 'diff');
 export const VIEWPORT = Object.freeze({ width: 915, height: 412 });
 export const DEVICE_SCALE_FACTOR = 2;
 // Indhold, der ændrer sig med tiden, skjules med fast bredde i testbrowseren, så
-// layoutet står stille: klubsaldoen tæller op med serverens ur, og gemmestatus skifter
+// layoutet står stille: klubsaldoen og transferbudgettet tæller op med serverens ur, og gemmestatus skifter
 // mellem "Forbinder…" og "Gemt i skyen". Selve appen ændres ikke.
-export const DYNAMIC_CSS = `button.balance b{display:inline-block!important;width:4.2em!important;visibility:hidden!important}.save-status{visibility:hidden!important}`;
+export const DYNAMIC_CSS = `button.balance b{display:inline-block!important;width:4.2em!important;visibility:hidden!important}.market-budget b{display:inline-block!important;width:5.4em!important;visibility:hidden!important}.save-status{visibility:hidden!important}`;
 export const MASK_SELECTORS = Object.freeze([]);
 // Resten af billedet skal være næsten pixel-identisk.
 export const CHANNEL_TOLERANCE = 24;
@@ -34,15 +34,32 @@ export const MAX_DIFF_RATIO = 0.0002;
 
 const FREEZE_CSS = `*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important;scroll-behavior:auto!important}`;
 
-// Skærme: navn, konto (null = ikke logget ind) og hvordan man når dem.
+// Skærme: navn, konto (indeks i TEST_ACCOUNTS, null = ikke logget ind) og trin.
+// Trin: { tab } klik på synlig knap med præcis tekst, { emailStep } udfyld e-mail og
+// fortsæt, { nav } bundnavigation, { more } punkt i Mere-menuen.
+const RICH = 2; // Prøvelund BK – mange penge og høje niveauer
+const NEW = 0; // helt ny klub
 export const SCREENS = Object.freeze([
-  { name: '01-login', account: null },
-  { name: '02-klub', account: 2, nav: 'Klub' },
-  { name: '03-hold', account: 2, nav: 'Hold' },
-  { name: '04-kampe', account: 2, nav: 'Kampe' },
-  { name: '05-center', account: 2, nav: 'Center' },
-  { name: '06-mere', account: 2, nav: 'Mere' },
-  { name: '07-ny-klub', account: 0, nav: 'Klub' },
+  { name: '01-login', account: null, steps: [] },
+  { name: '02-login-adgangskode', account: null, steps: [{ emailStep: true }] },
+  { name: '03-opret-konto', account: null, steps: [{ tab: 'Opret konto' }] },
+  { name: '04-klub', account: RICH, steps: [{ nav: 'Klub' }] },
+  { name: '05-hold-opstilling', account: RICH, steps: [{ nav: 'Hold' }] },
+  { name: '06-hold-taktik-trup', account: RICH, steps: [{ nav: 'Hold' }, { tab: 'Taktik & trup' }] },
+  { name: '07-kampe-liga', account: RICH, steps: [{ nav: 'Kampe' }] },
+  { name: '08-kampe-pokal', account: RICH, steps: [{ nav: 'Kampe' }, { tab: 'Pokal' }] },
+  { name: '09-kampe-europa', account: RICH, steps: [{ nav: 'Kampe' }, { tab: 'Europa' }] },
+  { name: '10-center-strategi', account: RICH, steps: [{ nav: 'Center' }] },
+  { name: '11-center-klubdesign', account: RICH, steps: [{ nav: 'Center' }, { tab: 'Klubdesign' }] },
+  { name: '12-mere-menu', account: RICH, steps: [{ nav: 'Mere' }] },
+  { name: '13-transfermarked', account: RICH, steps: [{ more: 'Transfermarked' }] },
+  { name: '14-klubudvikling', account: RICH, steps: [{ more: 'Klubudvikling' }] },
+  { name: '15-spillerkarriere', account: RICH, steps: [{ more: 'Spillerkarriere' }] },
+  { name: '16-maal-karriere', account: RICH, steps: [{ more: 'Mål & karriere' }] },
+  { name: '17-klub-konto', account: RICH, steps: [{ more: 'Klub & konto' }] },
+  { name: '18-hjaelp', account: RICH, steps: [{ more: 'Hjælp & spilleregler' }] },
+  { name: '19-ny-klub', account: NEW, steps: [{ nav: 'Klub' }] },
+  { name: '20-ny-klub-hold', account: NEW, steps: [{ nav: 'Hold' }] },
 ]);
 
 function loadPlaywright() {
@@ -72,19 +89,37 @@ async function settle(page) {
   await page.waitForTimeout(1200);
 }
 
-async function login(page, account) {
+const exact = (text) => new RegExp('^\\s*' + text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$');
+
+async function clickVisibleButton(page, text, scope = 'body') {
+  const button = page.locator(scope).locator('button:visible, [role=tab]:visible').filter({ hasText: exact(text) }).first();
+  await button.click({ timeout: 10000 });
+  await page.waitForTimeout(600);
+}
+
+async function emailStep(page, account) {
   await page.locator('input[type=email]').fill(account.email);
-  const next = page.getByRole('button', { name: /fortsæt|næste|videre/i }).first();
-  if (await next.count()) await next.click();
+  await page.getByRole('button', { name: /fortsæt/i }).first().click();
+  await page.locator('input[type=password]').first().waitFor({ timeout: 10000 });
+}
+
+async function login(page, account) {
+  await emailStep(page, account);
   await page.locator('input[type=password]').first().fill(account.password);
   await page.getByRole('button', { name: /log ind/i }).last().click();
   await page.locator('nav:visible').first().waitFor({ timeout: 15000 });
 }
 
-async function openScreen(page, nav) {
-  if (!nav) return;
+async function runStep(page, step) {
+  if (step.emailStep) return emailStep(page, TEST_ACCOUNTS[RICH]);
+  if (step.tab) return clickVisibleButton(page, step.tab);
   // Navigationsknapperne har aria-labels (fx "Mit hold"), så der vælges på den synlige tekst.
-  await page.locator('nav:visible button').filter({ hasText: new RegExp('^\\s*' + nav + '\\s*$') }).first().click();
+  if (step.nav) return clickVisibleButton(page, step.nav, 'nav:visible');
+  if (step.more) {
+    await clickVisibleButton(page, 'Mere', 'nav:visible');
+    return clickVisibleButton(page, step.more, '[role=dialog]:visible');
+  }
+  throw new Error('Ukendt trin: ' + JSON.stringify(step));
 }
 
 /** Tager alle skærmbilleder og returnerer {navn: PNG-buffer}. */
@@ -94,10 +129,13 @@ export async function captureScreens() {
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch();
   const shots = {};
+  // Ét login pr. konto: sessionen genbruges, så spillets loginbegrænsning ikke rammes.
+  const sessions = new Map();
   try {
     await seed({ db: local.db, worker: local.worker, pepper: local.env.AUTH_PEPPER });
     for (const screen of SCREENS) {
       const context = await browser.newContext({
+        storageState: screen.account === null ? undefined : sessions.get(screen.account),
         viewport: VIEWPORT,
         deviceScaleFactor: DEVICE_SCALE_FACTOR,
         isMobile: true,
@@ -113,11 +151,14 @@ export async function captureScreens() {
         if (['http:', 'https:', 'ws:', 'wss:'].includes(url.protocol) && url.hostname !== '127.0.0.1') external.push(request.url());
       });
       await page.goto(local.url + '/play');
-      await page.locator('input[type=email]').waitFor({ timeout: 15000 });
-      if (screen.account !== null) {
+      if (!sessions.has(screen.account)) await page.locator('input[type=email]').waitFor({ timeout: 15000 });
+      if (screen.account !== null && sessions.has(screen.account)) {
+        await page.locator('nav:visible').first().waitFor({ timeout: 15000 });
+      } else if (screen.account !== null) {
         await login(page, TEST_ACCOUNTS[screen.account]);
-        await openScreen(page, screen.nav);
+        sessions.set(screen.account, await context.storageState());
       }
+      for (const step of screen.steps) await runStep(page, step);
       await settle(page);
       shots[screen.name] = await page.screenshot({
         animations: 'disabled',

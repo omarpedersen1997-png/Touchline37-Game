@@ -75,12 +75,15 @@ Nye kampregler skal ligge i en ny motorfil (motor 11+). De frosne filer må aldr
 
 ### Design (referencebilleder)
 
-`tests/visual/baseline/` indeholder 7 referencebilleder af appen i bredformat (915 × 412, skalering 2):
-- login,
-- klub, hold, kampe, center og mere-menuen,
-- en ny klub.
+`tests/visual/baseline/` indeholder 20 referencebilleder af appen i bredformat (915 × 412, skalering 2):
+- **Login:** e-mail, adgangskode og opret konto.
+- **Klub og hold:** Klub, Hold (Opstilling og Taktik & trup).
+- **Kampe:** Liga, Pokal og Europa.
+- **Center:** Strategi & udvikling og Klubdesign.
+- **Mere-menuen og dens skærme:** Transfermarked, Klubudvikling, Spillerkarriere, Mål & karriere, Klub & konto og Hjælp & spilleregler.
+- **En helt ny klub:** Klub og Hold.
 
-Billederne tages i testmiljøet med en frisk, midlertidig database.
+Billederne tages i testmiljøet med en frisk, midlertidig database. Der logges ind én gang pr. konto, så spillets loginbegrænsning ikke rammes.
 
 | Kommando | Funktion |
 |---|---|
@@ -88,12 +91,22 @@ Billederne tages i testmiljøet med en frisk, midlertidig database.
 | `npm run visual:baseline` | Erstatter referencen. Må kun køres efter en godkendt designændring. |
 
 Sådan virker sammenligningen:
-- **Kun i testbrowseren:** Animationer slås fra under optagelsen. Klubsaldoen og gemmestatus skjules med fast bredde, fordi de ændrer sig med serverens ur. Selve appen ændres ikke.
+- **Kun i testbrowseren:** Animationer slås fra under optagelsen. Klubsaldoen, transferbudgettet og gemmestatus skjules med fast bredde, fordi de ændrer sig med serverens ur. Selve appen ændres ikke.
 - **Grænse:** Højst 0,02 % af pixels må afvige, med en tolerance på 24 pr. farvekanal.
-- **Afprøvet:** En ny reference gav 0 afvigelser i tre rene kørsler i træk. Den opdagede ændrede hjørner, 1 px forskydning og ændrede farver.
+- **Afprøvet:** En ny reference gav 0 afvigelser i tre rene kørsler i træk. Simulerede designændringer blev opdaget: ændrede hjørner på 19 af 20 skærme og ændrede farver på 20 af 20.
 - **Beskyttet mod sletning:** `tests/visual-baseline.test.mjs` indgår i `npm test` og kontrollerer, at referencebillederne findes og matcher `manifest.json`.
 
 Referencen er taget med Chromium via Playwright 1.63. En anden browserversion kan tegne skrift en smule anderledes. I så fald tages en ny reference med `visual:baseline` på den uændrede `main`.
+
+### Bevaringstag
+
+`npm run tag:prepare` kontrollerer, at `main` stadig peger på baseline (`e9b04e6`), og at motorfilerne dér er de frosne. Derefter udskriver scriptet kommandoerne til tagget `bevaring/apk37`. Scriptet **opretter og pusher intet**. Tagget må først oprettes efter ejerens særskilte godkendelse.
+
+## Forhåndsvisning i Claude-appen
+
+Claude-appens forhåndsvisning går gennem en https-proxy. Testserveren bestemmer browserens adresse ud fra `X-Forwarded-Host`/`X-Forwarded-Proto`, `Forwarded` eller `Origin` på samme vært. Derfor virker spillets egen beskyttelse mod forespørgsler fra fremmede adresser uændret, og login lykkes gennem proxyen. `tests/dev-preview.test.mjs` afprøver login, indlæsning og gemning gennem en simuleret https-proxy og kontrollerer, at fremmede adresser stadig afvises.
+
+Alle forespørgsler logges i `.dev-data/requests.log` med metode, sti, status og de adresse-headere, proxyen sendte. Loggen indeholder aldrig cookies, adgangskoder eller forespørgselsindhold. Hvis login fejler i forhåndsvisningen, viser loggen hvorfor.
 
 ## Begrænsninger
 

@@ -3,7 +3,7 @@
 // med lokal SQLite-database, en lokal testpepper og et R2-lager i hukommelsen.
 // Al udgående netværkstrafik fra Worker-koden blokeres.
 import { createServer } from 'node:http';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -34,9 +34,37 @@ export async function loadDraftWorker(file = DRAFT_SERVER) {
   return (await import(pathToFileURL(file).href)).default;
 }
 
-function requestUrl(req) {
-  const proto = String(req.headers['x-forwarded-proto'] || 'http').split(',')[0].trim();
-  const host = String(req.headers['x-forwarded-host'] || req.headers.host || '127.0.0.1').split(',')[0].trim();
+function firstValue(value) {
+  return String(Array.isArray(value) ? value[0] : value || '').split(',')[0].trim();
+}
+
+/** Læser RFC 7239 "Forwarded: host=...;proto=..." (første led). */
+function parseForwarded(header) {
+  const result = {};
+  for (const part of firstValue(header).split(';')) {
+    const [key, raw] = part.split('=');
+    if (key && raw) result[key.trim().toLowerCase()] = raw.trim().replace(/^"|"$/g, '');
+  }
+  return result;
+}
+
+/**
+ * Bestemmer den adresse, browseren faktisk bruger. Bag Claude-appens forhåndsvisning
+ * (en proxy) kan Host være 127.0.0.1, mens browseren ser en https-adresse. Spillets
+ * egen Origin-kontrol sammenligner Origin med denne adresse, så den skal være korrekt.
+ */
+export function requestUrl(req) {
+  const forwarded = parseForwarded(req.headers.forwarded);
+  let proto = firstValue(req.headers['x-forwarded-proto']) || forwarded.proto || 'http';
+  const host = firstValue(req.headers['x-forwarded-host']) || forwarded.host || firstValue(req.headers.host) || '127.0.0.1';
+  // Samme vært, men browseren bruger https (proxyen sendte ingen protokol-header).
+  const origin = firstValue(req.headers.origin);
+  if (origin) {
+    try {
+      const parsed = new URL(origin);
+      if (parsed.host === host && parsed.protocol === 'https:') proto = 'https';
+    } catch {}
+  }
   return new URL(req.url || '/', `${proto}://${host}`);
 }
 
@@ -79,6 +107,26 @@ async function writeResponse(res, response) {
 }
 
 /**
+ * Kort, ikke-følsom beskrivelse af en forespørgsel til fejlfinding af forhåndsvisningen.
+ * Indeholder aldrig cookies, adgangskoder eller forespørgselsindhold.
+ */
+export function requestSummary(req, request, status) {
+  const pick = (name) => firstValue(req.headers[name]) || '-';
+  return [
+    new Date().toISOString(),
+    req.method,
+    new URL(request.url).pathname,
+    status,
+    `url=${new URL(request.url).origin}`,
+    `host=${pick('host')}`,
+    `origin=${pick('origin')}`,
+    `xfh=${pick('x-forwarded-host')}`,
+    `xfp=${pick('x-forwarded-proto')}`,
+    `fwd=${pick('forwarded')}`,
+  ].join(' ');
+}
+
+/**
  * Starter testserveren.
  * @param {{dataDir?:string, port?:number, host?:string, database?:string, worker?:object, env?:object}} options
  */
@@ -94,9 +142,12 @@ export async function startLocalServer(options = {}) {
   const workerEnv = { DB: db, BUCKET: memoryBucket(), AUTH_PEPPER: loadTestPepper(dataDir) };
   const worker = options.worker ?? (await loadDraftWorker());
 
+  const log = options.log ?? (() => {});
   const server = createServer(async (req, res) => {
     try {
-      const response = await worker.fetch(await toRequest(req), workerEnv, { waitUntil() {}, passThroughOnException() {} });
+      const request = await toRequest(req);
+      const response = await worker.fetch(request, workerEnv, { waitUntil() {}, passThroughOnException() {} });
+      log(requestSummary(req, request, response.status));
       await writeResponse(res, response);
     } catch (error) {
       const status = error?.status || 500;
@@ -132,13 +183,22 @@ export async function startLocalServer(options = {}) {
 if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
   try {
     const port = Number(process.env.DEV_PORT || 8787);
-    const local = await startLocalServer({ port });
+    const logFile = resolve(DEFAULT_DATA_DIR, 'requests.log');
+    mkdirSync(DEFAULT_DATA_DIR, { recursive: true });
+    const local = await startLocalServer({
+      port,
+      log: (line) => {
+        if (/\/api\//.test(line) || / \/play /.test(line)) console.log(line);
+        appendFileSync(logFile, line + '\n');
+      },
+    });
     const accounts = local.db.sqlite.prepare('SELECT count(*) AS n FROM accounts').get().n;
     console.log('');
     console.log('Touchline TESTMILJØ kører (lokal database, ingen forbindelse til produktion).');
     console.log(`  Spil:      ${local.url}/play`);
     console.log(`  Database:  ${local.db.file} (${accounts} testkonti)`);
     console.log('  Udgående netværk fra Worker-koden er blokeret.');
+    console.log(`  Forespørgselslog (uden cookies/adgangskoder): ${logFile}`);
     console.log('  Stop med Ctrl+C.');
     const stop = async () => {
       if (local.guard.blocked.length) console.log(`Blokerede forsøg på udgående forbindelser: ${local.guard.blocked.length}`);
