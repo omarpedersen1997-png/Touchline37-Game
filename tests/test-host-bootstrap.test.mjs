@@ -16,7 +16,7 @@ const ENVIRONMENT = 'touchline37-engine11-test';
 const NATIVE = { Origin: 'https://localhost', 'X-Touchline-Test-Engine': '11' };
 const versions = resolve(ROOT, 'shared/engine-versions.js');
 const localVersions = resolve(ROOT, 'dev/engine-versions-local.js');
-const compiled = await build({
+const buildOptions = {
   entryPoints: [resolve(ROOT, 'dev/test-host/entry.js')], bundle: true, minify: true,
   format: 'esm', platform: 'browser', write: false, logLevel: 'error',
   plugins: [{ name: 'isolated-host-test', setup(b) {
@@ -26,11 +26,18 @@ const compiled = await build({
     b.onResolve({ filter: /generated-[^/]+\.js$/ }, (args) => ({ path: args.path, namespace: 'unused-resource' }));
     b.onLoad({ filter: /.*/, namespace: 'unused-resource' }, () => ({ contents: 'export default {}', loader: 'js' }));
   } }],
-});
+};
+const compiled = await build(buildOptions);
 const output = resolve(ROOT, '.dev-data/build/test-host-wrapper-test.mjs');
 mkdirSync(dirname(output), { recursive: true });
 writeFileSync(output, compiled.outputFiles[0].contents);
 const worker = (await import(pathToFileURL(output))).default;
+const closedCompiled = await build({
+  ...buildOptions, define: { __TOUCHLINE_ALLOW_TEST_SETUP__: 'false' },
+});
+const closedOutput = resolve(ROOT, '.dev-data/build/test-host-wrapper-closed-test.mjs');
+writeFileSync(closedOutput, closedCompiled.outputFiles[0].contents);
+const closedWorker = (await import(pathToFileURL(closedOutput))).default;
 
 function fixture(t, { markerTable = true } = {}) {
   const db = openLocalDatabase(':memory:');
@@ -179,4 +186,41 @@ test('normal drift afviser efterfølgende uvedkommende data og alternative vært
   assert.equal((await f.request('/api/test-environment')).status, 503);
   assert.equal((await f.request('/api/game', { headers: NATIVE })).status, 503);
   assert.equal(f.changes(), contaminated);
+});
+
+test('slutbygningen spærrer setup uanset runtimeflag og token, mens native motor 11 fortsat virker', async (t) => {
+  const f = fixture(t);
+  const requestClosed = (path, { method = 'GET', headers = {}, body } = {}) => closedWorker.fetch(new Request(ORIGIN + path, {
+    method, headers,
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+  }), f.env, {});
+  const closedInit = () => requestClosed('/internal/test-initialize', {
+    method: 'POST', headers: { Authorization: 'Bearer ' + f.env.TOUCHLINE_TEST_SETUP_TOKEN },
+  });
+  // Alle runtime-setupværdier er med vilje gyldige og slået til.
+  const empty = f.changes();
+  assert.equal((await closedInit()).status, 404);
+  assert.equal(f.changes(), empty, 'slutbygningen må ikke oprette testdata');
+  assert.equal(f.db.sqlite.prepare('SELECT count(*) AS n FROM accounts').get().n, 0);
+  assert.equal((await f.init()).status, 200, 'klargøringsbygningen kan forberede samme fiktive database');
+  const ready = f.changes();
+  assert.equal((await closedInit()).status, 404);
+  assert.equal(f.changes(), ready, 'genaktiverede runtimeværdier må heller ikke genåbne klargøring');
+  const handshake = await requestClosed('/api/test-environment');
+  assert.deepEqual(await handshake.json(), { isolated: true, engine: 11, environment: ENVIRONMENT });
+  const login = await requestClosed('/api/auth/login', {
+    method: 'POST', headers: NATIVE,
+    body: { email: 'test3@touchline.invalid', password: f.env.TOUCHLINE_TEST_LOGIN_PASSWORD },
+  });
+  assert.equal(login.status, 200, await login.clone().text());
+  const cookie = login.headers.get('set-cookie').split(';')[0];
+  const started = await requestClosed('/api/game', {
+    method: 'POST', headers: { ...NATIVE, Cookie: cookie },
+    body: { id: 'closed-host-m11-start', type: 'match', control: 'manual', manualVersion: 10 },
+  });
+  assert.equal(started.status, 200, await started.clone().text());
+  const game = await started.json();
+  assert.equal(game.state.active.manual.version, 11);
+  assert.equal(game.state.active.manual.config.matchVersion, 11);
+  assert.deepEqual(f.guard.blocked, []);
 });

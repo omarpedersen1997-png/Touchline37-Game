@@ -1,0 +1,37 @@
+{
+  "testOrigin": "https://touchline37-engine11-test.glowingconch1.chatgpt.site",
+  "previewOrigin": "https://touchline37-website-preview.glowingconch1.chatgpt.site",
+  "handshake": {
+    "isolated": true,
+    "engine": 11,
+    "environment": "touchline37-engine11-test"
+  },
+  "setupClosed": true,
+  "mailDisabled": true,
+  "postSetupLogin": true,
+  "persistedCareerMatches": 1,
+  "withoutSiteAccessStatus": 401,
+  "previewHtmlSha256": "91666867bdba31782adf43c3b49c6800682bd3a253b7b1c8898b859d54d4e881",
+  "original4KImages": [
+    {
+      "path": "assets/captures/match-37-b3da8abedb4c.jpg",
+      "sha256": "17a0e32718a092b7ae0a80beaeaf699b3333cb6f00515a11efaaa0a861aa17c1",
+      "bytes": 3310950
+    },
+    {
+      "path": "assets/captures/clubhouse-37-b3da8abedb4c.jpg",
+      "sha256": "40f3a90684b4fb682ac1473de8d3c9519ce02054f183fa59f220bad787a8ee08",
+      "bytes": 1210461
+    },
+    {
+      "path": "assets/captures/team-37-b3da8abedb4c.jpg",
+      "sha256": "93851d49d04a80c40733c6c6a9182c4ef766df7202c8b588ff27189460ad7706",
+      "bytes": 1244384
+    },
+    {
+      "path": "assets/captures/center-37-b3da8abedb4c.jpg",
+      "sha256": "100c3d6cb08bf5ffd2d16aa284d30c607e163c6bd36155dc16dc876370496225",
+      "bytes": 1022723
+    }
+  ]
+}

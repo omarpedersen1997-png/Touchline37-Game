@@ -1,0 +1,124 @@
+# Touchline 37 — motor 11 Android-test
+
+Status 15. november 2026: separat APK bygget og serverforløb verificeret. Dette er
+en testudgave, ikke en opdatering af APK 37 eller en offentlig produktionsrelease.
+
+## Hvad der er lavet
+
+- Fortsat fra Claudes `claude/m5-del2` (`492af99`) via reviewcommit `a600b2a`.
+- Testappen har eget app-id, egen signeringsnøgle og den præcise separate testserver.
+- Nativebroen kontrollerer serveridentitet/isolering, før login eller handlinger sendes.
+- Testserveren vælger motor 11 for både klub- og spillerkarrierekampe uden browsercookie.
+- Egen ny database, testpepper og kun tre fiktive `.invalid`-konti; ingen R2 eller mail.
+- Ingen ændringer af gameplay, motor 1–10, APK 37, det låste appdesign eller produktionen.
+
+## Verificeret
+
+Den bevarede testkæde samt de nye kontroller giver **588 beståede tests**. De første
+587 blev gennemført i hovedkæden og dens afgrænsede genkørsler; efter lukningen af
+setupflowet bestod alle otte bootstraptests, inklusive den ene nye regressionstest.
+Ældre tests blev bevaret. Kildescanneren er tilpasset den ene fastlåste testorigin
+og testprojektets ID; andre produktionsmarkører og konfigurationer afvises fortsat.
+
+Android-APK-signatur og ZIP/CRC er kontrolleret. Den pakkede HTML matcher den
+genererede testoverlay, og baselinewebfilen er uændret af overlayværktøjet.
+Testappens delings- og supportlinks bliver i testmiljøet.
+
+På den private, hostede server er **to komplette 250-sekunders kampforløb** kørt
+med rigtig serverfrist, uden ændring af ur eller database for at fremskynde dem:
+
+| Forløb | Motor | Resultat | Gemning | Gentagen gemning |
+|---|---|---|---|---|
+| Klub | 11 | 0–0 | Består | Kun ét resultat |
+| Spillerkarriere | 11 | 1–2 | Består | Kun ét resultat |
+
+For tidlig gemning blev afvist. Efter genudgivelse med lukket setup virker login,
+versionsoversigt og gemt karrierehistorik fortsat. Klargøringsruten svarer 404,
+og mail er deaktiveret. Beviser ligger i `test-evidence/`.
+
+Der er endnu ikke målt FPS, varme, touch eller installation på en fysisk Android.
+Den tidligere dokumenterede taklingskontaktfejl i motor 11 er ikke ændret her.
+
+## Den separate APK
+
+Fil: `dev/artifacts/Touchline37-Motor11-TEST.apk`.
+
+| Egenskab | Værdi |
+|---|---|
+| App-id | `dk.touchline.footballidle.test` |
+| Navn på telefonen | Touchline TEST |
+| Version | `1.0.0-test`, kode 37 |
+| Størrelse | 5.250.877 bytes |
+| SHA-256 | `8c2a1c416f8f1bf9918798fee730a1f96414726b344d8cadace487c08a9b4689` |
+| Testcertifikat SHA-256 | `bf6991c47983d125ef70a285da1a3cd9c7128f11b1e831a64b21af565abb0069` |
+
+APK 37 er fortsat byte-identisk med hash
+`b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0`.
+Testudgaven kan ikke opdatere den app, fordi både app-id og certifikat er forskellige.
+Produktionsnøglen er ikke brugt, kopieret eller uploadet. Testnøglen er kun lokal.
+
+## Adgang afventer ejerens godkendelse
+
+API: https://touchline37-engine11-test.glowingconch1.chatgpt.site
+
+Projekt-ID: `appgprj_6af9bc223af88191b6d68d7616afcc25`.
+Serveren er fortsat privat med kun ejeren tilladt. Et native kald uden Sites-adgang
+gav HTTP 401. Den byggede APK indeholder ingen Sites-bypass-token og kan derfor
+endnu ikke passere platformens private adgangskontrol fra telefonen.
+
+Før APK'en kaldes klar til installation og spil, skal ejeren udtrykkeligt godkende
+offentlig netværksadgang til KUN denne nye testadresse. Spillets API kræver stadig
+testlogin; ingen produktionskonto eller produktionsdata kan bruges her. Hverken
+det aktive domæne eller produktionsappens publikum skal ændres.
+
+Testlogin udleveres særskilt til ejeren. Det genererede kodeord, testpepper,
+setuptokens, serviceadgang og signeringsnøgler findes ikke i Git eller APK'en.
+
+Når adgangen er godkendt: Åbn APK-filens side i det private GitHub-repository på
+Android, log ind på GitHub og brug filens downloadknap. Åbn derefter filen fra
+Downloads/Filer, og tillad installation fra den app Android spørger om.
+Installer **Touchline TEST** ved siden af den eksisterende app.
+
+## Testserverens bygning og schema
+
+`dev/test-host/prepare-site.mjs` materialiserer kun den nye, fastlåste projektmappe.
+`dev/test-host/build.mjs` afviser originalens projekt-ID og alle R2-bindings.
+Kun testbuilden bruger de lokale motor 11-versionsregler. Marketingressourcer/APK
+er ikke i testserverpakken, og mailmodulet erstattes af en deaktiveret variant.
+
+Den nye tomme DB bruger et schema-only Drizzle-startskema med journal og statement-
+breakpoints. Alle oprindelige SQL-filer i Game-repositoryet er uændrede. Tabeller
+og kolonner er sammenlignet med originalens lokale skema. Startskemaet må ikke
+omskrives efter anvendelse; senere ændringer skal være nye migrationer.
+
+`dev/test-host/host-mode.json` har `allowSetup:false`. Lukningen håndhæves ved
+kompilering, så gamle runtimeflag ikke kan genåbne initialiseringen. De midlertidige
+setupvariabler er også fjernet fra Sites-konfigurationen. Ingen schemaændring
+foregår i normale requesthandlers.
+
+Genbyg kun i en udviklingskopi med JDK 21, SDK 36 og de låste afhængigheder:
+
+```sh
+npm test
+npm run android:test-key
+npm run android:test-apk -- -PtouchlineTestApi=https://touchline37-engine11-test.glowingconch1.chatgpt.site
+```
+
+Ingen automatisk merge eller deployment til produktion.
+
+## Separat websitearbejde
+
+Den kortere hjemmeside ligger i Website-repositoryets `codex/website-slides` på
+`294b4e6914daec44d8e5b606eb01da3175c328fc` og er ikke flettet ind i `main`.
+
+Privat forhåndsvisning: https://touchline37-website-preview.glowingconch1.chatgpt.site
+
+Der er seks manuelle slides, én nedtælling samt foldud-installation/FAQ. Logo,
+citat, mørkeblå/limefarver og de fire godkendte 4K-originaler er bevaret.
+32 målrettede kontroller og bundling består. Browserinteraktion og præcis mobil-
+sidehøjde er ikke målt, da det foreskrevne browserværktøj ikke er tilgængeligt.
+Den hostede HTML og alle fire 4K-filer er hentet og hashverificeret.
+
+Forhåndsvisningen er et kompileret, privat reviewartefakt uden database; den viser
+planlagt åbning med lokalt ur og sender ingen konto-/kontaktændringer. Den aktive
+hjemmeside er uændret og kræver separat godkendelse før udgivelse.
