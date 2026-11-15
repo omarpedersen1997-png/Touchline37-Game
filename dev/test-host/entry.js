@@ -12,7 +12,12 @@ export default {
     if (!hasTestHostConfiguration(request, env)) {
       return Response.json({ isolated: false, error: 'Testprojektets identitet kunne ikke verificeres.' }, { status: 503, headers: noStore });
     }
-    if (path === '/internal/test-initialize') return initializeTestDatabase(request, env);
+    if (path === '/internal/test-initialize') {
+      // Slutbygningen afviser også gamle runtimeflag/tokens fra en cached deploy.
+      if (typeof __TOUCHLINE_ALLOW_TEST_SETUP__ !== 'undefined' && !__TOUCHLINE_ALLOW_TEST_SETUP__)
+        return Response.json({ error: 'Ikke fundet.' }, { status: 404, headers: noStore });
+      return initializeTestDatabase(request, env);
+    }
     let safe;
     try { safe = await assertOnlyTestData(env.DB); }
     catch { return Response.json({ isolated: false, error: 'Ukendt testdatabase.' }, { status: 503, headers: noStore }); }

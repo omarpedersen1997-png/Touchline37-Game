@@ -12,10 +12,13 @@ if (manifest.project_id !== 'appgprj_6af9bc223af88191b6d68d7616afcc25'
 }
 const productionVersions = resolve(root, 'shared/engine-versions.js');
 const testVersions = resolve(root, 'dev/engine-versions-local.js');
+const mode = JSON.parse(await readFile(resolve(root, 'dev/test-host/host-mode.json'), 'utf8'));
+if (typeof mode.allowSetup !== 'boolean') throw new Error('Testhostens byggetilstand mangler.');
 await build({
   entryPoints: [resolve(root, 'dev/test-host/entry.js')],
   outfile: resolve(root, 'dist/server/index.js'),
   bundle: true, minify: true, platform: 'browser', format: 'esm',
+  define: { __TOUCHLINE_ALLOW_TEST_SETUP__: JSON.stringify(mode.allowSetup) },
   plugins: [{ name: 'isolated-android-test-only', setup(b) {
     b.onResolve({ filter: /engine-versions\.js$/ }, args => {
       if (args.importer === testVersions || resolve(args.resolveDir, args.path) !== productionVersions) return;
