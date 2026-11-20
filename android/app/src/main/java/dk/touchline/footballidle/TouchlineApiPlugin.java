@@ -47,6 +47,8 @@ public class TouchlineApiPlugin extends Plugin {
         return id != null && id.matches("[A-Za-z0-9:_-]{1,128}");
     }
 
+    @FunctionalInterface private interface SessionUpdate { void run() throws Exception; }
+
     private final class PendingRequest {
         final PluginCall call;
         final String id;
@@ -81,12 +83,12 @@ public class TouchlineApiPlugin extends Plugin {
             if (!terminal.compareAndSet(false, true)) return;
             try { call.reject(message, code); } finally { cleanup(); }
         }
-        void resolve(JSObject result, Runnable sessionUpdate) {
+        void resolve(JSObject result, SessionUpdate sessionUpdate) {
             if (!terminal.compareAndSet(false, true)) return;
             try {
                 // Et sent svar efter annullering må ikke ændre sessionslageret.
                 try { sessionUpdate.run(); }
-                catch (RuntimeException error) { call.reject("Sessionen kunne ikke gemmes."); return; }
+                catch (Exception error) { call.reject("Sessionen kunne ikke gemmes."); return; }
                 call.resolve(result);
             } finally { cleanup(); }
         }
