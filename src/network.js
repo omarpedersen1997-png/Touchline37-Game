@@ -109,12 +109,22 @@ export async function requestWithRetry(transport, { path, method = 'GET', body =
   for (let attempt = 0; attempt < attempts; attempt++) {
     if (attempt > 0) await withTimeout(() => sleep(delays[attempt - 1]), { signal });
     try {
-      const response = await withTimeout(transport, { timeoutMs: method === 'GET' ? timeouts.GET : timeouts.POST, signal });
+      const response = await withTimeout(async attemptSignal => {
+        const received = await transport(attemptSignal);
+        // fetch resolves at the headers. Keep the same deadline through body
+        // download and normalization, so callers never receive a stalled stream.
+        const bytes = await received.arrayBuffer();
+        const bodyless = [204, 205, 304].includes(received.status);
+        const buffered = new Response(bodyless ? null : bytes, {
+          status: received.status, statusText: received.statusText, headers: received.headers,
+        });
+        return normalizeResponse(buffered);
+      }, { timeoutMs: method === 'GET' ? timeouts.GET : timeouts.POST, signal });
       if (retry && RETRYABLE_STATUS.includes(response.status) && attempt < attempts - 1) {
         lastError = null;
         continue;
       }
-      return await normalizeResponse(response);
+      return response;
     } catch (error) {
       if (signal?.aborted) throw signal.reason ?? new DOMException('Aborted', 'AbortError');
       if (error?.name === 'AbortError') throw error;
