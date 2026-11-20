@@ -1,3 +1,7 @@
+## TEST44 — nyt layout til app og hjemmeside
+
+Ny kampcentral, lodret navigation i kompakt bredformat og fælles mørkeblåt/limegrønt designsystem. Stadion oprettes først, når det foldbare panel åbnes. 672 apptests og 81 websitetests består samlet. Signeret APK og PDF findes i dev/artifacts med TEST44 i navnet. Installér oven på Touchline TEST uden afinstallation, og brug samme testlogin. Spilregler og testserver version 6 er bevaret. Privat hjemmesidepreview: https://touchline37-website-preview.glowingconch1.chatgpt.site — playtouchline.dk er ikke genudgivet. Fysisk Android-FPS, installation og browserbaseret visuel kontrol er ikke verificeret. Der er ingen nye verificerede 4K-optagelser af TEST44. Se test-evidence/redesign-TEST44-report.json.
+
 ## TEST43 — aktuel kampstarttest
 
 Optakt før API-start, opt-in 8 sekunders nedtælling, korrekt klientmotorvalg, monotont kampur og ophør af periodisk klubhentning under manuel kamp. Serverversion 6 er udgivet i det isolerede testmiljø. To hostede 250-sekunders kampe med startforsinkelse er gemt korrekt én gang hver. 669 tests bestod samlet og to nye afgrænsede tilfælde giver 671 forskellige beståede tests. APK/PDF findes i dev/artifacts med TEST43 i navnet. Samme testlogin og certifikat; opdatér uden afinstallation. Fysisk Android-FPS er ikke verificeret; modstandernavne er stadig ikke tilgængelige.
