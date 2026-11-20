@@ -1,3 +1,7 @@
+## TEST40 — aktuel testudgave
+
+Asynkron gendannelse, synlig fremdrift og beskyttelse af gyldige optagelser. 643 tests bestod samlet, og afgrænsede genkørsler med én ny test giver 644 forskellige beståede tests. APK og PDF findes i dev/artifacts med TEST40 i filnavnet. Samme testlogin/server/certifikat. Installér oven på Touchline TEST uden afinstallation. Fysiske Android-målinger mangler. Måledata og begrænsninger: test-evidence/recovery-TEST40-*.
+
 ## TEST39 — aktuel testudgave
 
 639 tests består i én samlet kørsel. Rettet timeout ved ufuldstændig HTTP-body. APK: dev/artifacts/Touchline37-Motor11-TEST39.apk. PDF: dev/artifacts/Touchline37-Opdateringsrapport-TEST39.pdf. Installér oven på Touchline TEST uden afinstallation, brug samme login og Auto. Samme testserver og certifikat. Fysisk telefonafprøvning mangler. Se test-evidence/code-review-TEST39.md for gennemgangens præcise omfang.
