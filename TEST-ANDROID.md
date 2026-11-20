@@ -1,3 +1,9 @@
+## TEST38 — 20. november 2026
+
+Ny signeret APK og PDF ligger i dev/artifacts. 633 forskellige tests består efter afgrænsede genkørsler; detaljer i test-evidence/performance-v38-tests.json. Opstart-JS er 981.350 bytes mod 4.571.948.
+
+**IKKE KLAR TIL LOGIN:** Serverens revision 2-udgivelse afventer brugerens godkendelse efter automatisk afvisning. APK kræver revision 2-handshake og afviser den gamle server. Hostet R2-gemning, fysisk installation og FPS er ikke verificeret. Ingen ændring af produktion eller APK 37. Tidligere aflevering nedenfor er historisk.
+
 # Touchline 37 — motor 11 Android-test
 
 Status 15. november 2026: separat APK bygget og serverforløb verificeret. Dette er

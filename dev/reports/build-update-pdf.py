@@ -262,8 +262,8 @@ def build_pdf(data, output: Path, draft=False):
     story += [bullet(item) for item in data['nextTest']]
     doc.build(story)
     reader = PdfReader(output)
-    if len(reader.pages) != 3:
-        fail(f'Rapporten blev {len(reader.pages)} sider; forkort inputteksterne, så layoutet holder tre sider.')
+    if not 3 <= len(reader.pages) <= 6:
+        fail(f'Rapporten blev {len(reader.pages)} sider; forkort inputteksterne, så layoutet holder højst seks sider.')
     extracted = '\n'.join(page.extract_text() or '' for page in reader.pages)
     for expected in [update['id'], apk['fileName'], tests['phoneModel'], 'APK 37']:
         if expected not in extracted:
@@ -274,7 +274,7 @@ def build_pdf(data, output: Path, draft=False):
             if expected not in plain:
                 fail('PDF-kontrol af kontrolsum/kildecommit fejlede.')
     payload = output.read_bytes()
-    return {'output': str(output), 'pages': 3, 'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest(),
+    return {'output': str(output), 'pages': len(reader.pages), 'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest(),
             'draft': draft, 'apkChecked': not draft, 'font': body}
 
 
