@@ -1,3 +1,7 @@
+## TEST41 — aktuel kampvisningstest
+
+647 tests består i den komplette kørsel. Retter Auto-detaljefald under pres, ekstra positionsfilter og boldrotationens kadence. APK/PDF findes i dev/artifacts med TEST41 i navnet. Samme testserver, certifikat og login; installér oven på Touchline TEST uden afinstallation. Ingen fysisk FPS- eller grafikverifikation. Test- og målebegrænsninger i test-evidence/render-TEST41-report.json.
+
 ## TEST40 — aktuel testudgave
 
 Asynkron gendannelse, synlig fremdrift og beskyttelse af gyldige optagelser. 643 tests bestod samlet, og afgrænsede genkørsler med én ny test giver 644 forskellige beståede tests. APK og PDF findes i dev/artifacts med TEST40 i filnavnet. Samme testlogin/server/certifikat. Installér oven på Touchline TEST uden afinstallation. Fysiske Android-målinger mangler. Måledata og begrænsninger: test-evidence/recovery-TEST40-*.

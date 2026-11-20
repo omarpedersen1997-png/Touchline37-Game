@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST41",
+    "title": "Rettelser direkte i kampvisningen",
+    "date": "2026-11-20",
+    "summary": "Tre konkrete problemer i renderloopet er rettet: detaljemodeller faldt ikke korrekt tilbage under belastning, ekstra positionsfiltrering gav slæbende bevægelser, og boldrotation blev kun opdateret ved fysikticks. Det er en målrettet visningsrettelse, ikke en erklæring om optimal ydelse eller FC-lignende grafik.",
+    "sourceCommit": "7171c1451163687146c22fd4e858117e50a41e2a"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor11-TEST41.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 41,
+    "versionName": "1.0.0-test-match1",
+    "bytes": 5151665,
+    "sha256": "a26aab0330fd378300f6d184098c1518032b9ed3e79dce088fe8ec495745614c",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor11-performance/dev/artifacts/Touchline37-Motor11-TEST41.apk"
+  },
+  "changes": [
+    {
+      "title": "Grafiktilpasningen reducerer faktisk belastning",
+      "detail": "Når Auto registrerer pres, vælges den lettere model nu også, hvis den tunge model allerede er bygget. Tidligere kunne den tunge model forblive aktiv. Teksturer og rig bevares; eksplicit Sharp beholder sit valg."
+    },
+    {
+      "title": "Fjern ekstra slæb på positioner",
+      "detail": "I motor 11 følger spiller- og boldpositioner den eksisterende subtick-forudsigelse uden endnu et lavpasfilter. Rotation og kamera beholder deres glidende overgange. Motor 1–10 beholder den tidligere positionsfiltrering."
+    },
+    {
+      "title": "Boldrotation ved skærmkadence",
+      "detail": "Rotation følger nu renderens tidsinterval frem for alene ændringen i fysikticks. Frysninger og replay-hold stopper stadig rotationen. Fysik og scoring ændres ikke."
+    }
+  ],
+  "tests": {
+    "passed": 647,
+    "note": "Alle 647 tests består i én samlet kørsel uden fejl eller overspring. Den sidste pausekontrol for boldrotation blev også genkørt målrettet. Fysisk FPS og visuel Android-kvalitet er ikke verificeret.",
+    "checks": [
+      "Konstant bevægelse følger den beregnede position uden det ekstra filter i motor 11.",
+      "Tidligere motorer beholder deres oprindelige filter.",
+      "Allerede oprettede detaljemodeller vælges fra under pres.",
+      "Boldens samlede rotation er ens ved 30, 60 og 120 renderbilleder/sekund; frysning bevares.",
+      "Motorfrysning, determinisme, gemning, auth, UI og produktionsisolering indgår i den fulde testkæde.",
+      "APK-signatur, version, ZIP/CRC og alle pakkede webfiler er verificeret."
+    ],
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false
+  },
+  "measurements": [
+    {
+      "label": "Ekstra positionsfilters forsinkelse",
+      "before": 33.88741302866228,
+      "after": 0,
+      "unit": "ms",
+      "note": "Analytisk ved konstant hastighed og 60 Hz. Kun dette filters forsinkelse; ikke målt touch-, skærm- eller netværkslatens."
+    },
+    {
+      "label": "TEST-APK størrelse",
+      "before": 5151505,
+      "after": 5151665,
+      "unit": "bytes",
+      "note": "TEST40 mod TEST41. Modelressourcer og spilregler bevares."
+    }
+  ],
+  "preserved": [
+    "APK 37 og den aktive hjemmeside er uændrede.",
+    "Motor 1–10 og original motor 11 samt gamle kampoptagelser bevares; nye R2-kampe bruger eksplicit revision.",
+    "Testappen bruger fortsat egen identitet og det isolerede testmiljø."
+  ],
+  "limitations": [
+    "Ingen tilsluttet fysisk Android-enhed. FPS, varme, touch, batteri og den oplevede glathed er stadig uverificerede.",
+    "Android-emulatorens hardwareacceleration er utilgængelig: /dev/kvm findes ikke. Ingen troværdig emulatorbaseret ydelsesmåling udføres.",
+    "Geometribudgettet i den separate JSON er beregnet fra GLB-filer. Det er hverken en GPU-måling eller et bevis for lagfri drift.",
+    "Spillermodeller, stadion, AI og fodboldregler er ikke omskrevet. Opdateringen lover ikke FC-lignende grafikkvalitet eller komplet realistisk gameplay.",
+    "Serveren er uændret. De tidligere hostede R2-kampkontroller er ikke gentaget ved denne visningsrettelse."
+  ],
+  "installSteps": [
+    "Åbn APK-linket i GitHub på telefonen, log ind og brug filens downloadknap.",
+    "Åbn filen og installér oven på Touchline TEST uden at afinstallere. Produktionsappen har et andet app-id.",
+    "Brug det eksisterende testlogin. PDF-rapporten indeholder ingen adgangskoder."
+  ],
+  "nextTest": [
+    "Installér TEST41 oven på Touchline TEST og afprøv en hel kamp i Auto på OnePlus Nord 4.",
+    "Kontrollér bevægelse, boldkontakt, replay og gemning. FPS kan ses i kampindstillingerne."
+  ]
+}
