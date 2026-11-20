@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST46",
+    "title": "Enklere kampoversigt og lettere navigation",
+    "date": "2026-11-20",
+    "summary": "TEST45 blev oplevet som klodset. Kampforsiden er erstattet af en enkel opstilling af de to hold, kampvalg og klubbens nøgletal. Navigation og faner har færre fyldte felter og mere diskrete skillelinjer. Den korte sidestruktur bevares. Dette er en layoutopdatering; kampmotor og data ændres ikke.",
+    "sourceCommit": "e7bceee31ae5f73f60a1d6ff8d66d719217e29de"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor11-TEST46.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 46,
+    "versionName": "1.0.0-test-refined1",
+    "bytes": 5055681,
+    "sha256": "60188d7cf7bacd8b7fc8fa5dda24763f2341f9f23020dee7e59fc2ccc77b0755",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/refined-2026/dev/artifacts/Touchline37-Motor11-TEST46.apk"
+  },
+  "changes": [
+    {
+      "title": "En direkte kampoversigt",
+      "detail": "MatchDesk viser de to holdmærker/navne, turnering, formation og kampvalg. Den store dekorative klubgrafik og gentagne slogan er fjernet fra appens kampfane. Reelle tal for styrke, fans og ligaplads står ved siden af."
+    },
+    {
+      "title": "Tekstfaner og slankere navigation",
+      "detail": "Store farvede fanefelter er erstattet af tekst med en diskret understregning. Venstremenuen er smallere. Kort, dialoger og Mere-menu har lettere indramning. Opgavefaner, fokusstyring og adgang til længere indhold bevares."
+    },
+    {
+      "title": "Spilunivers og login får færre bokse",
+      "detail": "Karriere, Europa, pokal og administrationsgenveje vises med roligere flader og færre indramninger. Login beholder sin logik, men får en åben formularflade. Logo, farveidentitet, fonte og brugerdata bevares."
+    },
+    {
+      "title": "Hjemmesiden bruger samme retning",
+      "detail": "De tre hovedfaner ligger i headerens plads, og seks emner vises på en let linje. Ydre præsentationskort er fjernet. Countdown, citat, illustrationer, direkte links og juridiske oplysninger bevares. Websitecommit: 8bd065d329d3e0610cd9920a57380540477f0d06."
+    }
+  ],
+  "tests": {
+    "passed": 683,
+    "note": "683 apptests og 83 separate hjemmesidetests består uden fejl eller oversprungne tests. Sidste stiljusteringer er kompileret uden CSS-advarsler og indgår i den verificerede APK. Der er ikke gennemført visuel browsergodkendelse eller fysisk Android-test.",
+    "checks": [
+      "Den nye kampoversigt bevarer begge callbacks og nøgletal; simulation viser faktisk stilling, mens manuel kamp ikke opfinder en serverstilling.",
+      "Genoptagelse, busy-status og spærring ved en igangværende manuel spillerkarrierekamp er testet.",
+      "Eksisterende kontroller af kampmotorer, determinisme, login, lagring, genveje og isoleret testmiljø består.",
+      "APK-signatur, version 46, test-app-id, ZIP/CRC og alle 11 pakkede webfiler er verificeret byte for byte.",
+      "Fire private hjemmesideruter svarer HTTP 200 og matcher kildefilerne. Website og app ligger på separate udviklingsbranches."
+    ],
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false
+  },
+  "measurements": [
+    {
+      "label": "TEST-APK størrelse",
+      "before": 5053653,
+      "after": 5055681,
+      "unit": "bytes",
+      "note": "TEST45 sammenlignet med TEST46. Denne layoutopdatering har ingen nye FPS-målinger; filstørrelsen siger ikke noget om fysisk telefonydelse."
+    }
+  ],
+  "preserved": [
+    "APK 37, tidligere testudgaver, eksisterende konti/data, gemte kampe og motor 1–10/original motor 11 bevares.",
+    "TEST45-optimeringer af replay, joystick, skærmmålinger og sparkrotationer er bevaret. Ingen ændringer af grafikniveau, kampregler eller serverversion 6.",
+    "playtouchline.dk, produktionsdatabase, DNS og main er uændret. Kun ejerens private hjemmesidepreview er opdateret."
+  ],
+  "limitations": [
+    "Udseendet er ikke visuelt godkendt i en browser. Desktopkapabiliteten findes, men understøttet browserstyring er ikke eksponeret i sessionen.",
+    "Fysisk Android-installation, touch, FPS, varme og batteri er ikke verificeret. Lagfri drift er ikke dokumenteret.",
+    "Længere lister og små skærmhøjder kræver fortsat rulning i den aktuelle opgave. Der er ingen nye verificerede 4K-skærmbilleder.",
+    "Previewen er ejerprivat og uden aktiv spil-, login- eller kontaktbackend. Den offentlige hjemmeside er ikke genudgivet."
+  ],
+  "installSteps": [
+    "Åbn APK-filen på GitHub, log ind og vælg downloadknappen.",
+    "Installér oven på Touchline TEST uden afinstallation. Samme test-app-id og testcertifikat bevares; APK 37 overskrives ikke.",
+    "Brug det eksisterende fiktive testlogin. Rapporten indeholder ingen adgangskoder.",
+    "Privat hjemmeside: https://touchline37-website-preview.glowingconch1.chatgpt.site — log ind med din ejeradgang."
+  ],
+  "nextTest": [
+    "Kontrollér den enklere kampoversigt, tekstfanerne og venstremenuen i bredformat på OnePlus Nord 4.",
+    "Afprøv begge kampformer, genoptagelse, trupvalg og spillerkarriere. Formularværdier skal bevares ved faneskift.",
+    "Kontrollér hjemmesidens Overblik, Spillet og Hjælp i smalt og bredt format. Visuel godkendelse mangler før offentlig udgivelse."
+  ]
+}
