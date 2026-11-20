@@ -1,0 +1,38 @@
+{
+  "origin": "https://touchline37-engine11-test.glowingconch1.chatgpt.site",
+  "handshake": {
+    "isolated": true,
+    "engine": 11,
+    "engineRevision": 2,
+    "environment": "touchline37-engine11-test"
+  },
+  "withoutSiteToken": true,
+  "startedAt": "2026-11-20T00:33:59.815Z",
+  "matches": [
+    {
+      "career": false,
+      "engine": 11,
+      "revision": 2,
+      "score": [
+        0,
+        0
+      ],
+      "saved": true,
+      "idempotent": true,
+      "realServerDurationMs": 250000
+    },
+    {
+      "career": true,
+      "engine": 11,
+      "revision": 2,
+      "score": [
+        0,
+        1
+      ],
+      "saved": true,
+      "idempotent": true,
+      "realServerDurationMs": 250000
+    }
+  ],
+  "finishedAt": "2026-11-20T00:38:23.375Z"
+}

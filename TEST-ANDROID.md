@@ -1,3 +1,7 @@
+## Aktuel status: TEST38 er online
+
+Testserverrevision 2 er nu udgivet og to fulde hostede kampe er verificeret. Den tidligere blokering nedenfor er løst. Se TEST38-ONLINE.md og den nye TEST38-online-PDF. APK-filen er uændret. Fysiske Android-målinger mangler stadig.
+
 ## TEST38 — 20. november 2026
 
 Ny signeret APK og PDF ligger i dev/artifacts. 633 forskellige tests består efter afgrænsede genkørsler; detaljer i test-evidence/performance-v38-tests.json. Opstart-JS er 981.350 bytes mod 4.571.948.

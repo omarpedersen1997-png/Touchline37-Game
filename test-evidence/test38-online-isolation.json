@@ -1,0 +1,30 @@
+{
+  "origin": "https://touchline37-engine11-test.glowingconch1.chatgpt.site",
+  "checkedAt": "2026-11-20T00:35:00.354Z",
+  "checks": [
+    {
+      "path": "/api/test-environment",
+      "status": 200
+    },
+    {
+      "path": "/api/game",
+      "status": 401
+    },
+    {
+      "path": "/internal/test-initialize",
+      "status": 404
+    },
+    {
+      "path": "/api/auth/login",
+      "status": 403
+    },
+    {
+      "path": "/api/contact",
+      "status": 403
+    },
+    {
+      "path": "/api/auth/capabilities",
+      "status": 200
+    }
+  ]
+}
