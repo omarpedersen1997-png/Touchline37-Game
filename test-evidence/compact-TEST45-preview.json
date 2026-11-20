@@ -1,0 +1,29 @@
+{
+  "origin": "https://touchline37-website-preview.glowingconch1.chatgpt.site",
+  "sourceCommit": "119de78b697bb89e82d3420ea1350ef8d3eee510",
+  "previewOnly": true,
+  "browserVisualVerified": false,
+  "checkedAt": "2026-11-20T05:55:48.279Z",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "a656bd75c1b1824195f6fbaa7cc4da74c39a9b8df4e3754f42a40a023eb2ef35"
+    },
+    {
+      "path": "/contact/",
+      "status": 200,
+      "sha256": "a656bd75c1b1824195f6fbaa7cc4da74c39a9b8df4e3754f42a40a023eb2ef35"
+    },
+    {
+      "path": "/privacy/",
+      "status": 200,
+      "sha256": "a656bd75c1b1824195f6fbaa7cc4da74c39a9b8df4e3754f42a40a023eb2ef35"
+    },
+    {
+      "path": "/delete-account/",
+      "status": 200,
+      "sha256": "a656bd75c1b1824195f6fbaa7cc4da74c39a9b8df4e3754f42a40a023eb2ef35"
+    }
+  ]
+}

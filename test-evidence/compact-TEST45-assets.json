@@ -1,0 +1,20 @@
+{
+  "initialJavaScriptBytes": 854741,
+  "allJavaScriptBytes": 1758995,
+  "initialModuleCount": 4,
+  "allModuleCount": 7,
+  "models": [
+    {
+      "file": "football-auto.glb",
+      "bytes": 675776,
+      "sha256": "debd22d542f381cc4b2a72ae1db89c89670c3f1b8f9c4d1ac1a6f6bab5cc0717"
+    },
+    {
+      "file": "football-pro.glb",
+      "bytes": 1369400,
+      "sha256": "d31843ec2e893e2e080f360010f9c380beb8f92fa85904b391b1770c2910c916"
+    }
+  ],
+  "noModelsAtLogin": true,
+  "noThreeAtLogin": true
+}

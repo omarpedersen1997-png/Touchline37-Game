@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST45",
+    "title": "Mindre rulning og mindre spild i kampvisningen",
+    "date": "2026-11-20",
+    "summary": "Appen er opdelt i skærmsider med faner frem for en lang indholdsliste. Navigation og opgaver bliver stående i bredformat, mens længere lister stadig kan rulle. Hjemmesiden har tre separate sider i den private preview. Kampvisningen genbruger beregninger og målinger og undgår replaybilleder, der ikke skal tegnes.",
+    "sourceCommit": "c36d66c549b262febb5f26df7773eeaec2531462"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor11-TEST45.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 45,
+    "versionName": "1.0.0-test-compact1",
+    "bytes": 5053653,
+    "sha256": "bf71584a49dd2c14e3cc36777228fc0c6a75107d2c93a4298e6ab4b318106d66",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/compact-2026/dev/artifacts/Touchline37-Motor11-TEST45.apk"
+  },
+  "changes": [
+    {
+      "title": "Én klubopgave ad gangen",
+      "detail": "Klubhuset har Kamp, Spilunivers, Stadion, Fans og Rejse. Overskrift og navigation bliver stående. Kun den valgte opgave ruller, og stadion oprettes først ved åbning."
+    },
+    {
+      "title": "Hold, karriere og udvikling opdeles",
+      "detail": "Holdet har Opstilling, Taktik og Trup & reserver. Karriere, liga, mål og faciliteter har egne faner. Formularer bevares ved faneskift. Login er mere kompakt; små højder og zoom bevarer adgang via rulning."
+    },
+    {
+      "title": "Tre hjemmesidesider",
+      "detail": "Overblik, Spillet og Kom i gang & hjælp erstatter den lange forside. Seks slides, direkte ankre, countdown og juridiske links bevares. Websitekilde: 119de78b697bb89e82d3420ea1350ef8d3eee510. Kun den private preview er opdateret."
+    },
+    {
+      "title": "Færre beregninger og layoutmålinger",
+      "detail": "Spark og tacklinger genbruger lokale akser og quaternion-objekter med samme rotationsresultat. Banens skærmhøjde måles ved resize i stedet for i hvert tegnet billede. Grafikopløsning og modeller er bevaret."
+    },
+    {
+      "title": "Replays og joystick uden gentaget arbejde",
+      "detail": "Målreplays beregner kun de billeder, som faktisk tegnes, inklusive det sidste billede. Ved 120 Hz/60 FPS falder samples fra 121 til 61 pr. sekund. Joysticket måles én gang pr. bevægelse i stedet for ved hvert touchpunkt."
+    }
+  ],
+  "tests": {
+    "passed": 680,
+    "note": "680 apptests består i hele testkæden, uden fejl eller oversprungne tests. Hjemmesiden har 83 beståede tests i sin separate kørsel. CPU-mikromålinger og operationstal beskriver afgrænset arbejde; de er ikke fysisk Android-FPS.",
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "checks": [
+      "Faner, tastatur, formularer, karrieregenveje og udsat stadion er testet sammen med motorer, determinisme, kampstart, login og lagring.",
+      "Animationens rotationslag matcher den tidligere beregning over 1.000 trin. Tests af faktiske fodsåler og bevægelse består.",
+      "600 tegnede billeder giver 0 løbende højdemålinger. 120 joystickpunkter giver 1 måling. Ved 120 Hz kræver replay 61 samples ved 60 FPS og 31 ved 30 FPS.",
+      "APK-signatur, testidentitet, ZIP/CRC og alle 11 pakkede webfiler er verificeret. Fire private websiteruter matcher kilden byte for byte."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "20.000 fodboldhandlingscyklusser",
+      "before": 9.201281999999992,
+      "after": 3.2525660000000016,
+      "unit": "ms",
+      "note": "Node CPU-mikrobenchmark: median af 9 runder efter opvarmning, samme sparkrotationer. Måler kun dette beregningslag; ikke GPU, telefon-FPS eller den samlede kamp."
+    },
+    {
+      "label": "TEST-APK størrelse",
+      "before": 5051161,
+      "after": 5053653,
+      "unit": "bytes",
+      "note": "TEST44 sammenlignet med TEST45. Den lille størrelsesændring dokumenterer ikke en ændring af telefonens ydelse."
+    }
+  ],
+  "preserved": [
+    "APK 37, alle tidligere testudgaver, gemte data, optagelser, logo, fonte og farveidentitet er bevaret.",
+    "Motor-/serverkilderne er uændrede fra TEST44. Motor 1–10 og original motor 11 er bevaret; ingen ny testserverudgivelse.",
+    "playtouchline.dk forbliver version 56. Ingen ændringer af produktionsdatabase, DNS eller main. TEST45 har samme separate app-id og testcertifikat."
+  ],
+  "limitations": [
+    "Fysisk installation, touch, FPS, varme og batteri er ikke målt på Android. Lagfri drift er ikke dokumenteret.",
+    "Browserbaseret visuel kontrol mangler. Automatiske tests og HTTP-kontrol beviser ikke layoutets faktiske udseende.",
+    "Lange lister, formularer og små højder kræver fortsat rulning. Ingen nye 3D-modeller eller verificerede 4K-screenshots; fysik, kameravinkel og serverprotokol er bevaret.",
+    "Previewen kræver ejeradgang og har ingen aktiv login-, kontakt- eller spilbackend. Den offentlige hjemmeside er ikke genudgivet."
+  ],
+  "installSteps": [
+    "Åbn APK-linket på GitHub, log ind, og vælg filens downloadknap.",
+    "Installér oven på Touchline TEST uden at afinstallere. APK 37 bruger en anden appidentitet og overskrives ikke.",
+    "Brug dit eksisterende fiktive testlogin og Auto-grafik. Rapporten indeholder ingen adgangskoder.",
+    "Privat hjemmeside: https://touchline37-website-preview.glowingconch1.chatgpt.site — brug din ejeradgang."
+  ],
+  "nextTest": [
+    "Afprøv hovedfaner i bredformat: kamp, trup, fans, stadion og spillerkarriere. Kontrollér, at input bevares ved faneskift.",
+    "Spil en hel kamp på OnePlus Nord 4. Afprøv joystick, spark, tacklinger, målreplay og resultatgemning; mål FPS på telefonen.",
+    "Kontrollér hjemmesidens tre sider, seks slides og direkte links i smal og bred visning før offentlig udgivelse."
+  ]
+}
