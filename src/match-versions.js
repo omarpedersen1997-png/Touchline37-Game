@@ -12,7 +12,7 @@ export function rememberServerMatchVersions(data) {
 }
 
 /** Den motorversion, appen beder om til en ny kamp. Uden oversigt antages motor 10. */
-export function requestedMatchVersion(clientLatest = LATEST_MATCH_VERSION) {
+export function requestedMatchVersion(clientLatest = typeof __TOUCHLINE_TEST_APP__!=='undefined'&&__TOUCHLINE_TEST_APP__?11:LATEST_MATCH_VERSION) {
   return chooseRequestedMatchVersion(serverInfo, clientLatest);
 }
 

@@ -200,3 +200,10 @@ test('testadapteren indgår ikke i produktionsbygningen eller motor 1–10', () 
   assert(!/(?<!async |\.)\bfetch\(/.test(adapter), 'adapteren laver ingen egne netværkskald');
   assert(!adapter.includes('CREATE TABLE') && !adapter.includes('INSERT INTO'), 'requesthandlers opretter intet skema eller testkonti');
 });
+
+for(const career of [false,true])test(`kickoff lead preserves full duration through the actual ${career?'career':'club'} adapter`,async t=>{
+ const f=await fixture(t);await f.game();
+ if(career)assert.equal((await f.game({id:'kickoff-player',type:'player-career-create',name:'Testspiller',position:'ANG',journeyVersion:1})).status,200);
+ const before=Date.now();const response=await f.game({id:'kickoff-start',type:career?'player-career-match':'match',control:'manual',manualVersion:11,kickoffLeadMs:8000},{headers:{'X-Touchline-Test-Engine-Revision':'2'}});assert.equal(response.status,200);const data=await response.json(),active=career?data.state.playerCareer.active:data.state.active;
+ assert(active.started>=before+8000);assert.equal(active.ends-active.started,250000);assert.equal(active.manual.kickoffLeadMs,8000);assert.equal(active.manual.expiresAt,active.ends+86400000);
+});

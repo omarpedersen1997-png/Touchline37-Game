@@ -11,7 +11,8 @@ export function createManualChallenge(config,now){
  const version=configMatchVersion(config);
  if(version===11&&config.engineRevision!==undefined&&![1,2].includes(config.engineRevision))throw new GameError('Kamprevisionen understøttes ikke.');
  const rules=getArcadeRules(version,config.engineRevision);
- return {version,seed:crypto.randomUUID(),duration:rules.DURATION_MS,inputCount:rules.INPUT_COUNT,expiresAt:now+rules.DURATION_MS+(version>=6?MANUAL_RECOVERY_MS:MANUAL_GRACE_MS),recoveryWindow:1,config:structuredClone(config)};
+ const kickoffLeadMs=version===11&&config.kickoffLeadMs===8000?8000:0;now+=kickoffLeadMs;
+ return {...(kickoffLeadMs?{kickoffLeadMs}:{}),version,seed:crypto.randomUUID(),duration:rules.DURATION_MS,inputCount:rules.INPUT_COUNT,expiresAt:now+rules.DURATION_MS+(version>=6?MANUAL_RECOVERY_MS:MANUAL_GRACE_MS),recoveryWindow:1,config:structuredClone(config)};
 }
 export function playManualReplay(active,action,now){
  if(!active?.manual||active.id!==action.matchId)throw new GameError('Den spillede kamp er ikke længere aktiv.');
@@ -32,7 +33,7 @@ export function manualForfeit(active){
  delete active.penalties;
 }
 export function prepareClubManual(active,config,now){
- active.manual=createManualChallenge(config,now);active.control='manual';active.ends=now+active.manual.duration;
+ active.manual=createManualChallenge(config,now);active.control='manual';active.started=now+(active.manual.kickoffLeadMs||0);active.ends=active.started+active.manual.duration;
  active.home=0;active.away=0;active.events=[];active.reward=0;
  delete active.cupWon;delete active.europeWon;delete active.penalties;
  return active;
