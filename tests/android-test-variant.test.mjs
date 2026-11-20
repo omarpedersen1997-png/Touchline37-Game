@@ -79,7 +79,8 @@ test('den native bro tager serveren fra BuildConfig og afviser, når testappen e
   assert(!plugin.includes(PRODUCTION_API), 'ingen fast produktionsadresse i broen');
   assert(plugin.includes('TouchlineEndpoint.resolve(BuildConfig.TOUCHLINE_API, BuildConfig.TOUCHLINE_TEST_BUILD)'));
   assert(plugin.includes('if (API == null) {'));
-  assert(plugin.indexOf('if (API == null)') < plugin.indexOf('queue.execute'), 'spærren virker før der åbnes en forbindelse');
+  const scheduling = plugin.search(/queue\.(?:execute|submit)\(/);
+  assert(scheduling >= 0 && plugin.indexOf('if (API == null)') < scheduling, 'spærren virker før der åbnes en forbindelse');
 });
 
 test('JVM: TouchlineEndpoint spærrer alle produktionsadresser for testappen', () => {
