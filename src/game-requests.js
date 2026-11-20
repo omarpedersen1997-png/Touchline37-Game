@@ -33,8 +33,8 @@ export function createGameRequests(){
 }
 
 /** One foreground scheduler replaces overlapping idle, club and career poll intervals. */
-export function gamePollDelay({hidden=false,clubMatch=null,careerTask=null}={}){
- if(hidden)return null;
+export function gamePollDelay({hidden=false,manualCovered=false,clubMatch=null,careerTask=null}={}){
+ if(hidden||manualCovered)return null;
  return clubMatch&&!clubMatch.manual||careerTask?.kind==='match'&&!careerTask.manual?2000:10000;
 }
 

@@ -63,3 +63,5 @@ test('starting a write prevents an older queued refresh from fetching at all',as
 });
 
 test('critical save errors reach the match, ordinary failures notify once and stale-account errors do neither',()=>{const error=Error('Native request failed');let notices=0;const notify=()=>notices++;assert.throws(()=>handleGameActionFailure(error,{current:true,critical:true,notify}),e=>e===error);assert.equal(notices,0);handleGameActionFailure(error,{current:true,notify});assert.equal(notices,1);handleGameActionFailure(error,{current:false,critical:true,notify});assert.equal(notices,1);});
+
+test('manual match view suspends background polling but leaving it resumes normal refresh',()=>{assert.equal(gamePollDelay({manualCovered:true}),null);assert.equal(gamePollDelay({manualCovered:false}),10000);assert.equal(gamePollDelay({manualCovered:true,clubMatch:{manual:true}}),null)});
