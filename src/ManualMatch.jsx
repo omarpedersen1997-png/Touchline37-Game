@@ -6,7 +6,7 @@ import{createMatchFramePacer}from'./match-frame-pacer.js';
 import{matchRenderBudget}from'./match-render-budget.js';
 import{createIdleMatchSave}from'./match-scheduling.js';
 import{CLUB_COLORS,ClubBadge}from'./ClubStudio.jsx';
-import{createManualSession}from'./manual-session.js';
+import{createManualSessionAsync}from'./manual-session.js';
 import{localMatchStorage,readMatchPreferences,saveMatchPreferences,matchControlMask,isMatchShortcut}from'./manual-preferences.js';
 import{enterMatchDisplay,exitMatchDisplay}from'./match-display.js';
 import{saveManualRecording,manualRetryDelay}from'./manual-save.js';
@@ -23,6 +23,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  const settingsButton=useRef(null),settingsPanel=useRef(null),helpPanel=useRef(null),rotatePanel=useRef(null),inputBlocked=useRef(false),overlayState=useRef({});
  const commands=useRef([]),saveWork=useRef(null),replays=useRef(null);if(!replays.current)replays.current=createGoalReplayBuffer();
  const[clips,setClips]=useState([]),[replayClip,setReplayClip]=useState(null),[replayRun,setReplayRun]=useState(0);
+ const[recoveryProgress,setRecoveryProgress]=useState(null);
  const[resolution,setResolution]=useState(null),[frameStats,setFrameStats]=useState(null),[saveState,setSaveState]=useState({phase:'idle',attempt:0,retryAt:0});
  const[view,setView]=useState(preferences.view),[quality,setQuality]=useState(preferences.quality),[mode,setMode]=useState('3d'),[sceneLoading,setSceneLoading]=useState(live),[hud,setHud]=useState({home:0,away:0,seconds:duration,energy:100,radar:[],controlled:0,ball:{x:0,y:0},possession:'home'}),[showField]=useState(live),[complete,setComplete]=useState(false),[error,setError]=useState(''),[goal,setGoal]=useState(''),[help,setHelp]=useState(false),[settingsOpen,setSettingsOpen]=useState(false);
  const[portrait,setPortrait]=useState(()=>typeof window!=='undefined'&&!!window.matchMedia?.('(orientation: portrait)').matches);
@@ -78,12 +79,13 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  useEffect(()=>{
   if(!match.manual||!showField)return;
   let disposed=false,raf=0,lastHud=0,lastSave=0,lastHudCount=-1,lastSavedCount=-1,lastGoalPhase=null,lastGoalTick=null,scene;
+  const initialization=new AbortController();
   const host=canvas.current,drawDue=createMatchFramePacer(matchRenderBudget(version,quality).targetFps||30),saves=createIdleMatchSave({save:()=>session.current?.save()});saveWork.current=saves;
   const lost=e=>{e.preventDefault();setQuality('simple');};
-  setSceneLoading(true);setError('');setResolution(null);setFrameStats(null);
+  setSceneLoading(true);setRecoveryProgress(null);setError('');setResolution(null);setFrameStats(null);
   const start=async()=>{
    try{
-    session.current||=createManualSession(match,{storage:localMatchStorage(),now:time()});
+    if(!session.current){const restored=await createManualSessionAsync(match,{storage:localMatchStorage(),now:time(),signal:initialization.signal,onProgress:value=>{if(!disposed)setRecoveryProgress(value);}});if(disposed)return;session.current=restored;}setRecoveryProgress(null);
     const {createMatchScene,prepareMatchSceneAssets}=await import('./manual-scene.js');
     await prepareMatchSceneAssets({version,quality});
     if(disposed)return;
@@ -113,7 +115,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
    }catch(e){if(!disposed){setSceneLoading(false);setError(e.message||'Kampvisningen kunne ikke åbnes. Prøv enkel grafik.');}}
   };
   start();
-  return()=>{disposed=true;cancelAnimationFrame(raf);saves.flush();saves.dispose();if(saveWork.current===saves)saveWork.current=null;host?.removeEventListener('webglcontextlost',lost,true);if(sceneRef.current===scene)sceneRef.current=null;scene?.dispose();};
+  return()=>{disposed=true;initialization.abort();cancelAnimationFrame(raf);saves.flush();saves.dispose();if(saveWork.current===saves)saveWork.current=null;host?.removeEventListener('webglcontextlost',lost,true);if(sceneRef.current===scene)sceneRef.current=null;scene?.dispose();};
  },[match.id,quality,live]);
  const submit=async(manual=false)=>{
   if(sending.current||busy||!live||!session.current?.complete)return;
@@ -146,7 +148,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
   {showField&&<div className="manual-viewport"><div className="manual-field" ref={canvas} tabIndex={blocked?-1:0} onPointerDown={event=>{if(!inputBlocked.current)event.currentTarget.focus();}} aria-disabled={blocked} aria-label={mode==='3d'?'Spilbar 3D-fodboldbane':'Spilbar bane med enkel grafik'}/><div className="manual-radar-wrap"><svg className="manual-radar" viewBox="0 0 108 70" role="img" aria-label="Minikort over spillere og bold"><rect x="4" y="4" width="100" height="62" rx="1"/><path d="M54 4v62M4 20h15v30H4M104 20H89v30h15M4 27h6v16H4M104 27h-6v16h6"/><circle cx="54" cy="35" r="8" className="radar-circle"/>{hud.radar.map((p,i)=><circle key={i} cx={54-p.y*radarScale} cy={35+p.x*radarScale} r={p.active?2.2:1.6} className={p.active?'active':p.team}/>)}<circle cx={54-hud.ball.y*radarScale} cy={35+hud.ball.x*radarScale} r="1.7" className="ball"/></svg></div><div className="manual-player-indicator"><i aria-hidden="true"/><span>{personal?'Din spiller':`Spiller ${hud.controlled+1}`}<small>{hud.possession==='home'?'I boldbesiddelse':hud.possession==='away'?'Forsvar':'Fri bold'}</small></span><b aria-hidden="true">{String(hud.controlled+1).padStart(2,'0')}</b><progress value={hud.energy} max="100" aria-label="Spillerens energi"/></div></div>}
   {modern&&live&&!complete&&hud.charge>0&&<div className="manual-power" role="status"><span>{hud.chargeKind}</span><progress value={hud.charge} max="1" aria-label={hud.chargeKind}/><small>Slip knappen</small></div>}
   {modern&&live&&hud.restart&&<div className="manual-restart" role="status">{{'throw-in':'INDKAST',corner:'HJØRNESPARK','goal-kick':'MÅLSPARK'}[hud.restart]}</div>}
-  {sceneLoading&&showField&&<p className="manual-loading" role="status"><i aria-hidden="true"/>Banen gøres klar…</p>}
+  {sceneLoading&&showField&&<p className="manual-loading" role="status"><i aria-hidden="true"/>{recoveryProgress!==null&&recoveryProgress<100?`Gendanner kampen… ${recoveryProgress}%`:'Banen gøres klar…'}</p>}
   {showField&&<><div className="manual-menu-scrim" hidden={!settingsOpen} onClick={closeSettings}/><div id="manual-settings" ref={settingsPanel} tabIndex={-1} className="manual-settings" hidden={!settingsOpen||help} role="dialog" aria-modal={settingsOpen?true:undefined} aria-labelledby="manual-settings-title"><div className="manual-panel-heading"><div><span className="eyebrow">KAMPVISNING</span><h3 id="manual-settings-title">Indstillinger</h3></div><button onClick={closeSettings} aria-label="Luk kampindstillinger"><X size={19}/></button></div><div className="manual-toolbar"><label><span>Kamera</span><button disabled={mode==='simple'} onClick={changeCamera} aria-label="Skift kampkamera"><Camera size={18}/>{view==='pro'?'TV Pro':view==='broadcast'?'TV-kamera':view==='follow'?'Nærkamera':'Hele banen'}<RotateCcw size={14}/></button></label><label><span>Grafik</span><select aria-label="Grafikkvalitet" value={quality} onChange={e=>setQuality(e.target.value)}><option value="auto">Automatisk 3D</option><option value="sharp">Skarp 3D</option><option value="4k">4K · Ultra</option><option value="simple">Enkel</option></select></label><button className="manual-help-toggle" onClick={()=>setHelp(true)} aria-expanded={help}>Styring og kampregler<ArrowUpRight size={18}/></button></div>{version>=8&&live&&!complete&&<section className="match-tactics" aria-label="Kampplan"><h4>Din kampplan</h4><p>Kampuret fortsætter. Valgene gælder denne kamp.</p><div className="match-tactic-options">{[['balanced','Balanceret'],['attacking','Offensiv'],['defensive','Defensiv']].map(([key,label])=><button type="button" key={key} aria-pressed={(hud.tactic||match.manual.config.tactic||'balanced')===key} onClick={()=>chooseTactic(commandForTactic(key))}>{label}</button>)}</div><label>Formation<select aria-label="Skift formation under kampen" value={hud.formation||match.manual.config.formation||'4-3-3'} onChange={e=>chooseTactic(commandForFormation(e.target.value))}>{['4-3-3','4-4-2','3-5-2','4-5-1'].map(shape=><option key={shape}>{shape}</option>)}</select></label><small>Aktiv plan: {{balanced:'Balanceret',attacking:'Offensiv',defensive:'Defensiv'}[hud.tactic||match.manual.config.tactic||'balanced']} · {hud.formation||match.manual.config.formation||'4-3-3'}</small></section>}{gameStats&&<details className="match-live-statistics"><summary>Kampstatistik</summary><MatchStatistics stats={gameStats} club={club} opponent={match.opponent} personal={personal}/></details>}{resolution&&<p className="manual-render-status" role="status">{matchResolutionLabel(resolution)}{frameStats&&<span aria-live="off"> · {frameStats.fps} FPS</span>}</p>}<p className="manual-menu-clock">Kampuret fortsætter, mens menuen er åben.</p><button className="manual-return" onClick={closeSettings}>Tilbage på banen<ArrowUpRight size={17}/></button></div></>}
   {version>=6&&hud.pause>0&&live&&<div className="manual-halftime" role="status"><b>PAUSE · 45:00</b><span>Anden halvleg starter om {Math.ceil(hud.pause/1000)} sek.</span><small>Hver halvleg varer to minutter.</small>{version>=8&&<button className="match-half-plan" onClick={()=>setSettingsOpen(true)}>Tilpas kampplan</button>}</div>}
   {version>=10&&live&&!complete&&!halftime&&!settingsOpen&&!help&&!replayClip&&<GoalMoment goal={hud.goalMoment} home={hud.home} away={hud.away} club={club} opponent={match.opponent}/>}
