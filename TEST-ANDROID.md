@@ -1,3 +1,7 @@
+## TEST42 — aktuel testudgave
+
+Formularer med single-flight/abort, forbedret dialogfokus, skærmmeddelelser, læsbarhed og korrekt testversionsvisning fra samme manifest som Android. 660 apptests og 81 websitetests består. Privat hjemmeside: https://touchline37-website-preview.glowingconch1.chatgpt.site — offentlige playtouchline.dk er ikke genudgivet. APK og PDF findes i dev/artifacts med TEST42 i navnet. Opdatér oven på Touchline TEST uden afinstallation og brug samme testlogin. Fysisk Android- og browserbaseret visuel kontrol mangler stadig.
+
 ## TEST41 — aktuel kampvisningstest
 
 647 tests består i den komplette kørsel. Retter Auto-detaljefald under pres, ekstra positionsfilter og boldrotationens kadence. APK/PDF findes i dev/artifacts med TEST41 i navnet. Samme testserver, certifikat og login; installér oven på Touchline TEST uden afinstallation. Ingen fysisk FPS- eller grafikverifikation. Test- og målebegrænsninger i test-evidence/render-TEST41-report.json.
