@@ -11,7 +11,7 @@ test('the real modern career exposes plans, personal objectives, fitness and ear
  const html=screen(make(),0);
  for(const text of ['Trænerens tillid','100 energi','Hvilket aftryk','Spil for holdet','Tag initiativet','Træneren regner med dig','Bliv en fast del','Restituér','Udviklingsspiller','Fast starter','Nøglespiller','Genveje til spillerkarrieren'])assert(html.includes(text),text);
  for(const id of ['pc-gameplan-title','pc-objectives-title','pc-training-title','pc-contracts-title']){
-  assert(html.includes(`id="${id}"`));assert(html.includes(`href="#${id}"`));
+  assert(html.includes(`id="${id}"`));const page=({'pc-gameplan-title':'plan','pc-objectives-title':'plan','pc-training-title':'training','pc-contracts-title':'contracts'})[id];assert(html.includes(`aria-controls="career-desk-${page}-panel"`));
  }
  assert.equal((html.match(/name="career-gameplan"/g)||[]).length,3);
  const ids=[...html.matchAll(/ id="([^"]+)"/g)].map(m=>m[1]);assert.equal(new Set(ids).size,ids.length);

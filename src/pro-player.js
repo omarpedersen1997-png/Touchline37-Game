@@ -1,3 +1,4 @@
+import{createFootballSwing}from'./football-swing.js';
 import motion from'../assets/game/football-motion.json' with{type:'json'};
 import * as THREE from 'three';
 import{GLTFLoader}from'three/addons/loaders/GLTFLoader.js';
@@ -8,7 +9,6 @@ import{createPlayerGrounding}from'./player-grounding.js';
 import{isGoalCelebrant}from'./goal-presentation.js';
 const detailUrl=typeof __PRO_PLAYER_URL__!=='undefined'?__PRO_PLAYER_URL__:null,autoUrl=typeof __PRO_PLAYER_AUTO_URL__!=='undefined'?__PRO_PLAYER_AUTO_URL__:detailUrl;
 let template=null;const templates={},pending={};
-const axes={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
 const detailKey=quality=>quality==='sharp'||quality==='4k'?'detail':'auto';
 export async function preloadFootballPlayers(quality='auto'){
  const key=detailKey(quality);if(templates[key])return templates[key];const url=key==='auto'?autoUrl:detailUrl;
@@ -25,8 +25,7 @@ export function createFootballPlayer({color='#c1f66b',number=1,shadow=false,keep
  const labelCanvas=document.createElement('canvas');labelCanvas.width=256;labelCanvas.height=128;const c=labelCanvas.getContext('2d');c.fillStyle='rgba(10,27,38,.85)';c.fillRect(69,20,118,86);c.fillStyle='#f1f7ed';c.textAlign='center';c.font='bold 68px sans-serif';c.fillText(String(number),128,89);const labelMap=new THREE.CanvasTexture(labelCanvas);labelMap.colorSpace=THREE.SRGBColorSpace;const label=new THREE.Sprite(new THREE.SpriteMaterial({map:labelMap,depthTest:false,sizeAttenuation:false}));label.scale.set(.038,.019,1);label.position.set(0,2.13,0);model.add(label);
  const back=document.createElement('canvas');back.width=192;back.height=256;const ink=back.getContext('2d');ink.textAlign='center';ink.font='bold 158px sans-serif';ink.strokeStyle='#15252e';ink.lineWidth=6;ink.fillStyle='#f4f7ec';ink.strokeText(String(number),96,196);ink.fillText(String(number),96,196);const backMap=new THREE.CanvasTexture(back);backMap.colorSpace=THREE.SRGBColorSpace;const jersey=new THREE.Mesh(new THREE.PlaneGeometry(.24,.3),new THREE.MeshBasicMaterial({map:backMap,transparent:true,depthWrite:false}));jersey.position.set(0,1.38,-.145);jersey.rotation.y=Math.PI;model.add(jersey);
  human.scale.y=1+(number%3-1)*.015;
- const restParentAxis=(name,axis)=>axes[axis].clone().applyQuaternion(parentRest.get(name)?.clone().invert()||new THREE.Quaternion());
- const swing=(name,x=0,y=0,z=0)=>{const bone=bones[name];if(!bone)return;const delta=new THREE.Quaternion();for(const[axis,value]of[['x',x],['y',y],['z',z]])if(value)delta.multiply(new THREE.Quaternion().setFromAxisAngle(restParentAxis(name,axis),value));bone.quaternion.copy(base.get(name)).premultiply(delta);};
+ const swing=createFootballSwing(bones,base,parentRest);
  model.userData={professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey};
  configureMatchTextures(model,anisotropy);
  return model;

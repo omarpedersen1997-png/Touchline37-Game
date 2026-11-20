@@ -13,5 +13,7 @@ export function careerHeader(state,tab,clubBalance){
 
 export function focusCareerSection(id){
  const target=document.getElementById(id);if(!target)return;
- target.scrollIntoView({block:'start'});target.tabIndex=-1;target.focus({preventScroll:true});
+ document.dispatchEvent(new CustomEvent('touchline:reveal-section',{detail:{id}}));
+ const focus=()=>{target.scrollIntoView({block:'nearest'});target.tabIndex=-1;target.focus({preventScroll:true});};
+ if(typeof requestAnimationFrame==='function')requestAnimationFrame(focus);else focus();
 }
