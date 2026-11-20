@@ -1,0 +1,1 @@
+import{build}from'esbuild';import{spawnSync}from'node:child_process';await build({entryPoints:['tests/game-lobby.test.jsx'],bundle:true,platform:'node',format:'esm',packages:'external',loader:{'.webp':'dataurl'},outfile:'outputs/tests/game-lobby.mjs'});const r=spawnSync(process.execPath,['outputs/tests/game-lobby.mjs'],{stdio:'inherit'});if(r.status)process.exit(r.status);

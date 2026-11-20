@@ -1,3 +1,4 @@
+import StadiumIllustration from './StadiumIllustration.jsx';
 import {useFormRequest} from './use-form-request.js';
 import RecoveryAccess from './RecoveryAccess.jsx';
 import{TouchlineMark}from'./TouchlineBrand.jsx';
@@ -19,7 +20,7 @@ export default function AuthScreen({onAuthenticated,checking=false,connectionErr
  const editEmail=()=>{setStep('email');setPassword('');setConfirm('');setError('')};
  useEffect(()=>{const back=e=>{if(formRequest.pending){e.preventDefault();return;}if(step==='password'){e.preventDefault();editEmail()}else if(mode!=='login'){e.preventDefault();choose('login')}};window.addEventListener('touchline:back',back);return()=>window.removeEventListener('touchline:back',back)},[mode,step]);
  async function submit(e){e.preventDefault();if(busy||formRequest.pending||access.testEnvironment&&mode!=='login')return;if(step==='email'){setEmail(email.trim());setError('');setStep('password');return}if(mode==='signup'&&password!==confirm){setError('De to adgangskoder skal være ens.');return}setBusy(true);setError('');try{const reply=await formRequest.request('/api/auth/'+(mode==='signup'?'register':'login'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});if(!reply)return;const{response:r,data:d}=reply;if(!r.ok)throw Error(d.error||'Kunne ikke logge ind.');setPassword('');setConfirm('');onAuthenticated(d.user)}catch(e){setError(e.message||'Ingen forbindelse. Prøv igen.')}finally{setBusy(false)}}
- return <div className={'auth-page'+(mode==='mail'?' auth-recovery':'')}>
+ return <div className={'auth-page stadium-auth'+(mode==='mail'?' auth-recovery':'')}>
   <header className="auth-top">
    <a className="brand" href={gameHome} aria-label="Touchline forside"><TouchlineMark size={44}/><div>touchline<span>FOOTBALL IDLE</span></div></a>
    {!access.testEnvironment&&<a className="auth-support-link" href={documentLink(publisher.contactPath)}>Hjælp & support<ArrowRight size={15}/></a>}
@@ -29,10 +30,7 @@ export default function AuthScreen({onAuthenticated,checking=false,connectionErr
     <span className="eyebrow"><span className="tiny-line"/>Fra lokal til legende.</span>
     <h1 id="auth-story-title">Din klub.<br/>{' '}Dit næste <em>kapitel.</em></h1>
     <p>Et lille stadion. Et hold med store drømme.<br/>Resten af historien er din.</p>
-    <div className="auth-stadium" aria-hidden="true">
-     <div className="auth-pitch"><div className="auth-pitch-circle"/>{[[17,68],[38,72],[62,72],[83,68],[24,45],[50,48],[76,45],[24,22],[50,17],[76,22],[50,88]].map(([x,y],i)=><span className={i===10?'gold':''} key={i} style={{left:x+'%',top:y+'%'}}>{[2,4,5,3,6,8,10,7,9,11,1][i]}</span>)}</div>
-     <div className="auth-stadium-caption"><span>DIT KLUBHUS ER ÅBENT</span><b>11 spillere. Én fælles drøm.</b></div>
-    </div>
+    <div className="auth-stadium" aria-hidden="true"><StadiumIllustration/></div>
     <div className="auth-features"><span><Users size={17}/>Byg dit hold</span><span><TrendingUp size={17}/>Udvikl din klub</span><span><Trophy size={17}/>Spil dig til toppen</span></div>
    </section>
    <section className="auth-card panel" aria-labelledby="auth-title">
