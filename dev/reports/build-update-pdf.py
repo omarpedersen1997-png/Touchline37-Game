@@ -206,7 +206,7 @@ def build_pdf(data, output: Path, draft=False):
         canvas.setFont(body, 7.5)
         canvas.setFillColor(MUTED)
         canvas.drawString(18 * mm, 10 * mm, 'Kun test · APK 37 og aktiv hjemmeside bevares')
-        canvas.drawRightString(A4[0] - 18 * mm, 10 * mm, f'Side {doc.page} / 3')
+        canvas.drawRightString(A4[0] - 18 * mm, 10 * mm, f'Side {doc.page}')
         canvas.restoreState()
 
     output.parent.mkdir(parents=True, exist_ok=True)
