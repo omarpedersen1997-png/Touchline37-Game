@@ -1,0 +1,21 @@
+{
+  "game": {
+    "tests": 688,
+    "pass": 688,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "website": {
+    "tests": 84,
+    "pass": 84,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "gameSourceCommit": "8727accd168a2afe97e4dc14d9f4152a0fef073c",
+  "websiteSourceCommit": "4c9890933d2e2a928ca6765a822b475c5ca2f7d8",
+  "browserVerified": false,
+  "physicalAndroidVerified": false,
+  "websiteDeployed": false
+}

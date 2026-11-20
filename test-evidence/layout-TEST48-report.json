@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST48",
+    "title": "Rettelse af sammenpresset lobby og skævt websitelayout",
+    "date": "2026-11-20",
+    "summary": "Brugerens billeder viser reelle layoutfejl i TEST47. Denne udviklingskopi retter den skjulte kluboverskrift og gør lobbyens rækker eksplicitte. Hjemmesidens stadion får faste proportioner, udgivelsesfeltet slipper for gamle kortbegrænsninger, og navigationen flyttes ind i den faktiske header. Fuld visuel browserkontrol er endnu ikke udført.",
+    "sourceCommit": "8727accd168a2afe97e4dc14d9f4152a0fef073c"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor11-TEST48.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 48,
+    "versionName": "1.0.0-test-layout1",
+    "bytes": 5055621,
+    "sha256": "7c6d6fda821112e9be6d06a50558c746d1d811d059f09eac7c94dcedeb33cd25",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/layout-repair-48/dev/artifacts/Touchline37-Motor11-TEST48.apk"
+  },
+  "changes": [
+    {
+      "title": "Kluboverskrift og rækker i lobbyen",
+      "detail": "En ældre regel skjulte elementer med app-page-heading på klubforsiden. Lobbyheaderen havde arvet denne klasse. Klassen er fjernet, og header, spilområder og genveje er placeret eksplicit i række 1, 2 og 3. Genvejenes højde er afgrænset til 44 CSS-pixel."
+    },
+    {
+      "title": "Fokus ved navigation",
+      "detail": "Ved skift til klubforsiden kan fokus nu finde den selvstændige lobbyoverskrift. De eksisterende handlinger til kampstart, karriere, turneringer og klubgenveje bevares."
+    },
+    {
+      "title": "Stadion med naturlige proportioner",
+      "detail": "Hjemmesidens illustration følger nu 24:13 i stedet for at udfylde en høj viewport-række. Hero og tekst bruger egne klasser, så gamle hero-regler ikke strækker layoutet. Websitecommit: 4c9890933d2e2a928ca6765a822b475c5ca2f7d8."
+    },
+    {
+      "title": "Nedtælling og header",
+      "detail": "Forsidens udgivelseslinje har en separat release-rail-variant uden det gamle launch-panel-korts maxbredde, margen og polstring. De tre hovedfaner er nu i headerens almindelige layout frem for absolut placeret hen over en anden header. ARIA-koblinger og tastaturskift bevares."
+    }
+  ],
+  "tests": {
+    "passed": 688,
+    "note": "Hele spillets testsuite: 688 bestået. Website: 84 bestået; berørte UI-tests er også genkørt efter skærpet navigationsassertion. Ingen fejl, annulleringer eller oversprungne tests. Disse tests beviser funktion og build, men ikke et visuelt fejlfrit layout.",
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "checks": [
+      "Eksisterende motor-, determinisme-, autentifikations-, lagrings-, native- og isolationskontroller består. Ingen ændringer i shared/, worker/ eller Android-kilder siden TEST47.",
+      "Websitekontrol sikrer præcis én hovednavigation i headeren, entydige faner og paneler samt fortsat spærring af spil/download før serverbekræftet åbning.",
+      "Android-build: assembleTouchlineTest består. Signatur, test-app-id, versionskode 48 og ZIP/CRC er verificeret. Alle 11 pakkede webfiler matcher det endelige assetbuild.",
+      "Testcertifikat SHA-256: bf6991c47983d125ef70a285da1a3cd9c7128f11b1e831a64b21af565abb0069. Original APK 37 matcher fortsat sin tidligere SHA-256."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "APK-størrelse",
+      "before": 5055573,
+      "after": 5055621,
+      "unit": "bytes",
+      "note": "TEST47 mod TEST48. Layoutrettelsen giver ingen dokumenteret FPS-forbedring. Der er ikke udført nye fysiske Android-performance-målinger."
+    }
+  ],
+  "preserved": [
+    "APK 37, tidligere testudgaver, motor 1–10 og motor 11, gameplay, konti og gemte data er bevaret.",
+    "Testappen bruger samme separate testidentitet og faste testserver. Produktionen, playtouchline.dk, DNS og databasen er ikke ændret.",
+    "Begge rettelser ligger på nye udviklingsbrancher. Ingen merge til main og ingen ny website-deployment i denne opdatering."
+  ],
+  "limitations": [
+    "Hele layoutet er endnu ikke visuelt verificeret i browseren. En direkte Chromium-kontrol afventer brugerens tilladelse til en undtagelse fra Sites-vejledningen, fordi den foreskrevne browserstyring ikke er tilgængelig.",
+    "Fysisk installation, Android-touch, FPS, varme og batteri er ikke verificeret. APK-signaturkontrol er ikke en installationstest.",
+    "Den private websitepreview viser fortsat den tidligere version. De nye websitefiler er gemt på udviklingsbranchen; ingen genudgivelse er foretaget.",
+    "Den bredere hook-/backend-refaktorering fra kodegennemgangen er ikke blandet ind i denne afgrænsede layoutrettelse."
+  ],
+  "installSteps": [
+    "Åbn APK-linket på GitHub, log ind, og tryk på downloadknappen.",
+    "Installér oven på Touchline TEST uden at afinstallere. Testcertifikat og app-id er bevaret; produktionsappen APK 37 overskrives ikke.",
+    "Brug dit eksisterende fiktive testlogin. Del ingen adgangskoder i chatten."
+  ],
+  "nextTest": [
+    "Efter tilladelse: kontrollér faktisk layout, mål og klik i mobilbredde, desktoptilstand på højkant og appens bredformat.",
+    "Kontrollér lobbyoverskrift, begge kampknapper og alle tre spilområder; kontrollér stadionproportioner, separate countdowntal og klikbare headerfaner.",
+    "Kontrollér installation og opdatering på OnePlus Nord 4. Udgivelse og en påstand om fejlfrit layout kræver yderligere kontrol."
+  ]
+}
