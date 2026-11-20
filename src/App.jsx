@@ -100,9 +100,9 @@ export function App(){const[account,setAccount]=useState(null);const[authNotice,
  {status==='ready'&&!state.named&&<button className="welcome-strip" onClick={openName}><span>NY MANAGER</span> Gør klubben til din egen — vælg dit klubnavn.<ArrowRight size={16}/></button>}
  {['team','transfers','upgrades'].includes(tab)&&<ClubContext state={state} onRename={openName}/>}
  {tab==='club'&&<ClubHub state={state} money={displayMoney} now={now} rank={rank} busy={buttonDisabled} onPlay={()=>active?setMatchView(true):action({type:'match',control:'manual'})} onSimulate={()=>action({type:'match'})} onNavigate={navigate}/>}
- {tab==='club'&&<CompetitionProgress state={state} compact onNavigate={navigate}/>}
- {tab==='club'&&<ExpansionSummary state={state} now={now} onOpen={()=>setTab('center')}/>}
- {tab==='club'&&<ClubJourney state={state} busy={buttonDisabled} onClaim={key=>action({type:'claim',key})} onNavigate={missionNavigate} onNotice={tell}/>}
+ {tab==='club'&&<details className="console-secondary panel"><summary>Sæson & oprykning</summary><CompetitionProgress state={state} compact onNavigate={navigate}/></details>}
+ {tab==='club'&&<details className="console-secondary panel"><summary>Klubbens udvikling</summary><ExpansionSummary state={state} now={now} onOpen={()=>setTab('center')}/></details>}
+ {tab==='club'&&<details className="console-secondary panel"><summary>Mål, belønninger & managerrejse</summary><ClubJourney state={state} busy={buttonDisabled} onClaim={key=>action({type:'claim',key})} onNavigate={missionNavigate} onNotice={tell}/></details>}
  {tab==='upgrades'&&<Stadium venue={state.stadium} clubStyle={state.clubStyle}/>}
  {tab==='team'&&<><WorkspaceTabs id="team-workspace" label="Holdets områder" items={[{id:'lineup',label:'Opstilling'},{id:'tactics',label:'Taktik & trup'}]} selected={teamTab} onChange={setTeamTab}/><div className="dashboard-grid"><div className="main-column"><div className="app-workspace-panel" role="tabpanel" id="team-workspace-lineup-panel" aria-labelledby="team-workspace-lineup-tab" hidden={teamTab!=='lineup'} tabIndex={0}>{pitch}</div><div className="app-workspace-panel" role="tabpanel" id="team-workspace-tactics-panel" aria-labelledby="team-workspace-tactics-tab" hidden={teamTab!=='tactics'} tabIndex={0}>{tacticPicker}<TeamManagement state={{...state,money:displayMoney}} busy={buttonDisabled} onAction={action} onPlayer={p=>setModal({player:p})}/></div></div><div className="right-column">{match}<CompetitionProgress state={state} compact onNavigate={navigate}/>{income}</div></div></>}
 

@@ -1,0 +1,1 @@
+import{build}from'esbuild';import{spawnSync}from'node:child_process';await build({entryPoints:['tests/console-home.test.jsx'],bundle:true,platform:'node',format:'esm',packages:'external',loader:{'.webp':'dataurl'},outfile:'outputs/tests/console-home.mjs'});const r=spawnSync(process.execPath,['outputs/tests/console-home.mjs'],{stdio:'inherit'});if(r.status)process.exit(r.status);
