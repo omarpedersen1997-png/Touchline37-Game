@@ -1,0 +1,11 @@
+{
+  "note": "Geometribudget fra de faktiske GLB-filer. Illustrerer 22 synlige modeller, ikke målte GPU-draws/FPS.",
+  "trianglesPerAsset": {
+    "football-auto.glb": 9550,
+    "football-pro.glb": 25717
+  },
+  "pressureBefore": 242434,
+  "pressureAfter": 210100,
+  "highDetailPlayersBefore": 2,
+  "highDetailPlayersAfter": 0
+}

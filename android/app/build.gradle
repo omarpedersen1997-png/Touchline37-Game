@@ -103,8 +103,8 @@ android {
 androidComponents {
     onVariants(selector().withBuildType("touchlineTest")) { variant ->
         variant.outputs.each { output ->
-            output.versionCode.set(40)
-            output.versionName.set("1.0.0-test-recovery1")
+            output.versionCode.set(41)
+            output.versionName.set("1.0.0-test-match1")
         }
     }
 }
