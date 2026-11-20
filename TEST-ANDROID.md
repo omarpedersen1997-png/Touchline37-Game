@@ -1,3 +1,7 @@
+## TEST39 — aktuel testudgave
+
+639 tests består i én samlet kørsel. Rettet timeout ved ufuldstændig HTTP-body. APK: dev/artifacts/Touchline37-Motor11-TEST39.apk. PDF: dev/artifacts/Touchline37-Opdateringsrapport-TEST39.pdf. Installér oven på Touchline TEST uden afinstallation, brug samme login og Auto. Samme testserver og certifikat. Fysisk telefonafprøvning mangler. Se test-evidence/code-review-TEST39.md for gennemgangens præcise omfang.
+
 ## Aktuel status: TEST38 er online
 
 Testserverrevision 2 er nu udgivet og to fulde hostede kampe er verificeret. Den tidligere blokering nedenfor er løst. Se TEST38-ONLINE.md og den nye TEST38-online-PDF. APK-filen er uændret. Fysiske Android-målinger mangler stadig.
