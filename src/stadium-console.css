@@ -94,3 +94,8 @@
 @media(max-height:339px){.app-shell.game-console,.auth-page.stadium-auth{height:auto;min-height:100dvh;overflow:visible}.game-console .main-shell{height:auto;min-height:100dvh}.game-console main{min-height:250px;overflow:visible}.game-console .app-screen-content{overflow:visible}.game-console .app-screen-content>.workspace-deck{overflow:visible}.stadium-auth .auth-layout{min-height:280px;overflow:visible}.stadium-auth .auth-card{max-height:none}}
 @media(prefers-reduced-motion:reduce){.game-console *,.stadium-auth *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 .legal-page,.app-error-screen{background:#0b253a;color:#ecf4f3}.legal-page .legal-card{background:#123348;border:1px solid #37617566;border-radius:8px;box-shadow:none}.legal-page .legal-card :is(h1,h2,h3),.app-error-screen h1{font-family:'DM Sans',sans-serif;font-weight:650;letter-spacing:-.7px}.legal-page :is(input,textarea,select){background:#173e53;border:1px solid #4c7285;border-radius:6px;font-size:16px}.legal-page .primary{background:#c1f66b;color:#18342c;border-radius:6px;box-shadow:none;min-height:44px}
+
+/* Explicit tracks prevent hidden legacy headings from reassigning the lobby rows. */
+.game-console .lobby-club-heading{grid-row:1;display:flex}
+.game-console .lobby-play-grid{grid-row:2}
+.game-console .lobby-quick-actions{grid-row:3;height:44px;max-height:44px}

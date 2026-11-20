@@ -51,7 +51,7 @@ export function App(){const[account,setAccount]=useState(null);const[authNotice,
  const openClubArea=area=>{setClubArea(area);requestAnimationFrame(()=>{const target=area==='lobby'?document.querySelector('.lobby-club-heading h1'):document.getElementById('club-desk-'+area+'-panel');target?.focus({preventScroll:true});});};
  const navigate=destination=>{if(destination==='club')openClubArea('lobby');if(destination==='europe'||destination==='cup'){setLeagueTab(destination);setTab('league')}else setTab(destination)};
  const previousTab=useRef(tab);
- useEffect(()=>{window.scrollTo({top:0,behavior:'auto'});if(previousTab.current===tab)return;previousTab.current=tab;const frame=requestAnimationFrame(()=>document.querySelector('.app-page-heading h1')?.focus({preventScroll:true}));return()=>cancelAnimationFrame(frame)},[tab]);
+ useEffect(()=>{window.scrollTo({top:0,behavior:'auto'});if(previousTab.current===tab)return;previousTab.current=tab;const frame=requestAnimationFrame(()=>document.querySelector('.app-page-heading h1,.lobby-club-heading h1')?.focus({preventScroll:true}));return()=>cancelAnimationFrame(frame)},[tab]);
  const closeModal=()=>{if(modal?.kind==='match-lobby'&&busy)return;if(window.dispatchEvent(new Event('touchline:close-modal',{cancelable:true})))setModal(null)};
  useEffect(()=>{setModal(current=>{if(!current?.player)return current;const fresh=[...state.players,...state.reserves].find(p=>p.id===current.player.id);return fresh?{...current,player:fresh}:null})},[state.version]);
  const tell=(message,error=false)=>{setToast({message,error});clearTimeout(toastTimer.current);toastTimer.current=setTimeout(()=>setToast(null),6500)};
