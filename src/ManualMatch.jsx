@@ -88,7 +88,8 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
     await prepareMatchSceneAssets({version,quality});
     if(disposed)return;
     scene=createMatchScene(host,{version,quality,initialState:session.current.state,getMatchTime:()=>time()-match.started,onPerformance:r=>{if(!disposed)setFrameStats(r);},onResolution:r=>{if(!disposed)setResolution(r);},pattern:clubStyle?.pattern,stage:match.manual.config.stadiumStage??2,field:session.current.state.field,players:session.current.state.home.length,color:CLUB_COLORS[clubStyle?.color||'lime']});sceneRef.current=scene;
-    setMode(scene.mode);if(scene.mode==='simple'&&quality!=='simple')setQuality('simple');setSceneLoading(false);host.addEventListener('webglcontextlost',lost,true);
+    host.addEventListener('webglcontextlost',lost,true);await scene.prepare?.();if(disposed)return;
+    setMode(scene.mode);if(scene.mode==='simple'&&quality!=='simple')setQuality('simple');setSceneLoading(false);
     const frame=t=>{
      if(disposed)return;
      const s=session.current,c=controls.current,command=version>=8&&!overlayState.current.portrait&&!overlayState.current.help?commands.current[0]:null,mask=command??(inputBlocked.current||goalInputLocked(s.state)?0:matchControlMask(keys.current,c,scene.mode==='3d'?camera.current:'stadium',version)),before=s.count;

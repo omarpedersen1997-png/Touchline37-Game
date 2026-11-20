@@ -71,22 +71,31 @@ const defaultSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export async function withTimeout(transport, { timeoutMs, signal } = {}) {
   if (signal?.aborted) throw signal.reason ?? new DOMException('Aborted', 'AbortError');
   const controller = new AbortController();
-  let timedOut = false;
-  const timer = setTimeout(() => {
-    timedOut = true;
-    controller.abort();
-  }, timeoutMs);
-  const forward = () => controller.abort(signal.reason);
-  signal?.addEventListener('abort', forward, { once: true });
-  try {
-    return await transport(controller.signal);
-  } catch (error) {
-    if (timedOut) throw new NetworkError(OFFLINE_MESSAGE, { cause: error });
-    throw error;
-  } finally {
-    clearTimeout(timer);
-    signal?.removeEventListener('abort', forward);
-  }
+  // En native transport kan ignorere AbortSignal. Fristen skal derfor afgøre
+  // kaldets Promise direkte; abort er samtidig beskeden om at frigive I/O.
+  return new Promise((resolve, reject) => {
+    let settled = false, timer;
+    const finish = (settle, value) => {
+      if (settled) return;
+      settled = true; clearTimeout(timer);
+      signal?.removeEventListener('abort', forward);
+      settle(value);
+    };
+    const forward = () => {
+      const reason = signal.reason ?? new DOMException('Aborted', 'AbortError');
+      finish(reject, reason); controller.abort(reason);
+    };
+    signal?.addEventListener('abort', forward, { once: true });
+    if (signal?.aborted) { forward(); return; }
+    if (Number.isFinite(timeoutMs)) timer = setTimeout(() => {
+      const error = new NetworkError();
+      finish(reject, error); controller.abort(error);
+    }, Math.max(0, timeoutMs));
+    // Begge callbacks bliver siddende på transporten, så et sent svar eller en
+    // sen fejl efter fristen bliver konsumeret uden ny afvikling/unhandled rejection.
+    try { Promise.resolve(transport(controller.signal)).then(value => finish(resolve, value), error => finish(reject, error)); }
+    catch (error) { finish(reject, error); }
+  });
 }
 
 /**
@@ -98,7 +107,7 @@ export async function requestWithRetry(transport, { path, method = 'GET', body =
   const attempts = retry ? delays.length + 1 : 1;
   let lastError = null;
   for (let attempt = 0; attempt < attempts; attempt++) {
-    if (attempt > 0) await sleep(delays[attempt - 1]);
+    if (attempt > 0) await withTimeout(() => sleep(delays[attempt - 1]), { signal });
     try {
       const response = await withTimeout(transport, { timeoutMs: method === 'GET' ? timeouts.GET : timeouts.POST, signal });
       if (retry && RETRYABLE_STATUS.includes(response.status) && attempt < attempts - 1) {
@@ -107,6 +116,7 @@ export async function requestWithRetry(transport, { path, method = 'GET', body =
       }
       return await normalizeResponse(response);
     } catch (error) {
+      if (signal?.aborted) throw signal.reason ?? new DOMException('Aborted', 'AbortError');
       if (error?.name === 'AbortError') throw error;
       if (error?.retryable === false) throw error;
       lastError = error instanceof NetworkError ? error : new NetworkError(OFFLINE_MESSAGE, { cause: error });

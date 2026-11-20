@@ -1,10 +1,13 @@
 import React,{useState} from 'react';
 import {Trash2,LoaderCircle,ArrowLeft,Mail} from 'lucide-react';
 import {apiFetch} from './api.js';
+import {useAccountAccess} from './account-access.js';
 
-export default function DeleteAccount({email,onDeleted,onCancel}){
+export default function DeleteAccount({email,onDeleted,onCancel,initialCapabilities}){
+ const access=useAccountAccess(initialCapabilities);
  const [password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState('');
- const submit=async e=>{e.preventDefault();if(busy)return;setBusy(true);setError('');try{const response=await apiFetch('/api/auth/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password,confirm})});const result=await response.json();if(!response.ok)throw Error(result.error||'Kontoen kunne ikke slettes.');setPassword('');onDeleted()}catch(e){setError(e.message||'Forbindelsen blev afbrudt. Prøv igen.')}finally{setBusy(false)}};
+ const submit=async e=>{e.preventDefault();if(busy||!access.accountChanges)return;setBusy(true);setError('');try{const response=await apiFetch('/api/auth/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password,confirm})});const result=await response.json();if(!response.ok)throw Error(result.error||'Kontoen kunne ikke slettes.');setPassword('');onDeleted()}catch(e){setError(e.message||'Forbindelsen blev afbrudt. Prøv igen.')}finally{setBusy(false)}};
+ if(!access.accountChanges)return <div className="account-delete"><span className="eyebrow">TESTKONTO</span><h2 id="modal-title">Din testkonto bevares</h2><p className="account-mail-note" role="status">Kontosletning er slået fra i testudgaven. Der er ikke sendt en sletning.</p><div className="account-details"><Mail size={16}/><span>{email}</span></div><button type="button" className="auth-back" onClick={onCancel}><ArrowLeft size={16}/>Tilbage til indstillinger</button></div>;
  return <div className="account-delete">
   <span className="delete-symbol"><Trash2 size={23}/></span><span className="eyebrow">FARVEL TIL KLUBBEN</span><h2 id="modal-title">Slet konto og klub?</h2>
   <p className="account-delete-warning">Din konto, e-mailadresse, klub og alle fremskridt slettes permanent. Handlingen kan ikke fortrydes.</p>

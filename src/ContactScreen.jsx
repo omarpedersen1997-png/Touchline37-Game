@@ -1,10 +1,13 @@
 import React,{useState} from 'react';
 import {ArrowLeft,ArrowRight,MessageSquare,Check,LoaderCircle,ShieldCheck} from 'lucide-react';
 import {apiFetch,gameHome,documentLink} from './api.js';
+import {useAccountAccess} from './account-access.js';
 
-export default function ContactScreen(){
+export default function ContactScreen({initialCapabilities}={}){
+ const access=useAccountAccess(initialCapabilities);
  const [busy,setBusy]=useState(false),[error,setError]=useState(''),[reference,setReference]=useState('');
- async function submit(e){e.preventDefault();if(busy)return;const f=new FormData(e.currentTarget);setBusy(true);setError('');try{const r=await apiFetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:f.get('email'),topic:f.get('topic'),message:f.get('message'),website:f.get('website'),consent:f.get('consent')==='on'})});const d=await r.json();if(!r.ok)throw Error(d.error||'Prøv igen senere.');setReference(d.reference)}catch(e){setError(e.message||'Ingen forbindelse. Prøv igen.')}finally{setBusy(false)}}
+ async function submit(e){e.preventDefault();if(busy||access.testEnvironment)return;const f=new FormData(e.currentTarget);setBusy(true);setError('');try{const r=await apiFetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:f.get('email'),topic:f.get('topic'),message:f.get('message'),website:f.get('website'),consent:f.get('consent')==='on'})});const d=await r.json();if(!r.ok)throw Error(d.error||'Prøv igen senere.');setReference(d.reference)}catch(e){setError(e.message||'Ingen forbindelse. Prøv igen.')}finally{setBusy(false)}}
+ if(!(typeof __TOUCHLINE_PUBLIC_SITE__!=='undefined'&&__TOUCHLINE_PUBLIC_SITE__)&&access.testEnvironment)return <main className="legal-page contact-page"><a className="legal-back" href={gameHome}><ArrowLeft size={17}/>Tilbage til Touchline</a><section className="legal-card panel contact-card"><header className="contact-intro"><span className="contact-icon"><MessageSquare size={23}/></span><span className="eyebrow">TOUCHLINE · TESTUDGAVE</span><h1>Din tilbagemelding</h1><p role="status">Kontaktformularen er slået fra i testudgaven. Der er ikke sendt en besked.</p><p>Giv din tilbagemelding i samtalen, hvor du fik testappen.</p></header></section></main>;
  return <main className="legal-page contact-page">
   <a className="legal-back" href={gameHome}><ArrowLeft size={17}/>Tilbage til Touchline</a>
   <section className="legal-card panel contact-card">

@@ -8,7 +8,9 @@ export function extendManualRecovery(active){
  if(m&&m.version>=6&&!m.recoveryWindow&&m.expiresAt===active.ends+MANUAL_GRACE_MS){m.expiresAt=active.ends+MANUAL_RECOVERY_MS;m.recoveryWindow=1;}
 }
 export function createManualChallenge(config,now){
- const version=configMatchVersion(config),rules=getArcadeRules(version);
+ const version=configMatchVersion(config);
+ if(version===11&&config.engineRevision!==undefined&&![1,2].includes(config.engineRevision))throw new GameError('Kamprevisionen understøttes ikke.');
+ const rules=getArcadeRules(version,config.engineRevision);
  return {version,seed:crypto.randomUUID(),duration:rules.DURATION_MS,inputCount:rules.INPUT_COUNT,expiresAt:now+rules.DURATION_MS+(version>=6?MANUAL_RECOVERY_MS:MANUAL_GRACE_MS),recoveryWindow:1,config:structuredClone(config)};
 }
 export function playManualReplay(active,action,now){
@@ -16,6 +18,7 @@ export function playManualReplay(active,action,now){
  extendManualRecovery(active);
  // En gemt kamp genafspilles altid med sin oprindelige motor; den omskrives aldrig.
  if(!isSupportedMatchVersion(active.manual.version)||active.manual.version!==configMatchVersion(active.manual.config))throw new GameError('Kampversionen understøttes ikke.');
+ if(active.manual.version===11&&active.manual.config.engineRevision!==undefined&&![1,2].includes(active.manual.config.engineRevision))throw new GameError('Kamprevisionen understøttes ikke.');
  if(now<active.ends)throw new GameError('Kampen er ikke færdigspillet endnu.');
  if(now>active.manual.expiresAt)throw new GameError('Fristen for at gemme kampen er udløbet.');
  let inputs;try{inputs=decodeInputs(action.inputs,active.manual.version)}catch{throw new GameError('Kampforløbet indeholder ugyldig styring.');}

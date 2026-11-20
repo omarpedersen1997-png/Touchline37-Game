@@ -169,7 +169,7 @@ export function playerCareerAction(s,a,now,random=Math.random){
   const result=a.control==='manual'?null:simulateMatch(c,random);
   if(c.journey.enabled)c.journey.fitness=Math.max(0,c.journey.fitness-plan.energy-(currentTerm(c)?.energy||0));
   if(a.control==='manual'){
-   const next=nextOpponent(c),manual=createManualChallenge({homeRating:[48,60,73,85,92,96][clubFor(c).division],awayRating:next.rating,personalPosition:c.position,personalRating:playerCareerRating(c),technique:c.attributes.technique,physical:c.attributes.physical,reading:c.attributes.reading,fitness,...(resolveRequestedMatchVersion(a.manualVersion)?{matchVersion:resolveRequestedMatchVersion(a.manualVersion),stadiumStage:Math.min(3,clubFor(c).division)}: {})},now);
+   const next=nextOpponent(c),manual=createManualChallenge({homeRating:[48,60,73,85,92,96][clubFor(c).division],awayRating:next.rating,personalPosition:c.position,personalRating:playerCareerRating(c),technique:c.attributes.technique,physical:c.attributes.physical,reading:c.attributes.reading,fitness,...(resolveRequestedMatchVersion(a.manualVersion)?{matchVersion:resolveRequestedMatchVersion(a.manualVersion),...(resolveRequestedMatchVersion(a.manualVersion)===11&&a.engineRevision!==undefined?{engineRevision:a.engineRevision}:{}),stadiumStage:Math.min(3,clubFor(c).division)}: {})},now);
    c.active={id:a.id,kind:'match',started:now,ends:now+manual.duration,opponent:next.name,manual,plan:c.journey.plan,salary:Math.round(clubFor(c).salary*(currentTerm(c)?.salary||1)),xpMultiplier:currentTerm(c)?.xp||1};
   }else c.active={id:a.id,kind:'match',started:now,ends:now+MATCH_DURATION,opponent:result.opponent,result,plan:c.journey.plan,timeline:matchTimeline(result,c.position,a.id)};
  }else if(a.type==='player-career-transfer'){

@@ -210,7 +210,7 @@ test('klargøringsruten kan lukkes mens native login og kampstart bruger motor 1
   const env = { ...f.env, TOUCHLINE_TEST_SETUP_ENABLED: undefined, TOUCHLINE_TEST_SETUP_TOKEN: undefined, TOUCHLINE_TEST_LOGIN_PASSWORD: undefined };
   assert.equal((await f.init({ bindings: env })).status, 404);
   const attestation = await f.request('/api/test-environment', { bindings: env });
-  assert.deepEqual(await attestation.json(), { isolated: true, engine: 11, environment: ENVIRONMENT });
+  assert.deepEqual(await attestation.json(), { isolated: true, engine: 11, engineRevision: 2, environment: ENVIRONMENT });
   const login = await f.request('/api/auth/login', {
     bindings: env, method: 'POST', headers: NATIVE,
     body: { email: 'test3@touchline.invalid', password: f.env.TOUCHLINE_TEST_LOGIN_PASSWORD },
@@ -262,7 +262,7 @@ test('slutbygningen spærrer setup uanset runtimeflag og token, mens native moto
   assert.equal((await closedInit()).status, 404);
   assert.equal(f.changes(), ready, 'genaktiverede runtimeværdier må heller ikke genåbne klargøring');
   const handshake = await requestClosed('/api/test-environment');
-  assert.deepEqual(await handshake.json(), { isolated: true, engine: 11, environment: ENVIRONMENT });
+  assert.deepEqual(await handshake.json(), { isolated: true, engine: 11, engineRevision: 2, environment: ENVIRONMENT });
   const login = await requestClosed('/api/auth/login', {
     method: 'POST', headers: NATIVE,
     body: { email: 'test3@touchline.invalid', password: f.env.TOUCHLINE_TEST_LOGIN_PASSWORD },

@@ -27,7 +27,7 @@ test('actual native test bridge verifies isolation before credentials, selects e
     assert.equal(compile.status, 0, compile.stderr || compile.error?.message);
     const run = spawnSync(javaCommand('java'), ['-cp', nativeClasspath(classes, json), 'dk.touchline.footballidle.TouchlineTestApiBridgeTest'], { encoding: 'utf8', timeout: 15000 });
     assert.equal(run.status, 0, run.stderr || run.error?.message);
-    assert.match(run.stdout, /Rejected 18 invalid\/redirect\/error handshakes before credentials/);
+    assert.match(run.stdout, /Rejected 21 invalid\/redirect\/error handshakes before credentials/);
     assert.match(run.stdout, /Verified native engine11 headers, process-local cache, reset\/recovery and redirect isolation/);
   } finally {
     rmSync(classes, { recursive: true, force: true });

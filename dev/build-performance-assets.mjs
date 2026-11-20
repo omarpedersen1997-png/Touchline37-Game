@@ -25,6 +25,7 @@ const result = await build({
   loader: { '.css': 'text', '.webp': 'dataurl' },
   define: {
     'process.env.NODE_ENV': '"production"', '__WEB_GAME__': 'false',
+    '__TOUCHLINE_TEST_APP__': 'true',
     '__SITE_CAPTURES__': JSON.stringify(captureInfo.screenshots),
     '__PRO_PLAYER_URL__': JSON.stringify('/assets/models/football-pro.glb'),
     '__PRO_PLAYER_AUTO_URL__': JSON.stringify('/assets/models/football-auto.glb'),
@@ -83,4 +84,4 @@ const report = {
 };
 await mkdir(resolve(root, '.dev-data/review'), { recursive: true });
 await writeFile(resolve(root, '.dev-data/review/performance-assets.json'), JSON.stringify(report, null, 2) + '\n');
-console.log(JSON.stringify({ ...report, initialInputs: undefined }));
+console.log(JSON.stringify({ ...report, initialInputs: undefined, modules: undefined }));

@@ -84,7 +84,7 @@ test('miljøattest kræver særskilt flag, egen pepper, DB-sentinel og kompilere
   const f = await fixture(t);
   const response = await f.request('/api/test-environment');
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { isolated: true, engine: 11, environment: ENVIRONMENT });
+  assert.deepEqual(await response.json(), { isolated: true, engine: 11, engineRevision: 2, environment: ENVIRONMENT });
   for (const bindings of [
     { ...f.env, TOUCHLINE_TEST_ENVIRONMENT: undefined },
     { ...f.env, AUTH_PEPPER: 'x'.repeat(80) },
@@ -111,7 +111,7 @@ test('native kontrakt kræves, mail og registrering er spærret, og uvedkommende
     assert.equal((await f.request(path, { body: { email: 'new@touchline.invalid', password: 'Password123' } })).status, 403, path);
   }
   const capabilities = await f.request('/api/auth/capabilities');
-  assert.deepEqual(await capabilities.json(), { emailDelivery: false }, 'mailbindings videresendes aldrig');
+  assert.deepEqual(await capabilities.json(), { emailDelivery: false, testEnvironment: true, registration: false, accountChanges: false }, 'mailbindings videresendes aldrig');
   assert.equal((await f.request('/api/auth/login', { body: { email: 'outside@example.test', password: 'Outside-account-123' }, cookie: null })).status, 403);
   assert.equal((await f.request('/api/auth/me', { cookie: f.outsiderCookie })).status, 403);
   assert.equal((await f.game(undefined, { cookie: f.outsiderCookie })).status, 403);
@@ -134,19 +134,20 @@ test('testkonto logger ind via normal passwordvalidering og logger ud igen', asy
   assert.deepEqual(f.guard.blocked, []);
 });
 
-for (const career of [false, true]) {
-  test((career ? 'spillerkarriere' : 'klubkamp') + ': motor 11 uden browsercookie, fuld validering og idempotent gemning', async (t) => {
+for (const career of [false, true]) for (const revision of [1, 2]) {
+  test((career ? 'spillerkarriere' : 'klubkamp') + `: motor 11 revision ${revision} uden browsercookie, fuld validering og idempotent gemning`, async (t) => {
     const f = await fixture(t);
     assert.equal((await f.game()).status, 200);
     if (career) {
       const create = await f.game({ id: 'create-test-player', type: 'player-career-create', name: 'Testspiller', position: 'ANG', journeyVersion: 1 });
       assert.equal(create.status, 200, await create.clone().text());
     }
-    const started = await f.game({ id: 'start-test-match', type: career ? 'player-career-match' : 'match', control: 'manual', manualVersion: 1, ...(career ? { journeyVersion: 1 } : {}) });
+    const started = await f.game({ id: 'start-test-match', type: career ? 'player-career-match' : 'match', control: 'manual', manualVersion: 1, ...(career ? { journeyVersion: 1 } : {}) }, { headers: revision === 2 ? { 'X-Touchline-Test-Engine-Revision': '2' } : {} });
     assert.equal(started.status, 200, await started.clone().text());
     const start = await started.json();
     const active = career ? start.state.playerCareer.active : start.state.active;
     assert.equal(active.manual.version, 11); assert.equal(active.manual.config.matchVersion, 11);
+    assert.equal(active.manual.config.engineRevision, revision === 2 ? 2 : undefined);
     assert.equal(started.headers.get('x-touchline-test-engine'), '11');
     const rules = getArcadeRules(11);
     const tape = new Uint16Array(rules.INPUT_COUNT);
@@ -172,6 +173,26 @@ for (const career of [false, true]) {
     assert.deepEqual(f.guard.blocked, []);
   });
 }
+
+test('nye klienter bevarer aktive originalkampe, og en ukendt revision skaber ingen kamp', async (t) => {
+  const f = await fixture(t);
+  assert.equal((await f.game()).status, 200);
+  const unknown = await f.game({ id: 'unsupported-revision', type: 'match', control: 'manual' }, { headers: { 'X-Touchline-Test-Engine-Revision': '99' } });
+  assert.equal(unknown.status, 400);
+  assert.equal(f.savedState().active, null);
+  const legacy = await f.game({ id: 'legacy-start', type: 'match', control: 'manual', engineRevision: 2 });
+  assert.equal(legacy.status, 200);
+  const before = (await legacy.json()).state.active;
+  assert.equal(before.manual.config.engineRevision, undefined, 'uden ny nativeheader er dette stadig original motor 11');
+  const resumed = await f.game(undefined, { headers: { 'X-Touchline-Test-Engine-Revision': '2' } });
+  const active = (await resumed.json()).state.active;
+  assert.equal(active.id, before.id);
+  assert.deepEqual(active.manual, before.manual);
+  f.updateState(s => { s.active.manual.config.engineRevision = 99; });
+  const invalid = await f.game({ id: 'invalid-revision-save', type: 'manual-match-finish', matchId: active.id, inputs: encodeInputs(new Uint16Array(getArcadeRules(11).INPUT_COUNT), 11) });
+  assert.equal(invalid.status, 400);
+  assert.match((await invalid.json()).error, /revisionen understøttes ikke/);
+});
 
 test('testadapteren indgår ikke i produktionsbygningen eller motor 1–10', () => {
   assert(!readFileSync(resolve(ROOT, 'build.mjs'), 'utf8').includes('android-test-worker'));

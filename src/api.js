@@ -3,14 +3,24 @@ import{requestWithRetry,NetworkError,OFFLINE_MESSAGE}from'./network.js';
 const NativeApi=registerPlugin('TouchlineApi');
 export const isAndroid=()=>Capacitor.getPlatform()==='android';
 const NATIVE_TIMEOUTS={GET:40000,POST:40000};// Android-broen har selv 15 s + 20 s; JS-grænsen ligger over den.
+let nativeSequence=0;
+const nativeRequestId=()=>globalThis.crypto?.randomUUID?.()||'native-'+Date.now().toString(36)+'-'+(++nativeSequence);
 export async function apiFetch(path,options={}){
  const method=options.method||'GET',body=options.body||null;
  if(!isAndroid()){
   return requestWithRetry(signal=>fetch(path,{credentials:'same-origin',cache:'no-store',...options,signal}),{path,method,body,signal:options.signal});
  }
  if(!/^\/api\/(auth\/(me|register|login|logout|delete|capabilities|change-password|change-email|request-verification|verify-email|request-reset|reset-password)|game|contact)$/.test(path))throw Error('Ukendt apphandling.');
- return requestWithRetry(async()=>{
-  let response;try{response=await NativeApi.request({path,method,body});}catch(error){if(error?.code==='REQUEST_TOO_LARGE'){error.status=413;error.retryable=false;throw error;}throw new NetworkError(error?.message||OFFLINE_MESSAGE,{cause:error});}
+ return requestWithRetry(async signal=>{
+  const requestId=nativeRequestId();let sent=false;
+  const cancel=()=>{if(!sent)return;try{Promise.resolve(NativeApi.cancel?.({requestId})).catch(()=>{});}catch{}};
+  signal.addEventListener('abort',cancel,{once:true});
+  let response;try{
+   if(signal.aborted)throw signal.reason??new DOMException('Aborted','AbortError');
+   sent=true;response=await NativeApi.request({path,method,body,requestId});
+   if(signal.aborted)throw signal.reason??new DOMException('Aborted','AbortError');
+  }catch(error){if(signal.aborted)throw signal.reason??new DOMException('Aborted','AbortError');if(error?.code==='REQUEST_CANCELLED')throw new DOMException('Aborted','AbortError');if(error?.code==='REQUEST_TOO_LARGE'){error.status=413;error.retryable=false;throw error;}throw new NetworkError(error?.message||OFFLINE_MESSAGE,{cause:error});}
+  finally{signal.removeEventListener('abort',cancel);}
   const text=response.body??'';let json=true;if(text){try{JSON.parse(text)}catch{json=false}}
   // Et ikke-JSON-svar (fx en fejlside) bliver til en læsbar fejl i stedet for et nedbrud.
   if(!json)return new Response(JSON.stringify({error:OFFLINE_MESSAGE}),{status:response.status>=200&&response.status<300?502:response.status,headers:{'Content-Type':'application/json'}});

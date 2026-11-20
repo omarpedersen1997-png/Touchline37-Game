@@ -43,7 +43,7 @@ export default {
     const path = new URL(request.url).pathname;
     if (path === '/api/test-environment') {
       if (request.method !== 'GET') return json({ error: 'Metoden er ikke understøttet.' }, 405);
-      return json({ isolated: true, engine: 11, environment: ANDROID_TEST_ENVIRONMENT });
+      return json({ isolated: true, engine: 11, engineRevision: 2, environment: ANDROID_TEST_ENVIRONMENT });
     }
     // Dette er en native API, ikke en browserbaseret adgang til testdatabasen.
     if (request.headers.get('X-Touchline-Test-Engine') !== '11'
@@ -54,6 +54,9 @@ export default {
       return json({ error: 'Funktionen er slået fra i testmiljøet.' }, 403);
     }
     const bindings = isolatedBindings(env);
+    if (path === '/api/auth/capabilities' && request.method === 'GET') {
+      return json({ emailDelivery: false, testEnvironment: true, registration: false, accountChanges: false });
+    }
     let next = request;
     if (path === '/api/auth/login') {
       if (request.method !== 'POST') return json({ error: 'Metoden er ikke understøttet.' }, 405);
@@ -83,9 +86,18 @@ export default {
       const headers = new Headers(request.headers);
       headers.delete('Content-Length');
       const start = body && !Array.isArray(body) && START_ACTIONS.has(body.type) && body.control === 'manual';
+      const revision = request.headers.get('X-Touchline-Test-Engine-Revision');
+      if (start && revision !== null && revision !== '1' && revision !== '2')
+        return json({ error: 'Kamprevisionen understøttes ikke.' }, 400);
+      let payload = body;
+      if (start) {
+        payload = { ...body, manualVersion: 11 };
+        delete payload.engineRevision;
+        if (revision === '2') payload.engineRevision = 2;
+      }
       next = new Request(request.url, {
         method: 'POST', headers,
-        body: start ? JSON.stringify({ ...body, manualVersion: 11 }) : text,
+        body: start ? JSON.stringify(payload) : text,
       });
     }
     const response = await gameWorker.fetch(next, bindings, context);
