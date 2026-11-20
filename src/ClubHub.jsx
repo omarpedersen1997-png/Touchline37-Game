@@ -1,3 +1,4 @@
+import MatchDesk from './MatchDesk.jsx';
 import MatchModeChoices from './MatchModeChoices.jsx';
 import {ClubBadge}from'./ClubStudio.jsx';
 import React,{useState}from'react';
@@ -21,6 +22,7 @@ function EuropeEntry({europe,onNavigate}){
 }
 function FacilitiesPanel({state:s,money,hourlyIncome,onNavigate,expanded=false}){const[facilitiesOpen,setFacilitiesOpen]=useState(expanded);return (<details open={expanded||undefined} className="console-facilities" onToggle={e=>setFacilitiesOpen(e.currentTarget.open)}><summary><Building2 size={19}/><span>Stadion & økonomi<small>{s.stadium.name} · {number(s.stadium.capacity)} pladser</small></span><b>{number(money)} kr.</b></summary><div className="game-bottom-grid"><section className="game-stadium-card"><div className="game-section-heading"><div><span>DIN HJEMMEBANE · NIVEAU {s.stadium.level}</span><h2>{s.stadium.name}</h2></div><Building2 size={23}/></div>{facilitiesOpen&&<ArenaScene fit stage={s.stadium.stage} name={s.stadium.name} clubColor={s.clubStyle?.color}/>}<div className="game-stadium-caption"><span>{number(s.stadium.capacity)} pladser</span><button type="button" onClick={()=>onNavigate('upgrades')}>Udvid stadion<ArrowUpRight size={14}/></button></div></section><section className="hub-economy" aria-label="Klubbens økonomi"><div className="hub-wallet"><span className="hub-coin"><TrendingUp size={19}/></span><div><span>Klubbens saldo</span><strong>{number(money)} <small>kr.</small></strong></div></div><div className="hub-income"><span>Nettoindtægt</span><b className={hourlyIncome<0?'negative':''}>{hourlyIncome>=0?'+':''}{number(hourlyIncome)} kr./t.</b><small><Clock3 size={13}/>Op til 8 timer offline</small></div><button type="button" className="game-economy-link" onClick={()=>onNavigate('center')}>Åbn klubcenter<ArrowRight size={16}/></button></section></div></details>);}
 export default function ClubHub({state:s,money,now,rank,busy,onPlay,onSimulate,onNavigate,area='all'}){
+ if(area==='match')return <MatchDesk state={s} now={now} rank={rank} busy={busy} onPlay={onPlay} onSimulate={onSimulate}/>;
  const active=s.active,youth=s.academyFacility?.program,ready=!!youth&&now>=youth.ends;
  const minute=active?Math.min(90,Math.max(0,Math.floor((now-active.started)/Math.max(1,active.ends-active.started)*90))):0;
  const hourlyIncome=Math.round((s.rate||0)*3600),opponent=active?.opponent||opponents[s.played];

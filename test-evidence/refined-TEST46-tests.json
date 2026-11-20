@@ -1,0 +1,14 @@
+{
+  "app": {
+    "tests": 683,
+    "pass": 683,
+    "fail": 0,
+    "skipped": 0
+  },
+  "website": {
+    "tests": 83,
+    "pass": 83,
+    "fail": 0,
+    "skipped": 0
+  }
+}
