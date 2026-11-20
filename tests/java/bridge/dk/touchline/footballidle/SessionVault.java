@@ -6,6 +6,8 @@ public final class SessionVault {
     static volatile long maxAge;
     public SessionVault(Object context) {}
     public String read() { return cookie; }
-    public void save(String value, long seconds) { cookie = value; maxAge = seconds; }
+    // Match the checked exception declared by Android SessionVault so bridge
+    // compilation tests also catch invalid Runnable/session callbacks.
+    public void save(String value, long seconds) throws Exception { cookie = value; maxAge = seconds; }
     public void clear() { cookie = null; maxAge = 0; }
 }
