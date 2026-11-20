@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST43",
+    "title": "Kampoptakt, afspark og et stabilt kampur",
+    "date": "2026-11-20",
+    "summary": "Rettet en reel forskel mellem testklientens motorvalg og serverens motor samt et kampur, der kunne hoppe baglæns ved sene serveropdateringer. Nye manuelle kampe får en optakt med opstillinger og en serverunderstøttet nedtælling. Periodisk klubhentning stoppes under manuel kamp.",
+    "sourceCommit": "108e3ce9b8e0c613d22ab8ffed5236ee0d0f224c"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor11-TEST43.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 43,
+    "versionName": "1.0.0-test-kickoff1",
+    "bytes": 5153837,
+    "sha256": "2059458547b5e1704d7e068c685683cf824d800dac98c4ee9a8ca90a77e6890a",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor11-performance/dev/artifacts/Touchline37-Motor11-TEST43.apk"
+  },
+  "changes": [
+    {
+      "title": "Optakt før kampen bestilles",
+      "detail": "Ved nye manuelle motor 11-kampe vises en optakt. Klubben viser sine gemte spillere; modstanderen viser positionerne i kampens formation. Først når du vælger Gå til afspark, forberedes og oprettes kampen."
+    },
+    {
+      "title": "Nedtælling uden tab af spilletid",
+      "detail": "Nye klienter beder om 8 sekunders serverunderstøttet startforsinkelse. Der optages ingen spilinput før starttidspunktet. De to halvlege på 2 minutter plus 10 sekunders pause og hele gemmefristen bevares."
+    },
+    {
+      "title": "Klienten vælger nu motor 11 korrekt",
+      "detail": "Testklienten var begrænset til motor 10 i forhandlingen, mens adapteren tvang kampen til motor 11. Den kompilerede testklient vælger nu 11; produktionsklienten beholder 10. Serveren kørte allerede motor 11 tidligere."
+    },
+    {
+      "title": "Kampuret hopper ikke baglæns",
+      "detail": "Tidligere erstattede indkomne servertider det lokale ur direkte. En forsinket tid kunne få optagelsen til at vente på allerede spillede ticks. Korrektioner sker nu gradvist, og den lokale kampklokke er monoton."
+    },
+    {
+      "title": "Ingen periodisk klubhentning under kampen",
+      "detail": "Den almindelige baggrundshentning af hele klubtilstanden sættes på pause, mens manuel kamp er åben. Den genoptages, når visningen lukkes. Kritisk resultatgemning og brugerhandlinger er ikke blokeret af denne ændring."
+    }
+  ],
+  "tests": {
+    "passed": 671,
+    "note": "669 tests består i den samlede kørsel. Efter sidste ændring bestod 10 request-/pollingtests og fem ur-/kickofftests; to nye tilfælde giver 671 forskellige beståede tests. To hostede R2-kampe med startforsinkelse er gennemført og gemt én gang hver.",
+    "checks": [
+      "Den kompilerede testklient vælger motor 11, mens produktionsklienten beholder motor 10.",
+      "Forsinkede servertider kan ikke flytte kampuret baglæns; korrektioner sker gradvist.",
+      "Klub og spillerkarriere bevarer fuld spilletid og gemmefrist gennem den faktiske testadapter.",
+      "Ingen inputticks registreres under nedtællingen; gamle startprotokoller bevares.",
+      "Hostet klubkamp 0–0 og spillerkarriere 0–0: tidlig gemning afvises, korrekt replay gemmes, gentagelse fordobler ikke resultatet.",
+      "APK-signatur, version 43, ZIP/CRC og alle pakkede webfiler er kontrolleret."
+    ],
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false
+  },
+  "measurements": [
+    {
+      "label": "Baglæns hop i reproduceret urtest",
+      "before": 1000,
+      "after": 0,
+      "unit": "ms",
+      "note": "En syntetisk serveropdatering er 1 sekund forsinket. Dette tester tidslogikken, ikke GPU-FPS eller telefonens samlede lag."
+    },
+    {
+      "label": "Serverens startforsinkelse",
+      "before": 0,
+      "after": 8000,
+      "unit": "ms",
+      "note": "Kun nye opt-in motor 11-kampe. Hvor meget af nedtællingen der vises, afhænger af netværks- og sceneloading."
+    },
+    {
+      "label": "TEST-APK størrelse",
+      "before": 5152777,
+      "after": 5153837,
+      "unit": "bytes"
+    }
+  ],
+  "preserved": [
+    "Hjemmesiden, produktionsdatabasen, DNS, APK 37 og tidligere test-APK-filer er bevaret.",
+    "Motor 1–10, original motor 11 og R2-fysik/inputprotokol bevares. Eksisterende kampe får ikke tilføjet en startforsinkelse.",
+    "Kun det separate testmiljø er opdateret til serverversion 6; gamle testklienter beholder deres oprindelige startforløb."
+  ],
+  "limitations": [
+    "Fysisk Android-FPS, varme og touch er ikke verificeret. De konkrete ur- og pollingrettelser er ikke bevis for, at alt lag er fjernet.",
+    "Optakten viser modstanderens positioner. Individuelle modstanderspillernavne findes endnu ikke i de tilgængelige data og er ikke opfundet.",
+    "Dette er optakt/nedtælling og rettelser til tidsstyring. Der er ikke tilføjet dommeranimation, spillertunnel, kommentator eller et nyt komplet regelsystem for afspark.",
+    "Den sidste pollingændring og ekstra kickoff-test er kontrolleret med målrettede genkørsler efter den samlede kørsel.",
+    "Testmiljøets to kampforløb er kørt gennem API og replay, ikke visuelt med fysisk Android-styring."
+  ],
+  "installSteps": [
+    "Åbn APK-linket i GitHub på telefonen, log ind og brug filens downloadknap.",
+    "Åbn filen og installér oven på Touchline TEST uden at afinstallere. Produktionsappen har et andet app-id.",
+    "Brug det eksisterende testlogin. PDF-rapporten indeholder ingen adgangskoder."
+  ],
+  "nextTest": [
+    "Installér TEST43 oven på Touchline TEST, vælg Spil selv og gennemgå optakten før du starter.",
+    "Kontrollér nedtælling, bevægelse og eventuelle pauser under en hel kamp i Auto på OnePlus Nord 4."
+  ]
+}

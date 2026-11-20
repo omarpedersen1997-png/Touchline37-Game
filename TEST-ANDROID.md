@@ -1,3 +1,7 @@
+## TEST43 — aktuel kampstarttest
+
+Optakt før API-start, opt-in 8 sekunders nedtælling, korrekt klientmotorvalg, monotont kampur og ophør af periodisk klubhentning under manuel kamp. Serverversion 6 er udgivet i det isolerede testmiljø. To hostede 250-sekunders kampe med startforsinkelse er gemt korrekt én gang hver. 669 tests bestod samlet og to nye afgrænsede tilfælde giver 671 forskellige beståede tests. APK/PDF findes i dev/artifacts med TEST43 i navnet. Samme testlogin og certifikat; opdatér uden afinstallation. Fysisk Android-FPS er ikke verificeret; modstandernavne er stadig ikke tilgængelige.
+
 ## TEST42 — aktuel testudgave
 
 Formularer med single-flight/abort, forbedret dialogfokus, skærmmeddelelser, læsbarhed og korrekt testversionsvisning fra samme manifest som Android. 660 apptests og 81 websitetests består. Privat hjemmeside: https://touchline37-website-preview.glowingconch1.chatgpt.site — offentlige playtouchline.dk er ikke genudgivet. APK og PDF findes i dev/artifacts med TEST42 i navnet. Opdatér oven på Touchline TEST uden afinstallation og brug samme testlogin. Fysisk Android- og browserbaseret visuel kontrol mangler stadig.

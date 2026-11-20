@@ -1,0 +1,7 @@
+{
+  "scenario": "A server observation is 1000 ms behind the running match clock.",
+  "oldBackwardJumpMs": 1000,
+  "newBackwardJumpMs": 0,
+  "nextFrameAdvanceMs": 9.5,
+  "physicalDevice": false
+}
