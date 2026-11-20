@@ -7,6 +7,8 @@ import { createHash } from 'node:crypto';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const output = resolve(root, '.dev-data/android-web/public');
+const testRelease=JSON.parse(await readFile(resolve(root,'dev/test-release.json'),'utf8'));
+if(!Number.isInteger(testRelease.versionCode)||testRelease.versionCode<=37||!/^1\.0\.0-test-[a-z0-9]+$/.test(testRelease.versionName))throw Error('Ugyldig testversion.');
 const origin = 'https://touchline37-engine11-test.glowingconch1.chatgpt.site';
 const source = await readFile(resolve(root, 'src/ClubJourney.jsx'), 'utf8');
 const shareOrigin = source.match(/url:\s*'([^']+)'/)?.[1];
@@ -26,6 +28,8 @@ const result = await build({
   define: {
     'process.env.NODE_ENV': '"production"', '__WEB_GAME__': 'false',
     '__TOUCHLINE_TEST_APP__': 'true',
+    '__TOUCHLINE_BUILD_VERSION__':JSON.stringify(testRelease.versionName),
+    '__TOUCHLINE_BUILD_NUMBER__':JSON.stringify(testRelease.versionCode),
     '__SITE_CAPTURES__': JSON.stringify(captureInfo.screenshots),
     '__PRO_PLAYER_URL__': JSON.stringify('/assets/models/football-pro.glb'),
     '__PRO_PLAYER_AUTO_URL__': JSON.stringify('/assets/models/football-auto.glb'),

@@ -1,0 +1,5 @@
+import React from'react';import{test}from'node:test';import assert from'node:assert/strict';import{renderToStaticMarkup}from'react-dom/server';
+import AuthScreen from'../src/AuthScreen.jsx';import AccountSettings from'../src/AccountSettings.jsx';import ContactScreen from'../src/ContactScreen.jsx';import ErrorBoundary from'../src/ErrorBoundary.jsx';
+import release from'../dev/test-release.json' with{type:'json'};
+test('test authentication footer identifies the actual Android test release',()=>{const html=renderToStaticMarkup(<AuthScreen/>);assert(html.includes(`Version ${release.versionName} (${release.versionCode})`));assert(!html.includes('Version 1.0.0 (37)'));assert(html.includes('inputMode="email"'));assert(html.includes('autoCapitalize="none"'));assert(html.includes('aria-busy="false"'));});
+test('test error screen gives an actionable test feedback route without a disabled contact link',()=>{const boundary=new ErrorBoundary({children:null});boundary.state={failed:true};const html=renderToStaticMarkup(boundary.render());assert(html.includes('allerede gemte fremskridt bevares'));assert(html.includes('samtalen'));assert(!html.includes('href="/contact"'));});

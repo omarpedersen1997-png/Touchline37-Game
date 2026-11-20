@@ -1,1 +1,1 @@
-export const publisher={name:'OPNext Games',contactPath:'/contact',appName:'Touchline Football Idle',version:'1.0.0',build:37};
+export const publisher={name:'OPNext Games',contactPath:'/contact',appName:'Touchline Football Idle',version:typeof __TOUCHLINE_BUILD_VERSION__!=='undefined'?__TOUCHLINE_BUILD_VERSION__:'1.0.0',build:typeof __TOUCHLINE_BUILD_NUMBER__!=='undefined'?__TOUCHLINE_BUILD_NUMBER__:37};

@@ -103,8 +103,8 @@ android {
 androidComponents {
     onVariants(selector().withBuildType("touchlineTest")) { variant ->
         variant.outputs.each { output ->
-            output.versionCode.set(41)
-            output.versionName.set("1.0.0-test-match1")
+            output.versionCode.set(new groovy.json.JsonSlurper().parse(rootProject.file("../dev/test-release.json")).versionCode as Integer)
+            output.versionName.set(new groovy.json.JsonSlurper().parse(rootProject.file("../dev/test-release.json")).versionName as String)
         }
     }
 }
