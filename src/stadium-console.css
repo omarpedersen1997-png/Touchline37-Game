@@ -388,8 +388,8 @@
 .game-console .match-live-pulse {background:#0d2637;isolation:isolate}
 .game-console .game-match .manual-score .score-team-name {overflow:visible;text-overflow:clip;min-width:3ch}
 .app-shell.game-console .game-match[data-active=true] .manual-score {width:min(350px,48vw);grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto}
-.app-shell.game-console .game-match[data-active=true] .manual-radar-wrap {bottom:calc(env(safe-area-inset-bottom) + 58px)}
-.app-shell.game-console .game-match[data-active=true] .manual-player-indicator {left:50%;bottom:calc(env(safe-area-inset-bottom) + 10px);width:154px;max-width:26vw;transform:translateX(-50%);padding:5px 7px 7px 0;gap:0 5px;background:#0d2637ed}
+.app-shell.game-console .game-match[data-active=true] .manual-radar-wrap {bottom:calc(env(safe-area-inset-bottom) + 68px)}
+.app-shell.game-console .game-match[data-active=true] .manual-player-indicator {left:50%;bottom:calc(env(safe-area-inset-bottom) + 10px);width:154px;max-width:26vw;height:50px;min-height:50px;box-sizing:border-box;transform:translateX(-50%);padding:5px 7px 7px 0;gap:0 5px;background:#0d2637ed}
 .app-shell.game-console .game-match .manual-player-indicator>span {font-size:12px}
 .app-shell.game-console .game-match .manual-player-indicator small {font-size:10px}
 .app-shell.game-console .game-match .manual-player-indicator>b {font-size:20px}
