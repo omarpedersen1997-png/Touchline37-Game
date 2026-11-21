@@ -11,5 +11,22 @@
     "url": "https://playtouchline.dk"
   },
   "physicalAndroidVerified": false,
-  "downloadVerification": "Kontrolleres efter push; se endelig byte-/SHA-kontrol."
+  "downloadVerification": [
+    {
+      "file": "Touchline37-Motor11-TEST57.apk",
+      "httpStatus": 200,
+      "bytes": 47134909,
+      "sha256": "0878708dcc8b5574680ac049fed5d3cf859f5d9e608a648f4faf8d1d44557408",
+      "byteIdentical": true,
+      "url": "https://raw.githubusercontent.com/omarpedersen1997-png/Touchline37-Game/refs/heads/codex/test57-spatial-match/dev/artifacts/Touchline37-Motor11-TEST57.apk"
+    },
+    {
+      "file": "Touchline37-Opdateringsrapport-TEST57.pdf",
+      "httpStatus": 200,
+      "bytes": 35809,
+      "sha256": "75a59db784f80cb4242f42b5f14c75eb64b687ba14c94ac809dea758a0c96882",
+      "byteIdentical": true,
+      "url": "https://raw.githubusercontent.com/omarpedersen1997-png/Touchline37-Game/refs/heads/codex/test57-spatial-match/dev/artifacts/Touchline37-Opdateringsrapport-TEST57.pdf"
+    }
+  ]
 }
