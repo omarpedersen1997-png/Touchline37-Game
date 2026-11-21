@@ -148,7 +148,10 @@ export async function startLocalServer(options = {}) {
   const server = createServer(async (req, res) => {
     try {
       const request = await toRequest(req);
-      const response = await worker.fetch(request, workerEnv, { waitUntil() {}, passThroughOnException() {} });
+      const assetName=new URL(request.url).pathname.match(/^\/match-assets55\/([a-zA-Z0-9][a-zA-Z0-9.-]+)$/)?.[1];
+      const asset=assetName?resolve(ROOT,'web-draft/public/match-assets55',assetName):null;
+      const types={glb:'model/gltf-binary',png:'image/png',wav:'audio/wav',json:'application/json',md:'text/plain; charset=utf-8'};
+      const response=asset&&existsSync(asset)?new Response(request.method==='HEAD'?null:readFileSync(asset),{headers:{'Content-Type':types[assetName.split('.').pop()]||'application/octet-stream','Cache-Control':'public, max-age=3600','X-Content-Type-Options':'nosniff'}}):await worker.fetch(request, workerEnv, { waitUntil() {}, passThroughOnException() {} });
       log(requestSummary(req, request, response.status));
       await writeResponse(res, response);
     } catch (error) {

@@ -1,3 +1,5 @@
+import {verifyMatchAssets} from '../scripts/verify-match-assets.mjs';
+console.log('Lokale kampressourcer (ingen størrelsesgrænse):',await verifyMatchAssets());
 import{loadVerifiedSiteCaptures}from'./verify-site-captures.mjs';
 import{publisher}from'../src/publisher.js';
 import{createHash}from'node:crypto';

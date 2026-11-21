@@ -7,7 +7,7 @@ export function createMatchAudioFeed(){
   const first=!initialized;initialized=true;tick=action?.tick;kind=action?.kind;team=action?.team;index=action?.index;
   if(first||state.tick-action?.tick>2||state.freeze>0||state.replay||!sound||!Number.isFinite(now)||now-lastTime<65)return false;
   const cue=kind==='woodwork'?'woodwork':(kind==='shot'||kind==='pass'||kind==='through'||kind==='loft')?'kick':null;
-  if(!cue)return false;lastTime=now;return sound.impact?.(cue,action.power)||false;
+  if(!cue)return false;lastTime=now;if(kind==='shot'||kind==='woodwork')sound.chance?.();return sound.impact?.(cue,action.power)||false;
  },reset(){initialized=false;lastTime=-Infinity;}};
 }
 

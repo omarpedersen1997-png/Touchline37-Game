@@ -1,0 +1,409 @@
+{
+  "actualNativeAssets": true,
+  "fixtureOnly": true,
+  "requestedAssets": [
+    "/match-assets55/stadium-kit.glb",
+    "/match-assets55/grass-color-1024.png",
+    "/match-assets55/grass-normal-1024.png",
+    "/match-assets55/grass-roughness-1024.png",
+    "/match-assets55/kit-fabric-1024.png",
+    "/match-assets55/kit-normal-1024.png",
+    "/match-assets55/kit-roughness-1024.png",
+    "/match-assets55/boot-leather-1024.png",
+    "/match-assets55/stadium-board-2048.png",
+    "/match-assets55/club-emblem-1024.png",
+    "/match-assets55/player-auto.glb",
+    "/match-assets55/keeper-auto.glb",
+    "/match-assets55/player-detail.glb",
+    "/match-assets55/keeper-detail.glb",
+    "/match-assets55/ambience.wav",
+    "/match-assets55/crowd-goal.wav",
+    "/match-assets55/crowd-chance.wav",
+    "/match-assets55/kick-soft.wav",
+    "/match-assets55/kick-hard.wav",
+    "/match-assets55/woodwork.wav",
+    "/match-assets55/net.wav",
+    "/match-assets55/whistle.wav"
+  ],
+  "fullscreenEnteredAndExited": true,
+  "closeReturnsToMenu": true,
+  "options": [
+    "5 kr.10 kr.15 kr.20 kr.25 kr.",
+    "Automatisk 3DSkarp 3D4K · UltraEnkel",
+    "Op til 60 FPSOp til 120 FPS",
+    "4-3-34-4-23-5-24-5-1"
+  ],
+  "downloads": [
+    {
+      "label": "Hent ydelsesrapport",
+      "kind": "touchline-performance",
+      "measurements": [
+        {
+          "quality": "auto",
+          "fps": 1,
+          "frameMs": 1442,
+          "renderMs": 8.7,
+          "drawCalls": 182,
+          "triangles": 1212074,
+          "resolutionScale": 1,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 554,
+          "renderMs": 6.8,
+          "drawCalls": 182,
+          "triangles": 1212074,
+          "resolutionScale": 1,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 516,
+          "renderMs": 5.4,
+          "drawCalls": 182,
+          "triangles": 1212074,
+          "resolutionScale": 0.85,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 464,
+          "renderMs": 10.5,
+          "drawCalls": 182,
+          "triangles": 1212074,
+          "resolutionScale": 0.7224999999999999,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 434,
+          "renderMs": 6.9,
+          "drawCalls": 182,
+          "triangles": 1212074,
+          "resolutionScale": 0.6141249999999999,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 369,
+          "renderMs": 8,
+          "drawCalls": 182,
+          "triangles": 1212074,
+          "resolutionScale": 0.5220062499999999,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 340,
+          "renderMs": 7.4,
+          "drawCalls": 191,
+          "triangles": 1221692,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 351,
+          "renderMs": 4.2,
+          "drawCalls": 204,
+          "triangles": 1231318,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 325,
+          "renderMs": 4.3,
+          "drawCalls": 206,
+          "triangles": 1231322,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 374,
+          "renderMs": 12.6,
+          "drawCalls": 228,
+          "triangles": 1250566,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 357,
+          "renderMs": 8.1,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 346,
+          "renderMs": 5.2,
+          "drawCalls": 242,
+          "triangles": 1260194,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 355,
+          "renderMs": 4,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 348,
+          "renderMs": 4.6,
+          "drawCalls": 219,
+          "triangles": 1240948,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 399,
+          "renderMs": 4.4,
+          "drawCalls": 219,
+          "triangles": 1240948,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 364,
+          "renderMs": 5.6,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 405,
+          "renderMs": 42.8,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 391,
+          "renderMs": 7.5,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 345,
+          "renderMs": 35.7,
+          "drawCalls": 232,
+          "triangles": 1250574,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 346,
+          "renderMs": 8.4,
+          "drawCalls": 232,
+          "triangles": 1250574,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 358,
+          "renderMs": 4.6,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 511,
+          "renderMs": 4.5,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 362,
+          "renderMs": 4.2,
+          "drawCalls": 230,
+          "triangles": 1250570,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 361,
+          "renderMs": 4.1,
+          "drawCalls": 206,
+          "triangles": 1231322,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 365,
+          "renderMs": 3.6,
+          "drawCalls": 205,
+          "triangles": 1231320,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 367,
+          "renderMs": 6.4,
+          "drawCalls": 205,
+          "triangles": 1231320,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 358,
+          "renderMs": 8.2,
+          "drawCalls": 207,
+          "triangles": 1231324,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 326,
+          "renderMs": 4.5,
+          "drawCalls": 218,
+          "triangles": 1240946,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 381,
+          "renderMs": 5.9,
+          "drawCalls": 243,
+          "triangles": 1261154,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 323,
+          "renderMs": 5,
+          "drawCalls": 249,
+          "triangles": 1263274,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 2,
+          "frameMs": 408,
+          "renderMs": 10.5,
+          "drawCalls": 249,
+          "triangles": 1263274,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        },
+        {
+          "quality": "auto",
+          "fps": 3,
+          "frameMs": 364,
+          "renderMs": 7.7,
+          "drawCalls": 249,
+          "triangles": 1263274,
+          "resolutionScale": 0.5,
+          "assetPack": 55,
+          "textureSize": 1024
+        }
+      ],
+      "samples": 32
+    },
+    {
+      "label": "Hent kampbackup",
+      "kind": "touchline-match-recording",
+      "inputs": 375
+    }
+  ],
+  "scoreCodes": [
+    "PRBK",
+    "HAIF"
+  ],
+  "minimapAboveFocus": true,
+  "errors": [],
+  "blocked": []
+}

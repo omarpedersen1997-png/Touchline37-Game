@@ -16,16 +16,17 @@ export function sharePlayerSkeletons(human) {
 }
 
 const geometryCache=new WeakMap();
-// Combine only opaque, untextured parts with identical surface parameters.
+// Legacy: opaque untextured parts. TEST55 may also merge mapped clothing
+// only when every texture/surface parameter matches; UVs and tint survive.
 // Vertex colours retain each part's exact linear colour. Textured skin, hair,
 // eyes and shirts stay separate, with their original maps and alpha settings.
-export function mergePlayerClothing(human,source) {
+export function mergePlayerClothing(human,source,allowMapped=false) {
  const groups=[];
  human.traverse(mesh=>{
   const m=mesh.material;
-  if(!mesh.isSkinnedMesh||Array.isArray(m)||!m?.isMeshStandardMaterial||m.isMeshPhysicalMaterial||m.transparent||m.opacity!==1||m.alphaTest||m.vertexColors||Object.keys(m).some(k=>/Map$|^map$/.test(k)&&m[k]?.isTexture)||Object.keys(mesh.geometry.morphAttributes).length)return;
+  if(!mesh.isSkinnedMesh||Array.isArray(m)||!m?.isMeshStandardMaterial||m.isMeshPhysicalMaterial||m.transparent||m.opacity!==1||m.alphaTest||m.vertexColors||(!(allowMapped&&/Football|Sneaker/.test(m.name))&&Object.keys(m).some(k=>/Map$|^map$/.test(k)&&m[k]?.isTexture))||Object.keys(mesh.geometry.morphAttributes).length)return;
   mesh.updateMatrix();
-  let group=groups.find(g=>g[0].parent===mesh.parent&&g[0].skeleton===mesh.skeleton&&g[0].matrix.equals(mesh.matrix)&&g[0].bindMatrix.equals(mesh.bindMatrix)&&g[0].bindMode===mesh.bindMode&&g[0].material.roughness===m.roughness&&g[0].material.metalness===m.metalness&&g[0].material.side===m.side&&g[0].material.emissive.equals(m.emissive));
+  let group=groups.find(g=>g[0].parent===mesh.parent&&g[0].skeleton===mesh.skeleton&&g[0].matrix.equals(mesh.matrix)&&g[0].bindMatrix.equals(mesh.bindMatrix)&&g[0].bindMode===mesh.bindMode&&g[0].material.roughness===m.roughness&&g[0].material.metalness===m.metalness&&g[0].material.side===m.side&&g[0].material.emissive.equals(m.emissive)&&g[0].material.normalScale.equals(m.normalScale)&&Object.keys(m).every(k=>!m[k]?.isTexture||m[k]===g[0].material[k])&&Object.keys(g[0].material).every(k=>!g[0].material[k]?.isTexture||m[k]===g[0].material[k]));
   if(!group)groups.push(group=[]);
   group.push(mesh);
  });

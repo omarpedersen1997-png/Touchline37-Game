@@ -1,3 +1,4 @@
+import {packageMatchAssets,MATCH_ASSET_ROOT} from '../scripts/package-match-assets.mjs';
 import {SIZE_POLICY,assessClientSize} from './size-policy.mjs';
 // Kun Android-test: separate ESM-moduler og lokale modeller, ingen base64-GLB ved login.
 import { build, transform } from 'esbuild';
@@ -29,6 +30,7 @@ const result = await build({
   define: {
     'process.env.NODE_ENV': '"production"', '__WEB_GAME__': 'false',
     '__TOUCHLINE_TEST_APP__': 'true',
+    '__MATCH_ASSET_ROOT__':JSON.stringify(MATCH_ASSET_ROOT),
     '__TOUCHLINE_BUILD_VERSION__':JSON.stringify(testRelease.versionName),
     '__TOUCHLINE_BUILD_NUMBER__':JSON.stringify(testRelease.versionCode),
     '__SITE_CAPTURES__': JSON.stringify(captureInfo.screenshots),
@@ -77,7 +79,9 @@ for (const file of ['football-auto.glb','football-pro.glb']) {
 }
 await mkdir(resolve(output, 'third-party'), { recursive: true });
 await cp(resolve(root, 'assets/game/FOOTBALL-ASSET-LICENSES.md'), resolve(output, 'third-party/football-assets.txt'));
+const matchAssets=await packageMatchAssets(output);
 const report = {
+  matchAssets,matchAssetBytes:matchAssets.bytes,
   initialJavaScriptBytes: [...initial].reduce((sum, path) => sum + result.metafile.outputs[path].bytes, 0),
   allJavaScriptBytes: outputs.reduce((sum, [name, item]) => sum + (name.endsWith('.js') ? item.bytes : 0), 0),
   initialModuleCount: initial.size, allModuleCount: outputs.length, initialInputs, models, entryScript: script,

@@ -52,3 +52,10 @@ test('both detailed player models retain their original bytes and local licenses
   }
   assert(readFileSync(output + '/third-party/football-assets.txt', 'utf8').includes('MakeHuman'));
 });
+
+ test('all rich match binaries and license notices are packaged byte-for-byte outside JavaScript',()=>{
+ const manifest=JSON.parse(readFileSync('public/match-assets55/manifest.json'));
+ assert.equal(report.matchAssets.files.length,manifest.files.length);
+ for(const item of manifest.files){const bytes=readFileSync(output+'/match-assets55/'+item.file);assert.equal(bytes.length,item.bytes);assert.equal(hash(bytes),item.sha256);}
+ assert.deepEqual(assessClientSize({matchAssetBytes:500*1024*1024,initialJavaScriptBytes:report.initialJavaScriptBytes}).errors,[]);
+ });

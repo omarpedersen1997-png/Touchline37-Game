@@ -1,4 +1,4 @@
-const numeric=['fps','frameMs','renderMs','drawCalls','triangles','resolutionScale'];
+const numeric=['fps','frameMs','renderMs','drawCalls','triangles','resolutionScale','assetPack','textureSize'];
 export function createMatchPerformanceLog(limit=60) {
  const samples=[];let resolution=null;
  return {
