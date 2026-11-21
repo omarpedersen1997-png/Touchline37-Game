@@ -7,12 +7,15 @@ export function livingCameraPlan(state,aspect=1,{offset={x:30,z:3},height=13.7,f
  const x=kickoff?0:clamp(bx+(px-bx)*weight+clamp((b.vx||0)*lead,-3,3),-28,28);
  const z=kickoff?0:clamp(by+(py-by)*weight+clamp((b.vy||0)*lead,-4,4),-45,45);
  // At most 8% refit; never zoom way out to follow a distant selected defender.
- const framing=reducedMotion||kickoff?1:1+clamp((bz-.22)*.012+Math.max(0,separation-8)*.002,0,.08);
- const fit=Math.max(1,1.2/Math.max(.5,aspect)),scale=fit*.72*framing;
+ const framing=reducedMotion||kickoff?1:1+clamp((bz-.22)*.012+Math.max(0,separation-8)*.002+Math.hypot(b.vx||0,b.vy||0)*.0006,0,.08);
+ // The old linear portrait refit more than doubled the camera distance.
+ // A square-root refit preserves useful width without making figures tiny.
+ const fit=Math.max(1,Math.sqrt(1.2/Math.max(.5,aspect))),proximity=.64;
+ const scale=fit*.72*proximity*framing;
  // Follow loft height with a bounded target lift; no zoom chase after a
  // distant selected defender. The heading remains fixed for the joystick.
  const targetHeight=(reducedMotion||kickoff) ? .8 : .8+clamp((bz-.8)*.42,0,3.2);
- return {eye:[x+offset.x*scale,height*fit*framing,z+offset.z*scale],target:[x,targetHeight,z],fov};
+ return {eye:[x+offset.x*scale,height*fit*proximity*framing,z+offset.z*scale],target:[x,targetHeight,z],fov:Math.max(35,fov-2)};
 }
 export function createLivingCameraRig({response=14,feedforward=true}={}){
  const pose={eye:[0,0,0],target:[0,0,0],fov:42},velocity={eye:[0,0,0],target:[0,0,0]},previous={eye:[0,0,0],target:[0,0,0]},priorSpeed={eye:[0,0,0],target:[0,0,0]};let initialized=false;

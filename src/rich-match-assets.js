@@ -1,3 +1,4 @@
+import {broadcastSurfaceMaterial} from './broadcast-surfaces.js';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {matchAssetRoot} from './match-asset-config.js';
@@ -47,16 +48,16 @@ export function buildRichStadium(scene,field,quality,pack){
  for(const side of [-1,1])for(let z=-l+10;z<l;z+=22){const mesh=new THREE.Mesh(new THREE.PlaneGeometry(20,1.1),boardMat);mesh.position.set(side*(w+4),.8,z);mesh.rotation.y=side<0?Math.PI/2:-Math.PI/2;scene.add(mesh);}
  // Camera-side clipping prevents benches/roof geometry crossing the lens.
  const planes=[new THREE.Plane(new THREE.Vector3(-1,0,0),w+3),new THREE.Plane(new THREE.Vector3(0,0,-1),l+3)];
- for(const mesh of [...structures,...crowds]){mesh.material=mesh.material.clone();mesh.material.clippingPlanes=planes;}
+ for(const mesh of [...structures,...crowds]){mesh.material=broadcastSurfaceMaterial(mesh.material);mesh.material.clippingPlanes=planes;}
  let brightness=.8;const lampsMaterials=structures.map(m=>m.material).filter(m=>m.emissive?.r>.1);
  return {layout:{pitchY:.03},crowds,react(state,dt,reducedMotion){const target=!reducedMotion&&['net','celebration'].includes(state.goalSequence?.stage)?1.1:.8;brightness+=(target-brightness)*(1-Math.exp(-3*Math.min(.1,dt)));for(const m of lampsMaterials)m.emissiveIntensity=brightness;},setCameraView(eye,target){const dx=eye.x-target.x,dz=eye.z-target.z;planes[0].normal.x=dx>=0?-1:1;planes[1].normal.z=dz>=0?-1:1;}};
 }
 export function buildRichGoals(scene,field,pack){
  const nets=[];
  for(const sign of [-1,1]){
-  const group=cloneRichPart(pack,'goal');group.position.z=sign*field.length/2;group.rotation.y=sign>0?Math.PI:0;group.scale.set(field.goalWidth/7.32,field.goalHeight/2.44,1);scene.add(group);
+  const group=cloneRichPart(pack,'goal');group.traverse(part=>{if(part.isMesh)part.material=broadcastSurfaceMaterial(part.material);});group.position.z=sign*field.length/2;group.rotation.y=sign>0?Math.PI:0;group.scale.set(field.goalWidth/7.32,field.goalHeight/2.44,1);scene.add(group);
   const root=cloneRichPart(pack,'net');root.updateMatrixWorld(true);
-  root.traverse(part=>{if(!part.isMesh)return;part.geometry=part.geometry.clone();part.geometry.applyMatrix4(part.matrixWorld);const pos=part.geometry.attributes.position;
+  root.traverse(part=>{if(!part.isMesh)return;part.material=broadcastSurfaceMaterial(part.material);part.geometry=part.geometry.clone();part.geometry.applyMatrix4(part.matrixWorld);const pos=part.geometry.attributes.position;
    for(let i=0;i<pos.count;i++)pos.setXYZ(i,pos.getX(i)*field.goalWidth/7.32,pos.getY(i)*field.goalHeight/2.44,-pos.getZ(i)*sign);
    part.geometry.computeVertexNormals();part.geometry.computeBoundingBox();part.geometry.computeBoundingSphere();part.position.set(0,0,sign*field.length/2);part.quaternion.identity();part.scale.set(1,1,1);part.userData={netSign:sign,restNet:pos.array.slice(),netDeformed:false};nets.push(part);
   });for(const mesh of nets.filter(m=>m.userData.netSign===sign))scene.add(mesh);
