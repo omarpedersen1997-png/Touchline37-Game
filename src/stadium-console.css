@@ -499,3 +499,12 @@
 .game-console .game-match[data-active=false] .manual-score>span,.game-console .game-match[data-active=false] .manual-score>b{background:none;color:var(--tl-text)}
 .game-console .game-match[data-active=false] .manual-save{background:none;color:var(--tl-text)}
 .game-console .game-match-backdrop:has(.game-match[data-active=false]){background:#07131ded}
+
+/* R3 touch feedback is event-driven, independent of HUD and simulation cadence. */
+.game-match[data-direct-controls=true] .manual-actions button[data-input-down=true]{filter:brightness(1.25);scale:.95;transition:none}
+.game-match[data-direct-controls=true] .manual-joystick[data-input-down=true]{border-color:var(--tl-accent);box-shadow:inset 0 0 0 2px #c1f66b33}
+.game-match[data-direct-controls=true] .manual-power[hidden]{display:none!important}
+
+/* The R3 charge meter replaces the focus bar below the map; never covers it. */
+.app-shell.game-console .game-match[data-direct-controls=true] .manual-power{bottom:calc(var(--tl-safe-bottom) + 10px);width:154px;max-width:26vw;height:50px;box-sizing:border-box;padding:5px 7px;gap:3px;align-content:center;background:#0d2637;border-color:var(--tl-accent);border-radius:4px}
+.app-shell.game-console .game-match[data-direct-controls=true][data-charging=true] .manual-player-indicator{visibility:hidden}

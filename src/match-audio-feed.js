@@ -16,3 +16,13 @@ export function createGoalSoundTracker(){
  let previous=null;
  return (goals,phase)=>{if(phase==='waiting'){previous=null;return false;}const changed=previous!==null&&goals>previous;previous=goals;return changed;};
 }
+export function createGoalAudioObserver(){
+ const track=createGoalSoundTracker();
+ return (sound,goals,phase,withWhistle=false)=>{
+  if(!track(goals,phase))return false;
+  sound?.goal();sound?.crowd();
+  // Halftime/full-time already have their own stronger whistle sequence.
+  if(withWhistle&&phase!=='halftime'&&phase!=='finished')sound?.whistle('goal');
+  return true;
+ };
+}

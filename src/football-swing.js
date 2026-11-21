@@ -9,7 +9,7 @@ export function createFootballSwing(bones,base,parentRest){
   const inverse=parentRest.get(name)?.clone().invert()||new Quaternion();
   axes.set(name,worldAxes.map(axis=>axis.clone().applyQuaternion(inverse)));
  }
- return(name,x=0,y=0,z=0)=>{
+ return(name,x=0,y=0,z=0,additive=false)=>{
   const bone=bones[name];if(!bone)return;
   let local=axes.get(name);
   if(!local){const inverse=parentRest.get(name)?.clone().invert()||new Quaternion();local=worldAxes.map(axis=>axis.clone().applyQuaternion(inverse));axes.set(name,local);}
@@ -17,6 +17,6 @@ export function createFootballSwing(bones,base,parentRest){
   if(x)delta.multiply(rotation.setFromAxisAngle(local[0],x));
   if(y)delta.multiply(rotation.setFromAxisAngle(local[1],y));
   if(z)delta.multiply(rotation.setFromAxisAngle(local[2],z));
-  bone.quaternion.copy(base.get(name)).premultiply(delta);
+  if(!additive)bone.quaternion.copy(base.get(name));bone.quaternion.premultiply(delta);
  };
 }

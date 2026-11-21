@@ -1,5 +1,6 @@
 import {matchAssetRoot} from './match-asset-config.js';
 import {createAssetPlayerAnimation} from './asset-player-animation.js';
+import {createLocomotionSelector} from './player-action-sample.js';
 import {createPlayerResponse} from './match-player-pose.js';
 import{createFootballSwing}from'./football-swing.js';
 import motion from'../assets/game/football-motion.json' with{type:'json'};
@@ -33,14 +34,14 @@ export function createFootballPlayer({color='#c1f66b',number=1,shadow=false,keep
  let backMap=numberMap;if(!backMap){const back=document.createElement('canvas');back.width=192;back.height=256;const ink=back.getContext('2d');ink.textAlign='center';ink.font='bold 158px sans-serif';ink.strokeStyle='#15252e';ink.lineWidth=6;ink.fillStyle='#f4f7ec';ink.strokeText(String(number),96,196);ink.fillText(String(number),96,196);backMap=new THREE.CanvasTexture(back);backMap.colorSpace=THREE.SRGBColorSpace;}const jersey=new THREE.Mesh(new THREE.PlaneGeometry(.24,.3),new THREE.MeshBasicMaterial({map:backMap,transparent:true,depthWrite:false}));jersey.position.set(0,1.38,-.145);jersey.rotation.y=Math.PI;model.add(jersey);if(numberMap){const uv=jersey.geometry.attributes.uv,col=(number-1)%4,row=Math.floor((number-1)/4);for(let i=0;i<uv.count;i++)uv.setXY(i,(col+uv.getX(i))/4,1-(row+1-uv.getY(i))/4);uv.needsUpdate=true;}
  human.scale.y=1+(number%3-1)*.015;
  const swing=createFootballSwing(bones,base,parentRest);
- model.userData={response:createPlayerResponse(),professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,assetAnimation:source.userData.richPack?createAssetPlayerAnimation(source.animations,bones):null,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey};
+ model.userData={locomotion:richPack?createLocomotionSelector():null,response:createPlayerResponse(),professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,assetAnimation:source.userData.richPack?createAssetPlayerAnimation(source.animations,bones):null,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey};
  if(emblemMap){const badge=new THREE.Mesh(new THREE.PlaneGeometry(.09,.09),new THREE.MeshBasicMaterial({map:emblemMap,transparent:true,depthWrite:false}));badge.position.set(.095,1.44,.145);model.add(badge);}
  configureMatchTextures(model,anisotropy);
  return model;
 }
-export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=true,snap=false){
+export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=true,snap=false,subtick=0){
  const d=model.userData,speed=Math.hypot(p.vx,p.vy),kick=p.kick>0?Math.sin(Math.min(1,p.kick/12)*Math.PI):p.action==='kick'?Math.sin((1-p.actionTicks/Math.max(1,p.actionDuration))*Math.PI):0,celebrate=isGoalCelebrant(state,team,index,p);
- const clipName=celebrate?'cheer':speed>3.8?'run':speed>.25?'walk':'idle',clip=motion.clips[clipName];
+ const clipName=d.locomotion?d.locomotion(speed,celebrate):celebrate?'cheer':speed>3.8?'run':speed>.25?'walk':'idle',clip=motion.clips[clipName];
  // A planted boot in the shipped capture travels at 3.50m/s (run) and
  // 1.42m/s (walk). The old 5.5m/s run reference made boots slide forwards.
  // Preserve the cycle phase at walk/run transitions and drive it from the
@@ -61,8 +62,9 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
  if(!d.assetAnimation)motion.bones.forEach((name,i)=>{const bone=d.bones[name];if(!bone)return;qa.fromArray(a.rot[i]);qb.fromArray(b.rot[i]);qa.slerp(qb,mix);if(d.motionBlend)bone.quaternion.copy(d.motionFrom[name]).slerp(qa,blend);else bone.quaternion.copy(qa);});
  const hips=d.bones.Hips;if(hips&&a.root&&b.root){const y=a.root[1]+(b.root[1]-a.root[1])*mix;hips.position.y=d.motionBlend?d.motionRoot+(y-d.motionRoot)*blend:y;}
  // Locomotion comes from captured human movement; football actions layer over it.
- if(d.assetAnimation)d.assetAnimation.apply(clipName,d.motionTime,p,state,team,index,elapsed);
+ if(d.assetAnimation)d.assetAnimation.apply(clipName,d.motionTime,p,state,team,index,elapsed,model.rotation.y,snap,subtick);
  if(kick>0&&!d.assetAnimation){d.swing('RightUpLeg',-kick*.95);d.swing('RightLeg',kick*.48);d.swing('Spine2',kick*.08,-kick*.15);}
+ if(d.assetAnimation&&p.action==='skill'&&p.actionTicks>0){const progress=Math.max(0,Math.min(1,1-(p.actionTicks-Math.max(0,Math.min(.045,subtick))/.05)/Math.max(1,p.actionDuration))),wave=Math.sin(progress*Math.PI);d.swing('RightUpLeg',-.28*wave,0,0,true);d.swing('RightLeg',.2*wave,0,0,true);d.swing('Spine2',0,.2*wave,0,true);}
  model.position.y=0;
  if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
  if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
