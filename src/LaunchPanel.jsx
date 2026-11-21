@@ -9,6 +9,7 @@ export function useLaunchStatus(){
  useEffect(()=>{
   let alive=true,timer,controller,sequence=0;
   async function refresh(){
+   if(document.hidden)return;
    const request=++sequence,start=Date.now();controller?.abort();controller=new AbortController();const current=controller;
    const timeout=setTimeout(()=>current.abort(),8000);let delay=15000;
    try{
@@ -20,7 +21,7 @@ export function useLaunchStatus(){
    finally{clearTimeout(timeout)}
    if(alive&&request===sequence)timer=setTimeout(refresh,delay);
   }
-  refresh();const tick=setInterval(()=>setClock(Date.now()),1000);const wake=()=>{if(!document.hidden){setClock(Date.now());clearTimeout(timer);refresh()}};document.addEventListener('visibilitychange',wake);
+  refresh();const tick=setInterval(()=>{if(!document.hidden)setClock(Date.now())},1000);const wake=()=>{clearTimeout(timer);if(document.hidden){sequence++;controller?.abort();}else{setClock(Date.now());refresh()}};document.addEventListener('visibilitychange',wake);
   return()=>{alive=false;controller?.abort();clearTimeout(timer);clearInterval(tick);document.removeEventListener('visibilitychange',wake)};
  },[]);
  return{...sync,now:clock+sync.offset};

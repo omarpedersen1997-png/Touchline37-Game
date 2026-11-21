@@ -44,3 +44,10 @@
 @media(prefers-reduced-motion:reduce) {
  :is(.game-console,.stadium-site,.stadium-auth,.legal-page) * {transition:none!important;scroll-behavior:auto!important}
 }
+
+/* Support copy and placeholders carry readable contrast on every public page. */
+.legal-page :is(.contact-security-note,.contact-field-hint,.legal-small,.contact-consent) {color:var(--tl-muted);opacity:1;font-size:var(--tl-type-label);line-height:1.65}
+.legal-page .contact-form :is(input,textarea)::placeholder {color:var(--tl-muted);opacity:1}
+.legal-page .contact-form>label {color:var(--tl-text)}
+.legal-page #contact-form {scroll-margin-top:24px}
+.stadium-site .hero-mode-links>a {white-space:nowrap}

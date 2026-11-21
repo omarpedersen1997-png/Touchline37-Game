@@ -11,6 +11,7 @@ public class MainActivity extends BridgeActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         registerPlugin(TouchlineApiPlugin.class);
         registerPlugin(TouchlineMatchDisplayPlugin.class);
+        registerPlugin(TouchlineExportPlugin.class);
         super.onCreate(savedInstanceState);
         keepClubhouseColors();
     }
