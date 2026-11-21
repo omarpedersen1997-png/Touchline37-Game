@@ -53,7 +53,8 @@ export function createPlayerGrounding(human,source){
    for(const support of supports){
     weighted.set(0,0,0);
     for(const influence of support){position.copy(influence.point).applyMatrix4(byName[influence.name].matrix);weighted.addScaledVector(position,influence.weight);}
-    lowest=Math.min(lowest,weighted.y*human.scale.y);
+    weighted.multiply(human.scale).applyQuaternion(human.quaternion);
+    lowest=Math.min(lowest,weighted.y);
    }
    human.position.y=floor-lowest;
   }

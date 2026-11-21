@@ -1,3 +1,4 @@
+import {SIZE_POLICY} from './size-policy.mjs';
 // Størrelsesrapport for serverpakken og app-HTML'en (M3, trin 5).
 //
 //   node dev/bundle-report.mjs                    – viser rapporten
@@ -13,8 +14,8 @@ import { gzipSync } from 'node:zlib';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const BASELINE_FILE = resolve(ROOT, 'tests', 'bundle-baseline.json');
-export const DOCUMENTED_LIMIT_BYTES = 10 * 1024 * 1024;
-export const LIMIT_VERIFIED = false;
+export const DOCUMENTED_LIMIT_BYTES = SIZE_POLICY.worker.documentedLimitBytes;
+export const LIMIT_VERIFIED = SIZE_POLICY.worker.limitVerified;
 export const MAX_COMPONENT_GROWTH = 0.05;
 
 // Genererede moduler, som build.mjs lægger ind i serverpakken (dist/server/index.js).
@@ -70,6 +71,7 @@ export function measure() {
   return {
     worker: { bytes: worker.length, gzip: gz(worker), limit: DOCUMENTED_LIMIT_BYTES, limitVerified: LIMIT_VERIFIED, components },
     app,
+    clientSizePolicy: SIZE_POLICY,
   };
 }
 

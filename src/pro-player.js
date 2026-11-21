@@ -1,3 +1,4 @@
+import {createPlayerResponse} from './match-player-pose.js';
 import{createFootballSwing}from'./football-swing.js';
 import motion from'../assets/game/football-motion.json' with{type:'json'};
 import * as THREE from 'three';
@@ -26,7 +27,7 @@ export function createFootballPlayer({color='#c1f66b',number=1,shadow=false,keep
  const back=document.createElement('canvas');back.width=192;back.height=256;const ink=back.getContext('2d');ink.textAlign='center';ink.font='bold 158px sans-serif';ink.strokeStyle='#15252e';ink.lineWidth=6;ink.fillStyle='#f4f7ec';ink.strokeText(String(number),96,196);ink.fillText(String(number),96,196);const backMap=new THREE.CanvasTexture(back);backMap.colorSpace=THREE.SRGBColorSpace;const jersey=new THREE.Mesh(new THREE.PlaneGeometry(.24,.3),new THREE.MeshBasicMaterial({map:backMap,transparent:true,depthWrite:false}));jersey.position.set(0,1.38,-.145);jersey.rotation.y=Math.PI;model.add(jersey);
  human.scale.y=1+(number%3-1)*.015;
  const swing=createFootballSwing(bones,base,parentRest);
- model.userData={professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey};
+ model.userData={response:createPlayerResponse(),professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey};
  configureMatchTextures(model,anisotropy);
  return model;
 }
@@ -56,6 +57,7 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
  if(kick>0){d.swing('RightUpLeg',-kick*.95);d.swing('RightLeg',kick*.48);d.swing('Spine2',kick*.08,-kick*.15);}
  model.position.y=0;
  if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
+ if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
  if(!(p.dive>0)&&!(p.tackle>0))d.grounding.apply();else d.human.position.y=0;
  d.jersey.position.y=1.38;
  d.label.visible=team==='home'&&index===state.controlled;

@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { assessClientSize } from '../dev/size-policy.mjs';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
@@ -14,8 +15,9 @@ const output = resolve('.dev-data/android-web/public');
 test('native login does not parse Three, motion tracks or inline player models', () => {
   assert.equal(report.noThreeAtLogin, true);
   assert.equal(report.noModelsAtLogin, true);
-  assert(report.initialJavaScriptBytes < 1_200_000, 'Startup JavaScript has a real byte budget');
-  assert(report.allJavaScriptBytes < 2_500_000);
+  const size=assessClientSize(report);
+  assert.deepEqual(size.errors, [], 'Startup work stays bounded; lazy match code and assets have no arbitrary total cap');
+  for(const warning of size.warnings)console.warn('Størrelsesgennemgang:',warning);
   assert(!report.initialInputs.some(name => /node_modules\/three\/|src\/pro-player\.js|football-motion\.json/.test(name)));
   assert.equal(hash(readFileSync('native-web/index.html')), baseline, 'The normal build assets are not overwritten');
 });

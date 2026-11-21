@@ -68,3 +68,17 @@ test('goal celebrations keep real boots grounded, and approaching teammates cont
   dispose(model,source);
  }finally{restore();}
 });
+
+test('R3 banking and acceleration keep both shipped player LODs grounded during direction changes',async()=>{
+ const restore=setup();try{for(const name of ['football-auto.glb','football-pro.glb']){
+  const source=await asset(name),model=createFootballPlayer({source,number:8,optimize:false}),p={x:0,y:0,vx:0,vy:-6,ax:0,ay:0,facingX:0,facingY:-1,kick:0,dive:0,tackle:0},s={...state,version:11,engineRevision:3},point=new THREE.Vector3();let sole;
+  model.traverse(mesh=>{if(mesh.material?.name==='Sneaker outsole')sole=mesh;});assert(sole);
+  for(let frame=0;frame<180;frame++){
+   p.ax=Math.sin(frame*.08)*12;p.ay=Math.cos(frame*.08)*12;p.x+=p.vx/60;p.y+=p.vy/60;model.position.set(p.x,0,p.y);model.rotation.y=Math.PI;
+   animateFootballPlayer(model,p,s,'home',0,1/60);model.updateMatrixWorld(true);let floor=Infinity;
+   for(let i=0;i<sole.geometry.attributes.position.count;i++){sole.getVertexPosition(i,point).applyMatrix4(sole.matrixWorld);floor=Math.min(floor,point.y);}
+   assert(floor>.017&&floor<.05,`${name} tilted foot floor ${floor}`);assert(Math.abs(model.userData.human.rotation.x)<=.101);assert(Math.abs(model.userData.human.rotation.z)<=.111);
+  }
+  dispose(model,source);
+ }}finally{restore();}
+});

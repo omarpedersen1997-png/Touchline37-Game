@@ -1,3 +1,4 @@
+import {SIZE_POLICY,assessClientSize} from './size-policy.mjs';
 // Kun Android-test: separate ESM-moduler og lokale modeller, ingen base64-GLB ved login.
 import { build, transform } from 'esbuild';
 import { readFile, writeFile, mkdir, cp, rm, lstat } from 'node:fs/promises';
@@ -85,7 +86,11 @@ const report = {
     imports: item.imports.map(value => ({ ...value, path: value.external ? value.path : '/' + relative(output, resolve(root, value.path)).replaceAll('\\', '/') })),
   })),
   noModelsAtLogin: true, noThreeAtLogin: true,
+  sizePolicy: SIZE_POLICY,
 };
+report.sizeAssessment=assessClientSize(report);
+for(const warning of report.sizeAssessment.warnings)console.warn('Størrelsesgennemgang:',warning);
+if(report.sizeAssessment.errors.length)throw Error('Opstartsbudget overskredet: '+JSON.stringify(report.sizeAssessment.errors));
 await mkdir(resolve(root, '.dev-data/review'), { recursive: true });
 await writeFile(resolve(root, '.dev-data/review/performance-assets.json'), JSON.stringify(report, null, 2) + '\n');
 console.log(JSON.stringify({ ...report, initialInputs: undefined, modules: undefined }));

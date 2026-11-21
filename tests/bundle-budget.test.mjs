@@ -1,3 +1,4 @@
+import {SIZE_POLICY} from '../dev/size-policy.mjs';
 // Størrelseskontrol af serverpakken (dist/server/index.js).
 //
 // Den faktiske komprimerede grænse for den konkrete Sites/Cloudflare-hosting er
@@ -12,10 +13,10 @@ import { gzipSync } from 'node:zlib';
 import { existsSync } from 'node:fs';
 import { measure, growthViolations, BASELINE_FILE, MAX_COMPONENT_GROWTH } from '../dev/bundle-report.mjs';
 
-export const DOCUMENTED_LIMIT_BYTES = 10 * 1024 * 1024; // ubekræftet hostinggrænse
-export const LIMIT_VERIFIED = false;
-export const FAIL_AT_BYTES = 9_400_000; // forsigtig grænse, mens hostinggrænsen er ubekræftet
-export const WARN_AT_BYTES = 9_000_000;
+export const DOCUMENTED_LIMIT_BYTES = SIZE_POLICY.worker.documentedLimitBytes; // ubekræftet hostinggrænse
+export const LIMIT_VERIFIED = SIZE_POLICY.worker.limitVerified;
+export const FAIL_AT_BYTES = SIZE_POLICY.worker.failAtBytes; // forsigtig grænse, mens hostinggrænsen er ubekræftet
+export const WARN_AT_BYTES = SIZE_POLICY.worker.warnAtBytes;
 
 const mb = (bytes) => (bytes / 1_000_000).toFixed(2) + ' MB';
 
