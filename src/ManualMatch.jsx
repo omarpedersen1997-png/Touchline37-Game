@@ -13,7 +13,7 @@ import{createIdleMatchSave}from'./match-scheduling.js';
 import{CLUB_COLORS,ClubBadge}from'./ClubStudio.jsx';
 import{createManualSessionAsync}from'./manual-session.js';
 import{localMatchStorage,readMatchPreferences,saveMatchPreferences,matchControlMask,isMatchShortcut}from'./manual-preferences.js';
-import{enterMatchDisplay,exitMatchDisplay,toggleMatchExpansion}from'./match-display.js';
+import{enterMatchDisplay,exitMatchDisplay,toggleMatchExpansion,matchDisplayExpanded}from'./match-display.js';
 import{saveManualRecording,manualRetryDelay}from'./manual-save.js';
 import{commandForTactic,commandForFormation}from'../shared/football-tactics.js';
 import{createGoalReplayBuffer}from'./goal-replay.js';
@@ -50,7 +50,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  const personal=!!match.manual?.config.personalPosition,keeper=match.manual?.config.personalPosition==='MÅL',passLabel=version>=5?(hud.owns?'Aflever':personal?'Kald':'Skift'):personal?'Aflever / kald':'Aflever / skift';
  useEffect(()=>{clock.current.observe(now,performance.now());},[now]);
  const time=()=>clock.current.now(performance.now());
- useEffect(()=>{if(!showField)return;void enterMatchDisplay().catch(()=>{});return()=>{void exitMatchDisplay().catch(()=>{});};},[match.id,showField]);
+ useEffect(()=>{if(!showField)return;let mounted=true;const refresh=()=>{if(mounted)setExpanded(matchDisplayExpanded());};void enterMatchDisplay().then(refresh).catch(()=>{});document.addEventListener('fullscreenchange',refresh);return()=>{mounted=false;document.removeEventListener('fullscreenchange',refresh);void exitMatchDisplay().catch(()=>{});};},[match.id,showField]);
  useEffect(()=>{
   const media=window.matchMedia?.('(orientation: portrait)');
   const update=()=>{const next=media?media.matches:window.innerHeight>window.innerWidth;resetControls();setPortrait(next);if(next){setSettingsOpen(false);setHelp(false);}};

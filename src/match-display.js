@@ -109,3 +109,6 @@ export async function toggleMatchExpansion(element=globalThis.document?.document
 export async function releaseMatchExpansion(){
  if(ownedFullscreen){ownedFullscreen=false;if(globalThis.document?.fullscreenElement)try{await document.exitFullscreen();}catch{}}
 }
+export function matchDisplayExpanded(){
+ return !!(active&&nativeSession||globalThis.document?.fullscreenElement);
+}
