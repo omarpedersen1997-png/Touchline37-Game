@@ -1,0 +1,14 @@
+{
+  "game": {
+    "tests": 793,
+    "pass": 793,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "sourceCommit": "ada5ccc89245aada1157a7dbdd6d5e3ebbaade7b",
+  "physicalAndroidVerified": false,
+  "publicWebsiteVersion": 56,
+  "backendChanged": false,
+  "nativeCodeChanged": false
+}

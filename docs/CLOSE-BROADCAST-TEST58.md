@@ -47,7 +47,7 @@ Overfladen bruger én tegning i stedet for tolv og omkring 2.880 trekanter ved
 Kridtlinjerne er lidt bredere og mere neutrale/hvide. Et analytisk filter
 bevarer dækningsgraden for linjer under én pixel, så fjerne linjer ikke
 veksler mellem hvide og manglende rasterprøver. Det bruger bredere
-dækningsgeometri, men den synlige linje er fortsat 15 cm; MSAA forbliver slået
+dækningsgeometri, men den synlige linje er 15 cm; MSAA forbliver slået
 fra i Auto. Midtercirklen bruger samme filter. Lysbalancen giver mindre
 fladt fyldlys og tydeligere varmt hovedlys, afbalanceret modlys, mere grøn
 farvedybde og et roligere baggrunds-/dybdeudtryk.
@@ -121,6 +121,23 @@ de binære ressourcer i `public/`.
 - R3: `274b4d45a4fae126f62e3e9d79f7c76e9bc8eca0aa6d59fcfcc1203961fe1e10`.
 
 Ændrede/oprettede kildefiler:
+
+Slutkontrol på kildecommit `ada5ccc89245aada1157a7dbdd6d5e3ebbaade7b`:
+**793 tests, 793 beståede, 0 fejl, 0 skip, 0 annulleret**.
+APK: 47.136.397 bytes (47,14 MB), kode 58, `1.0.0-test-broadcast58`.
+SHA-256: `18b135ce18fd73e6c4d94e191c6e600384b4c668d3be4d977ee26f8a403d422e`.
+Samme TEST-id/certifikat; ZIP/CRC og alle 43 pakkede webfiler er byte-verificeret.
+
+Opstarts-JavaScript: 940.237 bytes mod 940.166 i TEST57. Samlet JS: 1.868.869
+mod 1.863.927. Den binære asset-pakke er uændret 46.637.951 bytes. Three.js og
+modeller er stadig adskilt fra login/opstart; ingen nye runtimeafhængigheder.
+
+Isoleret Chromium kontrollerer midtbanen på tick 550 og en målsituation på tick
+928 før/efter med identiske boldpositioner og renderopløsninger. Pakket app
+kontrolleres i Auto/Skarp med lyd, fullscreen/retur og eksport. Ingen registrerede
+runtime-/konsolfejl eller eksterne værtskald i disse fixtures. Ingen fysisk
+Android-verifikation. Den præcise filfortegnelse ligger i
+`test-evidence/broadcast-TEST58-files.json`.
 
 - `src/living-camera.js`, `src/match-lighting.js`, `src/manual-scene.js`.
 - `src/broadcast-pitch.js`, `src/broadcast-shadows.js`, `src/broadcast-surfaces.js`, `src/broadcast-chalk.js` (nye).

@@ -1,0 +1,34 @@
+{
+  "projectionComparison": [
+    {
+      "width": 915,
+      "height": 412,
+      "beforePixels": 24.72248348085106,
+      "afterPixels": 41.219016672645274,
+      "ratio": 1.6672684483568043
+    },
+    {
+      "width": 1280,
+      "height": 576,
+      "beforePixels": 34.56347205089857,
+      "afterPixels": 57.626586416125434,
+      "ratio": 1.6672684483568045
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "beforePixels": 20.799468669338506,
+      "afterPixels": 53.77439234920136,
+      "ratio": 2.58537336717994
+    },
+    {
+      "width": 320,
+      "height": 640,
+      "beforePixels": 15.772108943574224,
+      "afterPixels": 40.77679040697733,
+      "ratio": 2.585373367179939
+    }
+  ],
+  "source": "geometric projection, not FPS or physical phone measurement",
+  "sourceCommit": "ada5ccc89245aada1157a7dbdd6d5e3ebbaade7b"
+}

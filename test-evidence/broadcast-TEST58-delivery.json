@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "ada5ccc89245aada1157a7dbdd6d5e3ebbaade7b",
+  "pdf": {
+    "bytes": 35821,
+    "sha256": "f6dd41b76c33c5a91989af898e0b69e02d6419b5e73ed475da5bae07097ead78",
+    "pages": 4
+  },
+  "publicWebsite": {
+    "status": "active",
+    "version": 56,
+    "url": "https://playtouchline.dk"
+  },
+  "physicalAndroidVerified": false,
+  "downloadVerification": "Kontrolleres efter push; se endelig byte-/SHA-kontrol."
+}

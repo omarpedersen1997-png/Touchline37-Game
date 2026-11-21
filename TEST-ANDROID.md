@@ -1,3 +1,17 @@
+# TEST58 – tættere kamera og skarpere banepræsentation
+
+- APK: [Touchline37-Motor11-TEST58.apk](dev/artifacts/Touchline37-Motor11-TEST58.apk) – **47,14 MB**, kode 58, `1.0.0-test-broadcast58`.
+- PDF: [Opdateringsrapport TEST58](dev/artifacts/Touchline37-Opdateringsrapport-TEST58.pdf).
+- SHA-256: `18b135ce18fd73e6c4d94e191c6e600384b4c668d3be4d977ee26f8a403d422e`.
+- Samme TEST-id/certifikat. Opdater oven på Touchline TEST uden afinstallation.
+- Tættere broadcast/pro-kamera, mindre udzoomning i portræt, sammenhængende PBR-græs, analytisk udjævnede kridtlinjer og afstemte materialer/lys.
+- Fod-/krops-/hoved-/målskygger deler én instansieret tegning. Græstegninger reduceres fra tolv til én. Fysik, knapper og kontrolakser er bevaret.
+- **793 tests består**, ingen fejl/skip. Signatur, CRC og alle 43 webfiler kontrolleret. Før/efter bruger samme R3-states og opløsning; pakket app kontrolleret i Auto/Skarp med lyd, fullscreen/retur og eksport.
+- Fysisk installation/FPS/varme er ikke verificeret. APK 37, gamle motorer/optagelser, main og offentlig hjemmeside v56 er urørte. Ingen deployment.
+- [Før/efter-billeder, alle filer og tekniske grænser](docs/CLOSE-BROADCAST-TEST58.md).
+
+---
+
 # TEST57 – figur, bold, målmand og kamera
 
 - APK: [Touchline37-Motor11-TEST57.apk](dev/artifacts/Touchline37-Motor11-TEST57.apk) – **47,13 MB**, kode 57, `1.0.0-test-spatial57`.
