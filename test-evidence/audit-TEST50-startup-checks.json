@@ -1,0 +1,10 @@
+{
+  "skipMs": 224,
+  "removedFromDOM": true,
+  "removedInert": true,
+  "noSplashOnNavigation": true,
+  "optOutSurvivesReload": true,
+  "reEnabledFromMenu": true,
+  "errors": [],
+  "blocked": []
+}

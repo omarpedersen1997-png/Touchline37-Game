@@ -1,3 +1,17 @@
+# TEST50 – samlet audit og kamprettelser
+
+[Hent signeret TEST50-APK](dev/artifacts/Touchline37-Motor11-TEST50.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST50.pdf)
+
+Installér oven på Touchline TEST uden afinstallation. Samme test-app-id og testcertifikat; APK 37 erstattes ikke. Ingen merge eller produktionsudgivelse.
+
+Auto har nu et reelt renderbudget og reagerer også ved meget lav FPS. Kampens indhentning har et CPU-tidsbudget; skjulte apps stopper tegningen. Ny mållyd, replaypause/tempo, kampbackup og eksport af ydelsesrapport fra telefonen. Android bruger systemfilvælgeren. Menuportræt og særskilt kampbredformat bevares.
+
+721 apptests og 86 websitetests består. Sidste CSS-afstandsrettelse er browserkontrolleret. Fysisk installation, FPS, varme og filvælger på OnePlus Nord 4 er endnu ikke verificeret. 60–120 FPS og udgivelsesklarhed er ikke dokumenteret.
+
+[Alle fund, ændrede filer og manuel testliste](docs/LAUNCH-AUDIT-TEST50.md). Offentlig hjemmeside er uændret; privat preview er version 8.
+
+---
+
 ## TEST49 — sammenhængende UI og responsive menuer
 
 Fælles marineblå/lime-tokens, bedre spillerafstande, fuld reserveknap og footer-padding. Menuer kan bruges på højkant; kampen har midlertidigt bredformat og udvidet visning. En kort splash kan springes over og slås fra/til i Mere. Kampklienten fordeler efterslæb over små portioner og viser registrerede live-hændelser; enkel grafik cacher banen og bevæger markører mellem ticks. Den eksisterende styrkeformel deles nu af server og UI. 708 apptests og 84 websitetests består. 24 formationschecks og centrale flows er afprøvet i Chromium med fiktive data; ingen fysisk Android-FPS/installation er verificeret. Signeret APK og PDF findes i dev/artifacts. Privat hjemmesidepreview er version 7; playtouchline.dk er uændret på version 56. Se docs/UI-TEST49.md, docs/CORE-LOOP-AUDIT.md og test-evidence/polish-TEST49-report.json.

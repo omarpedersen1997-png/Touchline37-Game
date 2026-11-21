@@ -1,0 +1,86 @@
+{
+  "checks": [
+    {
+      "width": 384,
+      "height": 724,
+      "label": "Klubcenter",
+      "page": "center",
+      "error": false,
+      "scrollWidth": 384
+    },
+    {
+      "width": 384,
+      "height": 724,
+      "label": "Transfers",
+      "page": "transfers",
+      "error": false,
+      "scrollWidth": 384
+    },
+    {
+      "width": 384,
+      "height": 724,
+      "label": "Spillerkarriere",
+      "page": "player-career",
+      "error": false,
+      "scrollWidth": 384
+    },
+    {
+      "width": 384,
+      "height": 724,
+      "label": "Klubudvikling",
+      "page": "upgrades",
+      "error": false,
+      "scrollWidth": 384
+    },
+    {
+      "width": 384,
+      "height": 724,
+      "label": "Mål & karriere",
+      "page": "goals",
+      "error": false,
+      "scrollWidth": 384
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "label": "Klubcenter",
+      "page": "center",
+      "error": false,
+      "scrollWidth": 915
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "label": "Transfers",
+      "page": "transfers",
+      "error": false,
+      "scrollWidth": 915
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "label": "Spillerkarriere",
+      "page": "player-career",
+      "error": false,
+      "scrollWidth": 915
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "label": "Klubudvikling",
+      "page": "upgrades",
+      "error": false,
+      "scrollWidth": 915
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "label": "Mål & karriere",
+      "page": "goals",
+      "error": false,
+      "scrollWidth": 915
+    }
+  ],
+  "errors": [],
+  "blocked": []
+}

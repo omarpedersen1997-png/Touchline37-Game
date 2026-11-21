@@ -1,0 +1,76 @@
+{
+  "softwareBrowserOnly": true,
+  "frames": 24,
+  "elapsedMs": 8266.3,
+  "meanFrameMs": 359.4043478260869,
+  "samples": [
+    {
+      "fps": 1,
+      "frameMs": 934,
+      "renderMs": 13.7,
+      "drawCalls": 168,
+      "triangles": 157156,
+      "resolutionScale": 1
+    },
+    {
+      "fps": 3,
+      "frameMs": 295,
+      "renderMs": 3.7,
+      "drawCalls": 168,
+      "triangles": 157156,
+      "resolutionScale": 1
+    },
+    {
+      "fps": 4,
+      "frameMs": 258,
+      "renderMs": 4.1,
+      "drawCalls": 168,
+      "triangles": 157156,
+      "resolutionScale": 1
+    },
+    {
+      "fps": 3,
+      "frameMs": 319,
+      "renderMs": 3.7,
+      "drawCalls": 168,
+      "triangles": 157156,
+      "resolutionScale": 1
+    },
+    {
+      "fps": 4,
+      "frameMs": 269,
+      "renderMs": 4.3,
+      "drawCalls": 168,
+      "triangles": 157156,
+      "resolutionScale": 1
+    },
+    {
+      "fps": 4,
+      "frameMs": 281,
+      "renderMs": 3.6,
+      "drawCalls": 168,
+      "triangles": 157156,
+      "resolutionScale": 1
+    }
+  ],
+  "plans": [
+    {
+      "width": 1512,
+      "height": 675,
+      "quality": "auto",
+      "is4k": false,
+      "limited": false,
+      "antialias": false
+    },
+    {
+      "width": 1512,
+      "height": 675,
+      "quality": "auto",
+      "is4k": false,
+      "limited": false,
+      "antialias": false
+    }
+  ],
+  "errors": [],
+  "blocked": []
+}
