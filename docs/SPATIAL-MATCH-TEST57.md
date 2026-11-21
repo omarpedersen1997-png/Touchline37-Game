@@ -12,6 +12,9 @@ Rich-modellernes visuelle proportioner får 14–18,5 % mere bredde og 10–13 %
 mere dybde; målmænd får 20–24,5 % og 15–18 %. Højden varierer højst 1,35 %.
 Variationen følger trøjenummer, så den er stabil på tværs af indlæsning/LOD.
 Dette ændrer hverken kollisionskrop, rækkevidde, spillerattributter eller fart.
+Skridtfrekvensen kompenserer for den større dybdeskala. En ny test fangede
+fodglidning efter skaleringen; den faktiske støttefods medianhastighed testes
+nu ved både løb og sprint.
 
 Rygnummer og klubmærke var selvstændige flader på figurens rod. De kunne stå
 tilbage, mens brystet drejede, lænede sig eller dykkede. De bindes nu til
@@ -20,7 +23,8 @@ Overgangen mellem høj/lav LOD kopierer også overkroppens hældning.
 
 Det gamle dyks rodbevægelse brugte 16 ticks, mens R3-dykket varer 10. Det var
 desuden en rotation omkring fødderne med konstant løft ved start. Den nye
-præsentation bruger dykkets faktiske varighed og sub-tick-tid, roterer omkring
+præsentation bruger dykkets faktiske varighed og sub-tick-tid, fører begge
+hænder frem over hovedet mod redningen, roterer omkring
 bækkenet og spejler efter spillerens lokale sideretning. Ingen simulering eller
 redningssandsynlighed ændres. Den faktiske skinnede geometri testes over græsset.
 

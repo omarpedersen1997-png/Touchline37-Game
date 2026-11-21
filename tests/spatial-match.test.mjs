@@ -132,6 +132,27 @@ test('actual keeper dive geometry stays finite and above the turf through mirror
    animateFootballPlayer(model,p,s,'home',0,1/60,true,frame===0,(ticks%1)*.05);model.updateMatrixWorld(true);
    let floor=Infinity;model.userData.human.traverse(mesh=>{if(!mesh.isSkinnedMesh)return;const n=mesh.geometry.attributes.position.count;for(let i=0;i<n;i+=7){mesh.getVertexPosition(i,point).applyMatrix4(mesh.matrixWorld);assert(point.toArray().every(Number.isFinite));floor=Math.min(floor,point.y);}});
    assert(floor>-.04,`heading${heading} side${side} frame${frame} below turf ${floor}`);
+   if(frame===15){
+    const head=model.userData.bones.Head.getWorldPosition(new THREE.Vector3());
+    for(const hand of ['LeftHand','RightHand']){const point=model.userData.bones[hand].getWorldPosition(new THREE.Vector3());assert((point.x-head.x)*side>.1,`${hand} must reach towards the save, heading${heading} side${side}`);}
+   }
+  }
+ }finally{Object.assign(globalThis,prior);}
+});
+
+test('broader rich bodies retain low ground-relative boot drift at running and sprinting pace',async()=>{
+ const prior={self:globalThis.self,document:globalThis.document};globalThis.self=globalThis;globalThis.document={createElement:()=>({getContext:()=>new Proxy({},{get:()=>()=>{},set:()=>true})})};
+ try{
+  const source=await richModel('player-auto.glb');
+  for(const speed of [6,8]){
+   const model=createFootballPlayer({source,number:8,optimize:false}),p={x:0,y:0,vx:0,vy:-speed,facingX:0,facingY:-1,kick:0,dive:0,tackle:0},s=fieldState(),drift=[];let previous;
+   for(let frame=0;frame<600;frame++){
+    p.y-=speed/120;model.position.set(0,0,p.y);model.rotation.y=Math.PI;animateFootballPlayer(model,p,s,'home',0,1/120,true,frame===0);model.updateMatrixWorld(true);
+    const feet=['LeftFoot','RightFoot'].map(n=>model.userData.bones[n].getWorldPosition(new THREE.Vector3()));
+    if(previous&&frame>50)for(let i=0;i<2;i++)if(feet[i].y<.18&&previous[i].y<.18&&feet[i].y<feet[1-i].y-.08)drift.push(Math.abs(feet[i].z-previous[i].z)*120);
+    previous=feet;
+   }
+   drift.sort((a,b)=>a-b);assert(drift.length>100);const median=drift[drift.length>>1];console.log(JSON.stringify({richBootSpeed:speed,medianDrift:median}));assert(median<.9,`${speed}m/s planted boot drift ${median}`);
   }
  }finally{Object.assign(globalThis,prior);}
 });

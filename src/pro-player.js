@@ -60,7 +60,7 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
  const measured=d.motionX===null?NaN:Math.hypot(model.position.x-d.motionX,model.position.z-d.motionZ),expected=speed*elapsed;
  const tracked=Number.isFinite(p.x)&&Number.isFinite(p.y),distance=elapsed<=0?0:!snap&&Number.isFinite(measured)&&(tracked||measured>1e-6)&&measured<=Math.max(.35,expected*2.5)?measured:expected;
  d.motionX=model.position.x;d.motionZ=model.position.z;d.motionClip=clipName;
- d.motionTime+=celebrate||speed<=.25?elapsed:distance/(clipName==='run'?3.5:1.42);
+ d.motionTime+=celebrate||speed<=.25?elapsed:distance/((clipName==='run'?3.5:1.42)*(d.richPack?d.human.scale.z:1));
  if(!visible)return;
  d.motionBlend=snap?0:Math.max(0,d.motionBlend-elapsed);
  const sample=(d.motionTime%clip.duration)/clip.duration*(clip.frames.length-1),frame=Math.floor(sample),mix=sample-frame,a=clip.frames[frame],b=clip.frames[Math.min(clip.frames.length-1,frame+1)],fade=1-d.motionBlend/.12,blend=fade*fade*(3-2*fade),qa=d.poseA,qb=d.poseB;
@@ -85,6 +85,14 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
  if(d.richPack&&p.dive>0){
   const dive=keeperDivePose(p,model.rotation.y,state.replayHold||state.freeze>0?0:subtick,d.divePose);
   model.rotation.z=dive.roll;model.position.x+=dive.x;model.position.z+=dive.z;model.position.y=dive.height;
+  // Both hands reach beyond the head into the save. The authored clip's
+  // symmetric lateral arms otherwise turn into one up/one down after rolling.
+  const ramp=Math.min(1,dive.progress/.18,(1-dive.progress)/.18),reach=Math.max(0,ramp*ramp*(3-2*ramp));
+  for(const name of ['LeftArm','RightArm']){
+   const arm=d.bones[name];if(!arm)continue;
+   qa.copy(arm.quaternion);d.swing(name,-.25,0,(d.sides[name]||1)*2.7);
+   arm.quaternion.copy(qa.slerp(arm.quaternion,reach)).normalize();
+  }
  }else if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
  if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
  if(!(p.dive>0)&&!(p.tackle>0))d.grounding.apply();else d.human.position.y=0;
