@@ -10,3 +10,9 @@ export function createMatchAudioFeed(){
   if(!cue)return false;lastTime=now;return sound.impact?.(cue,action.power)||false;
  },reset(){initialized=false;lastTime=-Infinity;}};
 }
+
+// A restored score is the baseline, never a new goal announcement.
+export function createGoalSoundTracker(){
+ let previous=null;
+ return (goals,phase)=>{if(phase==='waiting'){previous=null;return false;}const changed=previous!==null&&goals>previous;previous=goals;return changed;};
+}

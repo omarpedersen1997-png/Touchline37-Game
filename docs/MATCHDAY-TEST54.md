@@ -6,7 +6,7 @@ Udgangspunkt: TEST53 `336d8debb287cbb9103539713de63061d32a4701`, som bevarer TES
 
 - **Forberedelse før første billede:** Model-/shaderforberedelsen kunne bruge flere sekunder efter første gendannelse og efterlade interaktionen bag kampuret. `finishMatchPreparation` indhenter denne tid med neutrale inputs i portioner på højst fire, med task-yield og annullering, mens indlæsningen stadig vises. Ingen ticks droppes. Det interaktive loop beholder højst fire inputs/2 ms-budget pr. billedkald. Testen giver præcis samme fulde uploadpakke og sluttilstand som neutral reference.
 - **Kort boldspor:** R3 kan vise et kort, diskret spor efter hurtige frie bolde. Ét Line-draw, højst 16 genbrugte samples og ca. 120 ms historik; ingen nye objekter i hvert frame. Sporet bruger den faktisk viste boldposition, nulstilles ved kontakt/afsæt og skjules under ejerskab, målsekvens, pause og reduceret bevægelse. Det ændrer ikke boldens fysik eller kollisioner.
-- **Kontaktlyd:** Seneste registrerede spark og stolpe-/overliggerkontakt kan udløse Web Audio-lyde. Der er throttling, alderskontrol og ingen afspilning af den gamle sidste handling ved åbning/retur. Mål får en kort, filtreret syntetisk publikumsreaktion. Bufferen oprettes først ved brug og genbruges; ingen lydfiler eller netværkskald.
+- **Kontaktlyd:** Seneste registrerede spark og stolpe-/overliggerkontakt kan udløse Web Audio-lyde. Der er throttling, alderskontrol og ingen afspilning af den gamle sidste handling ved åbning/retur. Mål får en kort, filtreret syntetisk publikumsreaktion. En gendannet stilling sættes som udgangspunkt og må ikke udløse gammel måljubel. Bufferen oprettes først ved brug og genbruges; ingen lydfiler eller netværkskald.
 - **Samme lydvalg:** Den eksisterende lokale lydnøgle bevares. Knappen hedder nu kamplyd, fordi den også styrer kontaktlyde. Mute, blokeret lyd, manglende API, baggrund og dispose håndteres. Eksisterende dommerfløjt og beskyttelsen mod falsk afsparksfløjt ved genåbning bevares.
 - **Kamp-HUD:** Livekortet har dækkende marineblå baggrund. Boldbesiddelse vises konsekvent med én dansk decimal, også 100,0 %. Status fortæller om indhentning af kampuret ved mindst ét sekunds efterslæb og ryddes ved ændret efterslæbstilstand; den påstår ikke længere fejlagtigt, at en allerede kørende kamp genoptages. FINTE-feedback skaleres uden at overskrive knappens placeringstransform.
 
@@ -50,3 +50,32 @@ En længere 10–15 minutters prøve er nødvendig for meningsfuld varme-/batter
 ## Filer
 
 Se de to udviklingsbranchers diff samt `test-evidence/matchday-TEST54-*`. Game-kilden ændrer App, GameLobby, ClubJourney, ManualMatch, MatchLivePulse, MatchSoundControl, match-sound, match-statistics, manual-scene og stadium-console.css; tilføjer ClubBriefing, MatchAnalysis, match-analysis, match-audio-feed, match-preparation og ball-trail; opdaterer testmanifest/pakke og tilføjer matchday-tests. Website ændrer MatchPreview, stadium-site.css og de relevante UI-tests. Dokumentation, APK/PDF og evidens følger denne aflevering.
+
+### Komplet kildediff for appen
+
+- `dev/test-release.json`
+- `docs/MATCHDAY-TEST54.md`
+- `package.json`
+- `scripts/test-matchday-ui.mjs`
+- `src/App.jsx`
+- `src/ClubBriefing.jsx`
+- `src/ClubJourney.jsx`
+- `src/GameLobby.jsx`
+- `src/ManualMatch.jsx`
+- `src/MatchAnalysis.jsx`
+- `src/MatchLivePulse.jsx`
+- `src/MatchSoundControl.jsx`
+- `src/ball-trail.js`
+- `src/manual-scene.js`
+- `src/match-analysis.js`
+- `src/match-audio-feed.js`
+- `src/match-preparation.js`
+- `src/match-sound.js`
+- `src/match-statistics.js`
+- `src/stadium-console.css`
+- `tests/manual-ui.test.jsx`
+- `tests/match-statistics.test.jsx`
+- `tests/matchday-ui.test.jsx`
+- `tests/matchday.test.mjs`
+
+Website: `src/MatchPreview.jsx`, `src/stadium-site.css`, `tests/launch-audit-ui.test.jsx`, `docs/MATCHDAY-PREVIEW-TEST54.md`.

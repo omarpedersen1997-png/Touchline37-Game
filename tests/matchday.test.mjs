@@ -1,6 +1,6 @@
 import {matchStatisticText} from '../src/match-statistics.js';
 import {test} from 'node:test';import assert from 'node:assert/strict';import {Scene} from 'three';
-import {analyseMatch} from '../src/match-analysis.js';import {createMatchAudioFeed} from '../src/match-audio-feed.js';import {createBallTrail} from '../src/ball-trail.js';
+import {analyseMatch} from '../src/match-analysis.js';import {createGoalSoundTracker,createMatchAudioFeed} from '../src/match-audio-feed.js';import {createBallTrail} from '../src/ball-trail.js';
 import {createMatchSound} from '../src/match-sound.js';
 test('analysis uses actual goals and assists, excludes own goals and never invents an unrecorded star',()=>{
  const state={stats:{homeShots:1,awayShots:6,homePassAttempts:10,homeCompletedPasses:5,homePossession:30,awayPossession:70},events:[{kind:'goal',side:'home',scorer:3,assister:7},{kind:'goal',side:'home',scorer:5,ownGoal:true}],home:[{energy:20},{energy:90}]};const before=structuredClone(state),roster=Array.from({length:11},(_,i)=>({name:'Navn '+i})),result=analyseMatch(state,roster);
@@ -10,6 +10,7 @@ test('analysis uses actual goals and assists, excludes own goals and never inven
  assert.equal(analyseMatch({}).star,null);assert.equal(analyseMatch({}).tired,null);assert.equal(analyseMatch({stats:{homePassAttempts:0,homeCompletedPasses:0}}).accuracy,null);
 });
 test('audio feed ignores stale opening actions, throttles real kicks and resets without a false return sound',()=>{
+ const tracker=createGoalSoundTracker();assert(!tracker(0,'waiting'));assert(!tracker(3,'first'));assert(tracker(4,'first'));assert(!tracker(4,'first'));assert(!tracker(0,'waiting'));assert(!tracker(6,'second'));
  const feed=createMatchAudioFeed(),calls=[],sound={impact:(...args)=>{calls.push(args);return true}},state={lastAction:{kind:'pass',tick:1},freeze:0};
  assert.equal(feed.observe(state,sound,0),false);state.lastAction={kind:'shot',tick:2,power:.8};assert.equal(feed.observe(state,sound,80),true);assert.equal(feed.observe(state,sound,160),false);
  state.lastAction={kind:'woodwork',tick:3};assert(feed.observe(state,sound,200));assert.deepEqual(calls.map(c=>c[0]),['kick','woodwork']);feed.reset();assert.equal(feed.observe(state,sound,400),false);state.freeze=3;state.lastAction={kind:'pass',tick:4};assert.equal(feed.observe(state,sound,500),false);
