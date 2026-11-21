@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST51",
+    "title": "Levende Motor 11 revision 3, roligt afspark og sikker visning",
+    "date": "2026-11-21",
+    "summary": "TEST51 forbedrer boldfysik, førsteberøring, spillerbevægelser og kameraføring i en særskilt motor 11 revision 3. Bolden starter præcist i midten med organiserede hold. Safe-area, talvisning, kampstatistik, knapper, mål/dommerkald og op til 120 FPS får konkrete forbedringer. Gamle motorer, optagelser og den offentlige hjemmeside bevares. Den målte Android-ydelse er fortsat ikke verificeret.",
+    "sourceCommit": "14de252d8c11b0cb4dc829cbefac964bb3d43501"
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 51,
+    "versionName": "1.0.0-test-living1",
+    "bytes": 5084385,
+    "sha256": "4a86411265752e401149a6d3fac67b72d19b1803989980fd90178ce62e9fb5af",
+    "fileName": "Touchline37-Motor11-TEST51.apk",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor11-living-play-51/dev/artifacts/Touchline37-Motor11-TEST51.apk"
+  },
+  "changes": [
+    {
+      "title": "Særskilt fysikrevision med levende bold",
+      "detail": "football-engine11-r3.js og football-motion-r3.js skelner flad aflevering, stikning, luftbold, skud og løs bold. Luft-/græsmodstand, aftagende skru, højde og nedslag er fælles for bold, modtagerprognose og keeperprognose. Førsteberøring bevarer dæmpet relativ fart efter teknik, vinkel og pres. Kritisk dæmpning tager bolden med i spillerens bevægelse frem for at lime den fast."
+    },
+    {
+      "title": "Bevægelse og afspark ved midterlinjen",
+      "detail": "Acceleration, opbremsning, ændringen i acceleration og kropsvinkel begrænses i R3. Løbeprognosen bruger samme model. Alle formationer starter på egen halvdel, bolden står i (0,0), og modstanderne er uden for cirklen. Et roligt startøjeblik på 1,2 s efterfølges af åbningsaflevering. Samme afspark bruges ved anden halvleg og efter mål. Input blokeres under selve opstillingsøjeblikket."
+    },
+    {
+      "title": "Dæmpet kamera og højst fire inputs",
+      "detail": "living-camera.js, match-camera.js, manual-scene.js og goal-presentation.js giver begrænset fremadrettet fokus, kritisk dæmpning og højst 8 % dynamisk indramning. Reduceret bevægelse slår ekstra zoom/lead fra. Styringens akser bevares. ManualMatch indhenter igen højst fire inputs pr. billedkald med 2 ms arbejdsbudget. Ingen ticks droppes, og uploadpakken er identisk."
+    },
+    {
+      "title": "Dommerfløjt, billedtempo og statistik",
+      "detail": "Valgfri Web Audio-fløjt ved afspark, halvleg og slut bruger den bevarede lokale lydindstilling. Genåbning midt i kampen må ikke give falsk afsparksfløjt. Motor 11 kan vælges til op til 60 eller 120 FPS; 60 er standard. Boldbesiddelse har én dansk decimal, så en lille reel modstanderandel ikke skjules af afrunding til 100 %. Pause/tempo gælder fortsat målreplayet."
+    },
+    {
+      "title": "Safe-area og sammenhængende menuer",
+      "detail": "TouchlineInsets.java og MainActivity publicerer kun systemkanter, der overlapper WebView, og rydder listeners op ved lukning. Identiske touchline-tokens.css i app/site beskytter topbar, faner, modaler og bundhandlinger. Dansk beløbsformatering samles i format-money.js og bruges i topbaren. Seks fungerende klubgenveje fjerner det tomme hjørne. FINTE flugter med STIKNING; bandetekst gentages mindre."
+    },
+    {
+      "title": "Bevarede motorer og isoleret server",
+      "detail": "arcade.js og worker/manual.js accepterer eksplicit R3 i testmiljøet. R1/R2 og motor 1–10 bevares; R2 har en fast filchecksum. Native TEST51 verificerer R3-testattesten før login. Gamle testklienters revision 2-header virker fortsat. Testserverens kilde er opdateret uden schema-/kontonulstilling. Offentlig hjemmeside er uændret; privat preview er version 9."
+    },
+    {
+      "title": "Audit, filoversigt og tidligere forbedringer",
+      "detail": "docs/LIVING-PLAY-TEST51.md beskriver arkitektur, 14 konkrete fund/rettelser, alle ændrede filer og ti manuelle testtrin. tests/engine11-living.test.mjs dækker ny fysik, kamera, afspark, lyd, indstillinger, statistik og determinisme. Størrelsesreferencen er bevidst opdateret for den ekstra frosne motorrevision, mens 5 %-vagten og absolutte budgetter bevares. TEST50’s save-, splash-, kontakt-, countdown- og SEO-rettelser består."
+    }
+  ],
+  "tests": {
+    "passed": 734,
+    "note": "734 apptests og 86 websitetests består uden fejl, skip eller annullering. Syntakskontrol omfatter 318 JS/JSX-filer i et inventar på 354 filer. Browser-QA bruger fiktive, eksternt afskårne tilstande. Native Java og APK-build består; fysisk OnePlus-test mangler.",
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "checks": [
+      "Tre komplette 5.000-inputsforløb giver identisk SHA-256 for hele sluttilstanden i Node og Chromium. Klientindhentning med højst fire inputs og replaycodec giver samme sluttilstand og uploadpakke.",
+      "Alle fire formationers midterafspark, egen halvdel, modstanderafstand, åbningsaflevering, anden halvleg, stolpe, overligger, mål og modstanderafspark er testet. Gamle motorer og R2-checksum er uændrede.",
+      "Kameradæmpning sammenlignes matematisk ved 30/60/120 Hz. Fysiktests dækker forskellige boldbaner, spin, opspring, førsteberøring, tryk/vinkel, acceleration og fuld opbremsning.",
+      "27 appvisninger, fem website-størrelser, seks dokumentvisninger, 24 formationscases, ti ekstra app-ruter og fire emulerede safe-area-konfigurationer består uden konsolfejl eller utilsigtet vandret sidescroll.",
+      "Browseren kontrollerer fullscreen/retur, JSON-downloads, splash/fravalg/genaktivering, seks genveje og lokal kontakt-/sletningskvittering. APK-signatur, test-app-id, version 51, ZIP/CRC og alle 11 pakkede webfiler er verificeret.",
+      "Hostet R3-testkamp på isoleret server version 8: 250 sekunder, 5.000 inputs, korrekt 2–0-resultat og idempotent gemning. Privat preview version 9 svarer 200 på fire bytekontrollerede ruter; offentlig playtouchline.dk forbliver version 56. Fysisk Android-kontrol mangler."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "Median CPU-tid for en hel kamp (5.000 inputs)",
+      "before": 266.101,
+      "after": 331.326,
+      "unit": "ms",
+      "note": "R2 mod R3, syv Node-forløb med samme seeds og autopilot. Den mere detaljerede fysik koster cirka 65 ms ekstra fordelt over en 250 sekunders kamp. Dette er ikke render-FPS eller telefonmåling."
+    },
+    {
+      "label": "Median af største fire-inputs-portion pr. forløb",
+      "before": 1.531,
+      "after": 1.982,
+      "unit": "ms",
+      "note": "Node CPU. Højeste enkeltudfald var cirka 29 ms i R3; GC/JIT/planlægning kan give udslag. Et arbejdsbudget kan ikke afbryde et input midt i et fysiktick. Der påstås ikke et hårdt 2 ms-loft."
+    },
+    {
+      "label": "Signeret test-APK",
+      "before": 5065861,
+      "after": 5084385,
+      "unit": "bytes",
+      "note": "TEST50 mod TEST51. Cirka 5,08 MB. Ingen nye modeller, teksturer, videoer, eksterne lyde eller afhængigheder."
+    }
+  ],
+  "preserved": [
+    "APK 37, tidligere APK/PDF-filer, motor 1–10, motor 11 R1/R2 og optagelser bevares.",
+    "Dansk design, styringsakser, lokal save, lyd-/splashvalg, test-app-id og certifikat bevares.",
+    "Ingen merge til main, produktionsdatabase-, offentlig website-, DNS- eller domæneændring. Kun isoleret testserver og privat preview er opdateret."
+  ],
+  "limitations": [
+    "60–120 FPS, fingerrespons, varme, batteri, notch/statuslinje og Android-filvælger er ikke verificeret på en fysisk OnePlus Nord 4. 120 FPS er et valgt maksimum og afhænger af skærm og GPU.",
+    "Software-WebGL er ikke en Android-GPU. Node-CPU-tider og matematisk dæmpningstest dokumenterer heller ikke telefon-FPS eller fravær af al hakken.",
+    "Vedvarende managerform, skader/karantæner og komplette offside-/frisparks-/straffe-/kort-/indskiftningsregler er fortsat reelle, versionerede mangler. Eksisterende personlig energi, restitution, træning og kerne-loop bevares.",
+    "Pause/tempo er for målreplays. Den aktive servervaliderede kamp kan ikke pauses/fremskyndes via en visningsknap. Fire-inputsgrænsen betyder langsommere indhentning ved ekstremt lav faktisk FPS; ingen inputs droppes.",
+    "Kampbackup er ikke en fuld kontobackup. Versionerede lokale indstillinger mindsker risikoen, men giver ikke en garanti om nul datatab. Serveren er fortsat autoritativ for klubben.",
+    "Browserbilleder er isolerede testtilstande og ikke nye markedsføringsbilleder i 4K. Offentlig hjemmesideversion 56 bevares, indtil særskilt godkendelse gives."
+  ],
+  "installSteps": [
+    "Åbn APK-linket på GitHub og tryk download. Installér oven på Touchline TEST uden afinstallation; APK 37 er separat.",
+    "Brug dit eksisterende fiktive testlogin. Serveren bevarer tidligere aktive revisioner.",
+    "Privat preview (ejeradgang): https://touchline37-website-preview.glowingconch1.chatgpt.site"
+  ],
+  "nextTest": [
+    "Test afspark, førsteberøring, alle boldtyper og 90/180-graders vendinger. Mærk opbremsning, kamerafølgning og reduceret bevægelse.",
+    "Prøv 60/120-valget, en hel kamp, baggrund/retur, gemning og lydvalg. Hent ydelsesrapport; fysisk FPS, varme og touch er endnu ikke målt.",
+    "Kontrollér notch, faner og modalbund i portræt/bredformat samt website, nedtælling og kontakt/sletning. Ti-punktsliste og alle filer: docs/LIVING-PLAY-TEST51.md."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "emulatedInsets": true,
+  "physicalAndroid": false,
+  "checks": [
+    {
+      "width": 320,
+      "height": 740,
+      "top": 32,
+      "left": 0,
+      "right": 0,
+      "bottom": 24,
+      "brandY": 32,
+      "navWidth": 296,
+      "quickActions": 6,
+      "modalTop": 52
+    },
+    {
+      "width": 360,
+      "height": 740,
+      "top": 28,
+      "left": 0,
+      "right": 0,
+      "bottom": 20,
+      "brandY": 28,
+      "navWidth": 336,
+      "quickActions": 6,
+      "modalTop": 48
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "top": 44,
+      "left": 0,
+      "right": 0,
+      "bottom": 30,
+      "brandY": 44,
+      "navWidth": 366,
+      "quickActions": 6,
+      "modalTop": 64
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "top": 24,
+      "left": 24,
+      "right": 12,
+      "bottom": 16,
+      "brandY": 24,
+      "navWidth": 440.109375,
+      "quickActions": 6,
+      "modalTop": 42
+    }
+  ],
+  "errors": [],
+  "blocked": []
+}

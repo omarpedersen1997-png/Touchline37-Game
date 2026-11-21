@@ -1,3 +1,17 @@
+# TEST51 – Motor 11 revision 3
+
+[Hent signeret TEST51-APK](dev/artifacts/Touchline37-Motor11-TEST51.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST51.pdf)
+
+Installér oven på Touchline TEST uden afinstallation. Samme test-app-id/certifikat; APK 37 bevares. Testserveren har egen database og vælger revision 3 efter TEST51-headeren, mens gamle revisioner bevares.
+
+Nyt: levende boldbaner og førsteberøring, bløde accelerations-/vendekurver, dæmpet kamera, præcist midterafspark i alle formationer, dommerfløjt, op til 60/120 FPS, safe-area, tydeligere boldbesiddelse og seks klubgenveje. Højst fire inputs pr. billedkald; ingen droppede fysikticks.
+
+734 apptests og 86 websitetests består. Fysisk OnePlus-installation, FPS, touch, notch, varme og batteri er ikke verificeret. Cirka 5,08 MB APK uden nye modeller eller afhængigheder.
+
+[Arkitektur, alle fund/filer og manuel testliste](docs/LIVING-PLAY-TEST51.md). Offentlig hjemmeside forbliver uændret; den separate private preview har safe-area-rettelserne.
+
+---
+
 # TEST50 – samlet audit og kamprettelser
 
 [Hent signeret TEST50-APK](dev/artifacts/Touchline37-Motor11-TEST50.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST50.pdf)
