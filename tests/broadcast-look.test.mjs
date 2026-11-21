@@ -1,4 +1,5 @@
 import {test} from 'node:test';
+import {chalkCoverage,createBroadcastChalk} from '../src/broadcast-chalk.js';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
@@ -86,4 +87,14 @@ test('goal, net and stadium grading clones materials while preserving their maps
 test('visual revision leaves frozen R2/R3 rules and original binary asset manifest intact',()=>{
  for(const [file,expected] of [['shared/football-engine11-r2.js','4ad518a8d5fe454a76cbca4345f0f2294a1b6e7fddb3f98c9d17dad47d6d6f42'],['shared/football-engine11-r3.js','274b4d45a4fae126f62e3e9d79f7c76e9bc8eca0aa6d59fcfcc1203961fe1e10']])assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),expected);
  for(const item of JSON.parse(readFileSync('public/match-assets55/manifest.json')).files)assert.equal(createHash('sha256').update(readFileSync('public/match-assets55/'+item.file)).digest('hex'),item.sha256);
+});
+
+
+test('analytic chalk preserves subpixel coverage instead of binary gaps, with one transparent material pass',()=>{
+ assert.equal(chalkCoverage(0,.1),1);assert.equal(chalkCoverage(1,.1),0);assert.equal(chalkCoverage(0,2),.25);
+ // Integral coverage of a .5-unit line remains .5 even if it moves across
+ // the pixel grid: no alternating all-white/all-missing distant segments.
+ for(const shift of [0,.1,.3,.7]){let total=0;for(let pixel=-4;pixel<=4;pixel++)total+=chalkCoverage(pixel+shift,1);assert(Math.abs(total-.5)<1e-10);}
+ const m=createBroadcastChalk();assert(m.transparent&&m.forceSinglePass&&!m.depthWrite);
+ const shader={vertexShader:'#include <common>\n#include <begin_vertex>',fragmentShader:'#include <common>\n#include <color_fragment>'};m.onBeforeCompile(shader);assert(shader.vertexShader.includes('attribute float chalkEdge'));assert(shader.fragmentShader.includes('fwidth(vChalkEdge)'));m.dispose();
 });

@@ -44,7 +44,11 @@ små farvevariationer og diskret slid ved midten og begge mål.
 
 Overfladen bruger én tegning i stedet for tolv og omkring 2.880 trekanter ved
 60 × 96 m. Der er ingen nye teksturdownloads eller beregning af græs i hvert frame.
-Kridtlinjerne er lidt bredere og mere neutrale/hvide. Lysbalancen giver mindre
+Kridtlinjerne er lidt bredere og mere neutrale/hvide. Et analytisk filter
+bevarer dækningsgraden for linjer under én pixel, så fjerne linjer ikke
+veksler mellem hvide og manglende rasterprøver. Det bruger bredere
+dækningsgeometri, men den synlige linje er fortsat 15 cm; MSAA forbliver slået
+fra i Auto. Midtercirklen bruger samme filter. Lysbalancen giver mindre
 fladt fyldlys og tydeligere varmt hovedlys, afbalanceret modlys, mere grøn
 farvedybde og et roligere baggrunds-/dybdeudtryk.
 
@@ -119,7 +123,7 @@ de binære ressourcer i `public/`.
 Ændrede/oprettede kildefiler:
 
 - `src/living-camera.js`, `src/match-lighting.js`, `src/manual-scene.js`.
-- `src/broadcast-pitch.js`, `src/broadcast-shadows.js`, `src/broadcast-surfaces.js` (nye).
+- `src/broadcast-pitch.js`, `src/broadcast-shadows.js`, `src/broadcast-surfaces.js`, `src/broadcast-chalk.js` (nye).
 - `src/pro-player.js`, `src/rich-match-assets.js` (materialer).
 - `tests/broadcast-look.test.mjs` (ny), `package.json`, `dev/test-release.json`.
 - Denne dokumentation, `TEST-ANDROID.md`, ny TEST58-APK/PDF og `test-evidence/broadcast-TEST58-*`.

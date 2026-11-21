@@ -13,7 +13,7 @@ export function createBroadcastShadows(scene,field,playersPerTeam){
   shader.fragmentShader=shader.fragmentShader.replace('#include <common>','#include <common>\nvarying float vShadowStrength;').replace('#include <color_fragment>','#include <color_fragment>\ndiffuseColor.a *= vShadowStrength;');
  };
  material.customProgramCacheKey=()=> 'touchline-projected-shadow-58';
- const mesh=new THREE.InstancedMesh(geometry,material,total);mesh.name='R3 foot, body and goal shadows';mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.frustumCulled=false;scene.add(mesh);
+ const mesh=new THREE.InstancedMesh(geometry,material,total);mesh.name='R3 foot, body and goal shadows';mesh.renderOrder=2;mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.frustumCulled=false;scene.add(mesh);
  const matrix=new THREE.Matrix4(),rotation=new THREE.Quaternion(),scale=new THREE.Vector3(),position=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),dx=25/55,dz=-20/55,angle=Math.atan2(dx,dz);
  const place=(index,x,z,width,length,heading)=>{position.set(x,.06,z);rotation.setFromAxisAngle(up,heading);scale.set(width/1.1,1,length/.8);matrix.compose(position,rotation,scale);mesh.setMatrixAt(index,matrix);};
  let goalIndex=players*3;
