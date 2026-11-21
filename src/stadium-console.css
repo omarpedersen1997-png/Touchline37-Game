@@ -442,3 +442,19 @@
  .app-shell.game-console[data-page=team] :is(.workspace-deck,.workspace-deck-panel){overflow:visible}
  .app-shell.game-console[data-page=team] .game-squad-panel{height:260px;min-height:260px}
 }
+
+/* TEST52: keep decorative marks inside their own cards, above a clean footer. */
+.game-console .lobby-mode{contain:paint}
+.game-console .page-footer{position:relative;isolation:isolate}
+
+/* Separate real club metrics even when the name forces a wrapped heading. */
+.game-console .lobby-club-heading dl{display:grid;grid-template-columns:repeat(3,max-content);gap:clamp(14px,2vw,24px);flex-shrink:0;font-variant-numeric:tabular-nums}
+.game-console .lobby-club-heading dl>div{min-width:0}
+.game-console .lobby-club-heading dl>div+div{border-inline-start:1px solid var(--tl-border);padding-inline-start:12px}
+.game-console .lobby-club-heading dd{white-space:nowrap;min-width:2ch}
+.game-console .exp-total-benefits{min-width:0;margin-block-start:24px}
+.game-console .exp-total-benefits>.exp-section-intro{margin:0 0 18px}
+@media(orientation:portrait) and (max-width:760px){
+ .game-console .lobby-club-heading dl>div{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+ .game-console .lobby-club-heading dt{display:block;font-size:11px;line-height:1.4}
+}
