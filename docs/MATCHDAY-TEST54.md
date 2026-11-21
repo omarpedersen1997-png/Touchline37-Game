@@ -20,6 +20,7 @@ TEST53's glidende førsteberøring, kontinuerlige R3-kropsretning, acceleration/
 - **Klubbriefing:** Et sammenfoldet felt under de seks genveje peger på faktiske klare belønninger, manglende klublicens, optjent Europaplads, eksisterende spilleraktivitet/træning og hold/taktik. Knapperne fører til eksisterende funktioner; der bygges ikke kopier af marked, træning eller turneringer.
 - **Passiv indtjening:** Den eksisterende serverkvittering vises i briefingen med beløb og minutter og kan kvitteres væk. Beløbet er allerede krediteret af serveren; åbning/dobbelttryk udløser ingen ny udbetaling. Kvitteringen nulstilles ved kontoskift/logout. Ingen fremskridt flyttes til en usikker ny browser-save.
 - **Seks synlige genveje:** Den sjette knap kunne lande på en klippet anden række i bredformat, fordi grid'et stadig havde fem kolonner. Bredformat bruger nu seks; portræt tre gange to.
+- **Arkiverede resultater:** Browserprøven afslørede, at gamle grønne styles stadig slog igennem i resultatpanelet. Arkivvisningen bruger nu samme marineblå flader og læsbare klubkoder som resten af appen.
 - **Tom managerrejse:** En tom ældre milepælsliste kunne give NaN i progressbarens bredde. Den har nu en gyldig tom tilstand og et gyldigt progress-interval.
 
 ## Hjemmesiden – kun udvikling/privat preview

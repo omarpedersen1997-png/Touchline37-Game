@@ -491,3 +491,11 @@
 
 .game-console .game-match .match-analysis>header{display:block;min-height:0;padding:0;background:none;border:0;position:static}
 .app-shell .game-match .manual-halftime:has(.half-analysis[open]){top:50%;max-height:calc(100dvh - 24px);padding:14px 18px;overflow:auto}
+
+/* Archived results use the same navy surfaces as the live match, not legacy green. */
+.game-console .game-match[data-active=false]{background:var(--tl-bg);color:var(--tl-text);border-color:var(--tl-border)}
+.game-console .game-match[data-active=false]>.game-match-header{background:var(--tl-surface);border-bottom:1px solid var(--tl-border)}
+.game-console .game-match[data-active=false] .manual-score{background:var(--tl-surface);color:var(--tl-text)}
+.game-console .game-match[data-active=false] .manual-score>span,.game-console .game-match[data-active=false] .manual-score>b{background:none;color:var(--tl-text)}
+.game-console .game-match[data-active=false] .manual-save{background:none;color:var(--tl-text)}
+.game-console .game-match-backdrop:has(.game-match[data-active=false]){background:#07131ded}
