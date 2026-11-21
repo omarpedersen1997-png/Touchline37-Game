@@ -60,7 +60,7 @@ for (const [name] of outputs) if (name.endsWith('.js')) {
   if (bytes.includes('data:model/gltf-binary;base64,')) throw new Error('En model er stadig indlejret i JavaScript.');
   await writeFile(file, bytes.replaceAll(shareOrigin, origin));
 }
-const cssFiles = ['style.css','expansion.css','clubstudio.css','web-release.css','player-career.css','refresh.css','career-journey.css','manual-match.css','match-modes.css','redesign.css','redesign-club.css','redesign-career.css','redesign-auth.css','forest.css','game-dashboard.css','game-match.css','game-sections.css','match-statistics.css','match-upgrade.css','landscape-app.css','workspace-deck.css','stadium-console.css'];
+const cssFiles = ['style.css','expansion.css','clubstudio.css','web-release.css','player-career.css','refresh.css','career-journey.css','manual-match.css','match-modes.css','redesign.css','redesign-club.css','redesign-career.css','redesign-auth.css','forest.css','game-dashboard.css','game-match.css','game-sections.css','match-statistics.css','match-upgrade.css','landscape-app.css','workspace-deck.css','stadium-console.css','touchline-tokens.css','startup-splash.css'];
 const rawCss = (await Promise.all(cssFiles.map(name => readFile(resolve(root, 'src', name), 'utf8')))).join('\n').replace(/@import\s+url\([^)]*\)\s*;/g, '');
 const css = (await transform(rawCss, { loader: 'css', minify: true })).code;
 const fonts = (await Promise.all([['DM Sans','DM-Sans.ttf','100 1000'],['Barlow Condensed','Barlow-Condensed.ttf','500 800']].map(async ([family,file,weight]) => `@font-face{font-family:'${family}';src:url(data:font/ttf;base64,${(await readFile(resolve(root, 'assets/fonts', file))).toString('base64')}) format('truetype');font-weight:${weight};font-display:swap}`))).join('');

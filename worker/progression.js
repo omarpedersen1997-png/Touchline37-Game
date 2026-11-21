@@ -1,5 +1,6 @@
 export const tactics={balanced:{name:'Balanceret',description:'Et sikkert udgangspunkt med balance i alle kæder.',attack:1,defense:1},attacking:{name:'Offensiv',description:'Skab flere chancer, men giv også mere plads bagude.',attack:1.25,defense:1.2},defensive:{name:'Defensiv',description:'Stå kompakt. Færre chancer i begge ender.',attack:.8,defense:.72}};
-export const effectiveRating=(p,level)=>Math.min(99,p.potential??99,p.rating+(level-1)*2+(p.development||0));
+export {effectivePlayerRating as effectiveRating} from '../shared/team-strength.js';
+import {effectivePlayerRating as effectiveRating} from '../shared/team-strength.js';
 export function seeded(seed){let h=2166136261;for(const c of String(seed)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return()=>{h^=h<<13;h^=h>>>17;h^=h<<5;return(h>>>0)/4294967296}}
 // Eleven clubs play each other once. A twelfth slot supplies one bye per club.
 export function fixtures(){let ring=Array.from({length:12},(_,i)=>i);const rounds=[];for(let r=0;r<11;r++){const pairs=[];for(let i=0;i<6;i++){const a=ring[i],b=ring[11-i];if(a!==11&&b!==11)pairs.push([a,b])}rounds.push(pairs);ring=[ring[0],ring[11],...ring.slice(1,11)]}const ordered=[...rounds.slice(1),rounds[0]];const mapping={0:0};let n=1;for(const round of ordered){const own=round.find(p=>p.includes(0));if(own)mapping[own.find(x=>x!==0)]=n++}return ordered.map(round=>round.map(pair=>pair.map(x=>mapping[x])))}

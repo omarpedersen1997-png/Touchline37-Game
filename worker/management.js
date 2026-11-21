@@ -1,3 +1,4 @@
+import {teamStrengthDetails} from '../shared/team-strength.js';
 import{ensureCompetition}from'./competition.js';
 import{ensureExpansion,expansionBonuses,academyDuration}from'./expansion.js';
 import{effectiveRating,seeded}from'./progression.js';
@@ -21,7 +22,7 @@ export function ensureManagement(s){
  return s;
 }
 export function economyFor(s){const staff=s.staff||{},fans=s.supporters??300,rep=s.reputation??10;const base=1+s.levels.stadium*.8+s.levels.sponsor*1.2;const stadiumBonus=s.levels.stadium*.8*(staff.groundskeeper||0)*.05;const fanBonus=Math.floor(Math.max(0,fans-300)/100)*.02;const reputationBonus=Math.max(0,rep-10)*.003*s.levels.sponsor;const wages=Object.entries(staffTypes).reduce((n,[key,v])=>n+(staff[key]||0)*v.wage,0);const researchBonus=(base+stadiumBonus+fanBonus+reputationBonus)*expansionBonuses(s).incomePercent/100;return{base,stadiumBonus,fanBonus,reputationBonus,researchBonus,wages,net:Math.max(.2,base+stadiumBonus+fanBonus+reputationBonus+researchBonus-wages)}}
-export function selectedStrength(s){const roles=(formations[s.formation]||formations['4-3-3']).roles;const team=s.players.reduce((n,p,i)=>n+Math.max(1,effectiveRating(p,s.levels.training)-(p.position===roles[i]?0:6)),0)/11;return Math.min(99,Math.round(team+(s.staff?.coach||0)+expansionBonuses(s).strengthBonus))}
+export function selectedStrength(s){return teamStrengthDetails({players:s.players,roles:(formations[s.formation]||formations['4-3-3']).roles,trainingLevel:s.levels.training,coach:s.staff?.coach||0,clubBonus:expansionBonuses(s).strengthBonus}).total}
 export function gateFor(s){const price=s.ticketPrice??10,fans=s.supporters??300,rep=s.reputation??10;const attendance=Math.min(capacityFor(s),Math.max(0,Math.floor(fans*(.55+rep*.004)*Math.max(.2,1.1-(price-10)*.035))));return{attendance,ticketPrice:price,net:Math.round(attendance*price*.15)}}
 export const staffPrice=(s,key)=>Math.round(staffTypes[key].base*Math.pow(1.8,s.staff?.[key]||0));
 export const academyPrice=s=>Math.round(800*Math.pow(1.7,(s.academyFacility?.level||1)-1));

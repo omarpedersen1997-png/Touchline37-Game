@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override public void onCreate(Bundle savedInstanceState) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         registerPlugin(TouchlineApiPlugin.class);
         registerPlugin(TouchlineMatchDisplayPlugin.class);
         super.onCreate(savedInstanceState);
@@ -19,7 +19,7 @@ public class MainActivity extends BridgeActivity {
         if (getBridge() == null) return;
         WebView webView = getBridge().getWebView();
         if (webView == null) return;
-        webView.setBackgroundColor(Color.rgb(11, 20, 29));
+        webView.setBackgroundColor(Color.rgb(11, 37, 58));
         WebSettings settings = webView.getSettings();
         if (Build.VERSION.SDK_INT >= 33) {
             settings.setAlgorithmicDarkeningAllowed(false);

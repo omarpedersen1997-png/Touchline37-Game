@@ -91,5 +91,21 @@ export function enterMatchDisplay() {
 
 export function exitMatchDisplay() {
   requested = false;
-  return schedule();
+  return schedule().finally(releaseMatchExpansion);
+}
+
+let ownedFullscreen=false;
+export async function toggleMatchExpansion(element=globalThis.document?.documentElement){
+ if(nativeAvailable()){
+  if(requested){await exitMatchDisplay();return false;}
+  await enterMatchDisplay();return true;
+ }
+ const doc=globalThis.document;
+ if(ownedFullscreen&&doc?.fullscreenElement){await doc.exitFullscreen();ownedFullscreen=false;return false;}
+ if(typeof element?.requestFullscreen!=='function')return false;
+ await element.requestFullscreen();ownedFullscreen=true;
+ await enterMatchDisplay();return true;
+}
+export async function releaseMatchExpansion(){
+ if(ownedFullscreen){ownedFullscreen=false;if(globalThis.document?.fullscreenElement)try{await document.exitFullscreen();}catch{}}
 }
