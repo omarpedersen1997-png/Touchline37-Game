@@ -69,7 +69,7 @@ export function copyPlayerPose(from,to) {
  to.userData.motionTime=from.userData.motionTime;
  for(const key of ['motionClip','motionX','motionZ','motionBlend','motionRoot'])to.userData[key]=from.userData[key];
  if(to.userData.motionFrom&&from.userData.motionFrom)for(const name of Object.keys(to.userData.motionFrom))if(from.userData.motionFrom[name])to.userData.motionFrom[name].copy(from.userData.motionFrom[name]);
- if(to.userData.human&&from.userData.human)to.userData.human.position.y=from.userData.human.position.y;
+ if(to.userData.human&&from.userData.human){to.userData.human.position.copy(from.userData.human.position);to.userData.human.quaternion.copy(from.userData.human.quaternion);}
  to.userData.inView=from.userData.inView;
  for(const name of Object.keys(to.userData.bones)){
   const old=from.userData.bones[name];if(!old)continue;

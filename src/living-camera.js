@@ -9,7 +9,10 @@ export function livingCameraPlan(state,aspect=1,{offset={x:30,z:3},height=13.7,f
  // At most 8% refit; never zoom way out to follow a distant selected defender.
  const framing=reducedMotion||kickoff?1:1+clamp((bz-.22)*.012+Math.max(0,separation-8)*.002,0,.08);
  const fit=Math.max(1,1.2/Math.max(.5,aspect)),scale=fit*.72*framing;
- return {eye:[x+offset.x*scale,height*fit*framing,z+offset.z*scale],target:[x,.8,z],fov};
+ // Follow loft height with a bounded target lift; no zoom chase after a
+ // distant selected defender. The heading remains fixed for the joystick.
+ const targetHeight=(reducedMotion||kickoff) ? .8 : .8+clamp((bz-.8)*.42,0,3.2);
+ return {eye:[x+offset.x*scale,height*fit*framing,z+offset.z*scale],target:[x,targetHeight,z],fov};
 }
 export function createLivingCameraRig({response=14,feedforward=true}={}){
  const pose={eye:[0,0,0],target:[0,0,0],fov:42},velocity={eye:[0,0,0],target:[0,0,0]},previous={eye:[0,0,0],target:[0,0,0]},priorSpeed={eye:[0,0,0],target:[0,0,0]};let initialized=false;

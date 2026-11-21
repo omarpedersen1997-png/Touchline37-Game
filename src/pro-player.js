@@ -1,3 +1,4 @@
+import {footballBodyProfile,keeperDivePose,createKeeperReadiness} from './football-body-profile.js';
 import {matchAssetRoot} from './match-asset-config.js';
 import {createAssetPlayerAnimation} from './asset-player-animation.js';
 import {createLocomotionSelector} from './player-action-sample.js';
@@ -32,10 +33,16 @@ export function createFootballPlayer({color='#c1f66b',number=1,shadow=false,keep
  const grounding=createPlayerGrounding(human,source),paletteCount=optimize?sharePlayerSkeletons(human):null,savedDraws=optimize?mergePlayerClothing(human,source,richPack):0;
  const labelCanvas=document.createElement('canvas');labelCanvas.width=256;labelCanvas.height=128;const c=labelCanvas.getContext('2d');c.fillStyle='rgba(10,27,38,.85)';c.fillRect(69,20,118,86);c.fillStyle='#f1f7ed';c.textAlign='center';c.font='bold 68px sans-serif';c.fillText(String(number),128,89);const labelMap=new THREE.CanvasTexture(labelCanvas);labelMap.colorSpace=THREE.SRGBColorSpace;const label=new THREE.Sprite(new THREE.SpriteMaterial({map:labelMap,depthTest:false,sizeAttenuation:false}));label.scale.set(.038,.019,1);label.position.set(0,2.13,0);model.add(label);
  let backMap=numberMap;if(!backMap){const back=document.createElement('canvas');back.width=192;back.height=256;const ink=back.getContext('2d');ink.textAlign='center';ink.font='bold 158px sans-serif';ink.strokeStyle='#15252e';ink.lineWidth=6;ink.fillStyle='#f4f7ec';ink.strokeText(String(number),96,196);ink.fillText(String(number),96,196);backMap=new THREE.CanvasTexture(back);backMap.colorSpace=THREE.SRGBColorSpace;}const jersey=new THREE.Mesh(new THREE.PlaneGeometry(.24,.3),new THREE.MeshBasicMaterial({map:backMap,transparent:true,depthWrite:false}));jersey.position.set(0,1.38,-.145);jersey.rotation.y=Math.PI;model.add(jersey);if(numberMap){const uv=jersey.geometry.attributes.uv,col=(number-1)%4,row=Math.floor((number-1)/4);for(let i=0;i<uv.count;i++)uv.setXY(i,(col+uv.getX(i))/4,1-(row+1-uv.getY(i))/4);uv.needsUpdate=true;}
- human.scale.y=1+(number%3-1)*.015;
+ if(richPack){
+  const profile=footballBodyProfile(number,keeper);human.scale.set(profile.width,profile.height,profile.depth);
+  // The printed number is part of the shirt: bind its rest transform to the
+  // chest once, then the existing skeleton carries it through every action.
+  human.updateMatrixWorld(true);model.updateMatrixWorld(true);
+  if(bones.Spine2)bones.Spine2.attach(jersey);
+ }else human.scale.y=1+(number%3-1)*.015;
  const swing=createFootballSwing(bones,base,parentRest);
- model.userData={locomotion:richPack?createLocomotionSelector():null,response:createPlayerResponse(),professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,assetAnimation:source.userData.richPack?createAssetPlayerAnimation(source.animations,bones):null,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey};
- if(emblemMap){const badge=new THREE.Mesh(new THREE.PlaneGeometry(.09,.09),new THREE.MeshBasicMaterial({map:emblemMap,transparent:true,depthWrite:false}));badge.position.set(.095,1.44,.145);model.add(badge);}
+ model.userData={locomotion:richPack?createLocomotionSelector():null,response:createPlayerResponse(),professional:true,label,human,bones,base,swing,sides,paletteCount,savedDraws,grounding,motionTime:number*.137,motionClip:null,motionX:null,motionZ:null,motionBlend:0,motionFrom:Object.fromEntries(motion.bones.map(name=>[name,bones[name]?.quaternion.clone()])),motionRoot:0,assetAnimation:source.userData.richPack?createAssetPlayerAnimation(source.animations,bones):null,poseA:new THREE.Quaternion(),poseB:new THREE.Quaternion(),jersey,divePose:{},richPack,keeperReadiness:richPack&&keeper?createKeeperReadiness():null};
+ if(emblemMap){const badge=new THREE.Mesh(new THREE.PlaneGeometry(.09,.09),new THREE.MeshBasicMaterial({map:emblemMap,transparent:true,depthWrite:false}));badge.position.set(.095,1.44,.145);model.add(badge);if(richPack&&bones.Spine2){model.updateMatrixWorld(true);bones.Spine2.attach(badge);}}
  configureMatchTextures(model,anisotropy);
  return model;
 }
@@ -63,12 +70,24 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
  const hips=d.bones.Hips;if(hips&&a.root&&b.root){const y=a.root[1]+(b.root[1]-a.root[1])*mix;hips.position.y=d.motionBlend?d.motionRoot+(y-d.motionRoot)*blend:y;}
  // Locomotion comes from captured human movement; football actions layer over it.
  if(d.assetAnimation)d.assetAnimation.apply(clipName,d.motionTime,p,state,team,index,elapsed,model.rotation.y,snap,subtick);
+ if(d.keeperReadiness){
+  const ready=d.keeperReadiness.update(p,state,team,elapsed,{snap});
+  if(ready>.001){
+   d.swing('LeftUpLeg',-.18*ready,0,0,true);d.swing('RightUpLeg',-.18*ready,0,0,true);
+   d.swing('LeftLeg',.34*ready,0,0,true);d.swing('RightLeg',.34*ready,0,0,true);
+   d.swing('LeftArm',-.4*ready,0,0,true);d.swing('RightArm',-.4*ready,0,0,true);
+  }
+ }
  if(kick>0&&!d.assetAnimation){d.swing('RightUpLeg',-kick*.95);d.swing('RightLeg',kick*.48);d.swing('Spine2',kick*.08,-kick*.15);}
  if(d.assetAnimation&&p.action==='skill'&&p.actionTicks>0){const progress=Math.max(0,Math.min(1,1-(p.actionTicks-Math.max(0,Math.min(.045,subtick))/.05)/Math.max(1,p.actionDuration))),wave=Math.sin(progress*Math.PI);d.swing('RightUpLeg',-.28*wave,0,0,true);d.swing('RightLeg',.2*wave,0,0,true);d.swing('Spine2',0,.2*wave,0,true);}
  model.position.y=0;
- if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
+ if(d.richPack){model.rotation.x=0;model.rotation.z=0;}
+ if(d.richPack&&p.dive>0){
+  const dive=keeperDivePose(p,model.rotation.y,state.replayHold||state.freeze>0?0:subtick,d.divePose);
+  model.rotation.z=dive.roll;model.position.x+=dive.x;model.position.z+=dive.z;model.position.y=dive.height;
+ }else if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
  if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
  if(!(p.dive>0)&&!(p.tackle>0))d.grounding.apply();else d.human.position.y=0;
- d.jersey.position.y=1.38;
+ if(!d.richPack)d.jersey.position.y=1.38;
  d.label.visible=team==='home'&&index===state.controlled;
 }

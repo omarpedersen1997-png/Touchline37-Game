@@ -1,10 +1,11 @@
 import {getArcadeRules} from '../shared/arcade.js';
+import {integrateLivingBall} from '../shared/football-motion-r3.js';
 const RELEASED_KICKS=new Set(['pass','through','loft','shot']);
 
 // Extrapolation keeps open play responsive, but must not display a ball past
 // an unresolved collision. Near contact, draw the authoritative state instead.
 // This affects presentation only; recorded controls/physics stay unchanged.
-export function safeMatchPrediction(s,seconds){
+export function safeMatchPrediction(s,seconds,{continuous=false}={}){
  if(s.version<7||seconds<=0)return seconds;
  const contact=s.lastContact,b=s.ball;
  // An already-owned R3 first touch is resolved: keep its visible carry moving.
@@ -14,8 +15,11 @@ export function safeMatchPrediction(s,seconds){
  // its 150ms contact hold while the ball has already left the boot. Swept
  // collision checks below still guard every receiver/defender and goalkeeper.
  const action=s.lastAction,releasedKick=s.version===11&&s.engineRevision>=3&&!b.owner&&action&&RELEASED_KICKS.has(action.kind)&&action.tick===b.lastTouchTick&&action.tick>=contact?.tick&&action.team===b.lastTouch?.team&&action.index===b.lastTouch?.index&&s.tick-action.tick>=0&&s.tick-action.tick<3;
- if(contact&&s.tick-contact.tick<3&&!carriedTouch&&!releasedKick)return 0;
- const end={x:b.x+b.vx*seconds,y:b.y+b.vy*seconds,z:b.z+b.vz*seconds},rules=getArcadeRules(s.version,s.version===11&&s.engineRevision>=3?s.engineRevision:undefined);
+ const resolved=continuous&&s.version===11&&s.engineRevision>=3&&contact&&b.lastTouchTick===contact.tick&&b.lastTouch?.team===contact.team&&b.lastTouch?.index===contact.index;
+ if(contact&&s.tick-contact.tick<3&&!carriedTouch&&!releasedKick&&!resolved)return 0;
+ const smooth=continuous&&s.version===11&&s.engineRevision>=3;
+ const end=smooth&&!b.owner?integrateLivingBall({x:b.x,y:b.y,z:b.z,vx:b.vx,vy:b.vy,vz:b.vz,curl:b.curl,flightKind:b.flightKind},seconds):{x:b.x+b.vx*seconds,y:b.y+b.vy*seconds,z:b.z+b.vz*seconds},rules=getArcadeRules(s.version,s.version===11&&s.engineRevision>=3?s.engineRevision:undefined);
+ let horizon=seconds;
  for(const team of['home','away']){
   if(b.owner?.team===team)continue;
   for(let i=0;i<s[team].length;i++){
@@ -23,8 +27,13 @@ export function safeMatchPrediction(s,seconds){
    const p=s[team][i],next={x:p.x+p.vx*seconds,y:p.y+p.vy*seconds};
    // Conservative visual guard around the body/extended limb, not a new rule
    // allowing possession. The engine still requires its much tighter contact.
-   if(rules.sweptContact(b,end,p,next,1.1,2.35))return 0;
+   const hit=rules.sweptContact(b,end,p,next,1.1,2.35);
+   if(hit){if(!continuous||s.version!==11||s.engineRevision<3)return 0;
+    // Stop just before the earliest unresolved contact, rather than freezing
+    // the entire 50ms interval because its endpoint touches a nearby body.
+    horizon=Math.min(horizon,Math.max(0,hit.t-.015)*seconds);
+   }
   }
  }
- return seconds;
+ return horizon;
 }
