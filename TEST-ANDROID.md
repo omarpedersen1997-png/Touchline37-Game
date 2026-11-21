@@ -1,3 +1,17 @@
+# TEST57 – figur, bold, målmand og kamera
+
+- APK: [Touchline37-Motor11-TEST57.apk](dev/artifacts/Touchline37-Motor11-TEST57.apk) – **47,13 MB**, kode 57, `1.0.0-test-spatial57`.
+- PDF: [Opdateringsrapport TEST57](dev/artifacts/Touchline37-Opdateringsrapport-TEST57.pdf).
+- SHA-256: `0878708dcc8b5574680ac049fed5d3cf859f5d9e608a648f4faf8d1d44557408`.
+- Samme TEST-app-id/certifikat. Opdater oven på Touchline TEST uden afinstallation.
+- Mere fyldige figurer, brystbundne numre/mærker, kompenseret skridtfrekvens, målmandsberedskab og dyk med begge hænder mod redningen.
+- Sikre kontaktfraktioner i boldvisningen, fælles vist boldhøjde/kamera, omkredsbaseret rul, blødere luftboldskygge og mere formgivende PBR-lys.
+- **784 tests består**, ingen fejl/skip. APK-signatur, CRC og alle 43 webfiler er verificeret. Chromium kontrollerer faktiske GLB'er og Auto/Skarp, lyd, fullscreen/retur og eksport.
+- Fysisk Android-FPS/installation/varme er ikke verificeret. R3-simulationen er stadig 20 Hz med uændrede regler og optagelser. Ingen merge eller deployment; offentlig hjemmeside v56 og APK 37 er urørte.
+- [Alle ændrede filer, tekniske grænser og OnePlus-prøve](docs/SPATIAL-MATCH-TEST57.md).
+
+---
+
 # TEST56 – direkte styring og synkron kampvisning
 
 - APK: [Touchline37-Motor11-TEST56.apk](dev/artifacts/Touchline37-Motor11-TEST56.apk) – **47,13 MB**, kode 56, `1.0.0-test-direct56`.

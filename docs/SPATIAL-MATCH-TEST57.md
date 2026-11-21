@@ -122,6 +122,24 @@ Lancering: fredag 1. januar 2027 kl. 10.00 København / 09.00 UTC.
 
 ## Ændrede kildefiler
 
+Slutkontrol på kildecommit `bd4c1498efcf74142c1ada16d65a9ed9205560d2`:
+**784 tests, 784 beståede, 0 fejl, 0 skip, 0 annulleret**.
+Signeret APK: 47.134.909 bytes, kode 57, `1.0.0-test-spatial57`.
+SHA-256: `0878708dcc8b5574680ac049fed5d3cf859f5d9e608a648f4faf8d1d44557408`.
+Samme TEST-id/certifikat; CRC og alle 43 webfiler kontrolleret byte for byte.
+
+Den uændrede binære asset-pakke er 46.637.951 bytes. Opstarts-JavaScript er
+940.166 bytes mod TEST56's 940.132; samlet JS er 1.863.927 mod 1.859.891.
+Three.js og modeller er fortsat ude af login/opstart. Ingen nye afhængigheder.
+
+Isoleret Chromium verificerer actual-native-assets i Auto/Skarp, alle otte
+WAV-dekodninger, kort/fokus, PRBK/HAIF, fullscreen/retur til menu og JSON-eksport.
+Separate nærbilleder verificerer de faktiske GLB-modeller og brystbundne print.
+Ingen konsol-/runtimefejl eller kald mod eksterne værter registreret i fixtures.
+Støttefodsdrift fra geometriprøven er ca. 0,473 m/s ved 6 m/s løb og 0,504 m/s
+ved 8 m/s sprint; det er en kontaktfase-test, ikke telefon-FPS eller touchlatens.
+Komplet filfortegnelse og kontrolgrundlag: `test-evidence/spatial-TEST57-*`.
+
 - `src/football-body-profile.js` (ny), `src/pro-player.js`, `src/player-rendering.js`.
 - `src/match-ball-surface.js` (ny), `src/match-prediction.js`, `src/ball-roll.js`.
 - `src/match-lighting.js` (ny), `src/living-camera.js`, `src/manual-scene.js`.

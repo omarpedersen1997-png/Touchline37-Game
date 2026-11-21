@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST57",
+    "title": "Figur, bold og målmand i samme bevægelse",
+    "date": "2026-11-21",
+    "sourceCommit": "bd4c1498efcf74142c1ada16d65a9ed9205560d2",
+    "summary": "TEST57 løfter Motor 11 R3-præsentationen med mere fyldige spillerfigurer, brystbundne trøjenumre, korrigeret skridtfrekvens, målmandsberedskab og sammenhængende dyk. Bold, skygge og kamera deler den viste position. R3-simulationens regler, optagelser og produktionsversionerne bevares."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 57,
+    "versionName": "1.0.0-test-spatial57",
+    "bytes": 47134909,
+    "sha256": "0878708dcc8b5574680ac049fed5d3cf859f5d9e608a648f4faf8d1d44557408",
+    "fileName": "Touchline37-Motor11-TEST57.apk",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test57-spatial-match/dev/artifacts/Touchline37-Motor11-TEST57.apk"
+  },
+  "changes": [
+    {
+      "title": "Fyldigere figurer, fast dragt og sikkert skridt",
+      "detail": "Rich-modellerne får mere bredde/dybde og stabil variation efter trøjenummer. Nummer og klubmærke følger nu brystbenets animation. Skridtfrekvensen kompenserer for dybdeskalaen; en ny test fangede og rettede fodglidning efter skaleringen. Fodfæste, løb/sprint, spark, finte og LOD-overgange videreføres. Ingen større kollisionskrop eller ny modelpakke."
+    },
+    {
+      "title": "Målmand med beredskab og sammenhængende redningsdyk",
+      "detail": "Målmanden kan bøje knæ og føre armene frem før en farlig bold. Dykket bruger egne 10 ticks og tid mellem ticks frem for 16 ticks. Kroppen roterer omkring bækkenet; begge hænder føres mod redningen. Tests måler de faktiske håndpositioner og geometri over græsset i begge retninger. Redningsbeslutning og sandsynlighed er uændret."
+    },
+    {
+      "title": "Mindre stop i bolden; tydelig højde, rul og skygge",
+      "detail": "Visningen kan bevæge sig frem til den tidligste sikre kontaktfraktion i stedet for at fryse hele intervallet. Bekræftet post-kontakt-bevægelse kan frigive den gamle beskyttelse; uløste kontakter beskyttes fortsat. R3-modstand/curl/opspring bruges til fremskrivningen. Vist radius, jordkontakt og omkreds hænger sammen, og luftboldens skygge bliver bredere og svagere."
+    },
+    {
+      "title": "Kamera og PBR-lys med mere dybde",
+      "detail": "Kameraet følger samme viste boldhøjde og løfter sigtepunktet begrænset ved høje bolde. Fast styringsretning, dæmpning, afspark og reduceret bevægelse bevares. Mindre fladt fyldlys, tydeligere varmt hovedlys og svagt køligt modlys fremhæver hud og stof. Ingen ny skyggepassage i Auto; eksisterende instanser og opløsningsstyring bevares."
+    }
+  ],
+  "tests": {
+    "passed": 784,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "784 tests består uden fejl, skip eller annullering. Chromium kontrollerer faktiske GLB-nærbilleder og APK-webfiler i Auto/Skarp, lyd, fullscreen/retur og eksport. Signatur, CRC og alle pakkede webfiler er kontrolleret. Fysisk Android er ikke verificeret.",
+    "checks": [
+      "11 nye tests: kontaktfraktion, bekræftet kontakt, state-integritet, boldprofiler, opspring, overflade/skygge, rul og lodret kamera.",
+      "Faktiske GLB-modeller: brystbundne numre, støvlesåler, dykgeometri/håndretning og støttefodsdrift ved 6 og 8 m/s. Beredskab testes ved 30/60/120 Hz.",
+      "Eksisterende determinisme, fuld replay/uploadpakke, fire-inputsloft, R2/R3-checksums, legacy-motorer, lyd, save, UI og testisolering består.",
+      "Browserkontrol registrerer ingen runtime-/konsolfejl eller eksterne værtskald i de isolerede fixtures. APK har samme TEST-id/certifikat, kode 57."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "Signeret TEST-APK",
+      "before": 47133453,
+      "after": 47134909,
+      "unit": "bytes",
+      "note": "Faktiske TEST56/TEST57-filer. Filstørrelse er ikke et mål for grafisk kvalitet."
+    },
+    {
+      "label": "JavaScript ved opstart",
+      "before": 940132,
+      "after": 940166,
+      "unit": "bytes",
+      "note": "Ukomprimeret. Three.js/modeller er fortsat adskilt fra login/opstart."
+    },
+    {
+      "label": "Samlet Android-JavaScript",
+      "before": 1859891,
+      "after": 1863927,
+      "unit": "bytes",
+      "note": "Ukomprimeret; ingen nye runtimeafhængigheder."
+    },
+    {
+      "label": "Lokale 3D-/tekstur-/lydressourcer",
+      "before": 46637951,
+      "after": 46637951,
+      "unit": "bytes",
+      "note": "Den eksisterende TEST55-pakke bevares byte for byte. Ingen fyldfiler eller nye modeloptagelser."
+    }
+  ],
+  "preserved": [
+    "APK 37, gamle APK/PDF, motor 1–10, R1/R2, faste R2/R3-checksums, optagelser, kontroller og lokal save/lyd/splash.",
+    "Samme TEST-app-id/certifikat og isolerede testserver. Ingen merge til main eller ændring af produktion, database, DNS eller hosting.",
+    "Offentlig hjemmeside er aktiv v56. Lancering fortsat fredag 1. januar 2027 kl. 10.00 København / 09.00 UTC."
+  ],
+  "limitations": [
+    "Simulationen er fortsat deterministisk 20 Hz. 60/120 Hz-tegning ændrer ikke dens beslutningsfrekvens. Uløste kontakter kan stadig kræve et kort visuelt stop; fire-inputsloftet begrænser catch-up ved meget lave FPS.",
+    "Ingen ny kamp-AI, nye fysisk simulerede kroppe, motion matching eller stofsimulation. Boldens kraft, førsteberøring og redningsregler er R3-regler. Et grundlæggende regel-/fysikløft kræver en ny eksplicit revision.",
+    "Fysisk installation, touchlatens, stabil 60–120 FPS, RAM, varme og batteri er ikke målt på OnePlus Nord 4. Software-WebGL er ikke et telefonbenchmark eller dokumentation for FC-kvalitet."
+  ],
+  "installSteps": [
+    "Hent TEST57 og vælg Opdater oven på Touchline TEST uden afinstallation. Samme testidentitet; APK 37 ligger separat.",
+    "Brug den eksisterende fiktive testkonto. Start med Auto/60 og kontrollér bevaret klub, optagelser og lyd-/splashvalg."
+  ],
+  "nextTest": [
+    "Se spillernes proportioner og numre under 90/180-graders vendinger, løb/sprint, spark og finte. Mærk efter fodglidning.",
+    "Prøv flad pasning, stikning, holdt/løftet aflevering og korte/hårde skud. Se efter kontakt, rul, opspring og luftboldens skygge.",
+    "Følg høje bolde og målmandsdyk. Begge hænder skal følge redningen; kameraet skal bevare overblik og styrepudens retning.",
+    "Gå i baggrunden og tilbage. Eksportér ydelsesrapport/kampbackup. Spil 10–15 minutter for at kontrollere vedvarende FPS, varme og batteri."
+  ]
+}
