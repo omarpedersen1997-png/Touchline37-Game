@@ -145,3 +145,12 @@ scripts/release-check.mjs samt de nye scripts/package-match-assets.mjs og
 scripts/verify-match-assets.mjs. Tests: native-performance-assets.test.mjs og
 rich-assets.test.mjs. Derudover generatorer, asset-mappen, denne dokumentation,
 TEST-ANDROID.md, TEST55-APK/PDF og test-evidence/assets-TEST55-*.
+
+## Endelig aflevering
+
+759 tests består uden fejl, skip eller annullering. APK 55 fylder 47.130.585 bytes
+(47,13 MB). SHA-256: 27c98d79929e064fe1b03eb451161314d2fad26462fc426fff0aff7185fc3eb0.
+43 pakkede webfiler og certifikat/test-id er verificeret. Fire siders PDF følger
+med. Den afsluttende Chromium-prøve omfatter klubstriber, Auto/Skarp, faktisk
+dekodning af alle otte WAV-filer og fullscreen/retur; ingen konsolfejl eller
+udgående kald til andre værter. Fysisk Android-afprøvning mangler fortsat.

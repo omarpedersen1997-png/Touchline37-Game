@@ -1,0 +1,622 @@
+{
+  "matchAssets": {
+    "root": "/match-assets55",
+    "bytes": 46637951,
+    "files": [
+      {
+        "file": "ASSETS.md",
+        "bytes": 3060,
+        "sha256": "af4d1407cbb3a24a35c05cc39fe7b9b36d5113eaa3a80ea983f458d98cbd3743"
+      },
+      {
+        "file": "FOOTBALL-ASSET-LICENSES.md",
+        "bytes": 5553,
+        "sha256": "8f9863dbefa9f99baa86d0eb6acf0620c427209b377a6982a2094ac218a4d8a5"
+      },
+      {
+        "file": "ambience.wav",
+        "bytes": 5292078,
+        "sha256": "47681d55d0c1bb832272416c69ba4623f4809374e8955e165f3f0417cda26dcf"
+      },
+      {
+        "file": "boot-leather-1024.png",
+        "bytes": 852071,
+        "sha256": "2750922ff621eddb0501c548881724ee4dc4458bf46a965804697ececaf2d5d6",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "club-emblem-1024.png",
+        "bytes": 14788,
+        "sha256": "a0b4f449ea8fae95a256b0cb8ef42067b7f99f92a28636963fd98cbfc9a671ba",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "crowd-chance.wav",
+        "bytes": 529278,
+        "sha256": "3005e255b8d153085e2b4f1b70566f4ac41773ee0da6d3a59f53e772ad63ec96"
+      },
+      {
+        "file": "crowd-goal.wav",
+        "bytes": 1234878,
+        "sha256": "6a8c96669234b0f2f12f5ccb0146fa9dd08d31a7734d33a0163a80faa765fd93"
+      },
+      {
+        "file": "glove-grip-1024.png",
+        "bytes": 928571,
+        "sha256": "8543d9effcad1034530db2eb4845e85a847e6348d78e636f9b481cde66705f3a",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "grass-color-1024.png",
+        "bytes": 1219806,
+        "sha256": "3bf2ed9d1ce67253590dc975e96081b0dd1e22b1e71a573ddfd752c81ff39d33",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "grass-color-2048.png",
+        "bytes": 6110362,
+        "sha256": "408b5933f119f9f31266ac414c063ee76b485b9da3d97ae776997fb168c71805",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "file": "grass-normal-1024.png",
+        "bytes": 1621407,
+        "sha256": "c533d9dcd38687377fc0da2cfe61761c83d0e1af573e316851ba0ff0d55628ec",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "grass-normal-2048.png",
+        "bytes": 8053307,
+        "sha256": "420c7b273e62257978d547f67c7d62c20920c742bb2fad5ad1c164808ad2f9a8",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "file": "grass-roughness-1024.png",
+        "bytes": 570868,
+        "sha256": "fd8827c21916d5d8d128c6bb0679aa2e8f35364acda7cbc7aec5c204d108d4f7",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "grass-roughness-2048.png",
+        "bytes": 2921541,
+        "sha256": "5204583bab88894ab3c9e735b79fb28c0adaa9dc01deb5745cee2bdb773aac2c",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "file": "jersey-numbers-1024.png",
+        "bytes": 78868,
+        "sha256": "40475d29e176fea01e0cdb9246a158e38cbe29ca4d58cb43ac2a3a6d118882cf",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "jersey-numbers-2048.png",
+        "bytes": 174224,
+        "sha256": "bbd972c7b401b2f3f1e28c4421b64d5816dbbe14b18b7af291653e4ef260ad39",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "file": "keeper-auto.glb",
+        "bytes": 2795960,
+        "sha256": "b97cf1b04eb5af0732ae4892a068d762be748dc278b3c8096fafc3934d1afdab",
+        "meshes": 15,
+        "triangles": 10318,
+        "animations": [
+          "idle",
+          "walk",
+          "run",
+          "strafe_left",
+          "strafe_right",
+          "cheer",
+          "sprint",
+          "turn",
+          "pass",
+          "shoot",
+          "tackle",
+          "dive"
+        ],
+        "skinned": true
+      },
+      {
+        "file": "keeper-detail.glb",
+        "bytes": 3489928,
+        "sha256": "e7d4e3aa87c69aa9ff8fa8212e1a1636173cf4aeef0cb3068eaa46d3f3603f20",
+        "meshes": 15,
+        "triangles": 26485,
+        "animations": [
+          "idle",
+          "walk",
+          "run",
+          "strafe_left",
+          "strafe_right",
+          "cheer",
+          "sprint",
+          "turn",
+          "pass",
+          "shoot",
+          "tackle",
+          "dive"
+        ],
+        "skinned": true
+      },
+      {
+        "file": "kick-hard.wav",
+        "bytes": 24740,
+        "sha256": "e99b9407982e6b25e2bbf19b1fa0638b4240aa438b5f6be8e651474e39c291ce"
+      },
+      {
+        "file": "kick-soft.wav",
+        "bytes": 24740,
+        "sha256": "f9370d56cc4342a4c99d11c9f39e3986a577fe7c5c3b7318338cd0d1cb8d52c7"
+      },
+      {
+        "file": "kit-fabric-1024.png",
+        "bytes": 856247,
+        "sha256": "6f136d2b530b5f0e203b939ac5009c3715f03ef4f7eac34477f33a7fbf4ce843",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "kit-normal-1024.png",
+        "bytes": 6252,
+        "sha256": "058e57309da608cc75aaa11d2579daf28afd6ad32e5d5e52ca766adc3f527aeb",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "kit-roughness-1024.png",
+        "bytes": 673790,
+        "sha256": "8a46eb965d877c5a1f5871517b4c995ada81a52d83d654f1d11446180d1bc47a",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "net.wav",
+        "bytes": 61784,
+        "sha256": "12611a65ba845b6e5ae394fa15ca4557f0d2594dcf609b0e72460b933fbff2ce"
+      },
+      {
+        "file": "player-auto.glb",
+        "bytes": 1835068,
+        "sha256": "74d02f14ca7b0a287e8647141da17079932eb7aa8c1633ea4d0059088eb8f0a9",
+        "meshes": 13,
+        "triangles": 9550,
+        "animations": [
+          "idle",
+          "walk",
+          "run",
+          "strafe_left",
+          "strafe_right",
+          "cheer",
+          "sprint",
+          "turn",
+          "pass",
+          "shoot",
+          "tackle",
+          "dive"
+        ],
+        "skinned": true
+      },
+      {
+        "file": "player-detail.glb",
+        "bytes": 2529032,
+        "sha256": "fd25ce04d5e06ec0570a5be5f706efdf807f4c62d54c015fd955ce9ede3313fe",
+        "meshes": 13,
+        "triangles": 25717,
+        "animations": [
+          "idle",
+          "walk",
+          "run",
+          "strafe_left",
+          "strafe_right",
+          "cheer",
+          "sprint",
+          "turn",
+          "pass",
+          "shoot",
+          "tackle",
+          "dive"
+        ],
+        "skinned": true
+      },
+      {
+        "file": "stadium-board-2048.png",
+        "bytes": 16340,
+        "sha256": "50656c54a901ed7f2ba57a6ec706f43b0bcde590b05e6c29b305748882f206d2",
+        "width": 2048,
+        "height": 512
+      },
+      {
+        "file": "stadium-concrete-1024.png",
+        "bytes": 1053638,
+        "sha256": "1fbd55d19e19ff65647a452b52ed6128588a3829dc18c3b11bfb6f3afcc12e49",
+        "width": 1024,
+        "height": 1024
+      },
+      {
+        "file": "stadium-kit.glb",
+        "bytes": 3546788,
+        "sha256": "21fe7768174d01a289efe3f4bce906f5f376c19d624f79b9a446b3f7ffac18f2",
+        "meshes": 10,
+        "triangles": 36230,
+        "animations": [],
+        "skinned": false
+      },
+      {
+        "file": "whistle.wav",
+        "bytes": 24740,
+        "sha256": "d44e13749e1e6a5e5fdf839c40b52a77ef7c9c92c29678482e0ed8783b93b655"
+      },
+      {
+        "file": "woodwork.wav",
+        "bytes": 88244,
+        "sha256": "1ba7e937b8a221a31c8ecd494cfb08e7c474e4082f99c69b86ce3b702e9e77d2"
+      }
+    ],
+    "license": "ASSETS.md"
+  },
+  "matchAssetBytes": 46637951,
+  "initialJavaScriptBytes": 934463,
+  "allJavaScriptBytes": 1852397,
+  "initialModuleCount": 4,
+  "allModuleCount": 7,
+  "initialInputs": [
+    "../../sites/touchline/node_modules/react/cjs/react.production.js",
+    "../../sites/touchline/node_modules/react/index.js",
+    "../../sites/touchline/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../sites/touchline/node_modules/scheduler/index.js",
+    "../../sites/touchline/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../sites/touchline/node_modules/react-dom/index.js",
+    "../../sites/touchline/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../sites/touchline/node_modules/react-dom/client.js",
+    "src/App.jsx",
+    "src/format-money.js",
+    "src/SquadAnalysis.jsx",
+    "shared/team-strength.js",
+    "worker/management.js",
+    "worker/competition.js",
+    "worker/expansion.js",
+    "worker/progression.js",
+    "src/AppStartup.jsx",
+    "src/TouchlineBrand.jsx",
+    "shared/brand-mark.js",
+    "src/startup-gate.js",
+    "src/LeagueStandings.jsx",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/lucide-react.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/createLucideIcon.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/shared/src/utils.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/Icon.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/defaultAttributes.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/activity.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/arrow-left.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/arrow-right.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/arrow-up-right.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/beaker.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/briefcase.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/building-2.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/camera.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/check.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/chevron-right.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/clock-3.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/coins.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/compass.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/dna.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/dumbbell.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/earth.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/eye-off.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/eye.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/flag.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/flask-conical.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/gamepad-2.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/gift.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/goal.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/graduation-cap.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/hand-heart.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/handshake.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/heart.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/key-round.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/layers.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/loader-circle.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/lock-keyhole.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/log-out.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/mail.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/menu.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/message-square.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/move-up-right.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/paintbrush.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/palette.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/pencil.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/play.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/plus.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/refresh-cw.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/rotate-ccw.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/rotate-cw.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/save.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/search.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/settings-2.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/settings.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/share-2.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/shield-check.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/shield.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/sliders-horizontal.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/smartphone.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/sparkles.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/star.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/target.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/trash-2.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/trending-up.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/trophy.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/user-round.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/users.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/volume-2.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/volume-x.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/wifi-off.js",
+    "../../sites/touchline/node_modules/lucide-react/dist/esm/icons/x.js",
+    "worker/game.js",
+    "worker/manual.js",
+    "shared/engine-versions.js",
+    "worker/player-career.js",
+    "worker/player-journey.js",
+    "worker/europe.js",
+    "worker/career.js",
+    "worker/clubstyle.js",
+    "worker/objectives.js",
+    "src/GameLobby.jsx",
+    "src/ClubBriefing.jsx",
+    "src/ClubStudio.jsx",
+    "src/StadiumIllustration.jsx",
+    "src/MatchModeChoices.jsx",
+    "src/GameNavigation.jsx",
+    "src/WorkspaceDeck.jsx",
+    "src/MatchLobby.jsx",
+    "src/dialog-focus.js",
+    "src/TransferMarket.jsx",
+    "src/PlayerPortrait.jsx",
+    "src/SquadPitch.jsx",
+    "src/squad-layout.js",
+    "src/career-navigation.js",
+    "src/PlayerCareer.jsx",
+    "src/CareerJourney.jsx",
+    "src/match-display.js",
+    "src/ManualMatch.jsx",
+    "src/match-preparation.js",
+    "src/MatchAnalysis.jsx",
+    "src/match-analysis.js",
+    "src/match-statistics.js",
+    "src/match-audio-feed.js",
+    "src/publisher.js",
+    "src/match-refresh.js",
+    "src/MatchLivePulse.jsx",
+    "src/MatchSoundControl.jsx",
+    "src/match-sound.js",
+    "src/match-sample-bank.js",
+    "src/manual-preferences.js",
+    "src/match-labels.js",
+    "src/download-json.js",
+    "src/match-performance-log.js",
+    "src/match-visibility.js",
+    "src/match-event-feed.js",
+    "src/replay-playback.js",
+    "src/match-frame-pacer.js",
+    "src/goal-replay.js",
+    "src/match-joystick.js",
+    "src/match-clock.js",
+    "src/manual-session.js",
+    "src/manual-recording-format.js",
+    "src/manual-save.js",
+    "src/MatchStatistics.jsx",
+    "src/GoalMoment.jsx",
+    "src/goal-hud.js",
+    "src/game-requests.js",
+    "src/match-versions.js",
+    "src/EuropeCompetition.jsx",
+    "src/CompetitionProgress.jsx",
+    "src/LiveMatchBanner.jsx",
+    "src/ClubCenter.jsx",
+    "src/ExpansionCenter.jsx",
+    "src/ClubHub.jsx",
+    "src/MatchDesk.jsx",
+    "src/ArenaScene.jsx",
+    "src/ClubJourney.jsx",
+    "src/ClubManagement.jsx",
+    "src/Stadium.jsx",
+    "src/AccountSettings.jsx",
+    "src/use-form-request.js",
+    "src/api.js",
+    "src/network.js",
+    "src/request-task.js",
+    "src/account-access.js",
+    "src/ErrorBoundary.jsx",
+    "src/ContactScreen.jsx",
+    "src/MatchExperience.jsx",
+    "src/AuthScreen.jsx",
+    "src/RecoveryAccess.jsx",
+    "src/MailRecovery.jsx",
+    "src/Goals.jsx",
+    "src/DeleteAccount.jsx",
+    "src/LegalScreen.jsx",
+    "src/notices.js",
+    "src/CareerPanel.jsx",
+    "src/HelpPanel.jsx",
+    "src/AppChrome.jsx",
+    "shared/football-modern.js",
+    "shared/arcade.js",
+    "shared/arcade-v1.js",
+    "shared/football11.js",
+    "shared/football-spaced.js",
+    "shared/football-pro.js",
+    "shared/football-halves.js",
+    "shared/football-contact.js",
+    "shared/football-tactics.js",
+    "shared/football-receiving.js",
+    "shared/football-goals.js",
+    "shared/football-engine11.js",
+    "shared/football-engine11-r2.js",
+    "shared/football-engine11-r3.js",
+    "shared/football-motion-r3.js",
+    "src/living-camera.js",
+    "src/match-camera.js",
+    "src/match-quality.js",
+    "src/match-render-budget.js",
+    "src/match-scheduling.js",
+    "src/stadium-layout.js",
+    "src/match-asset-config.js",
+    "<define:__SITE_CAPTURES__>",
+    "../../sites/touchline/node_modules/@capacitor/core/dist/index.js"
+  ],
+  "models": [
+    {
+      "file": "football-auto.glb",
+      "bytes": 675776,
+      "sha256": "debd22d542f381cc4b2a72ae1db89c89670c3f1b8f9c4d1ac1a6f6bab5cc0717"
+    },
+    {
+      "file": "football-pro.glb",
+      "bytes": 1369400,
+      "sha256": "d31843ec2e893e2e080f360010f9c380beb8f92fa85904b391b1770c2910c916"
+    }
+  ],
+  "entryScript": "/assets/app-FYTNZS7L.js",
+  "modules": [
+    {
+      "url": "/assets/app-FYTNZS7L.js",
+      "bytes": 609676,
+      "imports": [
+        {
+          "path": "/assets/chunks/chunk-TINEPIRX.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/chunk-IUT6K7HF.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/chunk-R23PPLZX.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/manual-scene-DFJGCKGP.js",
+          "kind": "dynamic-import"
+        },
+        {
+          "path": "/assets/chunks/manual-scene-DFJGCKGP.js",
+          "kind": "dynamic-import"
+        },
+        {
+          "path": "/assets/chunks/esm-PZYBO73K.js",
+          "kind": "dynamic-import"
+        }
+      ]
+    },
+    {
+      "url": "/assets/chunks/manual-scene-DFJGCKGP.js",
+      "bytes": 916883,
+      "imports": [
+        {
+          "path": "/assets/chunks/chunk-TINEPIRX.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/chunk-R23PPLZX.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    {
+      "url": "/assets/chunks/chunk-TINEPIRX.js",
+      "bytes": 315867,
+      "imports": [
+        {
+          "path": "/assets/chunks/chunk-R23PPLZX.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    {
+      "url": "/assets/chunks/web-63XSBH3G.js",
+      "bytes": 831,
+      "imports": [
+        {
+          "path": "/assets/chunks/chunk-IUT6K7HF.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/chunk-R23PPLZX.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    {
+      "url": "/assets/chunks/esm-PZYBO73K.js",
+      "bytes": 220,
+      "imports": [
+        {
+          "path": "/assets/chunks/chunk-IUT6K7HF.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/chunk-R23PPLZX.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "/assets/chunks/web-63XSBH3G.js",
+          "kind": "dynamic-import"
+        }
+      ]
+    },
+    {
+      "url": "/assets/chunks/chunk-IUT6K7HF.js",
+      "bytes": 8257,
+      "imports": [
+        {
+          "path": "/assets/chunks/chunk-R23PPLZX.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    {
+      "url": "/assets/chunks/chunk-R23PPLZX.js",
+      "bytes": 663,
+      "imports": []
+    }
+  ],
+  "noModelsAtLogin": true,
+  "noThreeAtLogin": true,
+  "sizePolicy": {
+    "matchAssets": {
+      "hardLimitBytes": null,
+      "reviewAtBytes": 83886080
+    },
+    "apk": {
+      "hardLimitBytes": null,
+      "reviewAtBytes": 26214400
+    },
+    "initialJavaScript": {
+      "hardLimitBytes": 1200000
+    },
+    "allJavaScript": {
+      "hardLimitBytes": null,
+      "reviewAtBytes": 4194304
+    },
+    "worker": {
+      "documentedLimitBytes": 10485760,
+      "limitVerified": false,
+      "warnAtBytes": 9000000,
+      "failAtBytes": 9400000
+    }
+  },
+  "sizeAssessment": {
+    "errors": [],
+    "warnings": []
+  }
+}

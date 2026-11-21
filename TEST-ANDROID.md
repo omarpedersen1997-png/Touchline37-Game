@@ -1,3 +1,16 @@
+# TEST55 – rigget 3D, PBR-teksturer og optaget publikumslyd
+
+- APK: [Touchline37-Motor11-TEST55.apk](dev/artifacts/Touchline37-Motor11-TEST55.apk) – **47.13 MB**, kode 55, `1.0.0-test-assets55`.
+- PDF: [Opdateringsrapport TEST55](dev/artifacts/Touchline37-Opdateringsrapport-TEST55.pdf).
+- SHA-256: `27c98d79929e064fe1b03eb451161314d2fad26462fc426fff0aff7185fc3eb0`.
+- Samme `dk.touchline.footballidle.test` og testcertifikat. Opdater oven på Touchline TEST uden afinstallation.
+- 31 nye asset-filer plus manifest; alle 43 webfiler i APK byte-verificeret. Fire riggede karakter-GLB'er, stadionkit, 16 PNG og otte WAV.
+- 759 tests består uden fejl/skip. Chromium kontrollerer Auto/Skarp, faktisk WAV-dekodning, klubstriber, fullscreen/retur og eksport.
+- Ingen fysisk Android-FPS-/installationskontrol. Offentlig hjemmeside v56, APK 37, motorregler og main er urørte.
+- [Teknisk rapport og fysisk testplan](docs/RICH-ASSETS-TEST55.md) · [præcist fil-/licensmanifest](public/match-assets55/manifest.json).
+
+---
+
 # TEST54 – kampdag, klubbriefing og interaktivt websitepreview
 
 [Hent signeret TEST54-APK](dev/artifacts/Touchline37-Motor11-TEST54.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST54.pdf)
