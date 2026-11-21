@@ -6,7 +6,7 @@ import {createMatchSampleBank} from '../src/match-sample-bank.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import * as THREE from 'three';
 import {createFootballPlayer,animateFootballPlayer} from '../src/pro-player.js';
-import {instanceRichPart,buildRichGoals,buildRichStadium} from '../src/rich-match-assets.js';
+import {instanceRichPart,buildRichGoals,buildRichStadium,texturedKit} from '../src/rich-match-assets.js';
 
 async function geometryAsset(name){
  const bytes=readFileSync('public/match-assets55/'+name),n=bytes.readUInt32LE(12),j=JSON.parse(bytes.subarray(20,20+n));
@@ -63,4 +63,12 @@ test('mapped kits merge only matching surfaces, retain UVs/tint and share immuta
   assert.equal(merged.geometry.attributes.uv.count,parts.reduce((n,m)=>n+m.geometry.attributes.uv.count,0));
   assert(merged.material.vertexColors);const tint=merged.geometry.attributes.color;assert(Array.from(tint.array).some(v=>v<.1));
  }finally{globalThis.document=prior;}
+});
+
+test('high-resolution fabric retains the club stripe/hoop choice without frame work or recoloring legacy kits',()=>{
+ const prior=globalThis.document,rects=[];let draws=0;const image={},fabric=new THREE.Texture(image),pack={textures:{'kit-fabric-1024.png':fabric}};
+ try{globalThis.document={createElement:()=>({getContext:()=>({drawImage(value){assert.equal(value,image);draws++;},fillRect(...args){rects.push(args);}})})};
+ assert.equal(texturedKit(pack,'classic'),fabric);assert.equal(draws,0);const stripe=texturedKit(pack,'stripe');assert(stripe.isCanvasTexture);assert.equal(stripe.image.width,1024);assert.equal(rects.length,4);assert(rects.every(r=>r[2]===100));rects.length=0;
+ const hoop=texturedKit(pack,'hoop');assert(hoop.isCanvasTexture);assert.equal(rects.length,5);assert(rects.every(r=>r[3]===80));assert.equal(draws,2);stripe.dispose();hoop.dispose();
+ }finally{globalThis.document=prior;fabric.dispose();}
 });

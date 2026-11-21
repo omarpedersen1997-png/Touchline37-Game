@@ -13,8 +13,12 @@ export async function preloadRichMatchAssets(quality='auto'){
 }
 const ready=new Map();
 export function richMatchAssets(quality='auto'){return ready.get(quality)||null;}
-export function texturedKit(pack,color){
- const texture=pack.textures['kit-fabric-1024.png'];return {texture,color};
+export function texturedKit(pack,pattern='classic'){
+ const fabric=pack.textures['kit-fabric-1024.png'];if(!['stripe','hoop'].includes(pattern))return fabric;
+ const canvas=document.createElement('canvas');canvas.width=canvas.height=1024;const c=canvas.getContext('2d');c.drawImage(fabric.image,0,0,1024,1024);c.fillStyle='rgba(10,24,30,.65)';
+ if(pattern==='stripe')for(let x=0;x<1024;x+=256)c.fillRect(x,0,100,1024);
+ else for(let y=0;y<1024;y+=224)c.fillRect(0,y,1024,80);
+ const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return texture;
 }
 export function cloneRichPart(pack,name){const root=pack.library.getObjectByName(name);if(!root)throw Error('Missing stadium module: '+name);return root.clone(true);}
 

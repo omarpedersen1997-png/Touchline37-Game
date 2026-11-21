@@ -51,6 +51,8 @@ eller recording-format er ændret. Boldspor, glidende bold/kamera, kropsretning 
 Auto vælger 1024-græs og nummer-atlas. Skarp/4K vælger 2048. Mipmaps og anisotropi
 bevares; der oprettes ikke nye billedkort pr. frame. Ens kort-/materialeparametre
 kan samles for trøje/shorts og sko uden at fjerne UV, tint eller skin-vægte.
+Klubbens eksisterende striber/bøjler komponeres én gang over stoffet ved
+indlæsning; udeholdets målmand beholder sin særskilte farve.
 Disse nye overflader er originalt genereret teksturkunst, ikke fotoscans. Modeller
 bevarer de tidligere legitime fotografiske hud-/øjenkort. Handske- og beton-PNG
 findes også indlejret i de selvstændige GLB'er.

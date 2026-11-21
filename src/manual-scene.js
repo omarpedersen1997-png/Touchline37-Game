@@ -1,4 +1,4 @@
-import {preloadRichMatchAssets,richMatchAssets,buildRichStadium,buildRichGoals,cloneRichPart} from './rich-match-assets.js';
+import {preloadRichMatchAssets,richMatchAssets,buildRichStadium,buildRichGoals,cloneRichPart,texturedKit} from './rich-match-assets.js';
 import {createBallTrail} from './ball-trail.js';
 import {samplePlayerPose} from './match-player-pose.js';
 import {createBallRoll} from './ball-roll.js';
@@ -138,7 +138,7 @@ function webglScene(container,options){
  groundLines(scene,field,professional);if(professional&&!assetPack)buildPitchDetails(scene,field,options.quality);
  const focusedDetail=budget.focusedPlayers,basePlayerQuality=budget.baseQuality;
  const textureAnisotropy=Math.min(options.quality==='auto'?8:16,renderer.capabilities.getMaxAnisotropy());
- const kits=assetPack?{home:assetPack.textures['kit-fabric-1024.png'],away:assetPack.textures['kit-fabric-1024.png']}:{home:kitTexture(options.color||'#c1f66b',options.pattern),away:kitTexture(opponentKitColor(options.color),'classic')};
+ const kits=assetPack?{home:texturedKit(assetPack,options.pattern),away:assetPack.textures['kit-fabric-1024.png']}:{home:kitTexture(options.color||'#c1f66b',options.pattern),away:kitTexture(opponentKitColor(options.color),'classic')};
  const surfaceMaps=assetPack?{kitNormal:assetPack.textures['kit-normal-1024.png'],kitRoughness:assetPack.textures['kit-roughness-1024.png'],bootMap:assetPack.textures['boot-leather-1024.png'],emblemMap:assetPack.textures['club-emblem-1024.png'],numberMap:assetPack.textures[`jersey-numbers-${assetPack.size}.png`]}:{};
  const models={home:[],away:[]};for(const team of['home','away'])for(let i=0;i<count;i++){const keeper=i===0,model=professional?createFootballPlayer({source:footballPlayerTemplate(basePlayerQuality,keeper,!!assetPack),...surfaceMaps,anisotropy:textureAnisotropy,color:keeper?(team==='home'?'#e5c254':'#8faabd'):team==='home'?options.color||'#c1f66b':opponentKitColor(options.color),number:i+1,shadow:renderer.shadowMap.enabled,keeper,kitMap:keeper?null:kits[team]}):buildMatchPlayer(keeper?(team==='home'?'#ebcb67':'#95b6c2'):team==='home'?options.color||'#c1f66b':opponentKitColor(options.color),count===11?i+1:[1,4,5,8,9][i],renderer.shadowMap.enabled,keeper?{}:{map:kits[team]});models[team].push(model);scene.add(model);}
  let autoResolution;
