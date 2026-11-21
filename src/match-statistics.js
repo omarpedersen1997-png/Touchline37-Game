@@ -43,5 +43,5 @@ export function matchStatistics(raw){
 }
 
 export function matchStatisticText(value,percent=false){
- return value===null?'—':percent?`${value.toLocaleString('da-DK',{maximumFractionDigits:1})} %`:String(value);
+ return value===null?'—':percent?`${value.toLocaleString('da-DK',{minimumFractionDigits:1,maximumFractionDigits:1})} %`:String(value);
 }

@@ -25,7 +25,7 @@ test('new engine side-specific counters show actual differences without duplicat
  assert.equal(data.homeOnly.length,0);assert.equal(data.rows.length,6);
  assert.deepEqual(data.rows.slice(3).map(row=>[row.home,row.away]),[[20,12],[14,9],[5,3]]);
  const html=renderToStaticMarkup(<MatchStatistics stats={{homeShots:8,awayShots:4,homeSaves:2,awaySaves:1,homePossession:7,awayPossession:3,homePassAttempts:20,awayPassAttempts:12,homeCompletedPasses:14,awayCompletedPasses:9,homeTackles:5,awayTackles:3}} club="Havnebro BK" opponent="Nordby IF"/>);
- assert(html.includes('70 %'));assert(html.includes('30 %'));assert(html.includes('Afleveringsforsøg'));assert(!html.includes('Modstanderens tal for disse handlinger')); 
+ assert(html.includes('70,0 %'));assert(html.includes('30,0 %'));assert(html.includes('Afleveringsforsøg'));assert(!html.includes('Modstanderens tal for disse handlinger'));
 });
 
 test('invalid or absent measurements stay bounded and cannot produce NaN, Infinity or a fabricated value',()=>{
