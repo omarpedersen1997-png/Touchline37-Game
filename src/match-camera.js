@@ -1,3 +1,4 @@
+import {livingCameraPlan} from './living-camera.js';
 // Broadcast camera keeps a fixed heading so screen-relative input never flips.
 export const BROADCAST_OFFSET={x:40,z:12};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -7,10 +8,10 @@ export function screenToPitch(x,y,view){
  const {x:cx,z:cz}=view==='pro'?PRO_OFFSET:BROADCAST_OFFSET,r=Math.hypot(cx,cz);
  return{x:(x*cz+y*cx)/r,y:(-x*cx+y*cz)/r};
 }
-export function matchCamera(state,view,aspect=1){
- if(view==='pro')return proCamera(state,aspect);
+export function matchCamera(state,view,aspect=1,options={}){
+ if(view==='pro')return proCamera(state,aspect,options);
  const field=state.field||{width:40,length:64},p=state.home[state.controlled],ball=state.ball;
- if(view==='broadcast')return proCamera(state,aspect,{offset:BROADCAST_OFFSET,height:state.version>=7?15.5:state.version>=6?17:state.version>=5?21:29,fov:state.version>=6?44:state.version>=5?46:52});
+ if(view==='broadcast')return proCamera(state,aspect,{offset:BROADCAST_OFFSET,height:state.version>=7?15.5:state.version>=6?17:state.version>=5?21:29,fov:state.version>=6?44:state.version>=5?46:52,...options});
  if(view==='follow'){const narrow=aspect<.85;return{eye:[p.x,narrow?13:9.5,p.y+(narrow?21:16)],target:[p.x,1,p.y-10]};}
  return{eye:[0,Math.max(field.length*1.07,field.width/Math.max(.5,aspect)*1.1),field.length*.65],target:[0,0,0]};
 }
@@ -18,6 +19,7 @@ export function matchCamera(state,view,aspect=1){
 // The pro lens follows the play, not the player's heading: controls never rotate.
 export const PRO_OFFSET={x:30,z:3};
 export function proCamera(state,aspect=1,profile={}){
+ if(state.version===11&&state.engineRevision>=3)return livingCameraPlan(state,aspect,profile);
  const offset=profile.offset||PRO_OFFSET,height=profile.height||(state.version>=7?13.7:state.version>=6?15:state.version>=5?19:18),baseFov=profile.fov||(state.version>=6?42:state.version>=5?44:56);
  const p=state.home[state.controlled],b=state.ball;
  // Professional matches use a fixed lens. Ball/player separation must never

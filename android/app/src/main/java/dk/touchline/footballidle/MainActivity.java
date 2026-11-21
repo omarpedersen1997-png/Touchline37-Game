@@ -7,6 +7,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
+    private TouchlineInsets safeArea;
     @Override public void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         registerPlugin(TouchlineApiPlugin.class);
@@ -14,6 +15,11 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(TouchlineExportPlugin.class);
         super.onCreate(savedInstanceState);
         keepClubhouseColors();
+        if (getBridge() != null) safeArea = new TouchlineInsets(getBridge());
+    }
+    @Override public void onDestroy() {
+        if (safeArea != null) safeArea.dispose();
+        super.onDestroy();
     }
     @SuppressWarnings("deprecation")
     private void keepClubhouseColors() {

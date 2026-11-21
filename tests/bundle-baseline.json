@@ -1,14 +1,14 @@
 {
-  "note": "Reference for serverpakkens komponenter (komprimerede bytes). Opdateres kun med \"node dev/bundle-report.mjs --update-baseline\" efter en bevidst, godkendt \u00e6ndring. TEST38: s\u00e6rskilt frosset motor 11 revision 2 kr\u00e6ver yderligere serverkode; den oprindelige revision bevares for gemte kampe. M\u00e5lt 82.655 gzip-bytes.",
+  "note": "Reference for serverpakkens komponenter (komprimerede bytes). Opdateres kun med \"node dev/bundle-report.mjs --update-baseline\" efter en bevidst, godkendt ændring.",
   "components": {
     "webGame": {
-      "gzip": 2192468
+      "gzip": 2136396
     },
     "siteCaptures": {
       "gzip": 6280301
     },
     "sitePage": {
-      "gzip": 323422
+      "gzip": 324462
     },
     "siteArt": {
       "gzip": 194554
@@ -17,8 +17,8 @@
       "gzip": 38
     },
     "code": {
-      "gzip": 82655
+      "gzip": 98984
     }
   },
-  "totalGzip": 9057929
+  "totalGzip": 9034735
 }

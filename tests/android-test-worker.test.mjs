@@ -134,7 +134,7 @@ test('testkonto logger ind via normal passwordvalidering og logger ud igen', asy
   assert.deepEqual(f.guard.blocked, []);
 });
 
-for (const career of [false, true]) for (const revision of [1, 2]) {
+for (const career of [false, true]) for (const revision of [1, 2, 3]) {
   test((career ? 'spillerkarriere' : 'klubkamp') + `: motor 11 revision ${revision} uden browsercookie, fuld validering og idempotent gemning`, async (t) => {
     const f = await fixture(t);
     assert.equal((await f.game()).status, 200);
@@ -142,12 +142,12 @@ for (const career of [false, true]) for (const revision of [1, 2]) {
       const create = await f.game({ id: 'create-test-player', type: 'player-career-create', name: 'Testspiller', position: 'ANG', journeyVersion: 1 });
       assert.equal(create.status, 200, await create.clone().text());
     }
-    const started = await f.game({ id: 'start-test-match', type: career ? 'player-career-match' : 'match', control: 'manual', manualVersion: 1, ...(career ? { journeyVersion: 1 } : {}) }, { headers: revision === 2 ? { 'X-Touchline-Test-Engine-Revision': '2' } : {} });
+    const started = await f.game({ id: 'start-test-match', type: career ? 'player-career-match' : 'match', control: 'manual', manualVersion: 1, ...(career ? { journeyVersion: 1 } : {}) }, { headers: revision >= 2 ? { 'X-Touchline-Test-Engine-Revision': String(revision) } : {} });
     assert.equal(started.status, 200, await started.clone().text());
     const start = await started.json();
     const active = career ? start.state.playerCareer.active : start.state.active;
     assert.equal(active.manual.version, 11); assert.equal(active.manual.config.matchVersion, 11);
-    assert.equal(active.manual.config.engineRevision, revision === 2 ? 2 : undefined);
+    assert.equal(active.manual.config.engineRevision, revision >= 2 ? revision : undefined);
     assert.equal(started.headers.get('x-touchline-test-engine'), '11');
     const rules = getArcadeRules(11);
     const tape = new Uint16Array(rules.INPUT_COUNT);

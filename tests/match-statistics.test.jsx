@@ -30,7 +30,7 @@ test('new engine side-specific counters show actual differences without duplicat
 
 test('invalid or absent measurements stay bounded and cannot produce NaN, Infinity or a fabricated value',()=>{
  for(const raw of[null,undefined,[],{},{homeShots:NaN,awayShots:Infinity,homePossession:'60',awayPossession:20},{homeShots:-4,awayShots:4.9,homePossession:-5,awayPossession:10,homePassAttempts:2,awayPassAttempts:4,homeCompletedPasses:20,awayCompletedPasses:Infinity}]){
-  const data=matchStatistics(raw);for(const row of data.rows)for(const value of[row.home,row.away])assert(value===null||Number.isInteger(value)&&value>=0&&value<=1000000);
+  const data=matchStatistics(raw);for(const row of data.rows)for(const value of[row.home,row.away])assert(value===null||(row.percent?Number.isFinite(value):Number.isInteger(value))&&value>=0&&value<=1000000);
   const html=renderToStaticMarkup(<MatchStatistics stats={raw}/>);assert(!/NaN|Infinity|undefined/.test(html));
  }
  const corrupt=matchStatistics({homePassAttempts:2,awayPassAttempts:4,homeCompletedPasses:20,awayCompletedPasses:8});assert.deepEqual(corrupt.rows.find(row=>row.key==='completedPasses'),{key:'completedPasses',label:'Fuldførte afleveringer',home:2,away:4});

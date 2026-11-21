@@ -8,8 +8,9 @@ export function matchStatistics(raw){
  const homePossession=count(stats.homePossession),awayPossession=count(stats.awayPossession);
  let possession={home:null,away:null};
  if(present(homePossession)&&present(awayPossession)&&homePossession+awayPossession>0){
-  const home=Math.round(homePossession/(homePossession+awayPossession)*100);
-  possession={home,away:100-home};
+  const rounded=Math.round(homePossession/(homePossession+awayPossession)*1000)/10;
+  const home=homePossession&&awayPossession?Math.min(99.9,Math.max(.1,rounded)):rounded;
+  possession={home,away:Math.round((100-home)*10)/10};
  }
  const rows=[
   {key:'shots',label:'Skud',home:count(stats.homeShots),away:count(stats.awayShots)},
@@ -42,5 +43,5 @@ export function matchStatistics(raw){
 }
 
 export function matchStatisticText(value,percent=false){
- return value===null?'—':percent?`${value} %`:String(value);
+ return value===null?'—':percent?`${value.toLocaleString('da-DK',{maximumFractionDigits:1})} %`:String(value);
 }

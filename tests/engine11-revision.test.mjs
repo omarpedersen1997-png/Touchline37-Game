@@ -98,7 +98,7 @@ test('revision 2 kan genafspilles og genoptages deterministisk via dispatcher og
 });
 
 test('ukendte motor 11-revisioner afvises før tilstanden kan ændres', () => {
-  for (const revision of [0, 3, -1, '2', null, NaN, 1.5]) {
+  for (const revision of [0, 4, -1, '2', null, NaN, 1.5]) {
     assert.throws(() => getArcadeRules(11, revision), /revisionen understøttes ikke/);
     assert.throws(() => createArcade('invalid', { matchVersion: 11, engineRevision: revision }), /revisionen understøttes ikke/);
     assert.throws(() => replayArcade('invalid', { matchVersion: 11, engineRevision: revision }, []), /revisionen understøttes ikke/);

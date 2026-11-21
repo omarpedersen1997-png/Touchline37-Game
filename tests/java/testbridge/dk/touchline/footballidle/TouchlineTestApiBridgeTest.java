@@ -22,7 +22,7 @@ import javax.net.ssl.HttpsURLConnection;
 /** Real native plugin and JSON parser; HTTPS is fully intercepted, never networked. */
 public final class TouchlineTestApiBridgeTest {
     private static final String BASE = "https://touchline37-engine11-test.glowingconch1.chatgpt.site";
-    private static final String ENVIRONMENT = "{\"isolated\":true,\"engine\":11,\"engineRevision\":2,\"environment\":\"touchline37-engine11-test\"}";
+    private static final String ENVIRONMENT = "{\"isolated\":true,\"engine\":11,\"engineRevision\":3,\"environment\":\"touchline37-engine11-test\"}";
     private static final String SESSION = "__Host-touchline=" + "a".repeat(64);
     private static final String LOGIN = "{\"email\":\"test1@touchline.invalid\",\"password\":\"only-local-fixture\"}";
     private static final ConcurrentLinkedQueue<Reply> replies = new ConcurrentLinkedQueue<>();
@@ -104,9 +104,9 @@ public final class TouchlineTestApiBridgeTest {
             new Reply(200, ENVIRONMENT.replace("11", "10"), "application/json"),
             new Reply(200, ENVIRONMENT.replace("\"engine\":11", "\"engine\":\"11\""), "application/json"),
             new Reply(200, ENVIRONMENT.replace("touchline37-engine11-test", "production"), "application/json"),
-            new Reply(200, ENVIRONMENT.replace("\"engineRevision\":2,", ""), "application/json"),
-            new Reply(200, ENVIRONMENT.replace("\"engineRevision\":2", "\"engineRevision\":1"), "application/json"),
-            new Reply(200, ENVIRONMENT.replace("\"engineRevision\":2", "\"engineRevision\":\"2\""), "application/json"),
+            new Reply(200, ENVIRONMENT.replace("\"engineRevision\":3,", ""), "application/json"),
+            new Reply(200, ENVIRONMENT.replace("\"engineRevision\":3", "\"engineRevision\":1"), "application/json"),
+            new Reply(200, ENVIRONMENT.replace("\"engineRevision\":3", "\"engineRevision\":\"2\""), "application/json"),
             new Reply(200, "{}", "application/json")
         };
         for (Reply invalidReply : invalid) {
@@ -129,7 +129,7 @@ public final class TouchlineTestApiBridgeTest {
         TouchlineApiPlugin plugin = plugin();
         int before = connections.size();
         try {
-            replies.add(new Reply(200, " { \"environment\": \"touchline37-engine11-test\", \"engine\": 11, \"engineRevision\": 2, \"isolated\": true }\n", "Application/JSON; charset=utf-8"));
+            replies.add(new Reply(200, " { \"environment\": \"touchline37-engine11-test\", \"engine\": 11, \"engineRevision\": 3, \"isolated\": true }\n", "Application/JSON; charset=utf-8"));
             replies.add(new Reply(200, "{\"user\":{\"id\":\"test\"}}", "application/json"));
             PluginCall login = call(plugin, "/api/auth/login", "POST", LOGIN);
             check(login.error == null && login.result != null, "valid isolated handshake must allow login");

@@ -426,3 +426,19 @@
 .match-lobby-preview{display:flex;flex-wrap:wrap;gap:10px 20px;margin:12px 0;padding:12px;background:var(--tl-bg);border-radius:var(--tl-radius-sm)}
 .match-lobby-preview>span{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--tl-muted)}
 .match-lobby-preview b{font-size:16px;color:var(--tl-text)}
+
+.app-shell.game-console .game-match[data-active=true] .manual-score {top:calc(var(--tl-safe-top) + 12px);left:max(12px,var(--tl-safe-left))}
+.app-shell.game-console .game-match .manual-header-actions {top:calc(var(--tl-safe-top) + 12px);right:max(12px,var(--tl-safe-right))}
+.app-shell.game-console .game-match[data-active=true] .manual-controls {padding-left:max(16px,var(--tl-safe-left));padding-right:max(16px,var(--tl-safe-right));padding-bottom:calc(16px + var(--tl-safe-bottom))}
+.app-shell.game-console .game-match[data-active=true] .manual-radar-wrap {bottom:calc(var(--tl-safe-bottom) + 68px)}
+.app-shell.game-console .game-match[data-active=true] .manual-player-indicator {bottom:calc(var(--tl-safe-bottom) + 10px)}
+.app-shell.game-console .game-match[data-through=true] .manual-actions .manual-skill {left:61px;top:-6px;width:48px;height:48px}
+@media(orientation:portrait) and (max-width:760px){.game-console .lobby-quick-actions{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+@media(orientation:landscape) and (max-height:450px){
+ .app-shell.game-console[data-page=team]{height:auto;min-height:100dvh;overflow:visible}
+ .app-shell.game-console[data-page=team] .main-shell{height:auto;min-height:100dvh}
+ .app-shell.game-console[data-page=team] main,.app-shell.game-console[data-page=team] .app-screen-content{flex:none;overflow:visible}
+ .app-shell.game-console[data-page=team] :is(.workspace-deck,.workspace-deck-panel){overflow:visible}
+ .app-shell.game-console[data-page=team] .game-squad-panel{height:260px;min-height:260px}
+}

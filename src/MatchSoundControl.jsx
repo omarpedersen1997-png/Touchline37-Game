@@ -2,8 +2,8 @@ import React,{useEffect,useRef,useState} from 'react';
 import {Volume2,VolumeX} from 'lucide-react';
 import {createMatchSound} from './match-sound.js';
 import {localMatchStorage} from './manual-preferences.js';
-export default function MatchSoundControl({goals=0}) {
- const sound=useRef(null),seen=useRef(null);
+export default function MatchSoundControl({goals=0,phase='waiting'}) {
+ const sound=useRef(null),seen=useRef(null),seenPhase=useRef(phase);
  const [enabled,setEnabled]=useState(()=>{let value=false;try{value=localMatchStorage()?.getItem('touchline:match-sound:v1')==='on';}catch{}return value;});
  useEffect(()=>{
   const audio=createMatchSound({storage:localMatchStorage()});sound.current=audio;
@@ -12,5 +12,6 @@ export default function MatchSoundControl({goals=0}) {
   return()=>{document.removeEventListener('pointerdown',unlock,true);document.removeEventListener('keydown',unlock,true);document.removeEventListener('visibilitychange',visibility);audio.dispose();sound.current=null;};
  },[]);
  useEffect(()=>{if(seen.current!==null&&goals>seen.current)sound.current?.goal();seen.current=goals;},[goals]);
+ useEffect(()=>{if(phase!==seenPhase.current){if(phase==='halftime'||phase==='finished')sound.current?.whistle(phase);else if(seenPhase.current==='kickoff'&&(phase==='first'||phase==='second'))sound.current?.whistle('kickoff');}seenPhase.current=phase;},[phase]);
  return <button type="button" aria-label={enabled?'Slå mållyd fra':'Slå mållyd til'} aria-pressed={enabled} onClick={()=>setEnabled(sound.current?.toggle()||false)}>{enabled?<Volume2 size={18}/>:<VolumeX size={18}/>}</button>;
 }

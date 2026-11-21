@@ -1,3 +1,4 @@
+import {integrateLivingBall} from '../shared/football-motion-r3.js';
 const clamp=(value,low,high)=>Math.max(low,Math.min(high,value));
 
 // A restart is not a celebration. Older recordings can cheer only during the
@@ -24,14 +25,14 @@ export function goalCameraPlan(plan,state,view){
 // The engine owns the bounce; this only bounds the intervening draw frames.
 export function goalBallPosition(state,seconds){
  const ball=state.ball,sequence=state.goalSequence;
- const point={x:ball.x+ball.vx*seconds,y:ball.y+ball.vy*seconds,z:ball.z+ball.vz*seconds};
+ const point=state.version===11&&state.engineRevision>=3&&!ball.owner?integrateLivingBall({x:ball.x,y:ball.y,z:ball.z,vx:ball.vx,vy:ball.vy,vz:ball.vz,curl:ball.curl,flightKind:ball.flightKind},seconds):{x:ball.x+ball.vx*seconds,y:ball.y+ball.vy*seconds,z:ball.z+ball.vz*seconds};
  if(!sequence||sequence.stage==='kickoff')return point;
  const field=state.field,edge=field.length/2,sign=sequence.netSide;
  // The mouth stays open: a real rebound can roll back onto the pitch.
  if(ball.y*sign<edge||point.y*sign<edge)return point;
  point.x=clamp(point.x,-field.goalWidth/2+.22,field.goalWidth/2-.22);
  point.y=sign*Math.min(point.y*sign,edge+1.78);
- point.z=clamp(point.z-4.905*seconds*seconds,.22,field.goalHeight-.22);
+ point.z=clamp(point.z-(state.engineRevision>=3?0:4.905*seconds*seconds),.22,field.goalHeight-.22);
  return point;
 }
 

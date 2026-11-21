@@ -20,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 /** Real queue/connection cancellation. No DNS, TLS or server is contacted. */
 public final class TouchlineApiCancelTest {
-    private static final String ENV = "{\"isolated\":true,\"engine\":11,\"engineRevision\":2,\"environment\":\"touchline37-engine11-test\"}";
+    private static final String ENV = "{\"isolated\":true,\"engine\":11,\"engineRevision\":3,\"environment\":\"touchline37-engine11-test\"}";
     private static final String COOKIE = "__Host-touchline=" + "a".repeat(64);
     private static final ConcurrentLinkedQueue<Reply> replies = new ConcurrentLinkedQueue<>();
     private static final List<Connection> opened = new CopyOnWriteArrayList<>();

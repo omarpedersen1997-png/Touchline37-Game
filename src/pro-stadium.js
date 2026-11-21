@@ -30,8 +30,8 @@ export function buildProStadium(scene,field,quality='auto'){
  }
  const boardMap=bannerTexture(),boardMat=new THREE.MeshBasicMaterial({map:boardMap});
  for(const side of[-1,1]){
-  for(let z=-l;z<l;z+=16){const board=add(new THREE.PlaneGeometry(15,1.2),boardMat,side*(w+4.8),.9,z+8);board.rotation.y=side<0?Math.PI/2:-Math.PI/2;}
-  for(let x=-w;x<w;x+=16){const board=add(new THREE.PlaneGeometry(15,1.2),boardMat,x+8,.9,side*(l+4.8));board.rotation.y=side<0?0:Math.PI;}
+  for(let z=-l;z<l;z+=24){const span=Math.min(22,l-z-1),board=add(new THREE.PlaneGeometry(span,1.2),boardMat,side*(w+4.8),.9,z+span/2);board.rotation.y=side<0?Math.PI/2:-Math.PI/2;}
+  for(let x=-w;x<w;x+=24){const span=Math.min(22,w-x-1),board=add(new THREE.PlaneGeometry(span,1.2),boardMat,x+span/2,.9,side*(l+4.8));board.rotation.y=side<0?0:Math.PI;}
  }
  // Benches and technical zones beside the touchline.
  for(const z of[-14,14]){add(new THREE.BoxGeometry(2,2.4,9),new THREE.MeshPhysicalMaterial({color:0x536d80,transparent:true,opacity:.55,roughness:.3}),-(w+3.5),1.2,z);add(new THREE.BoxGeometry(1,.55,8),rail,-(w+3.5),.45,z);}

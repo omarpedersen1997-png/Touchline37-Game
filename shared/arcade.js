@@ -11,11 +11,12 @@ import * as goals from './football-goals.js';
 // Motor 11 er registreret, men endnu ikke givet til nye kampe (se shared/engine-versions.js).
 import * as engine11 from './football-engine11.js';
 import * as engine11r2 from './football-engine11-r2.js';
+import * as engine11r3 from './football-engine11-r3.js';
 export const ARCADE_VERSION=10;
 export {STEP_MS,INPUT_MS,DURATION_MS,INPUT_COUNT,DIRECTIONS} from './arcade-v1.js';
 export const FIELD=football.FIELD;
 export function getArcadeRules(version=1,revision=1){
- if(version===11){if(revision!==1&&revision!==2)throw Error('Kampmotorrevisionen understøttes ikke.');return revision===2?engine11r2:engine11;}
+ if(version===11){if(revision!==1&&revision!==2&&revision!==3)throw Error('Kampmotorrevisionen understøttes ikke.');return revision===3?engine11r3:revision===2?engine11r2:engine11;}
  return version===10?goals:version===9?receiving:version===8?tactical:version===7?contact:version===6?halves:version===5?pro:version===4?spaced:version===3?modern:version===2?football:legacy;
 }
 export function validateMask(mask,version=1){return getArcadeRules(version).validateMask(mask);}

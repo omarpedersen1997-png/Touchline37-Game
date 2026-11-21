@@ -122,7 +122,7 @@ public class TouchlineApiPlugin extends Plugin {
             check.setRequestProperty("User-Agent", userAgent);
             check.setRequestProperty("Origin", "https://localhost");
             check.setRequestProperty("X-Touchline-Test-Engine", "11");
-            check.setRequestProperty("X-Touchline-Test-Engine-Revision", "2");
+            check.setRequestProperty("X-Touchline-Test-Engine-Revision", "3");
             // No session, authentication header or request body is sent during the
             // handshake. Its Set-Cookie headers must not reach the session vault.
             if (check.getResponseCode() != 200) throw new IllegalStateException("Test handshake status");
@@ -145,7 +145,7 @@ public class TouchlineApiPlugin extends Plugin {
             JSONObject result = (JSONObject) parsed;
             if (!Boolean.TRUE.equals(result.opt("isolated")) || !Integer.valueOf(11).equals(result.opt("engine")) ||
                 !"touchline37-engine11-test".equals(result.opt("environment")) ||
-                !Integer.valueOf(2).equals(result.opt("engineRevision")))
+                !Integer.valueOf(3).equals(result.opt("engineRevision")))
                 throw new IllegalStateException("Test environment not isolated");
             request.checkActive();
             testEnvironmentVerified = true;
@@ -212,7 +212,7 @@ public class TouchlineApiPlugin extends Plugin {
                 connection.setRequestProperty("User-Agent", userAgent);
                 connection.setRequestProperty("Origin", "https://localhost");
                 if (BuildConfig.TOUCHLINE_TEST_BUILD) connection.setRequestProperty("X-Touchline-Test-Engine", "11");
-                if (BuildConfig.TOUCHLINE_TEST_BUILD) connection.setRequestProperty("X-Touchline-Test-Engine-Revision", "2");
+                if (BuildConfig.TOUCHLINE_TEST_BUILD) connection.setRequestProperty("X-Touchline-Test-Engine-Revision", "3");
                 String cookie = vault.read();
                 if (cookie != null) connection.setRequestProperty("Cookie", cookie);
                 if (method.equals("POST")) {
