@@ -1,3 +1,15 @@
+# TEST52 – tre UI-detaljer
+
+[Hent signeret TEST52-APK](dev/artifacts/Touchline37-Motor11-TEST52.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST52.pdf)
+
+Mere luft og skillelinjer mellem klubtal, én eksplicit fælles DNA-bonussektion og afgrænsning af dekorationsikoner ved footeren. Ingen flydende bundknap eller gentaget oversigt kunne gengives i TEST51; telefonobservationen kræver stadig fysisk kontrol.
+
+735 tests består. 16 browservisninger ved otte størrelser kontrollerer statistikafstand, klikbart Privatliv og gentagne DNA-faneskift. Installér oven på Touchline TEST uden afinstallation. Samme app-id/certifikat; APK 37, Motor 11 R3, ældre motorer/optagelser og offentlig hjemmeside er uændrede. Ingen testserverudgivelse.
+
+[Ændrede filer, præcise fund og telefonkontrol](docs/UI-DETAILS-TEST52.md).
+
+---
+
 # TEST51 – Motor 11 revision 3
 
 [Hent signeret TEST51-APK](dev/artifacts/Touchline37-Motor11-TEST51.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST51.pdf)

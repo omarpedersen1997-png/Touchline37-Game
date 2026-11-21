@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST52",
+    "title": "Tre UI-detaljer: klubtal, DNA og footer",
+    "date": "2026-11-21",
+    "summary": "Afgrænset visuel opdatering oven på TEST51. Klubtallene er tydeligere adskilt, DNA-bonusser samles i én navngivet sektion, og dekorative ikoner afgrænses til deres kort. Motor 11 revision 3, ældre motorer/optagelser, APK 37 og den offentlige hjemmeside er uændrede.",
+    "sourceCommit": "44e53d79fb64d58de70871bafeaa10fdafb96230"
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 52,
+    "versionName": "1.0.0-test-ui52",
+    "bytes": 5084449,
+    "sha256": "eda79505c2e6e0c5f2fea8c038167d6ee761b1b043724e98e501a1a326d46344",
+    "fileName": "Touchline37-Motor11-TEST52.apk",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test52-ui-details/dev/artifacts/Touchline37-Motor11-TEST52.apk"
+  },
+  "changes": [
+    {
+      "title": "Klubtal med luft og skillelinjer",
+      "detail": "src/stadium-console.css: Statistikken bruger tre gridkolonner, 14–24 px gap og 12 px indvendig afstand ved fine skillelinjer. Tal står stabilt på én linje. Portræt viser Holdstyrke, Fans og Ligaplads; ved 320 px går talgruppen rent under klubnavnet. Målt mindste afstand mellem værdier er 27 px i de kontrollerede visninger."
+    },
+    {
+      "title": "Én tydelig samlet DNA-fordel",
+      "detail": "src/ExpansionCenter.jsx: Heading, forklaring og fire bonusser samles i én exp-total-benefits-sektion uden for de tre DNA-kort. Der var allerede kun én kilde-/DOM-forekomst i TEST51; den anmeldte gentagelse kunne ikke reproduceres lokalt. tests/expansion-ui.test.jsx kontrollerer alle DNA-valg og de øvrige faner."
+    },
+    {
+      "title": "Dekorationer holdes væk fra Privatliv",
+      "detail": "src/stadium-console.css: contain:paint afgrænser karriere-, Europa- og pokalkortenes dekorationsikoner; footeren får egen malekontekst. Ingen flydende bundknap blev fundet i TEST51-kode eller den lokale browser. Den konkrete telefonboble er ikke identificeret, og ingen funktionel knap skjules blindt."
+    }
+  ],
+  "tests": {
+    "passed": 735,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "Hele appens testpakke består: 735 tests, nul fejl, skip eller annullering. Relevant navigation og klubcenter er også kontrolleret i Chromium med fiktive data. Ingen fysisk telefonkontrol er gennemført.",
+    "checks": [
+      "16 visninger ved otte størrelser: 320×640, 360×740, 384×724, 390×844, 600×900, 740×360, 915×412 og 1440×900. Ingen uønsket vandret scroll eller konsolfejl.",
+      "Privatliv består hit-test i alle otte størrelser. Ingen fast placeret bundknap overlapper linket. Dekorationskort har paint-afgrænsning.",
+      "Tre skift mellem DNA og Forskning pr. størrelse efterlader præcis én totaloversigt med fire bonusser. Den nye regressionstest dækker også ingen/alle tre valgte DNA-retninger.",
+      "APK-signatur, test-app-id, kode 52, ZIP/CRC og alle 11 pakkede webfiler er kontrolleret. Samme certifikat som TEST51. R1/R2/R3 og APK 37 er kontrolleret byteuændrede."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "Signeret test-APK",
+      "before": 5084385,
+      "after": 5084449,
+      "unit": "bytes",
+      "note": "TEST51 mod TEST52: kun 64 bytes større. Ingen nye biblioteker, modeller eller motorændringer. Ingen ny FPS-måling er relevant for disse tre layoutrettelser."
+    }
+  ],
+  "preserved": [
+    "Motor 11 revision 3, ældre motorer, optagelser, spilregler, danske tekster og bonusdata er uændrede.",
+    "APK 37 og tidligere APK/PDF-filer bevares. Samme testidentitet og certifikat; ingen klubnulstilling.",
+    "Ingen merge til main, serverudgivelse, database-, DNS-, hosting- eller websiteændring."
+  ],
+  "limitations": [
+    "Boblen og gentagne fordelstekster kunne ikke reproduceres i den lokale TEST51-visning. Afgrænsningen og enkeltsektionen er verificeret; den oprindelige telefonobservation kræver stadig fysisk bekræftelse.",
+    "Installation, systemoverlays og den faktiske gengivelse på OnePlus Nord 4 er ikke verificeret her. Der påstås ingen ændring i kampens FPS eller gameplay."
+  ],
+  "installSteps": [
+    "Åbn APK-linket, og installér oven på Touchline TEST uden afinstallation. APK 37 er separat.",
+    "Brug samme fiktive testlogin. Der er ingen ændring af testserveren."
+  ],
+  "nextTest": [
+    "Åbn Spil i stående og liggende format: kontrollér tal/labels, hele klubnavnet og fri adgang til Privatliv.",
+    "Åbn Klubcenter → Klubbens DNA, rul ned, skift til Forskning og tilbage. Din samlede fordel skal stå én gang med fire bonusser.",
+    "Filoversigt og præcise afgrænsninger: docs/UI-DETAILS-TEST52.md."
+  ]
+}

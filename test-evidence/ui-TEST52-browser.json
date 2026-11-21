@@ -1,0 +1,471 @@
+{
+  "results": [
+    {
+      "width": 320,
+      "height": 640,
+      "screen": "lobby",
+      "scrollWidth": 320,
+      "values": [
+        {
+          "x": 12,
+          "y": 171.390625,
+          "right": 34.578125,
+          "bottom": 192.390625,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 93.859375,
+          "y": 171.390625,
+          "right": 123.21875,
+          "bottom": 192.390625,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 150.21875,
+          "y": 171.390625,
+          "right": 172.796875,
+          "bottom": 192.390625,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        59.28125,
+        27
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 578.390625,
+        "bottom": 612.390625,
+        "height": 640
+      },
+      "floating": []
+    },
+    {
+      "width": 296,
+      "height": 640,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 320
+    },
+    {
+      "width": 360,
+      "height": 740,
+      "screen": "lobby",
+      "scrollWidth": 360,
+      "values": [
+        {
+          "x": 12,
+          "y": 171.390625,
+          "right": 34.578125,
+          "bottom": 192.390625,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 93.859375,
+          "y": 171.390625,
+          "right": 123.21875,
+          "bottom": 192.390625,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 150.21875,
+          "y": 171.390625,
+          "right": 172.796875,
+          "bottom": 192.390625,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        59.28125,
+        27
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 678.390625,
+        "bottom": 712.390625,
+        "height": 740
+      },
+      "floating": []
+    },
+    {
+      "width": 336,
+      "height": 740,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 360
+    },
+    {
+      "width": 384,
+      "height": 724,
+      "screen": "lobby",
+      "scrollWidth": 384,
+      "values": [
+        {
+          "x": 172.25,
+          "y": 132.390625,
+          "right": 194.828125,
+          "bottom": 153.390625,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 254.109375,
+          "y": 132.390625,
+          "right": 283.46875,
+          "bottom": 153.390625,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 310.46875,
+          "y": 132.390625,
+          "right": 333.046875,
+          "bottom": 153.390625,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        59.28125,
+        27
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 662.390625,
+        "bottom": 696.390625,
+        "height": 724
+      },
+      "floating": []
+    },
+    {
+      "width": 360,
+      "height": 724,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 384
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "screen": "lobby",
+      "scrollWidth": 390,
+      "values": [
+        {
+          "x": 178.25,
+          "y": 132.390625,
+          "right": 200.828125,
+          "bottom": 153.390625,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 260.109375,
+          "y": 132.390625,
+          "right": 289.46875,
+          "bottom": 153.390625,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 316.46875,
+          "y": 132.390625,
+          "right": 339.046875,
+          "bottom": 153.390625,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        59.28125,
+        27
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 810.390625,
+        "bottom": 844.390625,
+        "height": 844
+      },
+      "floating": []
+    },
+    {
+      "width": 366,
+      "height": 844,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 390
+    },
+    {
+      "width": 600,
+      "height": 900,
+      "screen": "lobby",
+      "scrollWidth": 600,
+      "values": [
+        {
+          "x": 388.25,
+          "y": 132.390625,
+          "right": 410.828125,
+          "bottom": 153.390625,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 470.109375,
+          "y": 132.390625,
+          "right": 499.46875,
+          "bottom": 153.390625,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 526.46875,
+          "y": 132.390625,
+          "right": 549.046875,
+          "bottom": 153.390625,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        59.28125,
+        27
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 826.390625,
+        "bottom": 860.390625,
+        "height": 900
+      },
+      "floating": []
+    },
+    {
+      "width": 576,
+      "height": 900,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 600
+    },
+    {
+      "width": 740,
+      "height": 360,
+      "screen": "lobby",
+      "scrollWidth": 740,
+      "values": [
+        {
+          "x": 498.453125,
+          "y": 62.5,
+          "right": 521.03125,
+          "bottom": 83.5,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 578.390625,
+          "y": 62.5,
+          "right": 607.75,
+          "bottom": 83.5,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 692.421875,
+          "y": 62.5,
+          "right": 715,
+          "bottom": 83.5,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        57.359375,
+        84.671875
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 312,
+        "bottom": 346,
+        "height": 360
+      },
+      "floating": []
+    },
+    {
+      "width": 716,
+      "height": 360,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 740
+    },
+    {
+      "width": 915,
+      "height": 412,
+      "screen": "lobby",
+      "scrollWidth": 915,
+      "values": [
+        {
+          "x": 652.453125,
+          "y": 66.5,
+          "right": 675.03125,
+          "bottom": 87.5,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 738.890625,
+          "y": 66.5,
+          "right": 768.25,
+          "bottom": 87.5,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 859.421875,
+          "y": 66.5,
+          "right": 882,
+          "bottom": 87.5,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        63.859375,
+        91.171875
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 366,
+        "bottom": 400,
+        "height": 412
+      },
+      "floating": []
+    },
+    {
+      "width": 875,
+      "height": 412,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 915
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "screen": "lobby",
+      "scrollWidth": 1440,
+      "values": [
+        {
+          "x": 1166.046875,
+          "y": 72.5,
+          "right": 1188.625,
+          "bottom": 93.5,
+          "width": 22.578125,
+          "height": 21
+        },
+        {
+          "x": 1258.1875,
+          "y": 72.5,
+          "right": 1287.546875,
+          "bottom": 93.5,
+          "width": 29.359375,
+          "height": 21
+        },
+        {
+          "x": 1384.421875,
+          "y": 72.5,
+          "right": 1407,
+          "bottom": 93.5,
+          "width": 22.578125,
+          "height": 21
+        }
+      ],
+      "gaps": [
+        69.5625,
+        96.875
+      ],
+      "metricsLayout": "grid",
+      "clip": [
+        "paint",
+        "paint",
+        "paint"
+      ],
+      "footer": {
+        "visible": true,
+        "text": "Privatliv",
+        "top": 854,
+        "bottom": 888,
+        "height": 900
+      },
+      "floating": []
+    },
+    {
+      "width": 1400,
+      "height": 900,
+      "screen": "dna",
+      "headingCount": 1,
+      "benefits": 4,
+      "scrollWidth": 1440
+    }
+  ],
+  "errors": [],
+  "blocked": [],
+  "physicalAndroidVerified": false
+}
