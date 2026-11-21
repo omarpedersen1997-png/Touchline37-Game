@@ -1,0 +1,26 @@
+{
+  "game": {
+    "tests": 708,
+    "pass": 708,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "website": {
+    "tests": 84,
+    "pass": 84,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "gameSourceCommit": "0eecf06ebbfa3b1424584d97e9411d6d751a5ee4",
+  "websiteSourceCommit": "4cec93d89dfdf960fee0919ada856b26925cc165",
+  "physicalAndroidVerified": false,
+  "localChromiumVerified": true,
+  "formationCases": 24,
+  "cardOverlaps": 0,
+  "privatePreviewVersion": 7,
+  "publicWebsiteVersion": 56,
+  "screenshotsAreIsolatedFixtures": true,
+  "tokensSha256": "9566bc1fddf0a5d2e86e0e1ae8dab994f240ab731f84064dcada801b10399485"
+}
