@@ -1,0 +1,17 @@
+{
+  "game": {
+    "tests": 743,
+    "pass": 743,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "physicalAndroidVerified": false,
+  "websiteChanged": false,
+  "backendChanged": false,
+  "sourceCommit": "563215872fb6c16c8b85bb4ca86744d49a899a3f",
+  "motor11Revision": 3,
+  "physicsChanged": false,
+  "serverRedeployed": false,
+  "apk37Sha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0"
+}

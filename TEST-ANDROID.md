@@ -1,3 +1,17 @@
+# TEST53 – mere plads og mere levende kamppræsentation
+
+[Hent signeret TEST53-APK](dev/artifacts/Touchline37-Motor11-TEST53.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST53.pdf)
+
+Intet hårdt APK-loft; samlet kampkode har nu en størrelsesadvarsel i stedet for 2,5 MB-stop. Opstartskode og hostingens separate grænser beskyttes fortsat. R3 får glidende visning af afgjort førsteberøring, løbende kropsretning, dæmpet kropsvægt, bedre fodfæste under hældning, rul efter afstand og kamera med fokus mellem ticks.
+
+743 tests består uden fejl eller skip. Lokal Chromium-kontrol af R3-kamp, styring, fullscreen/retur og JSON-eksport består. Fysisk OnePlus-FPS, opstartstid, RAM, varme og batteri er ikke verificeret.
+
+Installér oven på Touchline TEST uden afinstallation. Samme test-app-id/certifikat. APK 37, autoritativ Motor 11 R3, ældre motorer og optagelser bevares. Ingen server- eller websiteudgivelse, ingen merge til main.
+
+[Alle størrelsesgrænser, kampændringer, filer og telefonprøve](docs/MATCH-HEADROOM-TEST53.md).
+
+---
+
 # TEST52 – tre UI-detaljer
 
 [Hent signeret TEST52-APK](dev/artifacts/Touchline37-Motor11-TEST52.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST52.pdf)

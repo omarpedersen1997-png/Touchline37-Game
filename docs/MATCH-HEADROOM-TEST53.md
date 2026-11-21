@@ -12,7 +12,10 @@ Udgangspunkt: TEST52 (`72fbda57909b147cbfdcd4ca86837daf8487e836`). Separat udvik
 | Komprimeret Worker/server | Advarsel 9.000.000 bytes, testfejl 9.400.000 bytes. Dokumenteret 10 MiB er **ikke bekræftet** som faktisk hostinggrænse. Release-check har separat 10 MiB-kontrol. | Bevares. Større APK/ressourcer må ikke ukritisk indlejres i den allerede store Worker. Ingen hostingændring gennemføres. |
 | Serverkomponenters vækst | Mere end 5 % komprimeret vækst kræver bevidst opdatering af `tests/bundle-baseline.json`. | Bevares som gennemgang af serverpakken; **5 % er ikke 5 MB** og gælder ikke APK'ens samlede størrelse. |
 | Android-rendering | Motor 11 Auto højst ca. 1,2 mio. renderpixels, DPR op til 1,25, adaptiv nedskalering; skygge-/detaljevalg pr. grafiktilstand. | Bevares: flere bytes på disk er ikke mere GPU-kapacitet. |
+| Geometri og draw calls | Tests dækker bl.a. fem statiske detail-draw calls med 1.000–8.000 trekanter, originale spiller-LOD’er, batching og tribune-culling. | Bevares som rendering-regressioner; ingen af disse er en 5 MB-downloadgrænse. |
 | Brugerdata/JSON-eksport | 1 MiB-grænser beskytter API og fil-eksport; optagelser og backup valideres. | Bevares. Det er sikkerheds-/datagrænser, ikke et ressourceloft for appen. |
+
+Den aktuelle standardserverpakke måles til cirka 9,04 MB gzip og giver allerede størrelsesadvarsel. Der er kun cirka 0,36 MB til den forsigtige fejlgrænse; ekstra store ressourcer skal derfor pakkes separat frem for at blive indlejret i Worker-koden.
 
 `dev/size-policy.mjs` samler klientens advarsler og tekniske Worker-værdier. `dev/build-performance-assets.mjs` rapporterer vurderingen; det stopper kun ved ugyldige størrelser eller overskredet opstartskode. `dev/apk-size-report.mjs <apk-fil>` måler eksisterende APK'er uden at ændre dem. Nye tests viser udtrykkeligt, at 25/80 MiB APK og 8 MB samlet JavaScript ikke i sig selv giver testfejl. Det er ikke en anbefaling om ukritisk at indlæse 8 MB ved opstart.
 

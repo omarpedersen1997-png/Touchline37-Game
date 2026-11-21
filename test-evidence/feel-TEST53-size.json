@@ -1,0 +1,11 @@
+{
+  "file": "dev/artifacts/Touchline37-Motor11-TEST53.apk",
+  "bytes": 5085385,
+  "sha256": "626b325cc30da935b86fe5e1d4530074ddeb9c1794f06f3b3bc72d8990cea727",
+  "policy": {
+    "hardLimitBytes": null,
+    "reviewAtBytes": 26214400
+  },
+  "errors": [],
+  "warnings": []
+}
