@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "449856246486758d61bb50ab467a3a7445115542",
+  "bytes": 5089625,
+  "sha256": "ed444ab8488ed68d0f2ee31d4c5d91667a87f40fe388e2e492137bdcbbc0a144",
+  "zipCrc": "består",
+  "pakkedeWebfiler": 11,
+  "appId": "dk.touchline.footballidle.test",
+  "versionCode": 54,
+  "versionName": "1.0.0-test-matchday54",
+  "certificateSha256": "bf6991c47983d125ef70a285da1a3cd9c7128f11b1e831a64b21af565abb0069"
+}

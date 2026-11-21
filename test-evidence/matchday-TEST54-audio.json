@@ -1,0 +1,8 @@
+{
+  "syntheticAudioApi": true,
+  "noiseSamples": 22050,
+  "noiseBufferBytes": 88200,
+  "bufferReused": true,
+  "disposalVerified": true,
+  "audiblePhoneVerified": false
+}

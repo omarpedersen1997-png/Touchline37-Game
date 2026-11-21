@@ -1,3 +1,17 @@
+# TEST54 – kampdag, klubbriefing og interaktivt websitepreview
+
+[Hent signeret TEST54-APK](dev/artifacts/Touchline37-Motor11-TEST54.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST54.pdf)
+
+Nyt: neutral indhentning efter shaderforberedelse før styringen vises; diskret boldspor; kontakt-/stolpelyd og syntetisk målpublikum; halvlegs-/efterkamp-analyse; profil efter registrerede målbidrag; klubbriefing og kvittering for allerede krediteret passiv indtjening. Seks genveje er synlige i bredformat, tomme milepæle giver ikke NaN, og procentformatet har én dansk decimal.
+
+751 apptests og 87 websitetests består uden fejl eller skip. Chromium kontrollerer relevante menuer, analyse, taktik, 3D, fullscreen/retur, eksport og interaktivt website. Det ejerprivate preview er version 10; offentlig hjemmeside er stadig v56. Fysisk OnePlus-FPS, touch, RAM og varme er ikke verificeret.
+
+Installér oven på Touchline TEST uden afinstallation. Samme app-id/certifikat og eksisterende fiktive login. Motor 11 R3-regler, ældre motorer/optagelser, APK 37 og eksisterende kontodata bevares. Ingen server-/produktionsudgivelse eller merge til main.
+
+[Alle ændrede filer, begrænsninger og fem minutters telefonprøve](docs/MATCHDAY-TEST54.md).
+
+---
+
 # TEST53 – mere plads og mere levende kamppræsentation
 
 [Hent signeret TEST53-APK](dev/artifacts/Touchline37-Motor11-TEST53.apk) · [PDF-rapport](dev/artifacts/Touchline37-Opdateringsrapport-TEST53.pdf)

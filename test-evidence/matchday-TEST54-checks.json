@@ -1,0 +1,25 @@
+{
+  "game": {
+    "tests": 751,
+    "pass": 751,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "website": {
+    "tests": 87,
+    "pass": 87,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "sourceCommit": "449856246486758d61bb50ab467a3a7445115542",
+  "websiteCommit": "631f0ebf834944af26968539a34fb30bcf150cc7",
+  "physicalAndroidVerified": false,
+  "localChromiumVerified": true,
+  "previewVersion": 10,
+  "publicWebsiteVersion": 56,
+  "backendChanged": false,
+  "apk37Sha256": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+  "finalSourceRegressionVerified": true
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST54",
+    "title": "Sammenhængende kampdag, klubbriefing og levende preview",
+    "date": "2026-11-21",
+    "sourceCommit": "449856246486758d61bb50ab467a3a7445115542",
+    "summary": "TEST54 samler konkrete forbedringer af kampen, klubben og det private websitepreview oven på TEST53. Ny indhentning efter 3D-forberedelse, kontaktlyd/publikum, diskret boldspor, halvlegs-/efterkamp-analyse, klubbriefing og interaktiv kampillustration. Frosne motorregler, kontodata, APK 37 og offentlig hjemmeside v56 bevares."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 54,
+    "versionName": "1.0.0-test-matchday54",
+    "bytes": 5089625,
+    "sha256": "ed444ab8488ed68d0f2ee31d4c5d91667a87f40fe388e2e492137bdcbbc0a144",
+    "fileName": "Touchline37-Motor11-TEST54.apk",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test54-matchday/dev/artifacts/Touchline37-Motor11-TEST54.apk"
+  },
+  "changes": [
+    {
+      "title": "Kampen er indhentet, før styringen vises",
+      "detail": "Model-/shaderarbejde kunne efterlade klienten bag kampuret allerede ved første billede. match-preparation.js indhenter tiden med neutrale fire-inputs-portioner, task-yield og annullering før interaktion. Ingen fysikticks droppes; hele sluttilstanden og uploadpakken matcher referencen. Gameplay-loopet beholder fire inputs/2 ms-budget. Kampur-status ryddes ved ændret efterslæb."
+    },
+    {
+      "title": "Mere levende 3D- og lydreaktioner",
+      "detail": "R3 får et kort spor efter hurtige frie bolde: ét Line-draw og højst 16 genbrugte samples. Kontakt, ejerskab, målsekvens og reduceret bevægelse afgrænser sporet. Registrerede spark og stolpetræf giver valgfri Web Audio-lyd; mål kan få syntetisk publikum fra én genbrugt 88.200-byte buffer. Gammel målscore er et lydudgangspunkt, ikke ny jubel ved genåbning."
+    },
+    {
+      "title": "Læs halvlegen og resultatet",
+      "detail": "Halvlegs-/efterkamp-analyse viser faktisk afleveringspræcision, lav kampenergi og korte råd. Profilen vælges fra begge holds registrerede mål/oplæg og mærkes som målbidrag; ukendte karakterer eller spillernavne opfindes ikke. Direkte vej til eksisterende kampplan bevares. Pauseanalysens klikområde og arkivets marineblå kontrast er rettet. Boldbesiddelse har én dansk decimal."
+    },
+    {
+      "title": "Klubbriefing og rigtig idle-kvittering",
+      "detail": "En sammenfoldet briefing forbinder klare mål, klublicens, Europaplads, spilleraktivitet og hold/taktik. Serverens allerede krediterede passive indtjening kan ses og kvitteres væk uden en ny udbetaling. Kontoskift rydder kvitteringen. Seks genveje er nu også synlige i bredformat; den gamle femkolonne-regel klippede den sjette. Tom milepælsliste giver ikke længere NaN."
+    },
+    {
+      "title": "Interaktivt, let websitepreview",
+      "detail": "Det ejerprivate preview er version 10: aflevering, stikning og afslutning kan startes, pauses, fortsættes og ses igen. Én SVG-transform, ingen autoplay/video, pause ved baggrund og statisk slutposition ved reduceret bevægelse. Illustrationen er tydeligt mærket. Kontakt/sletning, privatliv, SEO og countdown genverificeres. 1. januar 2027 kl. 10.00 København = 09.00 UTC er uændret."
+    },
+    {
+      "title": "Bevaret arkitektur og gennemsigtig aflevering",
+      "detail": "TEST53’s bevægelse, fodfæste, rul, kamerafokus og bløde størrelsespolitik bevares. Ingen ændring i shared/, worker/ eller native Android-kode. Ingen nye spillermodeller eller serverregler. docs/MATCHDAY-TEST54.md indeholder komplet kildediff, arkitekturgrænser, kendte mangler og fem minutters fysisk prøve. APK/PDF og evidens afleveres på den særskilte udviklingsbranch."
+    }
+  ],
+  "tests": {
+    "passed": 751,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "751 apptests og 87 websitetests består uden fejl, skip eller annullering. Lokal Chromium-QA, Android-build og APK-integritet er kontrolleret. Ingen fysisk Android-test er gennemført.",
+    "checks": [
+      "Gamle motorer/optagelser, R2/R3-checksum, fuldt replay, save/migration, API-isolering og idempotent gemning består.",
+      "Neutral forberedelse giver identisk pakke og kan afbrydes. Analyse, lydvagter, genåbning og fast trail-buffer er testet.",
+      "Browser: seks menustørrelser, briefing/idle, genveje, halvleg/taktik, arkiv og fire websiteskærme med pause/reduceret bevægelse. Ingen konsolfejl/eksterne kald.",
+      "3D-smoke: input, kamplyd, fullscreen/retur og to JSON-eksporter. APK-signatur, testidentitet, version 54, CRC og 11 webfiler matcher.",
+      "Privat v10: fire ruter giver 200 og byteidentisk HTML. Offentligt site er aktivt v56. Ingen backend-, database-, DNS- eller main-ændring."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "Signeret test-APK",
+      "before": 5085385,
+      "after": 5089625,
+      "unit": "bytes",
+      "note": "TEST53 mod TEST54. Intet fyld, ingen nye modeller eller eksterne afhængigheder. Ingen hård APK-størrelsesgrænse."
+    },
+    {
+      "label": "JavaScript ved opstart",
+      "before": 923071,
+      "after": 931969,
+      "unit": "bytes",
+      "note": "Ukomprimeret. Under 1,2 MB-opstartsbudgettet; Three.js og modeller forbliver frakoblet login."
+    },
+    {
+      "label": "Samlet Android-JavaScript",
+      "before": 1830962,
+      "after": 1841166,
+      "unit": "bytes",
+      "note": "Ukomprimeret. Totalbudgettet er en blød advarsel. Dette måler ikke telefon-RAM, varme eller FPS."
+    }
+  ],
+  "preserved": [
+    "APK 37, tidligere APK/PDF-filer, motor 1–10 og Motor 11 R1/R2/R3-regler, optagelser og uploadformat er bevaret.",
+    "Test-app-id/certifikat, styringsakser, dansk branding, lokal save og lyd-/splashvalg bevares. Ingen kontonulstilling.",
+    "Ingen merge til main, produktionsudgivelse eller database-/DNS-/hostingændring. Kun ejerprivat websitepreview er udgivet.",
+    "Aktiv kamp kan ikke pauses/fremskyndes. Fire inputs kan stadig give efterslæb ved lav FPS. Kampbackup er ikke kontobackup. Privat preview sender ikke support/kontoændringer."
+  ],
+  "limitations": [
+    "OnePlus-installation, FPS, touch, RAM, varme/batteri og systemoverlays kræver fysisk test. Software-WebGL dokumenterer ikke 60–120 FPS.",
+    "Ingen nye spillermodeller eller komplette skades-/dommerregler. Profilen bygger på målbidrag, ikke fulde karakterer."
+  ],
+  "installSteps": [
+    "Hent APK’en, og installér oven på Touchline TEST uden afinstallation. Samme testcertifikat; APK 37 forbliver separat.",
+    "Brug det eksisterende fiktive testlogin. Privat websitepreview kræver ejeradgang: https://touchline37-website-preview.glowingconch1.chatgpt.site"
+  ],
+  "nextTest": [
+    "0:00–0:30: Åbn menuer/briefing, kontroller genveje, notch, klubnavn, saldo og bevarede indstillinger.",
+    "0:30–4:40: Spil én kamp i Auto/60, prøv vendinger, afleveringer, skud/lyd, halvlegsanalyse/taktik og kort baggrund/retur. Kontroller resultat og hent ydelsesrapport.",
+    "4:40–5:00: Prøv websiteillustrationens start/pause og footer på højkant. Længere varme-/batteriprøve kræver 10–15 minutter. Fuld plan og filoversigt står i docs/MATCHDAY-TEST54.md."
+  ]
+}
