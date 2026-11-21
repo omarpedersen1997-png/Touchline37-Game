@@ -141,6 +141,25 @@ ikke i denne kompatible R3-klientopdatering. Nye regler kræver en ny version.
 
 ## Kildeliste
 
+Afsluttet kontrol: **773 beståede, 0 fejl, 0 skip, 0 annulleret** på kildecommit
+`a02c0b0abdec691865dec3c25b8896b7a848847f`. Den signerede TEST56 er
+47.133.453 bytes (47,13 MB), versionkode 56, `1.0.0-test-direct56`.
+APK-SHA-256: `4719cb4c5ae93fd17cba880fdbe4404554e15f10879d557e2eed3e13c6416200`.
+Alle 43 pakkede webfiler er kontrolleret byte for byte; testcertifikat/app-id
+stemmer med den tidligere aflevering.
+
+Én isoleret DOM-prøve gav 131,1 ms til synlig ladningsindikator i TEST55 og
+1,2 ms i TEST56 med Enkel-grafik. Det måler kun softwarefeedback efter pointerdown,
+ikke fysisk touch, udført spark eller synlig pixel på telefonen. En anden
+diagnostik målte otte inputforbrug med gennemsnit 23,1 ms og maksimum 45 ms;
+det er ikke et statistisk telefonbenchmark. Fire-inputsloftet er uændret.
+
+Chromium kontrollerede den faktisk pakkede klient i Auto/Skarp, otte lyddekodninger,
+kort/fokus, PRBK/HAIF, fullscreen og retur til menu samt JSON-eksport. Ingen
+konsol-/runtimefejl eller forsøg mod eksterne værter blev registreret i disse
+isolerede fixtures. Software-WebGL's lave FPS siger ikke noget om OnePlus Nord 4.
+Kilde-/APK-/PDF-evidens og komplet ændringsliste findes i `test-evidence/direct-TEST56-*`.
+
 - `src/ManualMatch.jsx`, `src/direct-match-input.js`, `src/match-joystick.js`
 - `src/player-action-sample.js`, `src/asset-player-animation.js`, `src/pro-player.js`
 - `src/football-swing.js`, `src/manual-scene.js`, `src/match-prediction.js`

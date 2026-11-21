@@ -1,3 +1,16 @@
+# TEST56 – direkte styring og synkron kampvisning
+
+- APK: [Touchline37-Motor11-TEST56.apk](dev/artifacts/Touchline37-Motor11-TEST56.apk) – **47,13 MB**, kode 56, `1.0.0-test-direct56`.
+- PDF: [Opdateringsrapport TEST56](dev/artifacts/Touchline37-Opdateringsrapport-TEST56.pdf).
+- SHA-256: `4719cb4c5ae93fd17cba880fdbe4404554e15f10879d557e2eed3e13c6416200`.
+- Samme `dk.touchline.footballidle.test` og testcertifikat. Opdater oven på Touchline TEST uden afinstallation.
+- Straks-feedback på knapper/ladning, uafhængige fingre, rettidig sparkepose, løb/finte/vendinger, tidligere visning af bekræftet boldfrigivelse og mindre kameraefterslæb.
+- 773 tests består uden fejl/skip. Isoleret Chromium kontrollerer alle fem knapper, Auto/Skarp, otte WAV-dekodninger, fullscreen/retur og eksport. Alle 43 webfiler i APK er byte-verificeret.
+- Fysisk installation, touchlatens, Android-FPS og varme er ikke verificeret. R3-regler/AI, main, APK 37 og offentlig hjemmeside v56 er urørte.
+- [Alle filer, konkrete fejl, målegrænser og telefonprøve](docs/DIRECT-FEEL-TEST56.md).
+
+---
+
 # TEST55 – rigget 3D, PBR-teksturer og optaget publikumslyd
 
 - APK: [Touchline37-Motor11-TEST55.apk](dev/artifacts/Touchline37-Motor11-TEST55.apk) – **47.13 MB**, kode 55, `1.0.0-test-assets55`.
