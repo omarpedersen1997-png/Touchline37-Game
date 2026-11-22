@@ -1,0 +1,96 @@
+{
+  "unityVersion": "6000.6.10f1",
+  "revision": "40e81493c67d",
+  "releaseDate": "2026-11-19T10:46:23.619Z",
+  "urp": "17.6.0",
+  "inputSystem": "1.20.1",
+  "testFramework": "1.4.6",
+  "editorInstalled": false,
+  "editorInstalledBytes": 9129973760,
+  "androidModules": [
+    {
+      "id": "android",
+      "name": "Android Build Support",
+      "installedSize": {
+        "value": 3655089102,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-open-jdk-17.0.21+9",
+      "name": "OpenJDK",
+      "installedSize": {
+        "value": 252924003,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-ndk-tools",
+      "name": "Android SDK & NDK Tools",
+      "installedSize": {
+        "value": 1,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-ndk-r27c",
+      "name": "Android NDK",
+      "installedSize": {
+        "value": 2053737567,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-build-tools-36.0.0",
+      "name": "Android SDK Build Tools",
+      "installedSize": {
+        "value": 153141817,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-platform-tools-37.0.1",
+      "name": "Android SDK Platform Tools",
+      "installedSize": {
+        "value": 22198160,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-platforms-34",
+      "name": "Android SDK Platforms 34",
+      "installedSize": {
+        "value": 99855424,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-platforms-36",
+      "name": "Android SDK Platforms 36",
+      "installedSize": {
+        "value": 106177284,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-platforms-37.0",
+      "name": "Android SDK Platforms 37",
+      "installedSize": {
+        "value": 124986304,
+        "unit": "BYTE"
+      }
+    },
+    {
+      "id": "android-sdk-command-line-tools-21.0",
+      "name": "Android SDK Command Line Tools",
+      "installedSize": {
+        "value": 174216486,
+        "unit": "BYTE"
+      }
+    }
+  ],
+  "unityEditorCompileVerified": false,
+  "unityApkBuilt": false,
+  "physicalAndroidVerified": false,
+  "officialReleaseSource": "https://services.api.unity.com/unity/editor/release/v1/releases?version=6000.6.10f1&limit=1"
+}

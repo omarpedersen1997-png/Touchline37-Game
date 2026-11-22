@@ -1,0 +1,108 @@
+{
+  "tool": "Blender 4.3.2",
+  "results": [
+    {
+      "file": "keeper-auto.fbx",
+      "meshes": 15,
+      "vertices": 8520,
+      "bones": 26,
+      "clips": [
+        "Armature|Armature|cheer_Armature",
+        "Armature|Armature|dive_Armature",
+        "Armature|Armature|idle_Armature",
+        "Armature|Armature|pass_Armature",
+        "Armature|Armature|run_Armature",
+        "Armature|Armature|shoot_Armature",
+        "Armature|Armature|sprint_Armature",
+        "Armature|Armature|strafe_left_Armature",
+        "Armature|Armature|strafe_right_Armature",
+        "Armature|Armature|tackle_Armature",
+        "Armature|Armature|turn_Armature",
+        "Armature|Armature|walk_Armature"
+      ],
+      "uvMaps": true,
+      "skinning": true,
+      "readable": true
+    },
+    {
+      "file": "keeper-detail.fbx",
+      "meshes": 15,
+      "vertices": 19987,
+      "bones": 26,
+      "clips": [
+        "Armature|Armature|cheer_Armature",
+        "Armature|Armature|dive_Armature",
+        "Armature|Armature|idle_Armature",
+        "Armature|Armature|pass_Armature",
+        "Armature|Armature|run_Armature",
+        "Armature|Armature|shoot_Armature",
+        "Armature|Armature|sprint_Armature",
+        "Armature|Armature|strafe_left_Armature",
+        "Armature|Armature|strafe_right_Armature",
+        "Armature|Armature|tackle_Armature",
+        "Armature|Armature|turn_Armature",
+        "Armature|Armature|walk_Armature"
+      ],
+      "uvMaps": true,
+      "skinning": true,
+      "readable": true
+    },
+    {
+      "file": "player-auto.fbx",
+      "meshes": 13,
+      "vertices": 8078,
+      "bones": 26,
+      "clips": [
+        "Armature|Armature|cheer_Armature",
+        "Armature|Armature|dive_Armature",
+        "Armature|Armature|idle_Armature",
+        "Armature|Armature|pass_Armature",
+        "Armature|Armature|run_Armature",
+        "Armature|Armature|shoot_Armature",
+        "Armature|Armature|sprint_Armature",
+        "Armature|Armature|strafe_left_Armature",
+        "Armature|Armature|strafe_right_Armature",
+        "Armature|Armature|tackle_Armature",
+        "Armature|Armature|turn_Armature",
+        "Armature|Armature|walk_Armature"
+      ],
+      "uvMaps": true,
+      "skinning": true,
+      "readable": true
+    },
+    {
+      "file": "player-detail.fbx",
+      "meshes": 13,
+      "vertices": 19545,
+      "bones": 26,
+      "clips": [
+        "Armature|Armature|cheer_Armature",
+        "Armature|Armature|dive_Armature",
+        "Armature|Armature|idle_Armature",
+        "Armature|Armature|pass_Armature",
+        "Armature|Armature|run_Armature",
+        "Armature|Armature|shoot_Armature",
+        "Armature|Armature|sprint_Armature",
+        "Armature|Armature|strafe_left_Armature",
+        "Armature|Armature|strafe_right_Armature",
+        "Armature|Armature|tackle_Armature",
+        "Armature|Armature|turn_Armature",
+        "Armature|Armature|walk_Armature"
+      ],
+      "uvMaps": true,
+      "skinning": true,
+      "readable": true
+    },
+    {
+      "file": "stadium-kit.fbx",
+      "meshes": 10,
+      "vertices": 70463,
+      "bones": 0,
+      "clips": [],
+      "uvMaps": true,
+      "skinning": false,
+      "readable": true
+    }
+  ],
+  "unityImportVerified": false
+}

@@ -1,0 +1,11 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Touchline/Scenes/Touchline.unity
+    guid: e41aa8517ada30fc2673fd3fbdae4eec
+  m_configObjects: {}

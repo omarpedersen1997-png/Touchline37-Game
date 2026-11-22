@@ -1,0 +1,133 @@
+{
+  "Name": "Prøvelund BK",
+  "Formation": "4-3-3",
+  "Tactic": "balanced",
+  "Training": 1,
+  "Coach": 0,
+  "ClubBonus": 0,
+  "Money": 1500,
+  "Players": [
+    {
+      "Id": "p0",
+      "Name": "Oliver Holm",
+      "Position": "MÅL",
+      "Rating": 48,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 1,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p1",
+      "Name": "Emil Lund",
+      "Position": "FOR",
+      "Rating": 45,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 2,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p2",
+      "Name": "Noah Berg",
+      "Position": "FOR",
+      "Rating": 47,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 4,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p3",
+      "Name": "Lucas Dahl",
+      "Position": "FOR",
+      "Rating": 44,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 5,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p4",
+      "Name": "Oscar Bak",
+      "Position": "FOR",
+      "Rating": 46,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 3,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p5",
+      "Name": "William Storm",
+      "Position": "MID",
+      "Rating": 49,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 6,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p6",
+      "Name": "Elias Møller",
+      "Position": "MID",
+      "Rating": 46,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 8,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p7",
+      "Name": "Alfred Vang",
+      "Position": "MID",
+      "Rating": 48,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 10,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p8",
+      "Name": "Malthe Frost",
+      "Position": "ANG",
+      "Rating": 50,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 7,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p9",
+      "Name": "Theo Lind",
+      "Position": "ANG",
+      "Rating": 52,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 9,
+      "Form": 70,
+      "Energy": 100
+    },
+    {
+      "Id": "p10",
+      "Name": "Viktor Sø",
+      "Position": "ANG",
+      "Rating": 47,
+      "Potential": 99,
+      "Development": 0,
+      "Number": 11,
+      "Form": 70,
+      "Energy": 100
+    }
+  ],
+  "SettledMatches": []
+}

@@ -1,0 +1,2799 @@
+{
+  "provenance": "Read-only export of existing JS domain rules. NEW Unity sandbox is not a Motor 11 replay implementation.",
+  "strengths": [
+    {
+      "formation": "4-3-3",
+      "training": 1,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 45,
+            "penalty": 0,
+            "contribution": 45
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 44,
+            "penalty": 0,
+            "contribution": 44
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 49,
+            "penalty": 0,
+            "contribution": 49
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 50,
+            "penalty": 0,
+            "contribution": 50
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          }
+        ],
+        "average": 47.45454545454545,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 52,
+        "outOfPosition": 0
+      }
+    },
+    {
+      "formation": "4-3-3",
+      "training": 4,
+      "players": [
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "MÅL",
+            "rating": 58,
+            "penalty": 6,
+            "contribution": 52
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 51,
+            "penalty": 0,
+            "contribution": 51
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 50,
+            "penalty": 0,
+            "contribution": 50
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 55,
+            "penalty": 0,
+            "contribution": 55
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 54,
+            "penalty": 0,
+            "contribution": 54
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 56,
+            "penalty": 0,
+            "contribution": 56
+          },
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "ANG",
+            "rating": 54,
+            "penalty": 6,
+            "contribution": 48
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          }
+        ],
+        "average": 52.36363636363637,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 57,
+        "outOfPosition": 2
+      }
+    },
+    {
+      "formation": "4-3-3",
+      "training": 10,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 63,
+            "penalty": 0,
+            "contribution": 63
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 62,
+            "penalty": 0,
+            "contribution": 62
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 67,
+            "penalty": 0,
+            "contribution": 67
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 68,
+            "penalty": 0,
+            "contribution": 68
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 70,
+            "penalty": 0,
+            "contribution": 70
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          }
+        ],
+        "average": 65.45454545454545,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 70,
+        "outOfPosition": 0
+      }
+    },
+    {
+      "formation": "4-4-2",
+      "training": 1,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 45,
+            "penalty": 0,
+            "contribution": 45
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 44,
+            "penalty": 0,
+            "contribution": 44
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 49,
+            "penalty": 0,
+            "contribution": 49
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 50,
+            "penalty": 6,
+            "contribution": 44
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          }
+        ],
+        "average": 46.90909090909091,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 52,
+        "outOfPosition": 1
+      }
+    },
+    {
+      "formation": "4-4-2",
+      "training": 4,
+      "players": [
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "MÅL",
+            "rating": 58,
+            "penalty": 6,
+            "contribution": 52
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 51,
+            "penalty": 0,
+            "contribution": 51
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 50,
+            "penalty": 0,
+            "contribution": 50
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 55,
+            "penalty": 0,
+            "contribution": 55
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 54,
+            "penalty": 0,
+            "contribution": 54
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 56,
+            "penalty": 6,
+            "contribution": 50
+          },
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "ANG",
+            "rating": 54,
+            "penalty": 6,
+            "contribution": 48
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          }
+        ],
+        "average": 51.81818181818182,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 57,
+        "outOfPosition": 3
+      }
+    },
+    {
+      "formation": "4-4-2",
+      "training": 10,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 63,
+            "penalty": 0,
+            "contribution": 63
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 62,
+            "penalty": 0,
+            "contribution": 62
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 67,
+            "penalty": 0,
+            "contribution": 67
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 68,
+            "penalty": 6,
+            "contribution": 62
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 70,
+            "penalty": 0,
+            "contribution": 70
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          }
+        ],
+        "average": 64.9090909090909,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 70,
+        "outOfPosition": 1
+      }
+    },
+    {
+      "formation": "3-5-2",
+      "training": 1,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 45,
+            "penalty": 0,
+            "contribution": 45
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 44,
+            "penalty": 0,
+            "contribution": 44
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "MID",
+            "rating": 46,
+            "penalty": 6,
+            "contribution": 40
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 49,
+            "penalty": 0,
+            "contribution": 49
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 50,
+            "penalty": 6,
+            "contribution": 44
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          }
+        ],
+        "average": 46.36363636363637,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 51,
+        "outOfPosition": 2
+      }
+    },
+    {
+      "formation": "3-5-2",
+      "training": 4,
+      "players": [
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "MÅL",
+            "rating": 58,
+            "penalty": 6,
+            "contribution": 52
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 51,
+            "penalty": 0,
+            "contribution": 51
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 50,
+            "penalty": 0,
+            "contribution": 50
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "MID",
+            "rating": 52,
+            "penalty": 6,
+            "contribution": 46
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 55,
+            "penalty": 0,
+            "contribution": 55
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 54,
+            "penalty": 0,
+            "contribution": 54
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 56,
+            "penalty": 6,
+            "contribution": 50
+          },
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "ANG",
+            "rating": 54,
+            "penalty": 6,
+            "contribution": 48
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          }
+        ],
+        "average": 51.27272727272727,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 56,
+        "outOfPosition": 4
+      }
+    },
+    {
+      "formation": "3-5-2",
+      "training": 10,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 63,
+            "penalty": 0,
+            "contribution": 63
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 62,
+            "penalty": 0,
+            "contribution": 62
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "MID",
+            "rating": 64,
+            "penalty": 6,
+            "contribution": 58
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 67,
+            "penalty": 0,
+            "contribution": 67
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 68,
+            "penalty": 6,
+            "contribution": 62
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 70,
+            "penalty": 0,
+            "contribution": 70
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          }
+        ],
+        "average": 64.36363636363636,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 69,
+        "outOfPosition": 2
+      }
+    },
+    {
+      "formation": "4-5-1",
+      "training": 1,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 45,
+            "penalty": 0,
+            "contribution": 45
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 44,
+            "penalty": 0,
+            "contribution": 44
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 49,
+            "penalty": 0,
+            "contribution": 49
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 46,
+            "penalty": 0,
+            "contribution": 46
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 48,
+            "penalty": 0,
+            "contribution": 48
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 50,
+            "penalty": 6,
+            "contribution": 44
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 52,
+            "penalty": 6,
+            "contribution": 46
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 47,
+            "penalty": 0,
+            "contribution": 47
+          }
+        ],
+        "average": 46.36363636363637,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 51,
+        "outOfPosition": 2
+      }
+    },
+    {
+      "formation": "4-5-1",
+      "training": 4,
+      "players": [
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "MÅL",
+            "rating": 58,
+            "penalty": 6,
+            "contribution": 52
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 51,
+            "penalty": 0,
+            "contribution": 51
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 50,
+            "penalty": 0,
+            "contribution": 50
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 55,
+            "penalty": 0,
+            "contribution": 55
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 52,
+            "penalty": 0,
+            "contribution": 52
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 54,
+            "penalty": 0,
+            "contribution": 54
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 56,
+            "penalty": 6,
+            "contribution": 50
+          },
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MID",
+            "rating": 54,
+            "penalty": 6,
+            "contribution": 48
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 53,
+            "penalty": 0,
+            "contribution": 53
+          }
+        ],
+        "average": 51.81818181818182,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 57,
+        "outOfPosition": 3
+      }
+    },
+    {
+      "formation": "4-5-1",
+      "training": 10,
+      "players": [
+        {
+          "id": "p0",
+          "name": "Oliver Holm",
+          "position": "MÅL",
+          "rating": 48,
+          "number": 1,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p1",
+          "name": "Emil Lund",
+          "position": "FOR",
+          "rating": 45,
+          "number": 2,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p2",
+          "name": "Noah Berg",
+          "position": "FOR",
+          "rating": 47,
+          "number": 4,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p3",
+          "name": "Lucas Dahl",
+          "position": "FOR",
+          "rating": 44,
+          "number": 5,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p4",
+          "name": "Oscar Bak",
+          "position": "FOR",
+          "rating": 46,
+          "number": 3,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p5",
+          "name": "William Storm",
+          "position": "MID",
+          "rating": 49,
+          "number": 6,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p6",
+          "name": "Elias Møller",
+          "position": "MID",
+          "rating": 46,
+          "number": 8,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p7",
+          "name": "Alfred Vang",
+          "position": "MID",
+          "rating": 48,
+          "number": 10,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p8",
+          "name": "Malthe Frost",
+          "position": "ANG",
+          "rating": 50,
+          "number": 7,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p9",
+          "name": "Theo Lind",
+          "position": "ANG",
+          "rating": 52,
+          "number": 9,
+          "development": 0,
+          "potential": 99
+        },
+        {
+          "id": "p10",
+          "name": "Viktor Sø",
+          "position": "ANG",
+          "rating": 47,
+          "number": 11,
+          "development": 0,
+          "potential": 99
+        }
+      ],
+      "expected": {
+        "lineup": [
+          {
+            "id": "p0",
+            "name": "Oliver Holm",
+            "position": "MÅL",
+            "role": "MÅL",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p1",
+            "name": "Emil Lund",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 63,
+            "penalty": 0,
+            "contribution": 63
+          },
+          {
+            "id": "p2",
+            "name": "Noah Berg",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          },
+          {
+            "id": "p3",
+            "name": "Lucas Dahl",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 62,
+            "penalty": 0,
+            "contribution": 62
+          },
+          {
+            "id": "p4",
+            "name": "Oscar Bak",
+            "position": "FOR",
+            "role": "FOR",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p5",
+            "name": "William Storm",
+            "position": "MID",
+            "role": "MID",
+            "rating": 67,
+            "penalty": 0,
+            "contribution": 67
+          },
+          {
+            "id": "p6",
+            "name": "Elias Møller",
+            "position": "MID",
+            "role": "MID",
+            "rating": 64,
+            "penalty": 0,
+            "contribution": 64
+          },
+          {
+            "id": "p7",
+            "name": "Alfred Vang",
+            "position": "MID",
+            "role": "MID",
+            "rating": 66,
+            "penalty": 0,
+            "contribution": 66
+          },
+          {
+            "id": "p8",
+            "name": "Malthe Frost",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 68,
+            "penalty": 6,
+            "contribution": 62
+          },
+          {
+            "id": "p9",
+            "name": "Theo Lind",
+            "position": "ANG",
+            "role": "MID",
+            "rating": 70,
+            "penalty": 6,
+            "contribution": 64
+          },
+          {
+            "id": "p10",
+            "name": "Viktor Sø",
+            "position": "ANG",
+            "role": "ANG",
+            "rating": 65,
+            "penalty": 0,
+            "contribution": 65
+          }
+        ],
+        "average": 64.36363636363636,
+        "coach": 2,
+        "clubBonus": 3,
+        "total": 69,
+        "outOfPosition": 2
+      }
+    }
+  ],
+  "balls": [
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 0.22,
+        "vx": 24,
+        "vy": 5,
+        "vz": 0,
+        "curl": 4,
+        "flightKind": "pass"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.188721130682482,
+        "y": -4.7506128157946605,
+        "z": 0.22,
+        "vx": 23.55586874500876,
+        "vy": 4.941892279188758,
+        "vz": 0,
+        "curl": 3.2749230123119273,
+        "flightKind": "pass"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 2,
+        "vx": 24,
+        "vy": 5,
+        "vz": -3,
+        "curl": 4,
+        "flightKind": "pass"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.198220614411682,
+        "y": -4.741606193574822,
+        "z": 1.8377375,
+        "vx": 23.788155061331906,
+        "vy": 5.129866620720693,
+        "vz": -3.4648275218644713,
+        "curl": 3.7859405918139353,
+        "flightKind": "pass"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 0.22,
+        "vx": 24,
+        "vy": 5,
+        "vz": 0,
+        "curl": 4,
+        "flightKind": "through"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.191802376487018,
+        "y": -4.74996638729667,
+        "z": 0.22,
+        "vx": 23.679118577190206,
+        "vy": 4.967749419108417,
+        "vz": 0,
+        "curl": 3.2749230123119273,
+        "flightKind": "through"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 2,
+        "vx": 24,
+        "vy": 5,
+        "vz": -3,
+        "curl": 4,
+        "flightKind": "through"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.198220614411682,
+        "y": -4.741606193574822,
+        "z": 1.8377375,
+        "vx": 23.802744075007865,
+        "vy": 5.133012711457558,
+        "vz": -3.4669524624481776,
+        "curl": 3.7859405918139353,
+        "flightKind": "through"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 0.22,
+        "vx": 24,
+        "vy": 5,
+        "vz": 0,
+        "curl": 4,
+        "flightKind": "loft"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.1874805349504225,
+        "y": -4.750873085986188,
+        "z": 0.22,
+        "vx": 23.50624491572641,
+        "vy": 4.931481471527666,
+        "vz": 0,
+        "curl": 3.2749230123119273,
+        "flightKind": "loft"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 2,
+        "vx": 24,
+        "vy": 5,
+        "vz": -3,
+        "curl": 4,
+        "flightKind": "loft"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.198220614411682,
+        "y": -4.741606193574822,
+        "z": 1.8377375,
+        "vx": 23.729977405208924,
+        "vy": 5.117320729059587,
+        "vz": -3.456353743903433,
+        "curl": 3.7859405918139353,
+        "flightKind": "loft"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 0.22,
+        "vx": 24,
+        "vy": 5,
+        "vz": 0,
+        "curl": 4,
+        "flightKind": "shot"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.19114824214893,
+        "y": -4.750103621098995,
+        "z": 0.22,
+        "vx": 23.6529532036667,
+        "vy": 4.962260067015414,
+        "vz": 0,
+        "curl": 3.2749230123119273,
+        "flightKind": "shot"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 2,
+        "vx": 24,
+        "vy": 5,
+        "vz": -3,
+        "curl": 4,
+        "flightKind": "shot"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.198220614411682,
+        "y": -4.741606193574822,
+        "z": 1.8377375,
+        "vx": 23.82319878285439,
+        "vy": 5.13742372705536,
+        "vz": -3.4699317617891987,
+        "curl": 3.7859405918139353,
+        "flightKind": "shot"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 0.22,
+        "vx": 24,
+        "vy": 5,
+        "vz": 0,
+        "curl": 4,
+        "flightKind": "loose"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.188069953774496,
+        "y": -4.750749429144344,
+        "z": 0.22,
+        "vx": 23.529821668689358,
+        "vy": 4.936427745201423,
+        "vz": 0,
+        "curl": 3.2749230123119273,
+        "flightKind": "loose"
+      }
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": -5,
+        "z": 2,
+        "vx": 24,
+        "vy": 5,
+        "vz": -3,
+        "curl": 4,
+        "flightKind": "loose"
+      },
+      "seconds": 0.05,
+      "expected": {
+        "x": 4.198220614411682,
+        "y": -4.741606193574822,
+        "z": 1.8377375,
+        "vx": 23.75903061907962,
+        "vy": 5.123585994763283,
+        "vz": -3.4605854455531935,
+        "curl": 3.7859405918139353,
+        "flightKind": "loose"
+      }
+    }
+  ],
+  "frozen": {
+    "shared/football-engine11-r2.js": "4ad518a8d5fe454a76cbca4345f0f2294a1b6e7fddb3f98c9d17dad47d6d6f42",
+    "shared/football-engine11-r3.js": "274b4d45a4fae126f62e3e9d79f7c76e9bc8eca0aa6d59fcfcc1203961fe1e10",
+    "shared/team-strength.js": "87a93081ff1654f0a181cc86051f5a484e1274d984f5c216edec3e11558d9eda",
+    "shared/football-motion-r3.js": "0a18700f04e0538d3509e30e55a0e9685c235c7262ab06baa98e5eca7f3a34f5"
+  }
+}

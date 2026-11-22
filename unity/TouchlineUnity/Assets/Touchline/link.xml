@@ -1,0 +1,4 @@
+<linker>
+  <!-- JsonUtility save DTOs must survive Android IL2CPP managed stripping. -->
+  <assembly fullname="Touchline.Core" preserve="all" />
+</linker>
