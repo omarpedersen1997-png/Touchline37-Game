@@ -115,6 +115,12 @@ henter ikke nyere kode og kræver repositoryets Actions-skriverettighed.
 Hvis **Run workflow** vises, vælg altid Unity-branchen. Job-guard afviser main
 selv ved en fejlvalgt manuel ref. Ingen af metoderne merger eller deployer.
 
+**Kontrolleret 22. november 2026:** Både [push-kørslen](https://github.com/omarpedersen1997-png/Touchline37-Game/actions/runs/44982895009)
+og [manuel workflow_dispatch](https://github.com/omarpedersen1997-png/Touchline37-Game/actions/runs/44982949333)
+startede på Unity-branchen ved commit `732773d`, uden workflow på main. Begge
+stoppede i licens-/signeringskontrollen før Unity; ingen APK blev bygget.
+Workflowet angiver nu præcis, hvilke Secret-navne der mangler, uden at vise værdier.
+
 ## 4. Download APK på Android
 
 1. Log ind på [GitHub Actions](https://github.com/omarpedersen1997-png/Touchline37-Game/actions).

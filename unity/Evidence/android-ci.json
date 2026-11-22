@@ -43,5 +43,14 @@
   },
   "licensing": "Personal .alf -> .ulf unsupported by Unity 6.6 manual activation. GameCI Hub .ulf if available, or locally Hub-activated Windows runner. Account license not verified.",
   "secretsNamesReadable": false,
-  "secretsReadHttpStatus": 403
+  "secretsReadHttpStatus": 403,
+  "githubVerification": {
+    "commit": "732773d6488cf9b1820ae8d25270f2a84354db66",
+    "pushRun": 44982895009,
+    "manualDispatchRun": 44982949333,
+    "bothTriggeredOnUnityBranch": true,
+    "bothStoppedBeforeUnity": "Missing licensing/signing prerequisites",
+    "workflowOnMain": false,
+    "apkUploaded": false
+  }
 }
