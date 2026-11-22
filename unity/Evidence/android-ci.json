@@ -1,0 +1,47 @@
+{
+  "branch": "codex/unity-66-foundation",
+  "baseCommit": "ac6d1436a0f4470f4f1e037fa212cacea1d9cdfe",
+  "changedFiles": [
+    ".github/actionlint.yaml",
+    ".github/workflows/unity-android-build.yml",
+    "unity/Artifacts/TouchlineUnity-Android-CI-6000.6.10f1.pdf",
+    "unity/CI-ANDROID.md",
+    "unity/Evidence/android-ci.json",
+    "unity/Evidence/project-validation.json",
+    "unity/Evidence/syntax-check.json",
+    "unity/README.md",
+    "unity/Tests/Test-AndroidCi.ps1",
+    "unity/Tests/test_android_ci.py",
+    "unity/Tools/report-android-ci.py",
+    "unity/TouchlineUnity/Assets/Touchline/Editor/TouchlineCiBuild.cs",
+    "unity/TouchlineUnity/Assets/Touchline/Editor/TouchlineCiBuild.cs.meta",
+    "unity/ci/Build-Windows.ps1",
+    "unity/ci/Publish-AndroidArtifact.ps1"
+  ],
+  "checks": {
+    "corePassed": 46,
+    "workflowPassed": 7,
+    "powershellChecksPassed": 8,
+    "powershellVersion": "7.7.0 Linux",
+    "actionlintVersion": "1.7.12",
+    "actionlintErrors": 0,
+    "csharpSyntaxFiles": 19,
+    "csharpSyntaxErrors": 0,
+    "unityEditorExecuted": false,
+    "unityApkBuilt": false,
+    "physicalAndroidVerified": false
+  },
+  "protected": {
+    "main": "e9b04e67d014b544ebe0c383e6b03093277666a1",
+    "checksums": {
+      "shared/football-engine11-r2.js": "4ad518a8d5fe454a76cbca4345f0f2294a1b6e7fddb3f98c9d17dad47d6d6f42",
+      "shared/football-engine11-r3.js": "274b4d45a4fae126f62e3e9d79f7c76e9bc8eca0aa6d59fcfcc1203961fe1e10",
+      "/workspace/sites/touchline/release/downloads/Touchline-1.0.0.apk": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+      "unity/Artifacts/TouchlineUnity-Foundation-6000.6.10f1.zip": "cb2af134360ab54f3c23bcb64256c8ae774315f86c8ff9f4257f29298c58b67f",
+      "unity/Artifacts/TouchlineUnity-Foundation-6000.6.10f1.pdf": "bd30de0784a46b015bb4b051ce7e0ec4139021c1bce8d166c99fd3ceea656110"
+    }
+  },
+  "licensing": "Personal .alf -> .ulf unsupported by Unity 6.6 manual activation. GameCI Hub .ulf if available, or locally Hub-activated Windows runner. Account license not verified.",
+  "secretsNamesReadable": false,
+  "secretsReadHttpStatus": 403
+}

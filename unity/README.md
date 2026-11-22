@@ -4,6 +4,12 @@
 `codex/unity-66-foundation`. Lancering fastholdt: **1. januar 2027 kl. 10.00
 Europe/Copenhagen / 09.00 UTC**. Ingen deployment eller merge.
 
+Android-bygning via GitHub Actions er nu beskrevet i
+[CI-ANDROID.md](CI-ANDROID.md): GameCI-cloud med Secrets eller en lokalt
+Hub-aktiveret Windows Personal-runner, vedvarende særskilt testsignering og
+download fra Android. Workflowet findes kun på Unity-branchen. Den gamle
+gratis `.alf` → `.ulf`-metode må ikke bruges som et løfte om Personal-aktivering.
+
 Der er implementeret et dansk klub-/startflow, der åbner en ny lokal 11-mod-11-
 kamp med bane, figurer, bold, kamera, joystick, knapper, kampflow og gemning.
 **Unity Editor findes ikke i det aktuelle miljø. Runtime-/Editor-koden er derfor
