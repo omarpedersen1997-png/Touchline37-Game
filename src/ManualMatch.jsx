@@ -1,3 +1,6 @@
+import {preparedMatchScenes,preparedSceneKey} from './prepared-match-scene.js';
+import {snapshotMatchHud} from './match-hud-state.js';
+import {isAppHidden,watchAppVisibility} from './app-visibility.js';
 import {matchPhase} from './match-flow.js';
 import {createInputOwnership,createInputLatencyTracker,createChargeFeedback,createCriticalHudGate,consumeDirectOneShots} from './direct-match-input.js';
 import {matchAssetRoot} from './match-asset-config.js';
@@ -33,7 +36,7 @@ import{commandForTactic,commandForFormation}from'../shared/football-tactics.js';
 import{createGoalReplayBuffer}from'./goal-replay.js';
 import MatchStatistics from'./MatchStatistics.jsx';
 import GoalMoment from'./GoalMoment.jsx';
-import{goalInputLocked,goalHudState}from'./goal-hud.js';
+import{goalInputLocked}from'./goal-hud.js';
 
 export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,onFinish,busy,players=[]}){
  const lastCatchup=useRef(false),matchAudio=useRef(null),audioFeed=useRef(null);audioFeed.current||=createMatchAudioFeed();
@@ -106,8 +109,8 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
    if(version>=5&&!e.repeat&&e.key.toLowerCase()==='r'&&isMatchShortcut(e)){e.preventDefault();controls.current.through=true;markInput('through');}
   };
   const up=e=>{const had=keys.current.delete(e.key.toLowerCase());if(had&&e.key!==' '&&e.key.toLowerCase()!=='e'&&acceptInput())markInput('move');if(e.key===' ')actionUp('shoot');if(e.key.toLowerCase()==='e')actionUp('pass');};
-  window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',reset);document.addEventListener('visibilitychange',reset);window.addEventListener('touchline:back',back);
-  return()=>{reset();document.body.style.overflow=overflow;window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',reset);document.removeEventListener('visibilitychange',reset);window.removeEventListener('touchline:back',back);prior?.focus();};
+  window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',reset);const stopVisibility=watchAppVisibility(reset);window.addEventListener('touchline:back',back);
+  return()=>{reset();document.body.style.overflow=overflow;window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',reset);stopVisibility();window.removeEventListener('touchline:back',back);prior?.focus();};
  },[match.id]);
  useEffect(()=>{
   if(!match.manual||!showField)return;
@@ -122,32 +125,35 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
     const {createMatchScene,prepareMatchSceneAssets}=await import('./manual-scene.js');
     await prepareMatchSceneAssets({version,quality,engineRevision:match.manual.config.engineRevision||1});
     if(disposed)return;
-    scene=createMatchScene(host,{version,quality,targetFps:version>=11?renderHz:undefined,initialState:session.current.state,getMatchTime:()=>time()-match.started,onPerformance:r=>{if(!disposed){const value=direct?{...r,...inputLatency.current.report()}:r;performanceLog.current.record(value,quality);setFrameStats(value);}},onResolution:r=>{if(!disposed){performanceLog.current.resolution(r);setResolution(r);}},pattern:clubStyle?.pattern,stage:match.manual.config.stadiumStage??2,field:session.current.state.field,players:session.current.state.home.length,color:CLUB_COLORS[clubStyle?.color||'lime']});sceneRef.current=scene;
+    const sceneOptions={version,quality,targetFps:version>=11?renderHz:undefined,initialState:session.current.state,getMatchTime:()=>time()-match.started,onPerformance:r=>{if(!disposed){const value=direct?{...r,...inputLatency.current.report()}:r;performanceLog.current.record(value,quality);setFrameStats(value);}},onResolution:r=>{if(!disposed){performanceLog.current.resolution(r);setResolution(r);}},pattern:clubStyle?.pattern,stage:match.manual.config.stadiumStage??2,field:session.current.state.field,players:session.current.state.home.length,color:CLUB_COLORS[clubStyle?.color||'lime']};
+    const preparedKey=preparedSceneKey({version,revision:match.manual.config.engineRevision||1,quality,color:clubStyle?.color,pattern:clubStyle?.pattern,stage:match.manual.config.stadiumStage??2});
+    scene=preparedMatchScenes.take(preparedKey,host,sceneOptions)||createMatchScene(host,sceneOptions);sceneRef.current=scene;
     host.addEventListener('webglcontextlost',lost,true);await scene.prepare?.();if(disposed)return;
     if(live){await finishMatchPreparation(session.current,{started:match.started,now:time,signal:initialization.signal});if(disposed)return;}
+    if(direct){scene.render(session.current.state,camera.current,true);setHud(snapshotMatchHud(session.current,{duration,kickoff:Math.max(0,Math.ceil((match.started-time())/1000)),catchingUp:false,players,feed:feed.current}));setComplete(session.current.complete);}
     setMode(scene.mode);if(scene.mode==='simple'&&quality!=='simple')setQuality('simple');setSceneLoading(false);
     const frame=t=>{
      if(disposed)return;
      const s=session.current,c=controls.current,command=version>=8&&!overlayState.current.portrait&&!overlayState.current.help?commands.current[0]:null,mask=command??(!acceptInput()||s.state.openingKickoff&&s.state.freeze>0||goalInputLocked(s.state)?0:matchControlMask(keys.current,c,scene.mode==='3d'?camera.current:scene.controlView||'stadium',version)),before=s.count;
-     if(live)s.advance(time(),document.hidden?0:mask,version>=11?{maxInputs:4,maxWorkMs:2}:undefined);
-     if(s.inputApplied&&command&&!document.hidden)commands.current.shift();if(direct&&s.inputApplied&&!command&&acceptInput()&&!document.hidden)inputLatency.current.applied(performance.now());
+     if(live)s.advance(time(),isAppHidden()?0:mask,version>=11?{maxInputs:4,maxWorkMs:2}:undefined);
+     if(s.inputApplied&&command&&!isAppHidden())commands.current.shift();if(direct&&s.inputApplied&&!command&&acceptInput()&&!isAppHidden())inputLatency.current.applied(performance.now());
      if(direct){const owned=s.state.ball.owner?.team==='home'&&s.state.ball.owner.index===s.state.controlled;chargeFeedback.current.paint(chargePanel.current,Math.max(s.state.shotCharge||0,s.state.passCharge||0)/18,s.state.passCharge>0||c.passHeld?'Løftet aflevering':'Skudkraft',owned&&acceptInput()&&(!!c.shootHeld||!!c.passHeld));}
      const flow=direct?matchPhase(s.state):null,nextGoalPhase=s.state.goalSequence?.stage||null,nextGoalTick=s.state.lastGoal?.tick??null,goalChanged=nextGoalPhase!==lastGoalPhase||nextGoalTick!==lastGoalTick;
      if(goalChanged||direct&&flow!==lastFlowPhase&&flow!=='PLAYING')resetControls();
      lastGoalPhase=nextGoalPhase;lastGoalTick=nextGoalTick;
      if(replays.current.capture(s.state))setClips([...replays.current.clips]);
      if(s.complete&&replays.current.finish(s.state))setClips([...replays.current.clips]);
-     if(direct)consumeDirectOneShots(c,s.inputApplied,command,acceptInput()&&!document.hidden,inputOwners.current);else if(s.inputApplied){c.shoot=false;c.pass=false;c.skill=false;c.through=false;}
+     if(direct)consumeDirectOneShots(c,s.inputApplied,command,acceptInput()&&!isAppHidden(),inputOwners.current);else if(s.inputApplied){c.shoot=false;c.pass=false;c.skill=false;c.through=false;}
      audioFeed.current.observe(s.state,matchAudio.current,t);
      const catchingUp=s.pendingInputs*s.inputMs>=1000;
      const kickoff=Math.max(0,Math.ceil((match.started-time())/1000));
      if(direct&&(criticalHud(s.state)||flow!==lastFlowPhase)||catchingUp!==lastCatchup.current||kickoff!==lastKickoff||s.count!==lastHudCount&&(t-lastHud>180||s.complete||goalChanged)){
       lastKickoff=kickoff;lastCatchup.current=catchingUp;lastFlowPhase=flow;
-      setHud({flow,setup:!!s.state.openingKickoff&&s.state.freeze>0,catchingUp,analysis:s.complete||s.state.intermissionRemaining>0?analyseMatch(s.state,players):null,events:feed.current.observe(s.state),kickoff,home:s.state.homeScore,away:s.state.awayScore,goalMoment:goalHudState(s.state),stats:{...s.state.stats},tactic:s.state.tactic,formation:s.state.formation,seconds:Math.max(0,duration-s.count*s.inputMs/1000),energy:s.state.home[s.state.controlled].energy,charge:Math.max(s.state.shotCharge||0,s.state.passCharge||0)/18,half:s.state.half||1,pause:s.state.intermissionRemaining||0,skillCooldown:s.state.skillCooldown||0,chargeKind:s.state.passCharge>0?'Løftet aflevering':'Skudkraft',restart:s.state.restart&&s.state.tick-s.state.restart.tick<22?s.state.restart.kind:null,controlled:s.state.controlled,radar:['home','away'].flatMap(team=>s.state[team].map((p,i)=>({x:p.x,y:p.y,team,active:team==='home'&&i===s.state.controlled}))),ball:{x:s.state.ball.x,y:s.state.ball.y},possession:s.state.ball.owner?.team,owns:s.state.ball.owner?.team==='home'&&s.state.ball.owner.index===s.state.controlled});
+      setHud(snapshotMatchHud(s,{duration,kickoff,catchingUp,players,feed:feed.current}));
       setComplete(s.complete);lastHud=t;lastHudCount=s.count;
      }
      if(s.count!==lastSavedCount&&(t-lastSave>1500||s.complete)){if(s.complete)saves.flush();else saves.request();lastSave=t;lastSavedCount=s.count;}
-     if(!document.hidden&&!overlayState.current.replay&&drawDue(t,s.complete)){scene.render(s.state,camera.current,s.complete);}
+     if(!isAppHidden()&&!overlayState.current.replay&&drawDue(t,s.complete)){scene.render(s.state,camera.current,s.complete);}
      return live&&!s.complete;
     };
     visibleLoop=createVisibleMatchLoop({frame,onHide:()=>{resetControls();saves.flush();},onResume:()=>{scene.resume?.();audioFeed.current.reset();lastHud=0;}});
@@ -168,7 +174,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
   const timer=setTimeout(()=>{void submit();},saveState.phase==='retry'?Math.max(0,saveState.retryAt-Date.now()):0);
   return()=>clearTimeout(timer);
  },[complete,live,busy,saveState.phase,saveState.retryAt]);
- useEffect(()=>{const retry=()=>{if(!document.hidden&&complete&&live&&saveState.retryable)setSaveState({phase:'idle',attempt:0,retryAt:0});};window.addEventListener('online',retry);document.addEventListener('visibilitychange',retry);return()=>{window.removeEventListener('online',retry);document.removeEventListener('visibilitychange',retry);};},[complete,live,saveState.retryable]);
+ useEffect(()=>{const retry=()=>{if(!isAppHidden()&&complete&&live&&saveState.retryable)setSaveState({phase:'idle',attempt:0,retryAt:0});};window.addEventListener('online',retry);const stopVisibility=watchAppVisibility(retry);return()=>{window.removeEventListener('online',retry);stopVisibility();};},[complete,live,saveState.retryable]);
  useEffect(()=>{if(replayClip)dialog.current?.querySelector('.match-replay-controls button')?.focus();},[replayClip]);
  useEffect(()=>{
   if(!replayClip||sceneLoading)return;let raf=0,stopped=false;const sample=createReplayPlayback(replayClip,{targetFps:version>=11?renderHz:matchRenderBudget(version,quality).targetFps||30});playback.current=sample;setReplayPaused(false);setReplaySpeed(1);

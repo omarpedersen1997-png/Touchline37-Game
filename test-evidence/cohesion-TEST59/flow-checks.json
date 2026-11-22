@@ -1,0 +1,67 @@
+{
+  "fixtureOnly": true,
+  "postEvidence": {
+    "ready": true,
+    "canvas": true,
+    "at": 3721.2000000029802
+  },
+  "handoff": {
+    "sameCanvas": true,
+    "orphanHosts": 0,
+    "reveals": [
+      {
+        "phase": "KICK_OFF",
+        "score": "PBPRBK0 : 0HAIFHI00:00"
+      }
+    ],
+    "phase": "KICK_OFF",
+    "score": "PBPRBK0 : 0HAIFHI00:00"
+  },
+  "backupKind": "touchline-match-recording",
+  "checks": [
+    {
+      "width": 320,
+      "height": 640,
+      "noHorizontalOverflow": true,
+      "sixShortcuts": true,
+      "currency": true
+    },
+    {
+      "width": 360,
+      "height": 740,
+      "noHorizontalOverflow": true,
+      "sixShortcuts": true,
+      "currency": true
+    },
+    {
+      "width": 384,
+      "height": 724,
+      "noHorizontalOverflow": true,
+      "sixShortcuts": true,
+      "currency": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "noHorizontalOverflow": true,
+      "sixShortcuts": true,
+      "currency": true
+    },
+    {
+      "width": 740,
+      "height": 360,
+      "noHorizontalOverflow": true,
+      "sixShortcuts": true,
+      "currency": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "noHorizontalOverflow": true,
+      "sixShortcuts": true,
+      "currency": true
+    }
+  ],
+  "errors": [],
+  "blocked": []
+}

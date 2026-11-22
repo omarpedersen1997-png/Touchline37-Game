@@ -1,0 +1,207 @@
+{
+  "source": "Samme deterministiske R3-state og fast skærmopløsning. Isoleret Chromium, ikke telefon-FPS.",
+  "results": [
+    {
+      "profile": "before",
+      "landscape": {
+        "tick": 550,
+        "ball": {
+          "x": 18.5472,
+          "y": 10.114,
+          "z": 0.22
+        },
+        "camera": {
+          "eye": [
+            36.82465686898482,
+            9.981602203793916,
+            16.184476260695448
+          ],
+          "target": [
+            18.278195999999998,
+            0.8,
+            10.620538000000002
+          ],
+          "fov": 42
+        },
+        "mode": "3d",
+        "resolution": {
+          "width": 915,
+          "height": 412,
+          "quality": "auto",
+          "is4k": false,
+          "limited": false,
+          "antialias": false
+        }
+      },
+      "portrait": {
+        "tick": 550,
+        "ball": {
+          "x": 18.5472,
+          "y": 10.114,
+          "z": 0.22
+        },
+        "camera": {
+          "eye": [
+            47.01024963066631,
+            15.463431641504437,
+            19.24015408919989
+          ],
+          "target": [
+            18.278195999999998,
+            0.8,
+            10.620538000000002
+          ],
+          "fov": 42
+        },
+        "mode": "3d",
+        "resolution": {
+          "width": 390,
+          "height": 844,
+          "quality": "auto",
+          "is4k": false,
+          "limited": false,
+          "antialias": false
+        }
+      },
+      "goal": {
+        "tick": 928,
+        "ball": {
+          "x": 7.4267,
+          "y": -40.9996,
+          "z": 1.5055
+        },
+        "camera": {
+          "eye": [
+            25.966275344438163,
+            10.344694265235818,
+            -36.09070919666855
+          ],
+          "target": [
+            6.745166,
+            1.0963100000000001,
+            -41.857042
+          ],
+          "fov": 42
+        },
+        "mode": "3d",
+        "resolution": {
+          "width": 915,
+          "height": 412,
+          "quality": "auto",
+          "is4k": false,
+          "limited": false,
+          "antialias": false
+        }
+      },
+      "figures": {
+        "kind": "pass",
+        "drawCalls": 48,
+        "triangles": 29642,
+        "models": 3
+      },
+      "errors": [],
+      "blocked": []
+    },
+    {
+      "profile": "after",
+      "landscape": {
+        "tick": 550,
+        "ball": {
+          "x": 18.5472,
+          "y": 10.114,
+          "z": 0.22
+        },
+        "camera": {
+          "eye": [
+            36.82465686898482,
+            9.981602203793916,
+            16.184476260695448
+          ],
+          "target": [
+            18.278195999999998,
+            0.8,
+            10.620538000000002
+          ],
+          "fov": 42
+        },
+        "mode": "3d",
+        "resolution": {
+          "width": 915,
+          "height": 412,
+          "quality": "auto",
+          "is4k": false,
+          "limited": false,
+          "antialias": false
+        }
+      },
+      "portrait": {
+        "tick": 550,
+        "ball": {
+          "x": 18.5472,
+          "y": 10.114,
+          "z": 0.22
+        },
+        "camera": {
+          "eye": [
+            47.01024963066631,
+            15.463431641504437,
+            19.24015408919989
+          ],
+          "target": [
+            18.278195999999998,
+            0.8,
+            10.620538000000002
+          ],
+          "fov": 42
+        },
+        "mode": "3d",
+        "resolution": {
+          "width": 390,
+          "height": 844,
+          "quality": "auto",
+          "is4k": false,
+          "limited": false,
+          "antialias": false
+        }
+      },
+      "goal": {
+        "tick": 928,
+        "ball": {
+          "x": 7.4267,
+          "y": -40.9996,
+          "z": 1.5055
+        },
+        "camera": {
+          "eye": [
+            25.966275344438163,
+            10.344694265235818,
+            -36.09070919666855
+          ],
+          "target": [
+            6.745166,
+            1.0963100000000001,
+            -41.857042
+          ],
+          "fov": 42
+        },
+        "mode": "3d",
+        "resolution": {
+          "width": 915,
+          "height": 412,
+          "quality": "auto",
+          "is4k": false,
+          "limited": false,
+          "antialias": false
+        }
+      },
+      "figures": {
+        "kind": "pass",
+        "drawCalls": 48,
+        "triangles": 29642,
+        "models": 3
+      },
+      "errors": [],
+      "blocked": []
+    }
+  ]
+}

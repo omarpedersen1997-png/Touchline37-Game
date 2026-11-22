@@ -1,0 +1,13 @@
+{
+  "game": {
+    "tests": 814,
+    "pass": 814,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "physicalAndroidVerified": false,
+  "baselineCommit": "2084e493041bd0fe395de0f981e3440b251d8dc8",
+  "visual": "test-evidence/cohesion-TEST59/visual-checks.json",
+  "flow": "test-evidence/cohesion-TEST59/flow-checks.json"
+}

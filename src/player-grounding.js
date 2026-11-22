@@ -46,7 +46,8 @@ export function createPlayerGrounding(human,source){
  const position=new THREE.Vector3(),weighted=new THREE.Vector3();
  return{
   supportCount:supports.length,
-  apply(floor=.035){
+  apply(floor=.035,options){
+   const rotation=options?.rotation,rootHeight=options?.rootHeight||0;
    if(!supports.length)return;
    for(const entry of records){entry.node.updateMatrix();if(entry.parent)entry.matrix.multiplyMatrices(entry.parent.matrix,entry.node.matrix);else entry.matrix.copy(entry.node.matrix);}
    let lowest=Infinity;
@@ -54,9 +55,11 @@ export function createPlayerGrounding(human,source){
     weighted.set(0,0,0);
     for(const influence of support){position.copy(influence.point).applyMatrix4(byName[influence.name].matrix);weighted.addScaledVector(position,influence.weight);}
     weighted.multiply(human.scale).applyQuaternion(human.quaternion);
+    if(rotation)weighted.applyQuaternion(rotation);
     lowest=Math.min(lowest,weighted.y);
    }
-   human.position.y=floor-lowest;
+   const vertical=rotation?Math.max(.25,1-2*(rotation.x*rotation.x+rotation.z*rotation.z)):1;
+   human.position.y=(floor-rootHeight-lowest)/vertical;
   }
  };
 }

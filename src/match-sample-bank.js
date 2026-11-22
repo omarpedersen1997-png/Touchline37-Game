@@ -2,10 +2,11 @@
 export function createMatchSampleBank(context,{base,output,allowed,fetcher=globalThis.fetch}={}){
  const buffers=new Map(),voices=new Set(),abort=new AbortController();let disposed=false,loading=null,ambience=null;
  const names=['ambience','crowd-goal','crowd-chance','kick-soft','kick-hard','woodwork','net','whistle'];
- const stopAll=()=>{for(const voice of [...voices]){try{voice.stop();}catch{}}ambience=null;};
+ const stopAll=()=>{for(const voice of [...voices]){try{voice.stop();}catch{}voice.onended?.();}ambience=null;};
  function play(name,{gain=.3,at=context.currentTime,loop=false}={}){
   if(disposed||!allowed()||!buffers.has(name)||voices.size>=8||context.state!=='running')return false;
-  try{const source=context.createBufferSource(),volume=context.createGain();source.buffer=buffers.get(name);source.loop=loop;volume.gain.value=gain;source.connect(volume);volume.connect(output);voices.add(source);source.onended=()=>{voices.delete(source);source.disconnect();volume.disconnect();if(ambience===source)ambience=null;};source.start(at);if(loop)ambience=source;return true;}catch{return false;}
+  let clean;
+  try{const source=context.createBufferSource(),volume=context.createGain();let ended=false;source.buffer=buffers.get(name);source.loop=loop;volume.gain.value=gain;source.connect(volume);volume.connect(output);voices.add(source);clean=()=>{if(ended)return;ended=true;voices.delete(source);source.disconnect();volume.disconnect();if(ambience===source)ambience=null;};source.onended=clean;source.start(at);if(loop)ambience=source;return true;}catch{clean?.();return false;}
  }
  return {load(){
   if(loading||disposed)return loading||Promise.resolve();
