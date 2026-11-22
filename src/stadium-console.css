@@ -315,6 +315,19 @@
 .match-live-events time{color:var(--tl-accent);font-variant-numeric:tabular-nums}
 @media(max-height:450px){.game-console .match-live-pulse{top:70px;left:16px;width:210px;padding:8px 10px}}
 
+/* The direction hint occupies its own row beneath the scoreboard. Keep the
+   live card below that row, including the native safe area and compact HUD. */
+.game-console .game-match[data-active=true] .match-live-pulse{
+ top:calc(env(safe-area-inset-top,0px) + var(--match-edge,20px) + 83px);
+ left:max(20px,env(safe-area-inset-left,0px));
+}
+@media(max-height:450px){
+ .game-console .game-match[data-active=true] .match-live-pulse{
+  top:calc(env(safe-area-inset-top,0px) + var(--match-edge,12px) + 75px);
+  left:max(16px,env(safe-area-inset-left,0px));
+ }
+}
+
 /* Portrait menus flow normally; only ManualMatch asks for landscape. */
 @media(orientation:portrait) and (max-width:760px){
  .app-shell.game-console{height:auto;min-height:100dvh;overflow:visible}

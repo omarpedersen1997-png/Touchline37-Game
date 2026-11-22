@@ -153,7 +153,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
       setComplete(s.complete);lastHud=t;lastHudCount=s.count;
      }
      if(s.count!==lastSavedCount&&(t-lastSave>1500||s.complete)){if(s.complete)saves.flush();else saves.request();lastSave=t;lastSavedCount=s.count;}
-     if(!isAppHidden()&&!overlayState.current.replay&&drawDue(t,s.complete)){scene.render(s.state,camera.current,s.complete);}
+     if(!isAppHidden()&&!overlayState.current.replay&&drawDue(t,s.complete,!catchingUp)){scene.render(s.state,camera.current,s.complete);}
      return live&&!s.complete;
     };
     visibleLoop=createVisibleMatchLoop({frame,onHide:()=>{resetControls();saves.flush();},onResume:()=>{scene.resume?.();audioFeed.current.reset();lastHud=0;}});

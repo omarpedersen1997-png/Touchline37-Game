@@ -12,6 +12,10 @@ export default function MatchSoundControl({goals=0,phase='waiting',controllerRef
   const audio=createMatchSound({storage:localMatchStorage()});sound.current=audio;if(controllerRef)controllerRef.current=audio;
   const unlock=()=>audio.unlock(),visibility=()=>{if(isAppHidden())audio.suspend();else audio.unlock();};
   document.addEventListener('pointerdown',unlock,true);document.addEventListener('keydown',unlock,true);const stopVisibility=watchAppVisibility(visibility);
+  // The start button was pressed before this lazy-mounted controller existed.
+  // Honour saved sound for that first kickoff, without autoplay on restoration
+  // in a document that has not received any real user interaction yet.
+  if(audio.enabled&&globalThis.navigator?.userActivation?.hasBeenActive)void audio.unlock();
   return()=>{document.removeEventListener('pointerdown',unlock,true);document.removeEventListener('keydown',unlock,true);stopVisibility();audio.dispose();sound.current=null;if(controllerRef?.current===audio)controllerRef.current=null;};
  },[]);
  useEffect(()=>{goalTracker.current(sound.current,goals,phase,goalWhistle);},[goals,phase,goalWhistle]);

@@ -1,0 +1,13 @@
+{
+  "url": "https://touchline37-engine11-test.glowingconch1.chatgpt.site/api/test-environment",
+  "status": 200,
+  "response": {
+    "isolated": true,
+    "engine": 11,
+    "engineRevision": 3,
+    "environment": "touchline37-engine11-test"
+  },
+  "contentType": "application/json",
+  "readOnly": true,
+  "physicalAndroidVerified": false
+}

@@ -17,6 +17,7 @@ import {createManualSession} from '../src/manual-session.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createFootballPlayer,animateFootballPlayer} from '../src/pro-player.js';
+import {createMatchFramePacer} from '../src/match-frame-pacer.js';
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return{promise,resolve,reject};};
 const flush=()=>new Promise(r=>setImmediate(r));
 
@@ -125,4 +126,18 @@ test('real R3 tackling pose remains planted under rotated root instead of buryin
  try{const source=await loadRig('player-auto.glb'),model=createFootballPlayer({source,optimize:false}),p={x:0,y:0,vx:2,vy:0,facingX:1,facingY:0,kick:0,dive:0,tackle:10,action:'tackle',actionDuration:16,actionTicks:10},state={version:11,engineRevision:3,controlled:0,ball:{owner:null}},point=new THREE.Vector3();let sole;model.traverse(mesh=>{if(mesh.material?.name==='Sneaker outsole')sole=mesh;});assert(sole);
   for(const hz of [60,120])for(let i=0;i<30;i++){p.tackle=Math.max(1,16-i/2);p.actionTicks=p.tackle;model.position.set(i/hz*2,0,0);model.rotation.y=.7;animateFootballPlayer(model,p,state,'home',0,1/hz,true,i===0);model.updateMatrixWorld(true);let floor=Infinity;for(let j=0;j<sole.geometry.attributes.position.count;j++){sole.getVertexPosition(j,point).applyMatrix4(sole.matrixWorld);floor=Math.min(floor,point.y);}assert(floor>.01&&floor<.055,'actual tackle sole '+floor);}
  }finally{Object.assign(globalThis,prior);}
+});
+
+test('slow graphics cannot monopolize a large catch-up; bounded input callbacks converge without dropping a physics tick or changing the packet',()=>{
+ const match={id:'draw59',started:1000,ends:251000,manual:{version:11,seed:'draw59',config:{matchVersion:11,engineRevision:3,homeRating:65,awayRating:62}}},results=[];
+ for(const gate of [false,true]){
+  const session=createManualSession(match,{now:1000}),pace=createMatchFramePacer(60);let now=11000,recovered=null,draws=0,callbacks=0,largest=0;
+  while(now<21000){const count=session.count;session.advance(now,0,{maxInputs:4});largest=Math.max(largest,session.count-count);const behind=session.pendingInputs*session.inputMs>=1000;if(!behind&&recovered===null)recovered=now-11000;const draw=pace(now,false,!gate||!behind);callbacks++;if(draw)draws++;now+=draw?250:1000/60;}
+  assert(largest<=4);const pending=session.pendingInputs;while(!session.complete)session.advance(match.ends,0,{maxInputs:4});const reference=createManualSession(match,{now:1000});reference.advance(match.ends);assert.equal(session.packet(),reference.packet());assert.deepEqual(session.state,reference.state);results.push({gate,recoveredMs:recovered,pendingInputs:pending,draws,callbacks});
+ }
+ assert.equal(results[0].recoveredMs,null);assert(results[1].recoveredMs<1500);assert(results[1].pendingInputs<25);assert(results[0].pendingInputs>150);
+ writeFileSync('outputs/cohesion59-recovery.json',JSON.stringify({note:'Artificial 250 ms draw cost and 60 Hz callback opportunities; scheduling model, NOT measured Android FPS. Physics and packet compared exactly.',results},null,2));
+});
+test('drawing restarts immediately after a blocked backlog, including at a backwards/restarted presentation clock',()=>{
+ const pace=createMatchFramePacer(60);assert(pace(0));assert(!pace(1));assert(!pace(2,true,false));assert(pace(3));assert(!pace(4));assert(!pace(5,false,false));assert(pace(0));
 });

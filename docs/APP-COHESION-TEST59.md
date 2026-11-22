@@ -46,6 +46,21 @@ Udviklingsbranch: `codex/test59-app-cohesion`. Baseline: TEST58, commit
   kunne overleve mute/baggrund. Begge deler nu et loft på otte stemmer og stoppes
   straks. Sen AudioContext.resume/dekodning kan ikke genstarte mute. Genåbning
   af en halvlegs-/sluttilstand genafspiller ikke det historiske fløjt.
+  Et gemt lydvalg aktiveres også efter startknappens allerede registrerede
+  brugerinteraktion, så første afspark ikke kræver et ekstra tryk på banen.
+  Uden registreret brugerinteraktion beholdes den sikre gesture-fallback.
+
+- Ved stor tidsrestance blev 3D-tegning stadig udført mellem de små
+  fysikbatcher. Hvis en tegning tog 250 ms, kunne fire inputs pr. callback
+  aldrig indhente en 20 Hz-simulation. Tegning holder nu kort pause ved mindst
+  ét sekunds restance; callbacks fortsætter og tegnecadencen nulstilles rent.
+  Ingen fysikticks droppes. I en udtrykkeligt syntetisk 250 ms-tegnemodel
+  indhentes startrestancen på 800 ms mod ingen indhentning før ændringen.
+  Dette er en scheduler-test, ikke en måling af telefonens FPS.
+
+- Visuel kontrol afslørede også, at livekortet dækkede bunden af retningstippet
+  under scoretavlen på lave skærme. Kortet placeres nu under sin egen
+  retningsrække med safe-area og mindst seks pixels målt afstand i browseren.
 
 ## Bevis og afgrænsning
 
@@ -67,7 +82,8 @@ Playwright og esbuild; alle HTTP-kald opfanges lokalt, ingen rigtig kamp startes
 Flowkontrollen bruger de faktisk pakkede webfiler og viser: R3-canvas klar før
 fiktiv kamp-POST, samme canvas efter overdragelse, ingen forældreløse skjulte
 hosts, første afslørede HUD i KICK_OFF, videre til PLAYING, backup og retur til
-menu. Menuer kontrolleres ved 320/360/384/390 px og lave/brede skærme, uden
+menu. Afspaksbilledet fastholdes ved første færdige frame via fixture-
+baggrundssignalet; derefter genoptages den normale kamp. Menuer kontrolleres ved 320/360/384/390 px og lave/brede skærme, uden
 vandret dokument-overflow, med seks genveje og `kr.`. Ingen runtime-/konsolfejl
 eller kald til eksterne værter i disse fixtures.
 
@@ -104,3 +120,25 @@ save-migration eller nulstilling af klub-, lyd- eller splash-valg.
 5. Mute midt i et fløjt, send appen i baggrunden og gå tilbage. Ingen gammel lyd,
    fast styrepude eller kamerahop. Luk kampen og kontrollér portrætmenuen.
    Spil derefter 10 minutter og eksportér ydelsesrapport for varme/FPS-vurdering.
+
+## Ændrede kildefiler
+
+- Figurer/animation: `src/pro-player.js`, `src/athlete-volume.js`,
+  `src/asset-player-animation.js`, `src/ball-body-response.js`,
+  `src/player-grounding.js`, `src/focus-marker.js`, `src/manual-scene.js`.
+- Kampstart/HUD/tegnebudget: `src/App.jsx`, `src/ManualMatch.jsx`,
+  `src/prepare-next-match.js`, `src/prepared-match-scene.js`,
+  `src/match-hud-state.js`, `src/match-frame-pacer.js`,
+  `src/stadium-console.css`.
+- Livscyklus: `src/app-visibility.js`, `src/match-visibility.js`,
+  `src/native-lifecycle.js`, `src/use-native-lifecycle.js`.
+- Lyd: `src/MatchSoundControl.jsx`, `src/match-sound.js`,
+  `src/match-sample-bank.js`, `src/match-audio-feed.js`.
+- Verifikation/bygning: `tests/app-cohesion.test.mjs`, `package.json`,
+  `dev/test-release.json`, de fire `dev/evidence/*59.mjs` scripts og billedbilagsgeneratoren,
+  denne rapport og `test-evidence/cohesion-TEST59*`.
+
+Den komplette filliste, APK-metadata og rapportgrundlaget gemmes sammen med
+TEST59-artefakterne. Det originale `player-rendering.js` er undersøgt og bevares;
+geometrien bearbejdes før dets eksisterende deling af skelet og sammenlægning
+af beklædningsmesh. Der er ingen ny modelkonvertering i hvert render-frame.
