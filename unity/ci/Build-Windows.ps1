@@ -5,9 +5,6 @@ if ($env:GITHUB_REF -ne 'refs/heads/codex/unity-66-foundation' -or
     $env:GITHUB_REPOSITORY -ne 'omarpedersen1997-png/Touchline37-Game') {
     throw 'Kun den aftalte Unity-branch maa bygges.'
 }
-if ([string]::IsNullOrWhiteSpace($env:UNITY_ANDROID_DEBUG_KEYSTORE_BASE64)) {
-    throw 'Opret UNITY_ANDROID_DEBUG_KEYSTORE_BASE64. Se unity/CI-ANDROID.md.'
-}
 $editor = $env:UNITY_EDITOR_PATH
 if ([string]::IsNullOrWhiteSpace($editor)) {
     $editor = 'C:\Program Files\Unity\Hub\Editor\6000.6.10f1\Editor\Unity.exe'
@@ -21,7 +18,7 @@ $log = Join-Path $env:RUNNER_TEMP ('touchline-unity-' + $env:TOUCHLINE_BUILD_ID 
 if (Test-Path -LiteralPath $key) { throw 'Midlertidig CI-noegle findes allerede; overskriver ikke.' }
 
 try {
-    [IO.File]::WriteAllBytes($key, [Convert]::FromBase64String($env:UNITY_ANDROID_DEBUG_KEYSTORE_BASE64))
+    & (Join-Path $PSScriptRoot 'New-DebugSigning.ps1')
     $arguments = @(
         '-batchmode', '-nographics', '-quit', '-buildTarget', 'Android',
         '-projectPath', ('"' + $project + '"'),
@@ -30,6 +27,7 @@ try {
         '-touchlineBuildId', $env:TOUCHLINE_BUILD_ID,
         '-touchlineBuildNumber', $env:TOUCHLINE_BUILD_NUMBER,
         '-touchlineCommit', $env:TOUCHLINE_COMMIT,
+        '-touchlineSigningKind', $env:TOUCHLINE_SIGNING_KIND,
         '-touchlineKeystore', ('"' + $key + '"'),
         '-logFile', ('"' + $log + '"')
     )

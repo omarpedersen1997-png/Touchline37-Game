@@ -1,1 +1,1 @@
-{"name":"Touchline.Tests.Editor","references":["Touchline.Core"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"defineConstraints":["UNITY_INCLUDE_TESTS"],"autoReferenced":false}
+{"name":"Touchline.Tests.Editor","references":["Touchline.Core","Touchline.Editor","Touchline.Runtime","Unity.RenderPipelines.Universal.Runtime"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"defineConstraints":["UNITY_INCLUDE_TESTS"],"autoReferenced":false}

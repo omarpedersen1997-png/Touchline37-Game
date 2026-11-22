@@ -51,7 +51,7 @@ kræver ingen `UNITY_LICENSE`, `UNITY_EMAIL` eller `UNITY_PASSWORD` på GitHub.
    variable**: navn `UNITY_BUILD_RUNNER`, værdi **`windows-personal`**.
    Hvis editoren ligger et andet sted end standardinstallationen, tilføj også
    variablen `UNITY_EDITOR_PATH` med den fulde sti til `Unity.exe`.
-4. Opret testsignerings-Secret fra næste afsnit. Et efterfølgende push til
+4. Testsignerings-Secret er valgfri. Et efterfølgende push til
    Unity-branchen vælger Windows-jobbet i stedet for GameCI-containeren.
 
 Repositoryet er offentligt. Runneren kører kun den aftalte branch og ingen
@@ -60,10 +60,22 @@ personer skriveadgang, brug en separat Windows-bruger uden produktionsnøgler,
 og godkend aldrig ukendt kode på branchen. Denne opgave installerer eller
 registrerer ikke en runner på din PC.
 
-## 2. Vedvarende, særskilt debug-signering (begge metoder)
+## 2. Automatisk debug-signering og valgfri vedvarende nøgle
 
-Cloud-runnere må ikke generere en ny nøgle ved hvert build; så kan nye APK'er
-ikke opdatere den samme testapp. Opret derfor **én ny Unity-testnøgle**. Genbrug
+**Ingen manuel keystore-opsætning kræves.** Hvis Secret
+`UNITY_ANDROID_DEBUG_KEYSTORE_BASE64` mangler, genererer både GameCI- og
+Windows-jobbet automatisk en kryptografisk tilfældig RSA-3072-debugnøgle med
+OpenJDK/keytool i runnerens midlertidige mappe. Ingen offentlig/deterministisk
+privat nøgle genbruges, og ingen nøgle uploades som artifact. Nøglen ryddes op
+efter bygningen. Unity-licens er stadig nødvendig.
+
+**En midlertidig nøgle skifter signatur ved næste kørsel.** APK'er med forskellige
+signaturer kan ikke opdatere hinanden med samme app-id. Afinstallér ikke en
+eksisterende testapp uden en særskilt save-backup. Workflowet afinstallerer
+intet. Byg samme app igen lokalt på samme PC, eller tilføj den valgfrie
+vedvarende Secret for gentagne CI-opdateringer.
+
+Vil du bevare samme CI-signatur fremover, opret **én ny Unity-testnøgle**. Genbrug
 ikke APK 37's eller Capacitor TEST's nøgle. Password/alias nedenfor er Androids
 offentlige debug-standard; den private nøgle er stadig hemmelig.
 
@@ -89,15 +101,16 @@ anderledes, skal kun `$keytool` i eksemplet tilpasses.
 
 Unity-testappens id er **`dk.touchline.footballidle.unitytest`**. Den installeres
 ved siden af APK 37 og den tidligere Capacitor TEST. Efterfølgende Unity-test-
-APK'er bruger samme nøgle og stigende `versionCode` (`1001 + run_number`).
+APK'er med en vedvarende Secret bruger samme nøgle og stigende `versionCode`
+(`1001 + run_number`). Lokale menu-builds øger deres eget versionsnummer.
 Skift eller slet ikke Secrets-nøglen mellem opdateringer. En manuelt bygget
 Unity-APK med en anden nøgle kan ikke opdateres med CI-nøglen; afinstallér ikke
 en sådan app uden særskilt backup af dens data.
 
 ## 3. Automatisk og manuel kørsel uden ændring af main
 
-Et push til **`codex/unity-66-foundation`** starter workflowet. Manglende Secrets
-giver en tydelig fejl; der bliver ikke uploadet en falsk/ufærdig APK.
+Et push til **`codex/unity-66-foundation`** starter workflowet. Manglende licens-Secrets
+giver en tydelig fejl; manglende signerings-Secret håndteres automatisk, og der bliver ikke uploadet en falsk/ufærdig APK.
 
 GitHubs **Run workflow**-knap kræver normalt workflowet på standardbranchen.
 **Vi lægger det ikke på main og ændrer ikke standardbranchen.** Når workflowet
@@ -119,7 +132,8 @@ selv ved en fejlvalgt manuel ref. Ingen af metoderne merger eller deployer.
 og [manuel workflow_dispatch](https://github.com/omarpedersen1997-png/Touchline37-Game/actions/runs/44982949333)
 startede på Unity-branchen ved commit `732773d`, uden workflow på main. Begge
 stoppede i licens-/signeringskontrollen før Unity; ingen APK blev bygget.
-Workflowet angiver nu præcis, hvilke Secret-navne der mangler, uden at vise værdier.
+Det opdaterede workflow kræver kun licens-Secrets og opretter testsignering
+automatisk, hvis signerings-Secret mangler. Ingen Secret-værdier vises.
 
 ## 4. Download APK på Android
 
@@ -139,7 +153,11 @@ Workflowet angiver nu præcis, hvilke Secret-navne der mangler, uden at vise væ
 
 - Pinned GameCI v4 + præcis Android-container fra serie 4, 2 GiB delt hukommelse.
 - Isoleret ARM64/IL2CPP-development-APK; aldrig AAB eller produktionstestnøgle.
-- Importkontrol af animationer, specifik editor, branch og test-app-id.
+- Importkontrol af alle fem FBX-modeller, fire controllere med hver 12 klip,
+  URP-materialer, startscene, editorversion, branch og test-app-id.
+- Lokal menu: **Touchline → Build Android Test APK** →
+  `Builds/Android/Touchline-Unity-Test.apk`, med automatisk Android-targetskift,
+  ventning over genkompilering og advarselslog. Tidligere output gemmes i History/.
 - APK-signaturen verificeres med `apksigner`; `aapt` kontrollerer app-id og
   versionCode mod metadata for netop den aktuelle commit/kørsel.
 - Kun APK, `build-info.json`, `SHA256SUMS.txt` og `certificate.txt` uploades.
@@ -157,5 +175,5 @@ touchrespons eller FPS på OnePlus Nord 4; det kræver fysisk test.
 - [GameCI: licensaktivering](https://game.ci/docs/github/activation/)
 - [GameCI: builder](https://game.ci/docs/github/builder/)
 - [GitHub: workflow_dispatch](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_dispatch)
-- Unity-skill: `using-unity`, `unity-cli.md`, `auth-license-cloud.md`,
+- Unity-skill: `using-unity`, `unity-cli.md`, `docs-workflow.md`, `projects-templates.md`, `auth-license-cloud.md`,
   `common-workflows.md` og `build-run-test.md` er læst til denne opgave.

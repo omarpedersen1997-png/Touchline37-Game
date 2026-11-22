@@ -1,0 +1,8 @@
+{
+  "source": "https://download.packages.unity.com/com.unity.template.urp-blank/-/com.unity.template.urp-blank-17.2.6.tgz",
+  "sha1": "667227add3c6ea5562d43103893fdd1346df0bfe",
+  "template": "com.unity.template.urp-blank@17.2.6",
+  "unity": "6000.6",
+  "urp": "17.6.0",
+  "scope": "Derived Player/Graphics/Quality/URP settings and four URP rendering assets. Unity template GUIDs remapped to this project; Android identity, signing, API levels, pipeline and typography unchanged by the source template."
+}

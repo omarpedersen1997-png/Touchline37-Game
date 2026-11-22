@@ -70,7 +70,11 @@ class AndroidCiTests(unittest.TestCase):
         self.assertEqual(builder['with']['unityVersion'], '6000.6.10f1')
         self.assertEqual(builder['with']['targetPlatform'], 'Android')
         self.assertRegex(builder['with']['customImage'], r'6000\.6\.10f1-android-4\.0\.0@sha256:[a-f0-9]{64}$')
-        self.assertEqual(builder['with']['androidKeystoreBase64'], '${{ secrets.UNITY_ANDROID_DEBUG_KEYSTORE_BASE64 }}')
+        self.assertEqual(builder['with']['androidKeystoreBase64'], '${{ steps.signing.outputs.keystore_base64 }}')
+        signing = next(step for step in steps if step.get('id') == 'signing')
+        self.assertEqual(signing['env']['UNITY_ANDROID_DEBUG_KEYSTORE_BASE64'], '${{ secrets.UNITY_ANDROID_DEBUG_KEYSTORE_BASE64 }}')
+        preflight = next(step for step in steps if 'for name in UNITY_LICENSE' in step.get('run',''))
+        self.assertNotIn('UNITY_ANDROID_DEBUG_KEYSTORE_BASE64', preflight['run'])
         for job in CONFIG['jobs'].values():
             for step in job['steps']:
                 if 'uses' in step:

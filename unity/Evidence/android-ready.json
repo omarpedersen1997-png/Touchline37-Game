@@ -1,0 +1,118 @@
+{
+  "branch": "codex/unity-66-foundation",
+  "baseCommit": "3a93323c5666061e43b81b6eb9d4d8bda88a6814",
+  "changes": [
+    ".github/workflows/unity-android-build.yml",
+    "unity/Artifacts/TouchlineUnity-Android-Ready-6000.6.10f1.pdf",
+    "unity/CI-ANDROID.md",
+    "unity/Evidence/android-ready.json",
+    "unity/Evidence/project-validation.json",
+    "unity/Evidence/syntax-check.json",
+    "unity/README.md",
+    "unity/Tests/Test-AndroidCi.ps1",
+    "unity/Tests/test_android_ci.py",
+    "unity/Tests/test_android_ready.py",
+    "unity/ThirdParty/Unity-URP-Blank-17.2.6-LICENSE.md",
+    "unity/ThirdParty/Unity-URP-Blank-17.2.6-source.json",
+    "unity/Tools/report-android-ready.py",
+    "unity/TouchlineUnity/Assets/Touchline/Editor/TouchlineAndroidBuild.cs",
+    "unity/TouchlineUnity/Assets/Touchline/Editor/TouchlineAndroidBuild.cs.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Editor/TouchlineCiBuild.cs",
+    "unity/TouchlineUnity/Assets/Touchline/Editor/TouchlineProjectSetup.cs",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/DefaultVolumeProfile.asset",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/DefaultVolumeProfile.asset.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/TouchlineGlobalSettings.asset",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/TouchlineGlobalSettings.asset.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/TouchlineRenderer.asset",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/TouchlineRenderer.asset.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/TouchlineURP.asset",
+    "unity/TouchlineUnity/Assets/Touchline/Resources/Touchline/Rendering/TouchlineURP.asset.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Tests/Editor/AndroidReadyTests.cs",
+    "unity/TouchlineUnity/Assets/Touchline/Tests/Editor/AndroidReadyTests.cs.meta",
+    "unity/TouchlineUnity/Assets/Touchline/Tests/Editor/Touchline.Tests.Editor.asmdef",
+    "unity/TouchlineUnity/Packages/manifest.json",
+    "unity/TouchlineUnity/ProjectSettings/GraphicsSettings.asset",
+    "unity/TouchlineUnity/ProjectSettings/ProjectSettings.asset",
+    "unity/TouchlineUnity/ProjectSettings/QualitySettings.asset",
+    "unity/TouchlineUnity/ProjectSettings/URPProjectSettings.asset",
+    "unity/ci/Build-Windows.ps1",
+    "unity/ci/New-DebugSigning.ps1",
+    "unity/ci/Publish-AndroidArtifact.ps1"
+  ],
+  "tests": {
+    "legacy": {
+      "passed": 816,
+      "failed": 0,
+      "skipped": 0,
+      "execution": "503 tests before environment block + 313 tests after providing existing JDK on PATH and temporary org.json jar; every package.json test command completed"
+    },
+    "core": {
+      "passed": 46,
+      "failed": 0
+    },
+    "pythonWorkflowSettings": {
+      "passed": 14,
+      "failed": 0
+    },
+    "powershell": {
+      "checksPassed": 15,
+      "failed": 0,
+      "version": "7.7.0 on Linux",
+      "randomTemporaryKeyGenerationVerified": true,
+      "optionalPersistentKeyReuseVerified": true
+    },
+    "syntax": {
+      "files": 21,
+      "errors": 0
+    },
+    "actionlint": "1.7.12: no errors",
+    "unityEditMode": {
+      "provided": 12,
+      "executed": false
+    },
+    "unityEditorImportExecuted": false,
+    "unityApiCompilationExecuted": false,
+    "androidApkBuilt": false,
+    "physicalAndroidVerified": false
+  },
+  "configuration": {
+    "editor": "6000.6.10f1",
+    "urp": "17.6.0",
+    "applicationId": "dk.touchline.footballidle.unitytest",
+    "backend": "IL2CPP",
+    "architectures": "ARM64",
+    "minimumApi": 26,
+    "targetApi": 35,
+    "inputBackend": "Input System only, committed before first import",
+    "sceneOrder": [
+      "Assets/Touchline/Scenes/Touchline.unity"
+    ],
+    "sceneFlow": "Existing runtime bootstrap opens Danish club, builds match world and switches its active root; no second scene is needed",
+    "menu": "Touchline/Build Android Test APK",
+    "localOutput": "Builds/Android/Touchline-Unity-Test.apk",
+    "localSigning": "Automatic Unity machine-local debug signing",
+    "ciSigning": "Optional dedicated Secret, otherwise cryptographically random temporary RSA-3072 debug key. Ephemeral keys cannot update each other without same certificate. No uninstall or save deletion."
+  },
+  "protected": {
+    "main": "e9b04e67d014b544ebe0c383e6b03093277666a1",
+    "checksums": {
+      "shared/football-engine11-r2.js": "4ad518a8d5fe454a76cbca4345f0f2294a1b6e7fddb3f98c9d17dad47d6d6f42",
+      "shared/football-engine11-r3.js": "274b4d45a4fae126f62e3e9d79f7c76e9bc8eca0aa6d59fcfcc1203961fe1e10",
+      "/workspace/sites/touchline/release/downloads/Touchline-1.0.0.apk": "b3da8abedb4c96072d0b876ebf4e8bf5dc04c9f1e742c2ca886ff997b60726a0",
+      "unity/Artifacts/TouchlineUnity-Foundation-6000.6.10f1.zip": "cb2af134360ab54f3c23bcb64256c8ae774315f86c8ff9f4257f29298c58b67f",
+      "unity/Artifacts/TouchlineUnity-Foundation-6000.6.10f1.pdf": "bd30de0784a46b015bb4b051ce7e0ec4139021c1bce8d166c99fd3ceea656110"
+    }
+  },
+  "limitations": [
+    "No Unity Editor installation/activation in this environment. No Unity API/import/build or physical phone verification.",
+    "CI still needs a supported Unity licence, or a locally Hub-activated Windows self-hosted runner. Missing signing Secret is no longer a blocker."
+  ],
+  "skillReferences": [
+    "unity-cli.md",
+    "build-run-test.md",
+    "common-workflows.md",
+    "projects-templates.md",
+    "docs-workflow.md"
+  ]
+}

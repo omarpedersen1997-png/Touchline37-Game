@@ -29,6 +29,9 @@ namespace Touchline.Editor
 
             string buildId = Read(args, "-touchlineBuildId");
             string commit = Read(args, "-touchlineCommit");
+            string signingKind = Read(args, "-touchlineSigningKind");
+            if(signingKind!="persistent-debug"&&signingKind!="ephemeral-debug")throw new InvalidDataException("Ukendt testsignering.");
+            if(EditorUserBuildSettings.activeBuildTarget!=BuildTarget.Android)throw new InvalidOperationException("Start CI-editoren med -buildTarget Android.");
             if (!Regex.IsMatch(buildId, @"\A[0-9]+-[0-9]+\z") || !Regex.IsMatch(commit, @"\A[0-9a-f]{40}\z"))
                 throw new InvalidDataException("Ugyldigt CI-build-id eller commit.");
             if (!int.TryParse(Read(args, "-touchlineBuildNumber"), NumberStyles.None,
@@ -44,6 +47,7 @@ namespace Touchline.Editor
             // A queued first-import setup must not later reset CI version/signing.
             EditorApplication.delayCall -= TouchlineProjectSetup.Ensure;
             TouchlineProjectSetup.Ensure();
+            TouchlineProjectSetup.ValidatePreparedProject();
             foreach (string model in new[] { "player-auto", "keeper-auto" })
             {
                 string controller = "Assets/Touchline/Resources/Touchline/Controllers/" + model + ".controller";
@@ -59,7 +63,7 @@ namespace Touchline.Editor
             Directory.CreateDirectory(output);
 
             // The password/alias are Android's public development defaults. The
-            // randomly generated private key lives ONLY in a dedicated GitHub Secret.
+            // private key is either an optional Secret or a random per-run temp key.
             // Never reuse APK 37's key or the Capacitor test signing identity here.
             try
             {
@@ -91,6 +95,7 @@ namespace Touchline.Editor
                     commit = commit, buildId = buildId, versionCode = PlayerSettings.Android.bundleVersionCode,
                     version = PlayerSettings.bundleVersion, target = "Android ARM64 IL2CPP",
                     signing = "Dedicated Unity debug key; not production/Capacitor signing",
+                    signingKind = signingKind,
                     builtUtc = DateTime.UtcNow.ToString("O", CultureInfo.InvariantCulture),
                     physicalAndroidTestExecuted = false
                 };
@@ -118,7 +123,7 @@ namespace Touchline.Editor
         [Serializable]
         private sealed class BuildInfo
         {
-            public string unityVersion, appId, branch, commit, buildId, version, target, signing, builtUtc;
+            public string unityVersion, appId, branch, commit, buildId, version, target, signing, signingKind, builtUtc;
             public int versionCode;
             public bool physicalAndroidTestExecuted;
         }

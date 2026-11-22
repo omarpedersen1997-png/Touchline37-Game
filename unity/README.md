@@ -93,14 +93,15 @@ Ingen Unity-skærmbilleder, Unity-FPS eller fysisk Android-test er opfundet.
    Unitys officielle metadata angiver OpenJDK 17.0.21+9. En gyldig Unity-
    aktivering er nødvendig. Ingen licens eller signeringsnøgle indgår i repoet.
 2. Vælg *Add project from disk* og åbn `unity/TouchlineUnity`.
-3. Lad de fastlåste pakker/importer blive færdige. Editorens klargøring opretter
-   URP-asset, materialer og controllere. Menuen **Touchline → Klargør Unity-projekt**
-   kan gentage klargøringen. Godkend editor-genstart, hvis Unity beder om den
-   efter aktivering af input-backends. Kontrollér Console; ingen fejl må ignoreres.
-4. Åbn `Assets/Touchline/Scenes/Touchline.unity`, og tryk **Play**.
+3. Lad de fastlåste pakker/importer blive færdige. URP-pipeline, renderer, global settings og Android Player Settings er
+   allerede gemt i projektet. Importen opretter automatisk materialer og
+   animationscontrollere. Input System er valgt på forhånd; der kræves ingen
+   manuel ændring af input-backend. Kontrollér Console; ingen fejl må ignoreres.
+4. Tryk **Play**. Klargøringen vælger automatisk bootstrap-scenen som Play Mode-startscene
+   uden at overskrive en anden åben scene. APK'en starter i samme scene.
 5. Test klub/træning/taktik, vælg **Spil Unity-testkamp**, og prøv afspark,
    afleveringer, skud, pause, retur til klub og genoptagelse.
-6. Kør **Window → General → Test Runner → EditMode**. De seks Unity-tests er
+6. Kør **Window → General → Test Runner → EditMode**. De tolv Unity-tests er
    leveret, men er ikke afviklet i dette miljø.
 
 Tastatur: WASD/pile, **E** aflever/skift, **R** stikning, **Q** finte, **F** indlæg,
@@ -127,17 +128,21 @@ plads; den mangler her, og tilgængelig plads rækker ikke til editor + Android-
 moduler. Ingen Unity-buildaktivering er til rådighed i værktøjerne. Installer-
 størrelsen er kontrolleret i den officielle release-API, ikke gættet.
 
-Når et Unity-buildmiljø er til rådighed, vælger man **Touchline → Byg separat
-Android-test-APK**. Metoden bygger ARM64/IL2CPP til
-`Builds/Android/Touchline-Unity-0.1.0.apk` med app-id
-**`dk.touchline.footballidle.unitytest`**. Unitys udviklingssignering bruges;
+Når et Unity-buildmiljø er til rådighed, vælger man **Touchline → Build Android Test APK**. Menuen skifter automatisk til Android, afventer import/genkompilering og
+bygger ARM64/IL2CPP til
+`Builds/Android/Touchline-Unity-Test.apk` med app-id
+**`dk.touchline.footballidle.unitytest`**. Unitys automatiske lokale debug-signering bruges;
 produktionsnøglen og det gamle Capacitor-TEST-certifikat åbnes ikke. Appen skal
 ligge ved siden af APK 37 og Touchline TEST, og dens første lokale klub er
-fiktiv. En fast Unity-testsigneringsidentitet skal sikres før efterfølgende
-installerbare Unity-opdateringer afleveres.
+fiktiv. Lokale gentagne builds bruger Unitys debugnøgle på samme PC. CI genererer en
+midlertidig nøgle, hvis den valgfrie signerings-Secret mangler; den kan ikke
+bruges til sikre opdateringer oven på en APK med en anden nøgle. Ingen eksisterende
+app eller save slettes automatisk. Se CI-ANDROID.md. Advarsler gemmes i
+Builds/Android/Build-*.log. Tidligere APK med samme outputnavn bevares i History/.
 
 Du bruger kun Android: du skal ikke udføre terminalkommandoerne på telefonen.
-Projekt-ZIP er kildekode, som kan gemmes fra mobilen. Den kan ikke installeres
+Den tidligere foundation-ZIP er et historisk snapshot, ikke den opdaterede branch.
+Den aktuelle branch skal hentes via GitHub/Git. Projekt-ZIP er kildekode, som kan gemmes fra mobilen. Den kan ikke installeres
 som en APK. En Unity-APK kan først leveres efter reel editor-/Android-bygning.
 Den bevarede TEST59-APK er stadig den eksisterende Capacitor-app, ikke Unity.
 

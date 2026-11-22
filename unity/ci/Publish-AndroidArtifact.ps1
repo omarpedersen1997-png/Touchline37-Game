@@ -62,6 +62,7 @@ $bytes = (Get-Item -LiteralPath $apk).Length
     ('- Commit: `' + $info.commit + '`'),
     ('- APK: **' + [math]::Round($bytes / 1000000, 2) + ' MB** (' + $bytes + ' bytes)'),
     ('- SHA-256: `' + $hash + '`'),
+    ('- Testsignering: **' + $info.signingKind + '**. ephemeral-debug skifter signatur ved naeste koersel; bevar eksisterende app/save.'),
     '- Verificeret: signatur, app-id, versionCode og build-metadata.',
     '- Ikke verificeret: installation, opstart og FPS paa fysisk Android.',
     '- Download ZIP under Artifacts; udpak og installer Touchline-Unity-Test.apk.',
