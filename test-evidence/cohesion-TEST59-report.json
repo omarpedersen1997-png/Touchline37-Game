@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST59",
+    "title": "Mere kropsvolumen, bedre spark i løb og ren R3-kampstart",
+    "date": "2026-11-22",
+    "sourceCommit": "cf43d4df0e1797e0cf1399960f6bc14387e5fbfb",
+    "summary": "TEST59 retter konkrete problemer i samspillet mellem de eksisterende figurer, animation, kontaktlyd og kampstart. Mere lokal kropsfylde, løbende støtteben, plantede tacklinger og samme GPU-scene fra klargøring til afspark. De frosne R3-fysikregler, kamera/lys fra TEST58 og gamle optagelser er bevaret. Billedbilag viser samme situation før/efter."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 59,
+    "versionName": "1.0.0-test-cohesion59",
+    "bytes": 47140700,
+    "sha256": "d663be4832b4118de9072fd0ef2a8c9122582981e0335b03b533812b1d94fb4c",
+    "fileName": "Touchline37-Motor11-TEST59.apk",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test59-app-cohesion/dev/artifacts/Touchline37-Motor11-TEST59.apk"
+  },
+  "changes": [
+    {
+      "title": "Kropsvolumen omkring de rigtige knogler",
+      "detail": "Radial geometrideformation i bind-pose giver mere bryst, arme, lår, lægge, fødder og hænder. Lokale faktorer er 10–28 %, med forskydningslofter. Maksimalt målt vertexflyt er 3,57 cm. Originale GLB-filer, ledlængder, UV, skin-weights og antal trekanter bevares. Geometri caches og forberedes uden for render-loopet."
+    },
+    {
+      "title": "Støtteben og kontaktreaktioner",
+      "detail": "Et spark i løb erstatter ikke længere begge ben med en næsten stillestående pose: støttebenet følger løbet, og begge ben løber under opladning. Stående spark bevarer deres klip. Tacklinger tager hensyn til roteret rod ved fodfæste. Eksisterende første touch/pres aflæses til en lille bryst-/armreaktion. Fokusnummer følger det faktiske hoved fra cached matrix."
+    },
+    {
+      "title": "R3-klargøring før kampuret starter",
+      "detail": "Før blev en gammel modelprofil forberedt, mens R3-arbejdet lå efter kampstart. Nu forberedes korrekt kvalitet, modeller, materialer og en faktisk GPU-tegning før kamp-POST. Samme canvas/renderer flyttes ind i kampen. Loading fjernes efter første tegning og korrekt HUD-snapshot. Afbrudte og forældede klargøringer ryddes op."
+    },
+    {
+      "title": "Kontaktlyd afspejler den bekræftede boldfart",
+      "detail": "R3-pasninger mangler power-feltet; lydlaget bruger nu faktisk boldhastighed til at vælge hårdere/blødere spark, når feltet mangler. Modtagelse og redning kan få separat, dæmpet kontaktlyd uden at vente på en ny lastAction. Eksisterende WAV-filer genbruges. Ingen boldhastighed, spin, collision eller AI-regel ændres."
+    },
+    {
+      "title": "Ren Android-baggrund og lydoprydning",
+      "detail": "Native appStateChange og DOM visibility samles. Sent returnerede listeners fjernes; gammel getState ignoreres efter nyere hændelser. Samples og fallback-toner deler loft på otte stemmer og stoppes straks ved mute/baggrund. Sen resume/dekodning kan ikke tænde lyd igen. Gamle fløjt gentages ikke ved genåbning. Gemt lydvalg klargøres efter startknappens brugerinteraktion."
+    },
+    {
+      "title": "Dokumenteret før/efter og fuldt kampflow",
+      "detail": "Samme R3-state ved tick 550/928, samme kamera, lys og opløsning før/efter. Nærvisningen har 29.642 trekanter og 48 draw calls i begge versioner. Browseren viser klar R3-canvas før fiktiv POST, samme canvas efter overdragelse og første HUD i KICK_OFF. Menuer kontrolleret ved 320/360/384/390/740/1280 px. Den eksisterende testservers skrivebeskyttede miljøattest svarer HTTP 200 med isoleret R3. Billedbilag følger."
+    },
+    {
+      "title": "Indhentning prioriterer fysik frem for nye tunge tegninger",
+      "detail": "Ved mindst ét sekunds restance holder 3D-tegning kort pause, mens små callbacks indhenter alle fysikticks. Fire-inputsloft, sluttilstand og uploadpakke bevares. I en syntetisk model med 250 ms pr. tegning indhentes startrestancen på 800 ms mod ingen indhentning før ændringen. Dette er ikke Android-FPS. Livekortet placeres desuden under retningstippet med safe-area, så teksten ikke dækkes."
+    }
+  ],
+  "tests": {
+    "passed": 816,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "816 tests består uden fejl, skip eller annullering. 23 nye regressionstests. Isoleret Chromium bruger de faktisk pakkede webfiler og fiktive svar; dette er ikke fysisk Android-test eller dokumentation for 60–120 FPS.",
+    "checks": [
+      "Alle eksisterende motor-/replay-/upload-, input-, lagrings-, sikkerheds-, app- og websitetests består.",
+      "Nye tests dækker fire faktiske GLB-rigge, immutable geometri, støtteben/charge, tacklingers fodfæste, labels, kontaktreaktioner, sceneoverdragelse, native races og lydoprydning.",
+      "Før/efter har identisk seed/tick/boldposition/kamera; ingen runtime-/konsolfejl eller eksterne værtskald i fixtures.",
+      "Samme TEST-app-id og certifikat; APK CRC, signatur og alle pakkede webfiler kontrolleres mod buildstaging."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "Signeret test-APK",
+      "before": 47136397,
+      "after": 47140700,
+      "unit": "bytes",
+      "note": "Faktiske TEST58/TEST59-filer, ikke et kvalitetsmål."
+    },
+    {
+      "label": "JavaScript ved opstart",
+      "before": 940237,
+      "after": 944626,
+      "unit": "bytes",
+      "note": "Ukomprimeret; tunge R3-moduler indlæses fortsat ved kampklargøring."
+    },
+    {
+      "label": "Samlet Android-JavaScript",
+      "before": 1868869,
+      "after": 1877834,
+      "unit": "bytes",
+      "note": "Ukomprimeret. De eksisterende binære model-/tekstur-/lydfiler er uændrede."
+    }
+  ],
+  "preserved": [
+    "APK 37, alle tidligere APK/PDF-filer, motor 1–10, R1/R2, R2-checksum, R3-regler, optagelser og uploadpakke.",
+    "Main, produktionsdata, DNS, domæne og offentlig hjemmeside v56. Ingen merge eller deployment.",
+    "Klub/save, lokale lyd-/splashvalg, styringsakser, test-app-id/certifikat og lancering 1. januar 2027 kl. 10.00 København / 09.00 UTC."
+  ],
+  "limitations": [
+    "Boldfart, græs-/luftmodstand, AI, spin og førsteberøringsregler er ikke omskrevet: R3-simulationen er stadig frosset og kører ved 20 Hz.",
+    "12 eksisterende klip og den eksisterende GLB-topologi/rig. Lagdeling og fodfæste er ikke nye optagelser, motion matching, fuld fod-IK, tøjsimulation eller en konsolmotor.",
+    "Ingen fysisk Android-installation, fingerlatens, vedvarende FPS, varme eller batteriforbrug er verificeret. Et tæt kamera og software-WebGL er ikke bevis for FC 27-kvalitet eller telefon-FPS."
+  ],
+  "installSteps": [
+    "Hent TEST59 og vælg Opdater oven på Touchline TEST uden afinstallation. APK 37 skal forblive separat.",
+    "Kontrollér eksisterende testklub, lyd og splashvalg. Begynd med Auto/60 på den fiktive testkonto."
+  ],
+  "nextTest": [
+    "Start ny kamp: optakt, klargøring, midterplet og kort afspark. Ingen gammel score, fokusmarkør eller loadingrest.",
+    "Løb og sprint, drej 90/180 grader, aflever/skyd i løb. Se kropsfylde, støtteben, støvler og aktivt nummer.",
+    "Prøv pasning, stikning og høj bold med lyd; mute midt i fløjt, skift til baggrunden og tilbage. Ingen gammel lyd/fast styrepude. Luk til portrætmenu. Spil 10 minutter og eksportér ydelsesrapport."
+  ],
+  "changedFiles": [
+    "dev/evidence/append-evidence59.py",
+    "dev/evidence/browser-flow59.mjs",
+    "dev/evidence/browser-visual59.mjs",
+    "dev/evidence/compile-visual59.mjs",
+    "dev/evidence/visual59-entry.mjs",
+    "dev/test-release.json",
+    "docs/APP-COHESION-TEST59.md",
+    "package.json",
+    "src/App.jsx",
+    "src/ManualMatch.jsx",
+    "src/MatchSoundControl.jsx",
+    "src/app-visibility.js",
+    "src/asset-player-animation.js",
+    "src/athlete-volume.js",
+    "src/ball-body-response.js",
+    "src/focus-marker.js",
+    "src/manual-scene.js",
+    "src/match-audio-feed.js",
+    "src/match-frame-pacer.js",
+    "src/match-hud-state.js",
+    "src/match-sample-bank.js",
+    "src/match-sound.js",
+    "src/match-visibility.js",
+    "src/native-lifecycle.js",
+    "src/player-grounding.js",
+    "src/prepare-next-match.js",
+    "src/prepared-match-scene.js",
+    "src/pro-player.js",
+    "src/stadium-console.css",
+    "src/use-native-lifecycle.js",
+    "test-evidence/cohesion-TEST59-checks.json",
+    "test-evidence/cohesion-TEST59-environment.json",
+    "test-evidence/cohesion-TEST59/after-390x844.png",
+    "test-evidence/cohesion-TEST59/after-915x412.png",
+    "test-evidence/cohesion-TEST59/after-figures-pass.png",
+    "test-evidence/cohesion-TEST59/after-goal-915x412.png",
+    "test-evidence/cohesion-TEST59/anatomy.json",
+    "test-evidence/cohesion-TEST59/before-390x844.png",
+    "test-evidence/cohesion-TEST59/before-915x412.png",
+    "test-evidence/cohesion-TEST59/before-figures-pass.png",
+    "test-evidence/cohesion-TEST59/before-goal-915x412.png",
+    "test-evidence/cohesion-TEST59/flow-checks.json",
+    "test-evidence/cohesion-TEST59/flow-kickoff-915x412.png",
+    "test-evidence/cohesion-TEST59/flow-menu-320.png",
+    "test-evidence/cohesion-TEST59/flow-menu-390.png",
+    "test-evidence/cohesion-TEST59/flow-playing-915x412.png",
+    "test-evidence/cohesion-TEST59/recovery.json",
+    "test-evidence/cohesion-TEST59/visual-checks.json",
+    "tests/app-cohesion.test.mjs"
+  ]
+}
