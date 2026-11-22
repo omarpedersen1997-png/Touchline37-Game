@@ -1,3 +1,5 @@
+AGENTS.md
+unity/AGENTS.md
 unity/Artifacts/TouchlineUnity-Foundation-6000.6.10f1.pdf
 unity/Artifacts/TouchlineUnity-Foundation-6000.6.10f1.zip
 unity/Evidence/archive.json

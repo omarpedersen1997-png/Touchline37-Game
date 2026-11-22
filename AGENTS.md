@@ -15,3 +15,19 @@
   Følg [UPDATE-POLICY.md](UPDATE-POLICY.md); bevar tidligere afleveringer.
 - Kør relevante tests og bevar determinisme/kompatibilitet. Android-FPS må ikke kaldes
   verificeret på baggrund af Node-timings, beregnede renderpixels eller HTTP-målinger.
+
+## Primært udviklingsspor fra 22. november 2026: Unity
+
+- Brugeren har valgt **Unity 6.6 / 6000.6.10f1**, URP **17.6.0**. Fortsæt primært
+  i `unity/TouchlineUnity/` på den særskilte Unity-udviklingsbranch. Se
+  `unity/README.md` og `unity/AGENTS.md`; begynd ikke en ny app igen.
+- Det eksisterende React/Capacitor-projekt og Motor 1–11 er bevaret som legacy-
+  reference og fungerende tidligere leverancer. Det omdøbes ikke til Unity.
+- Unity-kernen har egne versionsmærkede sandbox-regler og lokal save. Den må
+  ikke kaldes kompatibel med gamle Motor 11-replays eller servervalidering.
+- Native Unity-test bruger særskilt id `dk.touchline.footballidle.unitytest` og
+  egen fremtidig testsignering; den eksisterende Touchline TEST-identitet,
+  dens certifikat og APK 37 bevares.
+- C#-domænetests og Roslyn-syntaks er ikke Unity Editor-/Android-verifikation.
+  Lov aldrig en Unity-APK, fysisk spilbarhed eller FPS uden faktiske build-/
+  installations-/måledata. Ingen nøgler eller Unity-licensfiler i Git.
