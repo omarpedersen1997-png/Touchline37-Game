@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST64",
+    "title": "Motor 11 R7: førsteberøring, løb og TV-kamera",
+    "date": "2026-11-23",
+    "sourceCommit": "fe18a91dd8915b9555768220a6d623aa16e57fcb",
+    "summary": "R7 til den lokale testkamp lægger mere vægt på boldens indfaldsvinkel, fart, vådt græs og pres. Støttespillere danner tydeligere afleveringsvinkler, og spillerfaconer, landinger, indlægskamera og netreaktion er opdateret."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 64,
+    "versionName": "1.0.0-test-match64",
+    "fileName": "Touchline37-Motor11-TEST64.apk",
+    "bytes": 46262796,
+    "sha256": "84af0268820007c09f6fb0b5fa36b61d124789a061669afb40563fbd41020e13",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test64-motor11-r7/dev/artifacts/Touchline37-Motor11-TEST64.apk"
+  },
+  "tests": {
+    "passed": 855,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "Faststegstest ved 60 og 120 Hz verificerer kampforløb og inputpakke. Fysisk FPS, fingerrespons og varme på telefonen er ikke målt.",
+    "checks": [
+      "Førsteberøring i fart og under pres, kontrolleret parering til siden, skulderduel og to forskellige afleveringsvinkler på hver side af boldholderen.",
+      "Støtteanklen bevarer banekoordinater gennem en vending. Kameraet følger en loftet aflevering og netbølgen flytter kun det ramte net.",
+      "Chromium åbnede den pakkede lokale kamp i 986 × 426 software-WebGL, skiftede til Taktisk og 2D og observerede ingen JavaScript- eller shaderfejl.",
+      "Komplette R4-, R5- og R6-forløb gav identisk slutstate med TEST63 på samme input.",
+      "Testcertifikat og native DEX/resources matcher TEST63. Live webserver og gemmedata er urørte."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Bold og dueller",
+      "detail": "Tæmning bruger relativ fart og vinkel til spilleren. Ved hård modtagelse går bolden længere, og den kan udfordres før. Skulderkontakt overfører momentum, og hårde målmandssaves pareres bredere med højde afhængig af rækkevidden."
+    },
+    {
+      "title": "Taktiske støtteløb",
+      "detail": "Spillere søger en kort vinkel og en adskilt fremadrettet mulighed uden at stå offside. Offensiv placerer den fremadgående støtte dybere, og defensiv taktik samler blokken."
+    },
+    {
+      "title": "Animation og TV",
+      "detail": "Fodplantning i banekoordinater på lette 3D-modeller og i 2D, særskilt kropsreaktion ved duel og hovedstød, tydeligere støvler og strømper, felt til trænerbænke og forudseende kamera ved indlæg. Netbølgen genbruger geometribuffere og spreder sig fra kontaktpunktet."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Signeret Android-testpakke",
+      "before": 46262796,
+      "after": 46262796,
+      "unit": "bytes",
+      "note": "Lokale 3D-aktiver og native Android-kode genbruges. Pakken er målt på disk."
+    }
+  ],
+  "preserved": [
+    "APK 37, motor 1–10, R1/R2, R2-kontrolsum og eksisterende optagelser. R7 bruges kun til den lokale øvekamp.",
+    "Lokale klubber, saves, lyd og splash. TEST64 bruger nøjagtigt samme testapp-id og certifikat som TEST63.",
+    "main, v56, den aktive hjemmeside v60, lanceringstid, DNS og produktionsdata."
+  ],
+  "limitations": [
+    "Ingen fysisk FPS-, touch- eller varmetest på OnePlus Nord 4.",
+    "Kropsbevægelserne bruger eksisterende modeller og animationsklip med nye overgange og procedurale justeringer."
+  ],
+  "installSteps": [
+    "Hent TEST64 og vælg Opdater oven på Touchline TEST.",
+    "Åbn Spil lokal testkamp · R7, og vælg tør eller våd bane. Start med Automatisk 3D i bredformat."
+  ],
+  "nextTest": [
+    "Spil en hård flad aflevering og et indlæg på hver bane. Læg mærke til første touch, støttefod og kameraudsving.",
+    "Skift mellem Balanceret, Offensiv og Defensiv under kampindstillinger. Prøv Broadcast og Taktisk for at se støttevinklerne.",
+    "Spil flere minutter i Auto. Brug kampstatistik og telefonens temperatur som kontrol af tempo og varme."
+  ]
+}
