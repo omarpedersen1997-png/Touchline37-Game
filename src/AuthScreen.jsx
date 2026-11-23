@@ -9,7 +9,7 @@ import {initialAccountAccess,mergeAccountAccess} from './account-access.js';
 import React,{useState,useEffect} from 'react';
 import {ArrowLeft,ArrowRight,Mail,LockKeyhole,Eye,EyeOff,LoaderCircle,ShieldCheck,Users,TrendingUp,Trophy,RefreshCw,Check} from 'lucide-react';
 
-export default function AuthScreen({onAuthenticated,checking=false,connectionError,onRetry,notice,initialCapabilities}){const formRequest=useFormRequest();
+export default function AuthScreen({onAuthenticated,checking=false,connectionError,onRetry,notice,initialCapabilities,onPractice}){const formRequest=useFormRequest();
  const [step,setStep]=useState('email'),[mailStatus,setMailStatus]=useState('loading');
  const [access,setAccess]=useState(()=>initialAccountAccess(initialCapabilities));
  const [mode,setMode]=useState('login'),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[visible,setVisible]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState('');
@@ -23,6 +23,7 @@ export default function AuthScreen({onAuthenticated,checking=false,connectionErr
  return <div className={'auth-page stadium-auth'+(mode==='mail'?' auth-recovery':'')}>
   <header className="auth-top">
    <a className="brand" href={gameHome} aria-label="Touchline forside"><TouchlineMark size={44}/><div>touchline<span>FOOTBALL IDLE</span></div></a>
+   {onPractice&&<button type="button" className="r4-practice-launch" onClick={onPractice}>Spil lokal testkamp · R4</button>}
    {!access.testEnvironment&&<a className="auth-support-link" href={documentLink(publisher.contactPath)}>Hjælp & support<ArrowRight size={15}/></a>}
   </header>
   {mode==='mail'?<div className="auth-recovery-content"><MailRecovery onBack={()=>choose('login')} onRecovered={data=>onAuthenticated(data.user)}/></div>:<main className="auth-layout">

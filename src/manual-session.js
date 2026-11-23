@@ -1,13 +1,13 @@
 import {sealRecording,recordingMatches,recordingBackup} from './manual-recording-format.js';
 import {createArcade,stepArcade,getArcadeRules} from '../shared/arcade.js';
 const prefix='touchline:manual:v1:';
-function prepareManualSession(match,{storage,now=Date.now()}={}){
- const version=match.manual.version||match.manual.config?.matchVersion||1,{INPUT_MS,INPUT_COUNT,STEP_MS,validateMask,encodeInputs}=getArcadeRules(version,match.manual.config?.engineRevision),steps=INPUT_MS/STEP_MS;
+function prepareManualSession(match,{storage,now=Date.now(),practiceRules=null}={}){
+ const version=match.manual.version||match.manual.config?.matchVersion||1,{INPUT_MS,INPUT_COUNT,STEP_MS,validateMask,encodeInputs}=practiceRules||getArcadeRules(version,match.manual.config?.engineRevision),steps=INPUT_MS/STEP_MS;
  const key=prefix+match.id,inputs=[];let cleared=false,pendingInputs=0,inputApplied=false,persistenceStatus='unknown',recoveryWarning=false;
- try{const owned=[];for(let i=0;i<(storage?.length||0);i++){const k=storage.key(i);if(k?.startsWith(prefix))owned.push(k);}for(const k of owned){let data;try{data=JSON.parse(storage.getItem(k));}catch{}if(data&&[6,7].includes(data.version)&&!data.retentionVersion&&Array.isArray(data.inputs)&&data.inputs.length===5000&&data.inputs.every(getArcadeRules(data.version).validateMask)){data.expiresAt=Math.max(data.expiresAt,data.expiresAt-180000+86400000);data.retentionVersion=2;storage.setItem(k,JSON.stringify(data));}if(!data||(k!==key&&data.expiresAt<now))storage.removeItem(k);}}catch{}let state=createArcade(match.manual.seed,match.manual.config);
+ try{const owned=[];for(let i=0;i<(storage?.length||0);i++){const k=storage.key(i);if(k?.startsWith(prefix))owned.push(k);}for(const k of owned){let data;try{data=JSON.parse(storage.getItem(k));}catch{}if(data&&[6,7].includes(data.version)&&!data.retentionVersion&&Array.isArray(data.inputs)&&data.inputs.length===5000&&data.inputs.every(getArcadeRules(data.version).validateMask)){data.expiresAt=Math.max(data.expiresAt,data.expiresAt-180000+86400000);data.retentionVersion=2;storage.setItem(k,JSON.stringify(data));}if(!data||(k!==key&&data.expiresAt<now))storage.removeItem(k);}}catch{}let state=(practiceRules?.createArcade||createArcade)(match.manual.seed,match.manual.config);
  try{const saved=JSON.parse(storage?.getItem(key)||'null');if(saved?.seed===match.manual.seed&&(version<3||saved.version===version)&&Array.isArray(saved.inputs)&&saved.inputs.length<=INPUT_COUNT&&saved.inputs.every(validateMask)&&recordingMatches(saved,match))inputs.push(...saved.inputs);else if(saved)recoveryWarning=true;}catch{}
  const restored=inputs.splice(0);
- const add=mask=>{inputs.push(mask);for(let i=0;i<steps;i++)stepArcade(state,mask);};
+ const add=mask=>{inputs.push(mask);for(let i=0;i<steps;i++)(practiceRules?.stepArcade||stepArcade)(state,mask);};
  const record=()=>sealRecording({version,retentionVersion:2,seed:match.manual.seed,inputs:[...inputs],expiresAt:Math.max(match.manual.expiresAt||0,(Number.isFinite(match.ends)?match.ends:match.started+INPUT_COUNT*INPUT_MS)+86400000)},match);
  const save=()=>{if(cleared)return;try{if(!storage?.setItem)throw Error('Storage unavailable');storage.setItem(key,JSON.stringify(record()));persistenceStatus='saved';return true;}catch{persistenceStatus='unavailable';return false;}};
  // Time spent away cannot be replayed with newly chosen controls.

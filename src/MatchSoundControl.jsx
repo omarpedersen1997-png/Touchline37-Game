@@ -4,12 +4,12 @@ import React,{useEffect,useRef,useState} from 'react';
 import {Volume2,VolumeX} from 'lucide-react';
 import {createMatchSound} from './match-sound.js';
 import {localMatchStorage} from './manual-preferences.js';
-export default function MatchSoundControl({goals=0,phase='waiting',controllerRef,goalWhistle=false}) {
+export default function MatchSoundControl({goals=0,phase='waiting',controllerRef,goalWhistle=false,storage=localMatchStorage()}) {
  const sound=useRef(null),goalTracker=useRef(null),phaseTracker=useRef(null);
  goalTracker.current||=createGoalAudioObserver();phaseTracker.current||=createPhaseWhistleObserver(phase);
- const [enabled,setEnabled]=useState(()=>{let value=false;try{value=localMatchStorage()?.getItem('touchline:match-sound:v1')==='on';}catch{}return value;});
+ const [enabled,setEnabled]=useState(()=>{let value=false;try{value=storage?.getItem('touchline:match-sound:v1')==='on';}catch{}return value;});
  useEffect(()=>{
-  const audio=createMatchSound({storage:localMatchStorage()});sound.current=audio;if(controllerRef)controllerRef.current=audio;
+  const audio=createMatchSound({storage});sound.current=audio;if(controllerRef)controllerRef.current=audio;
   const unlock=()=>audio.unlock(),visibility=()=>{if(isAppHidden())audio.suspend();else audio.unlock();};
   document.addEventListener('pointerdown',unlock,true);document.addEventListener('keydown',unlock,true);const stopVisibility=watchAppVisibility(visibility);
   // The start button was pressed before this lazy-mounted controller existed.
