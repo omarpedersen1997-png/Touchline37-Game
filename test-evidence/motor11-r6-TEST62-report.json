@@ -1,0 +1,577 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST62",
+    "title": "Leddelte spillere og Motor 11 R6",
+    "date": "2026-11-23",
+    "sourceCommit": "440eb131e5cf01a1d8b3c093e377488d1a6d67a9",
+    "summary": "De lette figurer har nu et skelet med hofte, knæ, hænder og separate støvler. Nye R6-regler knytter spark og stolpetræf tættere sammen med kropsretning og boldens bevægelse. R6 kan prøves direkte uden konto i den separate testapp."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 62,
+    "versionName": "1.0.0-test-match62",
+    "fileName": "Touchline37-Motor11-TEST62.apk",
+    "bytes": 47249209,
+    "sha256": "2652a54c1b49f1feb649723bfd007c88623f055ca39320be0b84b0ed0e03ce60",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test62-articulated-players/dev/artifacts/Touchline37-Motor11-TEST62.apk"
+  },
+  "changes": [
+    {
+      "title": "Proportioner, leddeling og fodfæste",
+      "detail": "Figurerne har smallere midje, skuldre, hals og hoved. Runde kropssegmenter følger de beregnede led i stedet for at svinge hele benet som ét stykke. Skridt følger vist afstand. Knæet bøjes efter hofte og støvle, støttefoden ligger fladt under det lige løb, og skyggen følger støtten."
+    },
+    {
+      "title": "Naturligere sprint, drej og spark",
+      "detail": "Hofte og bryst drejer modsat hinanden i skridtet. Ved sprint læner kroppen sig frem, og acceleration forskyder balancen til siden. Detaljeriggen bruger samme skridtfase mellem løb og sprint. Ladebevægelse og gennemføring starter omkring den bekræftede boldkontakt."
+    },
+    {
+      "title": "Samme animation i 2D og let Auto 3D",
+      "detail": "De fjerne 3D-figurer deler ét renderkald. Kun synlige kropsdele sendes til GPU’en. 2D genbruger tegnede stillinger for sekundære spillere, mens den aktive spiller animeres kontinuerligt. I Chromium havde TEST61/TEST62 medianerne 66/66 renderkald og 273.664/269.074 trekanter i 3D."
+    },
+    {
+      "title": "R6-bold og taktiske løb",
+      "detail": "Skud og luftbolde påvirkes af kropsvinkel, sidebevægelse og pres. Boldens bevægelse og sparkets retning stemmer tættere overens. Stolpe- og overliggertræf afbøjer efter boldens indfaldsvinkel og bevarer en del af spinnet. En fremadløber kan nu gå indenom en bred boldholder."
+    },
+    {
+      "title": "Broadcast og stadionreaktioner",
+      "detail": "Kameraet giver lidt mere plads foran et skud i flugt. Banens reklamebånd får en kort nedtonet lysreaktion ved mål. Træværk vises som egen kampbegivenhed. Lyd, netreaktion og de eksisterende tre vinkler genbruges."
+    }
+  ],
+  "tests": {
+    "passed": 845,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "845 automatiske tests bestod, heraf syv nye. Hardware-FPS, touchforsinkelse og varme kræver måling på en fysisk telefon. Software-WebGL er kun en kontrol af renderstien.",
+    "checks": [
+      "R6 har identisk sluttilstand og inputpakke ved 60- og 120 Hz renderkadence. Seks hele R4-/R5-kampe matchede TEST61-reglerne.",
+      "Støttestøvle er stabil i lige løb, knægeometri har fast længde, og sparkets støttestøvle forbliver ved gulvet.",
+      "Chromium med pakkede webfiler afprøvede faktisk 3D, skift til 2D, rotation og baggrundspause. Ingen konsolfejl eller serverwrites. Lokale valg var ens før/efter.",
+      "APK’ens certifikat, package id, CRC og alle webfiler er sammenlignet med testidentiteten og buildstaging."
+    ]
+  },
+  "measurements": [
+    {
+      "label": "Signeret Android-testpakke",
+      "before": 47245197,
+      "after": 47249209,
+      "unit": "bytes",
+      "note": "Samme testidentitet og certifikat som TEST61."
+    },
+    {
+      "label": "3D billedinterval · Chromium 95-percentil",
+      "before": 433.3,
+      "after": 300,
+      "unit": "ms",
+      "note": "Software-WebGL. Gennemsnitlig browserkadence 5,1 → 6,8 FPS, cirka 10 sekunder pr. build, samme viewport."
+    },
+    {
+      "label": "2D billedinterval · Chromium 95-percentil",
+      "before": 200.1,
+      "after": 116.6,
+      "unit": "ms",
+      "note": "Canvas 2D. Gennemsnitlig browserkadence 8,3 → 14,3 FPS, cirka 9 sekunder pr. build. Spilforløb og arbejdsbelastning varierede."
+    }
+  ],
+  "preserved": [
+    "APK 37, test-APK’er, motor 1–10, R1/R2, R2-checksum og ældre optagelser. R6 har sit eget afgrænsede regelvalg.",
+    "Touchline TESTs app-id, eksisterende gemte klubber, lydvalg og splashvalg. Testkampen er lokal.",
+    "GitHubs main, DNS og produktionsdatabasen. Denne APK-opdatering ændrer ingen hjemmeside."
+  ],
+  "limitations": [
+    "Softwaretesten kan dokumentere billedintervaller og renderkompleksitet i dette miljø. Stabil 60–120 FPS og uændret ydeevne på OnePlus Nord 4 kræver fysisk måling.",
+    "Den lette model bruger rundede ledsegmenter, og nærvisningen bruger de eksisterende skinnede modeller og animationsklip. Der er ingen nye motion capture-optagelser eller fuld fysisk simulation af kroppen.",
+    "R6 er tilgængelig som lokal testkamp. Onlinekampe valideres fortsat med det eksisterende revisionsvalg."
+  ],
+  "installSteps": [
+    "Hent og åbn TEST62 på telefonen. Vælg Opdater oven på Touchline TEST.",
+    "Vælg Spil lokal testkamp · R6, vælg tør eller våd bane, og vend telefonen til bredformat."
+  ],
+  "nextTest": [
+    "Sprint, slip styrepuden, og vend 90–180 grader. Følg hofte, knæ og græskontakt på den aktive spiller og de fjerne spillere.",
+    "Hold AFLEVER eller SKYD, og slip. Se støttefod, gennemføring, boldens skru og kameraets reaktion. Skift mellem Automatisk 3D og Enkel. ",
+    "Start med 60 i Automatisk 3D. Aflæs FPS og billedtid, og hent en ydelsesrapport, hvis bevægelsen stadig hakker."
+  ],
+  "changedFiles": [
+    "dev/test-release.json",
+    "package.json",
+    "shared/football-engine11-r4.js",
+    "shared/football-engine11-r6.js",
+    "shared/football-r6-contact.js",
+    "src/App.jsx",
+    "src/AuthScreen.jsx",
+    "src/ManualMatch.jsx",
+    "src/R4Practice.jsx",
+    "src/asset-player-animation.js",
+    "src/broadcast-r4.js",
+    "src/manual-scene.js",
+    "src/match-2d-players.js",
+    "src/match-distance-players.js",
+    "src/match-event-feed.js",
+    "src/match-player-pose.js",
+    "src/player-stride-pose.js",
+    "src/pro-player.js",
+    "src/r4-practice.js",
+    "src/rich-match-assets.js",
+    "tests/engine11-r5.test.mjs",
+    "tests/engine11-r6.test.mjs"
+  ],
+  "verification": {
+    "browser": {
+      "61": {
+        "perf3d": {
+          "frames": 52,
+          "wallMs": 10133,
+          "fps": 5.131747754860357,
+          "medianMs": 200,
+          "p95Ms": 433.2999999999993
+        },
+        "perf2d": {
+          "frames": 76,
+          "wallMs": 9133,
+          "fps": 8.321471586554253,
+          "medianMs": 100,
+          "p95Ms": 200.10000000000218
+        },
+        "canvas": [
+          458,
+          206
+        ],
+        "samples3d": [
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 0,
+            "frameMs": 2399,
+            "renderMs": 4.3,
+            "drawCalls": 46,
+            "triangles": 254412,
+            "geometries": 37,
+            "textures": 15,
+            "resolutionScale": 1,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 2,
+            "frameMs": 563,
+            "renderMs": 8.5,
+            "drawCalls": 46,
+            "triangles": 254412,
+            "geometries": 37,
+            "textures": 15,
+            "resolutionScale": 1,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 3,
+            "frameMs": 380,
+            "renderMs": 7,
+            "drawCalls": 56,
+            "triangles": 264038,
+            "geometries": 41,
+            "textures": 17,
+            "resolutionScale": 1,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 4,
+            "frameMs": 238,
+            "renderMs": 2.1,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.7224999999999999,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 6,
+            "frameMs": 181,
+            "renderMs": 2.7,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.6141249999999999,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 5,
+            "frameMs": 187,
+            "renderMs": 1.7,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5220062499999999,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 6,
+            "frameMs": 174,
+            "renderMs": 5.2,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 5,
+            "frameMs": 199,
+            "renderMs": 1.9,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 1,
+            "frameMs": 671,
+            "renderMs": 15.1,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 5,
+            "frameMs": 217,
+            "renderMs": 5.4,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 3,
+            "frameMs": 349,
+            "renderMs": 1.7,
+            "drawCalls": 66,
+            "triangles": 273664,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          }
+        ],
+        "errors": [],
+        "writes": []
+      },
+      "62": {
+        "perf3d": {
+          "frames": 69,
+          "wallMs": 10116.3,
+          "fps": 6.8206755434299104,
+          "medianMs": 149.89999999999964,
+          "p95Ms": 300
+        },
+        "perf2d": {
+          "frames": 130,
+          "wallMs": 9083,
+          "fps": 14.312451833094793,
+          "medianMs": 66.70000000000073,
+          "p95Ms": 116.60000000000218
+        },
+        "canvas": [
+          458,
+          206
+        ],
+        "samples3d": [
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 0,
+            "frameMs": 2256,
+            "renderMs": 4.3,
+            "drawCalls": 46,
+            "triangles": 247572,
+            "geometries": 37,
+            "textures": 15,
+            "resolutionScale": 1,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 2,
+            "frameMs": 484,
+            "renderMs": 3.9,
+            "drawCalls": 46,
+            "triangles": 247572,
+            "geometries": 37,
+            "textures": 15,
+            "resolutionScale": 1,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 3,
+            "frameMs": 292,
+            "renderMs": 6.3,
+            "drawCalls": 56,
+            "triangles": 258098,
+            "geometries": 41,
+            "textures": 17,
+            "resolutionScale": 0.85,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 7,
+            "frameMs": 151,
+            "renderMs": 2.9,
+            "drawCalls": 46,
+            "triangles": 252072,
+            "geometries": 41,
+            "textures": 17,
+            "resolutionScale": 0.7224999999999999,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 5,
+            "frameMs": 187,
+            "renderMs": 2.8,
+            "drawCalls": 56,
+            "triangles": 262598,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.6141249999999999,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 6,
+            "frameMs": 157,
+            "renderMs": 9.1,
+            "drawCalls": 66,
+            "triangles": 270424,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5220062499999999,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 0,
+            "inputMeanMs": 0,
+            "inputMaxMs": 0
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 6,
+            "frameMs": 161,
+            "renderMs": 1.6,
+            "drawCalls": 66,
+            "triangles": 268624,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 1,
+            "inputMeanMs": 4898.6,
+            "inputMaxMs": 4898.6
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 8,
+            "frameMs": 133,
+            "renderMs": 2.9,
+            "drawCalls": 66,
+            "triangles": 270424,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 1,
+            "inputMeanMs": 4898.6,
+            "inputMaxMs": 4898.6
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 8,
+            "frameMs": 130,
+            "renderMs": 2,
+            "drawCalls": 66,
+            "triangles": 270424,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 1,
+            "inputMeanMs": 4898.6,
+            "inputMaxMs": 4898.6
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 7,
+            "frameMs": 143,
+            "renderMs": 2.2,
+            "drawCalls": 66,
+            "triangles": 269524,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 1,
+            "inputMeanMs": 4898.6,
+            "inputMaxMs": 4898.6
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 7,
+            "frameMs": 152,
+            "renderMs": 37.3,
+            "drawCalls": 66,
+            "triangles": 269524,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 1,
+            "inputMeanMs": 4898.6,
+            "inputMaxMs": 4898.6
+          },
+          {
+            "quality": "auto",
+            "profile": "mobile-3d",
+            "fps": 7,
+            "frameMs": 153,
+            "renderMs": 2.8,
+            "drawCalls": 66,
+            "triangles": 270424,
+            "geometries": 43,
+            "textures": 18,
+            "resolutionScale": 0.5,
+            "assetPack": 55,
+            "textureSize": 1024,
+            "inputSamples": 2,
+            "inputMeanMs": 2505.6,
+            "inputMaxMs": 4898.6
+          }
+        ],
+        "errors": [],
+        "writes": []
+      }
+    },
+    "apk": {
+      "bytes": 47249209,
+      "sha256": "2652a54c1b49f1feb649723bfd007c88623f055ca39320be0b84b0ed0e03ce60",
+      "webFilesExact": 49,
+      "crcPass": true
+    },
+    "legacyCompleteMatchComparisons": 6,
+    "drawCallsMedian": [
+      66,
+      66.0
+    ],
+    "trianglesMedian": [
+      273664,
+      269074.0
+    ]
+  }
+}
