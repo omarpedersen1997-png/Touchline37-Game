@@ -141,3 +141,17 @@
   background:var(--broadcast-acid);
   color:var(--broadcast-ink);
 }
+
+.app-shell.game-console .game-match[data-match-revision="7"] .manual-player-indicator {
+  color:var(--broadcast-linen);
+  background:var(--broadcast-ink);
+  border:1px solid var(--broadcast-edge);
+  border-inline-start:3px solid var(--broadcast-acid);
+  border-radius:var(--tl-brand-radius);
+}
+.app-shell.game-console .game-match[data-match-revision="7"] .manual-player-indicator small {
+  color:var(--broadcast-muted);
+}
+.app-shell.game-console .game-match[data-match-revision="7"] .manual-player-indicator progress {
+  accent-color:var(--broadcast-acid);
+}

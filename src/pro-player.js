@@ -28,11 +28,16 @@ export async function preloadFootballPlayers(quality='auto',rich=!!matchAssetRoo
 }
 export function footballPlayerTemplate(quality='auto',keeper=false,rich=!!matchAssetRoot){rich=!!(rich&&matchAssetRoot);return templates[(rich?'rich-':'')+(keeper&&rich?'keeper-':'')+detailKey(quality)]||null;}
 export function footballPlayersReady(){return !!template;}
-export function createFootballPlayer({color='#c1f66b',number=1,shadow=false,keeper=false,kitMap=null,kitNormal=null,kitRoughness=null,bootMap=null,emblemMap=null,numberMap=null,source=template,optimize=true,anisotropy=1}={}){
+export function createFootballPlayer({color='#c1f66b',number=1,shadow=false,keeper=false,kitMap=null,kitNormal=null,kitRoughness=null,bootMap=null,emblemMap=null,numberMap=null,source=template,optimize=true,anisotropy=1,presentationR7=false}={}){
  if(!source)throw Error('Spillerne er ikke klar endnu.');
  const richPack=!!source.userData.richPack;
  const model=new THREE.Group(),human=cloneSkeleton(source),bones={},base=new Map(),parentRest=new Map(),sides={};model.add(human);human.updateMatrixWorld(true);
- human.traverse(o=>{if(o.isBone){bones[o.name]=o;base.set(o.name,o.quaternion.clone());parentRest.set(o.name,o.parent.getWorldQuaternion(new THREE.Quaternion()));sides[o.name]=Math.sign(o.getWorldPosition(new THREE.Vector3()).x)||1;}if(o.isMesh){o.frustumCulled=false;o.castShadow=shadow;o.receiveShadow=shadow;const source=Array.isArray(o.material)?o.material:[o.material];o.material=source.map(m=>{const material=m.clone();material.roughness=Math.max(.65,material.roughness||.8);if(/Football Shirt/i.test(m.name)){material.color.set(richPack?color:keeper?'#e5c254':color);if(kitMap){material.map=kitMap;material.color.set(richPack?(keeper?'#e5c254':color):0xffffff);if(kitNormal){material.normalMap=kitNormal;material.normalScale.set(.25,.25);}if(kitRoughness)material.roughnessMap=kitRoughness;}}if(/Football Shorts/i.test(m.name))material.color.set('#172733');if(richPack&&/Football Shirt|Football Shorts/.test(m.name)){material.roughness=MATCH_LIGHTING.kitRoughness;if(kitMap)material.map=kitMap;if(kitNormal){material.normalMap=kitNormal;material.normalScale.set(.25,.25);}if(kitRoughness)material.roughnessMap=kitRoughness;}if(/Football Socks/i.test(m.name))material.color.set(color);if(/Sneaker leather/i.test(m.name)){material.color.set([0x354855,0xe2e5df,0x9fca46,0xb73a39][number%4]);if(bootMap){material.map=bootMap;material.roughness=.8;}}if(/Buzz cut/i.test(m.name))material.color.multiply(new THREE.Color([0xffffff,0x976643,0x4c3a31][number%3]));if(/Skin$/.test(m.name)){const tones=[0xffffff,0xd6b296,0xb08059,0xe3c5b0];material.color.multiply(new THREE.Color(tones[number%tones.length]));}return material;});if(!Array.isArray(o.material)||o.material.length===1)o.material=o.material[0];}});
+ human.traverse(o=>{if(o.isBone){bones[o.name]=o;base.set(o.name,o.quaternion.clone());parentRest.set(o.name,o.parent.getWorldQuaternion(new THREE.Quaternion()));sides[o.name]=Math.sign(o.getWorldPosition(new THREE.Vector3()).x)||1;}if(o.isMesh){o.frustumCulled=false;o.castShadow=shadow;o.receiveShadow=shadow;const source=Array.isArray(o.material)?o.material:[o.material];o.material=source.map(m=>{const material=m.clone();material.roughness=Math.max(.65,material.roughness||.8);if(/Football Shirt/i.test(m.name)){material.color.set(richPack?color:keeper?'#e5c254':color);if(kitMap){material.map=kitMap;material.color.set(richPack?(keeper?'#e5c254':color):0xffffff);if(kitNormal){material.normalMap=kitNormal;material.normalScale.set(.25,.25);}if(kitRoughness)material.roughnessMap=kitRoughness;}}if(/Football Shorts/i.test(m.name))material.color.set('#172733');if(richPack&&/Football Shirt|Football Shorts/.test(m.name)){material.roughness=MATCH_LIGHTING.kitRoughness;if(kitMap)material.map=kitMap;if(kitNormal){material.normalMap=kitNormal;material.normalScale.set(.25,.25);}if(kitRoughness)material.roughnessMap=kitRoughness;}if(/Football Socks/i.test(m.name))material.color.set(color);if(/Sneaker leather/i.test(m.name)){material.color.set([0x354855,0xe2e5df,0x9fca46,0xb73a39][number%4]);if(bootMap){material.map=bootMap;material.roughness=.8;}}if(/Buzz cut/i.test(m.name))material.color.multiply(new THREE.Color([0xffffff,0x976643,0x4c3a31][number%3]));if(/Skin$/.test(m.name)){const tones=[0xffffff,0xd6b296,0xb08059,0xe3c5b0];material.color.multiply(new THREE.Color(tones[number%tones.length]));}if(presentationR7&&richPack){
+  if(/Football Shorts/.test(m.name))material.color.set(0x25302e);
+  if(/Football Socks/.test(m.name))material.color.lerp(new THREE.Color(0xe6eadc),.16);
+  if(/Sneaker leather/.test(m.name))material.roughness=.58;
+  if(/Buzz cut/.test(m.name))material.roughness=.89;
+ }return material;});if(!Array.isArray(o.material)||o.material.length===1)o.material=o.material[0];}});
  if(richPack)applyAthleteVolume(human);
  const grounding=createPlayerGrounding(human,source),paletteCount=optimize?sharePlayerSkeletons(human):null,savedDraws=optimize?mergePlayerClothing(human,source,richPack):0;
  const labelCanvas=document.createElement('canvas');labelCanvas.width=256;labelCanvas.height=128;const c=labelCanvas.getContext('2d');c.fillStyle='rgba(10,27,38,.85)';c.fillRect(69,20,118,86);c.fillStyle='#f1f7ed';c.textAlign='center';c.font='bold 68px sans-serif';c.fillText(String(number),128,89);const labelMap=new THREE.CanvasTexture(labelCanvas);labelMap.colorSpace=THREE.SRGBColorSpace;const label=new THREE.Sprite(new THREE.SpriteMaterial({map:labelMap,depthTest:false,sizeAttenuation:false}));label.scale.set(.038,.019,1);label.position.set(0,2.13,0);model.add(label);
@@ -100,9 +105,23 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
    qa.copy(arm.quaternion);d.swing(name,-.25,0,(d.sides[name]||1)*2.7);
    arm.quaternion.copy(qa.slerp(arm.quaternion,reach)).normalize();
   }
- }else if(d.richPack&&p.tackle>0){model.rotation.x=.35;model.position.y=0;}else if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
+ }else if(d.richPack&&p.tackle>0){model.rotation.x=state.engineRevision===7 ? .32*Math.sin(Math.PI*(1-p.tackle/(p.actionDuration||16))):.35;model.position.y=0;}else if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
  if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,athletic:state.engineRevision>=6,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
  if(d.richPack&&p.tackle>0)d.grounding.apply(.035,{rotation:model.quaternion,rootHeight:model.position.y});else if(!(p.dive>0)&&!(p.tackle>0))d.grounding.apply();else d.human.position.y=0;
+ if(state.engineRevision===7&&!(p.dive>0)&&!celebrate){
+  const swing=Math.sin(Math.PI*Math.max(0,1-(p.actionTicks||0)/7));
+  if(p.action==='header'){
+   d.swing('Spine2',-.24*swing,0,0,true);
+   d.swing('Head',.25*swing,0,0,true);
+   d.swing('LeftArm',-.43*swing,0,0,true);
+   d.swing('RightArm',-.43*swing,0,0,true);
+   model.position.y+=.16*swing;
+  }
+  if(p.duelTicks>0){
+   const side=(p.duelX||0)*Math.cos(model.rotation.y)-(p.duelY||0)*Math.sin(model.rotation.y);
+   d.swing('Spine2',0,0,Math.max(-.18,Math.min(.18,-side*.06*p.duelTicks/5)),true);
+  }
+ }
  if(!d.richPack)d.jersey.position.y=1.38;
  d.label.visible=team==='home'&&index===state.controlled;
 }

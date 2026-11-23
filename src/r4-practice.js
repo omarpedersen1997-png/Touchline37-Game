@@ -1,11 +1,12 @@
 import * as r4 from '../shared/football-engine11-r4.js';
 import * as r5 from '../shared/football-engine11-r5.js';
 import * as r6 from '../shared/football-engine11-r6.js';
+import * as r7 from '../shared/football-engine11-r7.js';
 
 // Practice lives only for the mounted component. Neither match recording nor
 // preferences share storage with account-backed matches.
 export function createR4Practice(epoch = Date.now(), {revision=4,surface='dry'} = {}) {
-  const rules=revision===6?r6:revision===5?r5:r4;
+  const rules=revision===7?r7:revision===6?r6:revision===5?r5:r4;
   const {DURATION_MS,INPUT_COUNT,ENGINE_REVISION:engineRevision}=rules;
   const id='r'+engineRevision;
   const values = new Map();

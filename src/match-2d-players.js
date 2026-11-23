@@ -46,14 +46,15 @@ export function createMatch2DPlayers(makeCanvas=()=>globalThis.document?.createE
     if(player.sentOff){clock.previousX=NaN;return;}
     const owns=state.ball?.owner?.team===team&&state.ball.owner.index===index;
     const charge=owns?Math.max(state.shotCharge||0,state.passCharge||0)/18:0;
-    const j=samplePlayerStride(clock,player,x,y,heading,elapsed,subtick,snap,charge);
+    const planted=state.engineRevision===7;
+    const j=samplePlayerStride(clock,player,x,y,heading,elapsed,subtick,snap,charge,planted);
     const px=x*scale,py=y*scale,r=Math.max(4,scale*.62),focused=home&&index===state.controlled;
     context.beginPath();context.ellipse(px,py,r,r*.69,0,0,Math.PI*2);context.fillStyle='#0a201e91';context.fill();
     if(focused){context.strokeStyle='#eaffab';context.lineWidth=1.5;context.stroke();}
     const skin=SKIN[slot%SKIN.length];
     // The focused player's pose is continuous. Other players reuse a bounded
     // sprite sheet for matching headings and phases instead of redrawing joints.
-    if(!painter||focused){
+    if(!painter||focused||planted&&(player.action==='header'||player.dive>0||player.duelTicks>0)){
       body(context,j,x,y,heading,scale,landscape,color,skin);
       return;
     }

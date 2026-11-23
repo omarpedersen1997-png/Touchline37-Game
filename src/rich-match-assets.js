@@ -65,9 +65,9 @@ export function buildRichStadium(scene,field,quality,pack,fast=false,night=false
  const lampsMaterials=structures.map(m=>m.material).filter(m=>m.emissive?.r>.1);
  return {layout:{pitchY:.03},crowds,react(state,dt,reducedMotion){
   const goal=!reducedMotion&&(state.goalSequence?.stage==='net'||state.goalSequence?.stage==='celebration');
-  if(fast&&(!goal&&goalTint<=.005||state.engineRevision!==6))return;
+  if(fast&&(!goal&&goalTint<=.005||state.engineRevision<6))return;
   const fade=reducedMotion?1:1-Math.exp(-3*Math.min(.1,dt));
-  if(state.engineRevision===6&&(goal||goalTint>.005)){
+  if(state.engineRevision>=6&&(goal||goalTint>.005)){
    goalTint+=((goal?1:0)-goalTint)*fade;
    if(goalTint<.005)goalTint=0;
    boardMat.color.setRGB(1+goalTint*.09,1+goalTint*.29,1+goalTint*.12);

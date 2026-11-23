@@ -13,12 +13,41 @@ export function isGoalCelebrant(state,team,index,player){
 
 // Hold the lens over the actual goal instead of chasing a selected defender.
 // Translating eye and target together preserves the TV heading and zoom.
-export function goalCameraPlan(plan,state,view){
+export function goalCameraPlan(plan,state,view,out={eye:[0,0,0],target:[0,0,0]}){
  if(view==='stadium')return plan;
  const sequence=state.goalSequence;
  if(!sequence||!['net','celebration'].includes(sequence.stage))return plan;
  const x=clamp(sequence.point.x,-27,27),z=clamp(sequence.point.y,-45,45),dx=x-plan.target[0],dz=z-plan.target[2];
- return{...plan,eye:[plan.eye[0]+dx,plan.eye[1],plan.eye[2]+dz],target:[x,plan.target[1],z]};
+ out.eye[0]=plan.eye[0]+dx;out.eye[1]=plan.eye[1];out.eye[2]=plan.eye[2]+dz;
+ out.target[0]=x;out.target[1]=plan.target[1];out.target[2]=z;out.fov=plan.fov;
+ return out;
+}
+
+const waveCache=new WeakMap();
+
+function netWave(rest,impact,sign,field){
+ let wave=waveCache.get(rest);
+ if(!wave){
+  wave={sine:new Float32Array(rest.length/3),cosine:new Float32Array(rest.length/3),impact:null,axis:2};
+  waveCache.set(rest,wave);
+ }
+ if(wave.impact===impact)return wave;
+ wave.impact=impact;
+ const surface=impact.surface;
+ wave.axis=surface==='side'||surface==='left'||surface==='right'?0:surface==='roof'||surface==='top'?1:2;
+ const hitZ=impact.y-sign*field.length/2;
+ for(let i=0,j=0;i<rest.length;i+=3,j++){
+  const x=rest[i],y=rest[i+1],z=rest[i+2];
+  const distance=(x-impact.x)**2+(y-impact.z)**2+(z-hitZ)**2;
+  const phase=Math.sqrt(distance)*1.55;
+  const pinned=clamp(z*sign/.9,0,1);
+  const direction=wave.axis===0?Math.sign(impact.x)*clamp(Math.abs(x)/(field.goalWidth/2),0,1)
+   :wave.axis===1?clamp(y/field.goalHeight,0,1):sign;
+  const envelope=Math.exp(-distance/4.3)*pinned*direction;
+  wave.sine[j]=Math.cos(phase)*envelope;
+  wave.cosine[j]=-Math.sin(phase)*envelope;
+ }
+ return wave;
 }
 
 // Do not extrapolate through the net before the next authoritative impact.
@@ -44,6 +73,14 @@ export function deformGoalNet(output,rest,state,sign,field,subtick=0){
  if(!impact||sequence.netSide!==sign||sequence.stage==='kickoff')return false;
  const age=(state.tick-impact.tick)*.05+subtick;
  if(age<0||age>1.8)return false;
+ if(state.engineRevision===7){
+  const {sine,cosine,axis}=netWave(rest,impact,sign,field);
+  const strength=(.09+clamp(impact.strength||0,0,1)*.29)*Math.exp(-age*3.4)*Math.min(1,age*22);
+  const sin=Math.sin(age*21)*strength,cos=Math.cos(age*21)*strength;
+  output.set(rest);
+  for(let i=axis,j=0;j<sine.length;i+=3,j++)output[i]+=sin*sine[j]+cos*cosine[j];
+  return true;
+ }
  const wave=Math.sin(age*18)*Math.exp(-age*3.4)*(.07+clamp(impact.strength||0,0,1)*.27);
  if(Math.abs(wave)<.0002&&age>.6)return false;
  const length=field.length/2,halfWidth=field.goalWidth/2,height=field.goalHeight,surface=impact.surface;

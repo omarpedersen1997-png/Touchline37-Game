@@ -48,11 +48,11 @@ export function createDistancePlayers(scene, count, home, away) {
   }
   return {
     mesh,
-    draw(slot,player,model,elapsed,visible,subtick=0,snap=false) {
+    draw(slot,player,model,elapsed,visible,subtick=0,snap=false,planted=false) {
       const state=slots[slot];
       if(!visible){state.previousX=NaN;return null;}
       const {x,z}=model.position,heading=model.rotation.y;
-      const j=samplePlayerStride(state,player,x,z,heading,elapsed,subtick,snap);
+      const j=samplePlayerStride(state,player,x,z,heading,elapsed,subtick,snap,0,planted);
       offset=visibleCount*DISTANCE_PLAYER_PARTS;
       if(owners[visibleCount]!==slot){
         owners[visibleCount]=slot;

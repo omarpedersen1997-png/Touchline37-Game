@@ -23,7 +23,7 @@ export default function AuthScreen({onAuthenticated,checking=false,connectionErr
  return <div className={'auth-page stadium-auth'+(mode==='mail'?' auth-recovery':'')}>
   <header className="auth-top">
    <a className="brand" href={gameHome} aria-label="Touchline forside"><TouchlineMark size={44}/><div>touchline<span>FOOTBALL IDLE</span></div></a>
-   {onPractice&&<button type="button" className="r4-practice-launch" onClick={onPractice}>Spil lokal testkamp · R6</button>}
+   {onPractice&&<button type="button" className="r4-practice-launch" onClick={onPractice}>Spil lokal testkamp · R7</button>}
    {!access.testEnvironment&&<a className="auth-support-link" href={documentLink(publisher.contactPath)}>Hjælp & support<ArrowRight size={15}/></a>}
   </header>
   {mode==='mail'?<div className="auth-recovery-content"><MailRecovery onBack={()=>choose('login')} onRecovered={data=>onAuthenticated(data.user)}/></div>:<main className="auth-layout">

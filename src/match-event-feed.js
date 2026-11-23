@@ -13,7 +13,7 @@ export function createMatchEventFeed(){
    else if(current.away>previous.away)add('goal','away',`Modstanderen scorer · ${current.home}–${current.away}`);
    else if(current.homeSaves>previous.homeSaves)add('save','home','Din målmand redder');
    else if(current.awaySaves>previous.awaySaves)add('save','away','Modstanderens målmand redder');
-   else if(state.engineRevision===6&&state.lastAction?.kind==='woodwork'&&state.lastAction.tick>woodworkTick&&state.lastAction.tick>=previous.tick){
+   else if(state.engineRevision>=6&&state.lastAction?.kind==='woodwork'&&state.lastAction.tick>woodworkTick&&state.lastAction.tick>=previous.tick){
     woodworkTick=state.lastAction.tick;add('woodwork',null,'På træværket!');
    }
    else if(current.homeShots>previous.homeShots)add('shot','home','Afslutning fra dit hold');

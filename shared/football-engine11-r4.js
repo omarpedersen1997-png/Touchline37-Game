@@ -1,4 +1,5 @@
 import {applyStrikeMechanics,reboundFromWoodwork} from './football-r6-contact.js';
+import {createSupportTriangle,cushionR7Ball,planSupportTriangle,receptionLoad,redirectR7Save,resolveR7Duel} from './football-r7-dynamics.js';
 import { R5_ADDED_TICKS, clockWithAddedTime } from './football-r5-clock.js';
 import { HIGH_PRESS_COMMAND, FREE_KICK_SHOT, FREE_KICK_PASS, isR5Command, estimateGroundFlight, resolveShoulderMomentum, firstTouchError, redirectHeader } from './football-r5-dynamics.js';
 import {moveLivingPlayer,turnFacing} from './football-motion-r3.js';
@@ -28,6 +29,7 @@ export const DIRECTIONS = [[0, 0], ...Array.from({ length: 32 }, (_, i) => [Math
 
 const dt = FIXED_DELTA_TIME;
 const SIDES = ['home','away'];
+const supportPlans = new WeakMap();
 const ballFields = ['x','y','z','vx','vy','vz','touchPhase','curl'];
 const down = value => value > 1 ? value - 1 : 0;
 /** Motor 11's justerbare fysik- og AI-parametre (alle deterministiske). */
@@ -223,7 +225,10 @@ function separate(s) {
       a.y = q(clamp(a.y - ny * push, -47.4, 47.4));
       b.x = q(clamp(b.x + nx * push, -29.5, 29.5));
       b.y = q(clamp(b.y + ny * push, -47.4, 47.4));
-      if (s.engineRevision>=5 && pass===0) resolveShoulderMomentum(a,b,nx,ny,s.surface);
+      if (s.engineRevision>=5 && pass===0) {
+        if (s.engineRevision===7 && i<11 && j>=11) resolveR7Duel(a,b,nx,ny,s.surface);
+        else resolveShoulderMomentum(a,b,nx,ny,s.surface);
+      }
     }
   }
 }
@@ -410,10 +415,14 @@ function kick(s, team, index, shoot, mask = 0, options = {}) {
   const throwIn=options.restart==='throw-in';
   b.owner = null; b.vx = dx / d * speed + p.vx * .12; b.vy = dy / d * speed + p.vy * .12;
   b.vz = throwIn ? Math.max(4,vz) : vz;
-  if(s.engineRevision===6&&!options.restart){
+  if((s.engineRevision===6||s.engineRevision===7)&&!options.restart){
     applyStrikeMechanics(b,p,skill,pressure);
     const pace=length(b.vx,b.vy)||1;
     p.kickFacingX=b.vx/pace;p.kickFacingY=b.vy/pace;
+  }
+  if(s.engineRevision===7&&setShot){
+    // Keep the standard restart and release, but set a repeatable curved flight.
+    b.curl*=1.24;
   }
   b.z = throwIn ? 1.85 : Math.max(.22,b.z); b.lastTouchTick=s.tick; b.lastTeam = team; b.lastTouch = { team, index }; b.protected = 2; b.flight = 0;
   p.cooldown = shoot ? 15 : 8; p.possessionTicks = 0; animate(p, 'kick', shoot ? 10 : 7);
@@ -667,8 +676,9 @@ function shapeTarget(s, team, i, own) {
   const shift=press?4:0;
   const back = own ? clamp(ballT - 22 + intent * 3, -36, 8) : clamp(ballT - 12 + intent * 2+shift, -37, 2+shift);
   // Forsvarskæden (band 0) står på én linje; midtbane og angreb beholder lidt forskydning.
-  const lineT = back + (own ? [0, 15, 29] : [0, 9, 17])[band] + (band === 0 ? 0 : (anchorT - [-28, -12, -1][band]) * .5);
-  return { x: clamp(anchor[0] * sign * (own ? 1.03 : .65) + clamp(b.x * .35, -9, 9), -27, 27), y: clamp(lineT * f, -43.5, 43.5), band };
+  const compact = s.engineRevision===7 && !own && intent<0;
+  const lineT = back + (own ? [0, 15, 29] : compact ? [0, 7, 14] : [0, 9, 17])[band] + (band === 0 ? 0 : (anchorT - [-28, -12, -1][band]) * .5);
+  return { x: clamp(anchor[0] * sign * (own ? 1.03 : compact ? .57 : .65) + clamp(b.x * .35, -9, 9), -27, 27), y: clamp(lineT * f, -43.5, 43.5), band };
 }
 function paceFor(p, base) { return base * (ENGINE.fatigue.floor + (1 - ENGINE.fatigue.floor) * p.energy / 100); }
 /** Sprint for computerspillere: kun med nok energi; trætheden (tire) tærer på energien. */
@@ -709,6 +719,13 @@ function ai(s, team) {
     else if(d<second){second=d;coverer=i;}
   }
   const marked = new Set(), lastLine = lastLineT(s, team), ownGoal = { x: 0, y: -f * 48 };
+  let outlets=null;
+  if(s.engineRevision===7&&carrier&&!carrier.keeper){
+    outlets=supportPlans.get(s);
+    if(!outlets){outlets=createSupportTriangle();supportPlans.set(s,outlets);}
+    planSupportTriangle(players,opponents,carrier,f,lastLine,
+      team==='home'?s.tactic:'balanced',team==='home'&&!s.autopilot?s.controlled:-1,outlets);
+  }
   for (let i = 0; i < players.length; i++) {
     const p = players[i];
     if (!isActive(p)) continue;
@@ -754,6 +771,13 @@ function ai(s, team) {
       const dx = p.dribbleX ?? 0, dy = p.dribbleY ?? f, open = pressure > 5;
       move(p, clamp(p.x + dx * (open ? 9 : 6), -26, 26), clamp(p.y + dy * (open ? 9 : 6), -45.5, 45.5), open ? sprintFor(p, base) * .94 : pace * .91);
     } else if (own) {
+      const outlet = i===outlets?.short.index ? outlets.short : i===outlets?.far.index ? outlets.far : null;
+      if(outlet){
+        p.role='support';
+        move(p,outlet.x,outlet.y,pace*.9,true);
+        tire(p,base);
+        continue;
+      }
       const shape = shapeTarget(s, team, i, true);
       if (shape.band === 2) {
         // Angribere holder den bageste forsvarers linje og løber i dybden, når boldholderen har tid.
@@ -767,7 +791,7 @@ function ai(s, team) {
         const wide = Math.abs(p.homeX)>15 && Math.sign(p.homeX)===Math.sign(carrier.x) && Math.abs(carrier.x)>10;
         const overlap = wide && carrier.y*f>2 && carrier.y*f<35 && nearestOpponentDistance(s,team,carrier)>3.4;
         if (overlap) {
-          const underlap=s.engineRevision===6&&Math.abs(carrier.x)>17;
+          const underlap=(s.engineRevision===6||s.engineRevision===7)&&Math.abs(carrier.x)>17;
           p.role=underlap?'underlap':'overlap';
           move(p,Math.sign(p.homeX)*(underlap?14:26),clamp(carrier.y*f+(underlap?8:10),-33,lastLine-.7)*f,sprintFor(p,base),true);
           tire(p,base);
@@ -965,7 +989,10 @@ function receiveBall(s, team, index) {
   b.shot=false;b.lastShooter=null;b.assist=null;
   b.curl=0;b.passTarget=null;b.receivePoint=null;b.offsideMask=0;b.offsideTeam=null;b.indirectTeam=null;
   // A receiving touch carries momentum into the next stride instead of teleporting to the chest.
-  p.touch=receiveMatchBall(b,p,{skill:rating(s,team,index),pressure:nearestOpponentDistance(s,team,p),keeper:p.keeper});
+  const skill=rating(s,team,index),pressure=nearestOpponentDistance(s,team,p);
+  p.touch=s.engineRevision===7&&!p.keeper
+    ? cushionR7Ball(b,p,skill,pressure,s.surface)
+    : receiveMatchBall(b,p,{skill,pressure,keeper:p.keeper});
   p.cooldown = p.keeper ? 12 : 3; p.possessionTicks = 0; animate(p, 'receive', p.keeper ? 9 : 6);
   if (team === 'home' && !p.keeper && s.personalIndex === null) s.controlled = index;
 }
@@ -1013,7 +1040,8 @@ function ballContacts(s, previous, endpoint, endT = 1, frame = contactMotion(s))
     if (b.shot && (speed > 25 || height > 1.5 || d > .85)) {
       // Hard or stretching saves are pushed wide. The ball stays live for rebounds and corners.
       const side = b.x - p.x ? Math.sign(b.x - p.x) : b.vx ? Math.sign(b.vx) : (random(s) < .5 ? -1 : 1);
-      b.vx = side * (8 + speed * .15); b.vy = forward(team) * (6 + speed * .22); b.vz = 2.5 + Math.max(0, height - 1);
+      if(s.engineRevision===7)redirectR7Save(b,p,forward(team),side,d);
+      else {b.vx = side * (8 + speed * .15); b.vy = forward(team) * (6 + speed * .22); b.vz = 2.5 + Math.max(0, height - 1);}
       b.lastTeam = team; b.lastTouch = { team, index: i }; b.lastPassFrom = null; b.passTarget = null; b.receivePoint = null; b.curl = 0;b.flightKind='loose'; b.protected = 5;
       b.x += side * .22; b.y += forward(team) * .18;
       if (p.dive === 0) startDive(p, side, -.2);
@@ -1032,7 +1060,7 @@ function ballContacts(s, previous, endpoint, endT = 1, frame = contactMotion(s))
     b.protected=2;b.flight=0;
     noteContact(s,'header',team,i,{x:b.x,y:b.y,z:b.z,t});
     s.lastAction={kind:'header',team,index:i,tick:s.tick};
-    animate(p,'receive',7);
+    animate(p,s.engineRevision===7?'header':'receive',7);
     return true;
   }
   if (contact.block || b.shot && speed > 24) {
@@ -1046,7 +1074,8 @@ function ballContacts(s, previous, endpoint, endT = 1, frame = contactMotion(s))
   // Motor 11: førsteberøring. En hård eller høj bold under pres kan springe fra en
   // svagere spiller; sandsynligheden falder med rating og stiger med fart og pres.
   const skill=rating(s,team,i),pressure=nearestOpponentDistance(s,team,p);
-  const miss=clamp((speed-(9+skill*.12))*.035+Math.max(0,b.z-.6)*.12+Math.max(0,2.5-pressure)*.06-skill*.0015+(s.engineRevision>=5?firstTouchError(p,b,skill,pressure,s.surface):0),0,s.engineRevision>=5?.5:.4);
+  const touchRisk=s.engineRevision===7?receptionLoad(b,p,skill,pressure,s.surface)*.12:0;
+  const miss=clamp((speed-(9+skill*.12))*.035+Math.max(0,b.z-.6)*.12+Math.max(0,2.5-pressure)*.06-skill*.0015+(s.engineRevision>=5?firstTouchError(p,b,skill,pressure,s.surface):0)+touchRisk,0,s.engineRevision>=5?.5:.4);
   if(miss>0&&random(s)<miss){
     const fx=p.facingX||0,fy=p.facingY||forward(team);
     b.vx=b.vx*.3+fx*2.4;b.vy=b.vy*.3+fy*2.4;b.vz=.6;b.lastTeam=team;b.lastTouch={team,index:i};b.lastPassFrom=b.lastPassFrom?.team===team?b.lastPassFrom:null;
@@ -1077,7 +1106,7 @@ function leavePitch(s, crossing) {
   const bar = Math.abs(crossing.z - 2.4) < .12 && Math.abs(crossing.x) < 4.14;
   if (post || bar) {
     b.owner = null; b.x = clamp(crossing.x, -29.8, 29.8); b.y = Math.sign(crossing.y) * 47.86; b.z = Math.max(.22, crossing.z);
-    if(s.engineRevision===6)reboundFromWoodwork(b,crossing,post,bar);
+    if(s.engineRevision===6||s.engineRevision===7)reboundFromWoodwork(b,crossing,post,bar);
     else{b.vy *= -.55; if (post) b.vx = (crossing.x > 0 ? -1 : 1) * Math.max(3, Math.abs(b.vx) * .6); if (bar) b.vz = -Math.abs(b.vz) * .6;}
     b.protected = 2; s.lastAction = { kind: 'woodwork', tick: s.tick }; return;
   }
@@ -1113,7 +1142,7 @@ function carryBall(s) {
   b.touchPhase = (b.touchPhase + dt * (2.8 + speed * .35)) % 1;
   p.touch = Math.max(0, p.touch - .075);
   const stride = .55 + speed * .052 + Math.max(0, Math.sin(b.touchPhase * Math.PI * 2)) * (speed * .027) + p.touch * .35;
-  let fx = p.facingX, fy = s.engineRevision===6 ? p.facingY : p.facingY || f;
+  let fx = p.facingX, fy = s.engineRevision===6||s.engineRevision===7 ? p.facingY : p.facingY || f;
   if (s.skillTicks > 0 && team === 'home' && index === s.controlled) {
     const angle = (1 - s.skillTicks / 12) * Math.PI * 2, x = fx;
     fx = x * Math.cos(angle) - fy * Math.sin(angle); fy = x * Math.sin(angle) + fy * Math.cos(angle);
@@ -1157,6 +1186,7 @@ function stepPlayingArcade(s, mask) {
   for (const team of ['home', 'away']) for (const p of s[team]) {
     p.cooldown = down(p.cooldown); p.dive = down(p.dive); p.kick = down(p.kick); p.tackle = down(p.tackle);
     p.receive = down(p.receive); p.actionTicks = down(p.actionTicks); p.decision = down(p.decision);
+    if(p.duelTicks>0)p.duelTicks--;
     if (p.actionTicks === 0) p.action = 'idle';
   }
   s.ball.protected = Math.max(0, s.ball.protected - 1);
