@@ -16,7 +16,7 @@ export function createMatchEventFeed(){
    else if(current.homeShots>previous.homeShots)add('shot','home','Afslutning fra dit hold');
    else if(current.awayShots>previous.awayShots)add('shot','away','Modstanderen afslutter');
   }
-  if(state.engineRevision===4){
+  if(state.engineRevision>=4){
    const referee=state.refereeEvents||[],last=referee.indexOf(lastReferee);
    for(let i=last+1;i<referee.length;i++){
     const event=referee[i];

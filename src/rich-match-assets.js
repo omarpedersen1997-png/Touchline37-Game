@@ -3,17 +3,19 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {matchAssetRoot} from './match-asset-config.js';
 let pending=null,library=null;const textureCache=new Map();
-export async function preloadRichMatchAssets(quality='auto'){
+export async function preloadRichMatchAssets(quality='auto',fast=false){
  if(!matchAssetRoot)return null;
  if(!pending)pending=new GLTFLoader().loadAsync(matchAssetRoot+'/stadium-kit.glb').then(g=>{library=g.scene;library.updateMatrixWorld(true);return library;}).catch(e=>{pending=null;throw e;});
- const size=quality==='auto'?1024:2048,names=[`grass-color-${size}.png`,`grass-normal-${size}.png`,`grass-roughness-${size}.png`,`jersey-numbers-${size}.png`,'kit-fabric-1024.png','kit-normal-1024.png','kit-roughness-1024.png','boot-leather-1024.png','stadium-board-2048.png','club-emblem-1024.png'];
+ const size=quality==='auto'?1024:2048,key=fast?'fast-auto':quality;
+ if(ready.has(key))return ready.get(key);
+ const names=[`grass-color-${size}.png`,`grass-normal-${size}.png`,`grass-roughness-${size}.png`,`jersey-numbers-${size}.png`,'kit-fabric-1024.png','kit-normal-1024.png','kit-roughness-1024.png','boot-leather-1024.png','stadium-board-2048.png','club-emblem-1024.png'].filter(name=>!fast||!/normal|roughness|boot-leather/.test(name));
  await Promise.all([pending,...names.map(name=>{if(!textureCache.has(name))textureCache.set(name,new THREE.TextureLoader().loadAsync(matchAssetRoot+'/'+name).catch(e=>{textureCache.delete(name);throw e;}));return textureCache.get(name);})]);
  const textures=Object.fromEntries(await Promise.all(names.map(async name=>[name,await textureCache.get(name)])));
  for(const [name,t]of Object.entries(textures)){t.colorSpace=/normal|roughness/.test(name)?THREE.NoColorSpace:THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;}
- ready.set(quality,{library,textures,size});return ready.get(quality);
+ ready.set(key,{library,textures,size});return ready.get(key);
 }
 const ready=new Map();
-export function richMatchAssets(quality='auto'){return ready.get(quality)||null;}
+export function richMatchAssets(quality='auto',fast=false){return ready.get(fast?'fast-auto':quality)||null;}
 export function texturedKit(pack,pattern='classic'){
  const fabric=pack.textures['kit-fabric-1024.png'];if(!['stripe','hoop'].includes(pattern))return fabric;
  const canvas=document.createElement('canvas');canvas.width=canvas.height=1024;const c=canvas.getContext('2d');c.drawImage(fabric.image,0,0,1024,1024);c.fillStyle='rgba(10,24,30,.65)';
@@ -32,25 +34,32 @@ export function instanceRichPart(scene,pack,name,placements,{tint=false}={}){
   mesh.computeBoundingSphere();mesh.receiveShadow=true;scene.add(mesh);meshes.push(mesh);
  });return meshes;
 }
-export function buildRichStadium(scene,field,quality,pack){
+export function buildRichStadium(scene,field,quality,pack,fast=false){
  const w=field.width/2,l=field.length/2,stands=[],audience=[],lamps=[],benches=[],flags=[];
  for(const side of [-1,1]){
   for(let z=-l+7;z<l;z+=12.5)stands.push({x:side*(w+8),z,angle:side<0?Math.PI/2:-Math.PI/2});
   for(let x=-w+7;x<w;x+=12.5)stands.push({x,z:side*(l+8),angle:side<0?0:Math.PI});
   for(const x of [-w,w]){flags.push({x,z:side*l});lamps.push({x:x+Math.sign(x)*13,z:side*(l+15)});}
  }
- const automatic=quality==='auto',stride=automatic?4:2,rowStride=automatic?2:1;
+ const automatic=quality==='auto',stride=fast?7:automatic?4:2,rowStride=fast?3:automatic?2:1;
  for(const stand of stands)for(let row=0;row<6;row+=rowStride)for(let col=0;col<15;col+=stride){if(col===7)continue;const across=-5.55+col*.79,depth=-(row*.85+.1),cos=Math.cos(stand.angle),sin=Math.sin(stand.angle);audience.push({x:stand.x+across*cos+depth*sin,y:.1+row*.48,z:stand.z-across*sin+depth*cos,angle:stand.angle});}
  benches.push({x:-(w+4),z:-14,angle:Math.PI/2},{x:-(w+4),z:14,angle:Math.PI/2});
  const structures=[...instanceRichPart(scene,pack,automatic?'stand-low':'stand',stands),...instanceRichPart(scene,pack,'floodlight',lamps),...instanceRichPart(scene,pack,'bench',benches),...instanceRichPart(scene,pack,'flag',flags)],crowds=instanceRichPart(scene,pack,quality==='4k'?'spectator':'spectator-low',audience,{tint:true});
  const surround=new THREE.Mesh(new THREE.PlaneGeometry(field.width+80,field.length+80),new THREE.MeshStandardMaterial({color:0x263c34,roughness:1}));surround.rotation.x=-Math.PI/2;surround.position.y=-.035;scene.add(surround);
  const board=pack.textures['stadium-board-2048.png'],boardMat=new THREE.MeshBasicMaterial({map:board});
- for(const side of [-1,1])for(let z=-l+10;z<l;z+=22){const mesh=new THREE.Mesh(new THREE.PlaneGeometry(20,1.1),boardMat);mesh.position.set(side*(w+4),.8,z);mesh.rotation.y=side<0?Math.PI/2:-Math.PI/2;scene.add(mesh);}
+ const boardSlots=[];
+ for(const side of [-1,1])for(let z=-l+10;z<l;z+=22)boardSlots.push({side,z});
+ const boardMesh=new THREE.InstancedMesh(new THREE.PlaneGeometry(20,1.1),boardMat,boardSlots.length),boardMatrix=new THREE.Matrix4();
+ boardSlots.forEach(({side,z},i)=>{
+  boardMatrix.makeRotationY(side<0?Math.PI/2:-Math.PI/2);
+  boardMatrix.setPosition(side*(w+4),.8,z);boardMesh.setMatrixAt(i,boardMatrix);
+ });
+ scene.add(boardMesh);
  // Camera-side clipping prevents benches/roof geometry crossing the lens.
  const planes=[new THREE.Plane(new THREE.Vector3(-1,0,0),w+3),new THREE.Plane(new THREE.Vector3(0,0,-1),l+3)];
  for(const mesh of [...structures,...crowds]){mesh.material=broadcastSurfaceMaterial(mesh.material);mesh.material.clippingPlanes=planes;}
  let brightness=.8;const lampsMaterials=structures.map(m=>m.material).filter(m=>m.emissive?.r>.1);
- return {layout:{pitchY:.03},crowds,react(state,dt,reducedMotion){const target=!reducedMotion&&['net','celebration'].includes(state.goalSequence?.stage)?1.1:.8;brightness+=(target-brightness)*(1-Math.exp(-3*Math.min(.1,dt)));for(const m of lampsMaterials)m.emissiveIntensity=brightness;},setCameraView(eye,target){const dx=eye.x-target.x,dz=eye.z-target.z;planes[0].normal.x=dx>=0?-1:1;planes[1].normal.z=dz>=0?-1:1;}};
+ return {layout:{pitchY:.03},crowds,react(state,dt,reducedMotion){if(fast)return;const target=!reducedMotion&&['net','celebration'].includes(state.goalSequence?.stage)?1.1:.8;brightness+=(target-brightness)*(1-Math.exp(-3*Math.min(.1,dt)));for(const m of lampsMaterials)m.emissiveIntensity=brightness;},setCameraView(eye,target){const dx=eye.x-target.x,dz=eye.z-target.z;planes[0].normal.x=dx>=0?-1:1;planes[1].normal.z=dz>=0?-1:1;}};
 }
 export function buildRichGoals(scene,field,pack){
  const nets=[];

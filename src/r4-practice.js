@@ -1,9 +1,12 @@
-import * as rules from '../shared/football-engine11-r4.js';
-const {DURATION_MS,INPUT_COUNT}=rules;
+import * as r4 from '../shared/football-engine11-r4.js';
+import * as r5 from '../shared/football-engine11-r5.js';
 
 // Practice lives only for the mounted component. Neither match recording nor
 // preferences share storage with account-backed matches.
-export function createR4Practice(epoch = Date.now()) {
+export function createR4Practice(epoch = Date.now(), {revision=4,surface='dry'} = {}) {
+  const rules=revision===5?r5:r4;
+  const {DURATION_MS,INPUT_COUNT,ENGINE_REVISION:engineRevision}=rules;
+  const id=engineRevision===5?'r5':'r4';
   const values = new Map();
   const storage = {
     key(index) { return [...values.keys()][index] ?? null; },
@@ -13,10 +16,10 @@ export function createR4Practice(epoch = Date.now()) {
     removeItem(key) { values.delete(key); },
   };
   const match = {
-    id:'r4-practice-'+epoch, started:epoch, ends:epoch+DURATION_MS, opponent:'Havneby IF', home:0, away:0,
+    id:id+'-practice-'+epoch, started:epoch, ends:epoch+DURATION_MS, opponent:'Havneby IF', home:0, away:0,
     manual:{
-      version:11, seed:'touchline-r4-'+epoch, duration:DURATION_MS, inputCount:INPUT_COUNT,
-      expiresAt:epoch+DURATION_MS, config:{matchVersion:11,engineRevision:4,homeRating:65,awayRating:61,formation:'4-3-3',stadiumStage:2},
+      version:11, seed:'touchline-'+id+'-'+epoch, duration:DURATION_MS, inputCount:INPUT_COUNT,
+      expiresAt:epoch+DURATION_MS, config:{matchVersion:11,engineRevision,...(engineRevision===5?{surface}:{}),homeRating:65,awayRating:61,formation:'4-3-3',stadiumStage:2},
     },
   };
   let elapsed=0,last=null,paused=true;

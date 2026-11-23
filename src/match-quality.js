@@ -1,6 +1,6 @@
 // 4K targets a real 3840-pixel long edge while preserving the viewport's aspect.
 // This changes rendering resolution, never the phone's physical display resolution.
-export function matchResolution({width,height,dpr=1,quality='auto',maxSize=8192,maxViewport=[8192,8192],scale=1,version=1}){
+export function matchResolution({width,height,dpr=1,quality='auto',maxSize=8192,maxViewport=[8192,8192],scale=1,version=1,fast=false}){
  const positive=(n,fallback)=>Number.isFinite(n)&&n>0?n:fallback;
  width=positive(width,1);height=positive(height,1);dpr=positive(dpr,1);scale=positive(scale,1);
  const limitX=Math.min(positive(maxSize,8192),positive(maxViewport?.[0],8192)),limitY=Math.min(positive(maxSize,8192),positive(maxViewport?.[1],8192));
@@ -11,7 +11,8 @@ export function matchResolution({width,height,dpr=1,quality='auto',maxSize=8192,
  // The old CSS-pixel floor prevented a pressured GPU from reducing its work.
  // Explicit Sharp/4K and all historical presentation profiles stay unchanged.
  const automatic=version>=11?Math.min(dpr,1.25,1920/longEdge,Math.sqrt(1200000/(width*height)))*Math.max(.5,Math.min(1,scale)):Math.max(1,Math.min(dpr,1.5)*Math.max(.5,Math.min(1,scale)));
- const desired=quality==='4k'?3840/longEdge:quality==='sharp'?Math.min(3840/longEdge,Math.max(dpr,1920/longEdge)):automatic;
+ const capped=fast&&quality==='auto'?Math.min(automatic,Math.sqrt(420000/(width*height))*Math.max(.5,Math.min(1,scale))):automatic;
+ const desired=quality==='4k'?3840/longEdge:quality==='sharp'?Math.min(3840/longEdge,Math.max(dpr,1920/longEdge)):capped;
  const ratio=Math.min(desired,limitX/width,limitY/height);
  const w=Math.max(1,Math.min(Math.floor(limitX),Math.round(width*ratio))),h=Math.max(1,Math.min(Math.floor(limitY),Math.round(height*ratio)));
  return{width:w,height:h,quality,is4k:quality==='4k'&&Math.max(w,h)>=3839,limited:quality==='4k'&&Math.max(w,h)<3839};

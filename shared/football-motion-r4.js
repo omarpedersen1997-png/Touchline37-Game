@@ -1,3 +1,4 @@
+import {surfaceBallProfile} from './football-r5-dynamics.js';
 import { BALL_PROFILES, receiveLivingBall } from './football-motion-r3.js';
 
 export const BALL_RADIUS = .22;
@@ -32,7 +33,7 @@ function air(ball, dt, profile) {
 
 export function integrateMatchBall(ball, seconds = .05) {
   let remaining = clamp(Number.isFinite(seconds) ? seconds : 0, 0, .05);
-  const profile = BALL_PROFILES[ball.flightKind] || BALL_PROFILES.loose;
+  const profile = surfaceBallProfile(BALL_PROFILES[ball.flightKind] || BALL_PROFILES.loose, ball.surface);
   while (remaining > 1e-8) {
     const dt = Math.min(BALL_SUBSTEP, remaining);
     remaining -= dt;

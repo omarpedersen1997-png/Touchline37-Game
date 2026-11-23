@@ -14,7 +14,7 @@ export function createMatchAudioFeed(){
   let played=false;
   const freshAction=Number.isFinite(state.tick)?state.tick-tick>=0&&state.tick-tick<=2:!r3;
   if(changed&&freshAction&&now-lastTime>=65){
-   const cue=kind==='woodwork'?'woodwork':['shot','pass','through','loft'].includes(kind)?'kick':null;
+   const cue=kind==='woodwork'?'woodwork':['shot','pass','through','loft','header'].includes(kind)?'kick':null;
    if(cue){lastTime=now;if(kind==='shot'||kind==='woodwork')sound.chance?.();
     const power=r3&&!Number.isFinite(action.power)?Math.max(.15,Math.min(1,(pace-8)/24)):action.power;
     played=sound.impact?.(cue,power)||false;
