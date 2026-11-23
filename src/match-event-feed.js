@@ -2,10 +2,10 @@ import {playingTime,PLAY_MS} from '../shared/football-halves.js';
 // Only observed engine events/counter changes are announced. No invented cards,
 // substitutions or chance statistics. Keep at most three messages on screen.
 export function createMatchEventFeed(){
- let previous=null,sequence=0,items=[],lastReferee=null;
+ let previous=null,sequence=0,items=[],lastReferee=null,woodworkTick=-1;
  return{observe(state){
   const stats=state.stats||{},current={home:state.homeScore,away:state.awayScore,homeShots:stats.homeShots||0,awayShots:stats.awayShots||0,homeSaves:stats.homeSaves||0,awaySaves:stats.awaySaves||0};
-  if(previous&&state.tick<previous.tick){items=[];lastReferee=null;}
+  if(previous&&state.tick<previous.tick){items=[];lastReferee=null;woodworkTick=-1;}
   const minute=Math.min(90,Math.max(0,Math.floor(playingTime(state.tick*50)/PLAY_MS*90)));
   const add=(kind,team,text)=>items=[{id:++sequence,kind,team,text,minute},...items];
   if(previous&&state.tick>=previous.tick){
@@ -13,6 +13,9 @@ export function createMatchEventFeed(){
    else if(current.away>previous.away)add('goal','away',`Modstanderen scorer · ${current.home}–${current.away}`);
    else if(current.homeSaves>previous.homeSaves)add('save','home','Din målmand redder');
    else if(current.awaySaves>previous.awaySaves)add('save','away','Modstanderens målmand redder');
+   else if(state.engineRevision===6&&state.lastAction?.kind==='woodwork'&&state.lastAction.tick>woodworkTick&&state.lastAction.tick>=previous.tick){
+    woodworkTick=state.lastAction.tick;add('woodwork',null,'På træværket!');
+   }
    else if(current.homeShots>previous.homeShots)add('shot','home','Afslutning fra dit hold');
    else if(current.awayShots>previous.awayShots)add('shot','away','Modstanderen afslutter');
   }

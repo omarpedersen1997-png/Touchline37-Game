@@ -16,8 +16,11 @@ export function samplePlayerPose(p,seconds,out={}){
 
 export function createPlayerResponse(){
  const pose={forward:0,side:0};
- return {update(p,seconds,{snap=false,disabled=false}={}){
-  const forward=disabled?0:clamp(((p.ax||0)*p.facingX+(p.ay||0)*p.facingY)*.008,-.075,.1);
+ return {update(p,seconds,{snap=false,disabled=false,athletic=false}={}){
+  const speed=athletic?Math.hypot(p.vx||0,p.vy||0):0;
+  const sprintLean=Math.max(0,speed-4.2)*.020;
+  const kickLean=athletic&&p.kick>0?.077*Math.sin(Math.PI*(1-.55*clamp(p.kick/Math.max(p.kick,p.actionDuration||10),0,1))):0;
+  const forward=disabled?0:clamp(((p.ax||0)*p.facingX+(p.ay||0)*p.facingY)*.008+sprintLean+kickLean,-.075,athletic?.175:.1);
   const side=disabled?0:clamp(((p.ax||0)*p.facingY-(p.ay||0)*p.facingX)*.009,-.11,.11);
   const dt=clamp(Number.isFinite(seconds)?seconds:0,0,.05),mix=snap?1:1-Math.exp(-12*dt);
   pose.forward+=(forward-pose.forward)*mix;pose.side+=(side-pose.side)*mix;

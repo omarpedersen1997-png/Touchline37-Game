@@ -13,7 +13,10 @@ export function createAssetPlayerAnimation(clips,bones){
  return {apply(base,time,p,state,team,index,dt,renderedHeading,snap=false,subtick=0){
   let name=base,phase=time;
   const speed=Math.hypot(p.vx,p.vy);sprinting=base==='run'&&(sprinting?speed>6.8:speed>7.4);
-  if(sprinting){name='sprint';phase*=.82;}
+  if(sprinting&&samples.has('sprint')){
+   name='sprint';
+   phase*=state.version===11&&state.engineRevision>=6?samples.get('sprint').duration/(samples.get('run')?.duration||1):.82;
+  }
   const locomotion=samples.get(name),locomotionTime=locomotion?((phase%locomotion.duration)+locomotion.duration)%locomotion.duration:0;
   sampleFootballAction(p,state,team,index,name,phase,actionSample,subtick);name=actionSample.clip;phase=actionSample.time;
   const nextHeading=Number.isFinite(renderedHeading)?renderedHeading:Math.atan2(p.facingX,p.facingY),angle=heading===null||snap?0:Math.atan2(Math.sin(nextHeading-heading),Math.cos(nextHeading-heading)),rate=dt>0?angle/dt:0;

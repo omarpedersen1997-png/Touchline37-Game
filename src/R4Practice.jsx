@@ -6,7 +6,7 @@ import {createR4Practice} from './r4-practice.js';
 
 export default function R4Practice({onClose}) {
   const [practice,setPractice]=useState(null);
-  const begin=surface=>setPractice(createR4Practice(Date.now(),{revision:5,surface}));
+  const begin=surface=>setPractice(createR4Practice(Date.now(),{revision:6,surface}));
   if(practice)return <div className="app-shell game-console">
     <ManualMatch match={practice.match} now={practice.match.started} club="Prøvelund BK"
       clubStyle={{color:'lime',crest:'shield'}} practice={practice} onClose={onClose}/>
@@ -15,7 +15,7 @@ export default function R4Practice({onClose}) {
       <img className="match-test-cover" src={matchCover} alt="" decoding="async" width={1440} height={810}/>
       <button type="button" className="match-test-back" onClick={onClose}><ArrowLeft size={18}/> Tilbage</button>
       <div>
-        <p className="eyebrow">MOTOR 11 · R5</p>
+        <p className="eyebrow">MOTOR 11 · R6</p>
         <h1 id="test-match-title">Kampdag<span>.</span></h1>
         <p>Prøvelund BK mod Havneby IF. Vælg baneforhold for at gå til afspark.</p>
         <div className="match-test-actions">

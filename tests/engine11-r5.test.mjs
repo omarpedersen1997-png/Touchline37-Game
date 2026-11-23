@@ -11,7 +11,7 @@ import { createManualSession } from '../src/manual-session.js';
 import { applyFastMatchMaterials, takeMatchPose, usesFastMatchRender } from '../src/match-fast-render.js';
 import { matchResolution } from '../src/match-quality.js';
 import { createR4CameraPlan } from '../src/broadcast-r4.js';
-import { createDistancePlayers, keepDetailedPlayer } from '../src/match-distance-players.js';
+import { createDistancePlayers, DISTANCE_PLAYER_PARTS, keepDetailedPlayer } from '../src/match-distance-players.js';
 import { screenToPitch } from '../src/match-camera.js';
 
 test('R5 commands stay in the isolated revision and round trip with its own tape',()=>{
@@ -167,11 +167,11 @@ test('distant players share one submission, move at the rendered pose and hide t
  const matrix=new Matrix4();
  assert.equal(scene.children.length,1);
  players.draw(3,proxy,model,.016,true);players.finish();
- players.mesh.getMatrixAt(36,matrix);
+ assert.equal(players.mesh.count,DISTANCE_PLAYER_PARTS);
+ players.mesh.getMatrixAt(0,matrix);
  assert.equal(matrix.elements[12],4);assert.equal(matrix.elements[14],-9);
  players.draw(3,proxy,model,0,false);players.finish();
- players.mesh.getMatrixAt(36,matrix);
- assert.equal(matrix.elements[0],0);assert.equal(matrix.elements[5],0);
+ assert.equal(players.mesh.count,0);
  assert(keepDetailedPlayer(proxy,true,true,true,99,false));
  assert(!keepDetailedPlayer(proxy,false,true,true,5,true));
  assert(keepDetailedPlayer(proxy,false,true,false,85,true));

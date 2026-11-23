@@ -1,76 +1,85 @@
 import {
-  CapsuleGeometry, Color, DynamicDrawUsage, Euler, InstancedMesh, Matrix4,
+  CapsuleGeometry, Color, DynamicDrawUsage, InstancedMesh, Matrix4,
   MeshLambertMaterial, Quaternion, Vector3,
 } from 'three';
+import {createPlayerStride,JOINT as J,samplePlayerStride} from './player-stride-pose.js';
 
-const PARTS = 12;
+export const DISTANCE_PLAYER_PARTS = 15;
 const SKIN = [0xc69075,0x895b43,0xd8a180,0x6d4935];
 
 export function createDistancePlayers(scene, count, home, away) {
   const geometry = new CapsuleGeometry(.5, 1, 2, 6);
   const material = new MeshLambertMaterial({color:0xffffff});
-  const mesh = new InstancedMesh(geometry, material, count*2*PARTS);
-  mesh.name = 'Animated distant footballers';
+  const mesh = new InstancedMesh(geometry, material, count*2*DISTANCE_PLAYER_PARTS);
+  mesh.name = 'Articulated distant footballers';
   mesh.frustumCulled = false;
   mesh.instanceMatrix.setUsage(DynamicDrawUsage);
   scene.add(mesh);
 
-  const colour = new Color(), hidden = new Matrix4().makeScale(0,0,0);
-  const active = new Uint8Array(count*2), strides = new Float32Array(count*2);
-  const root = new Matrix4(), part = new Matrix4(), world = new Matrix4();
-  const position = new Vector3(), scale = new Vector3(), rotation = new Quaternion(), euler = new Euler();
-  for (let i=0;i<count*2;i++) {
-    const keeper=(i%count)===0;
-    const shirt=keeper?(i<count?'#e5c254':'#8faabd'):(i<count?home:away);
-    const tone=SKIN[i%SKIN.length];
-    const uniform=[shirt,tone,'#20262b',shirt,shirt,tone,tone,0xe5e7dd,0xe5e7dd,0x172222,0x172222,0x172222];
-    for (let n=0;n<PARTS;n++) {
-      mesh.setColorAt(i*PARTS+n,colour.set(uniform[n]));
-      mesh.setMatrixAt(i*PARTS+n,hidden);
-    }
-    strides[i]=i*1.3;
+  const slots=Array.from({length:count*2},(_,i)=>createPlayerStride(i+1));
+  const owners=new Int16Array(count*2).fill(-1);
+  const root=new Matrix4(),part=new Matrix4(),world=new Matrix4();
+  const point=new Vector3(),scale=new Vector3(),rotation=new Quaternion(),direction=new Vector3(),up=new Vector3(0,1,0);
+  const palettes=slots.map((_,i)=>{
+    const keeper=i%count===0,shirt=keeper?(i<count?'#e5c254':'#8faabd'):(i<count?home:away);
+    const skin=SKIN[i%SKIN.length];
+    return [0x20262b,shirt,skin,skin,shirt,skin,shirt,skin,0x20262b,0xe5e7dd,0x20262b,0xe5e7dd,0x142222,0x142222,0x282322].map(color=>new Color(color));
+  });
+  mesh.setColorAt(0,palettes[0][0]);mesh.instanceColor.setUsage(DynamicDrawUsage);
+  let visibleCount=0,changedPalette=false,offset=0;
+  mesh.count=0;
+
+  function place(j,id,index,sx,sy,sz,dy=0,dz=0) {
+    point.set(j[id],j[id+1]+dy,j[id+2]+dz);scale.set(sx,sy,sz);rotation.identity();
+    write(index);
   }
-  let dirty=true;
-  const place=(slot,offset,x,y,z,sx,sy,sz,rx=0,rz=0)=>{
-    position.set(x,y,z);scale.set(sx,sy,sz);
-    rotation.setFromEuler(euler.set(rx,0,rz));
-    part.compose(position,rotation,scale);
-    mesh.setMatrixAt(slot*PARTS+offset,world.multiplyMatrices(root,part));
-  };
+  function bone(j,a,b,index,width,depth,overhang=0) {
+    direction.set(j[b]-j[a],j[b+1]-j[a+1],j[b+2]-j[a+2]);
+    const length=direction.length()||1;
+    rotation.setFromUnitVectors(up,direction.multiplyScalar(1/length));
+    point.set((j[a]+j[b])*.5,(j[a+1]+j[b+1])*.5,(j[a+2]+j[b+2])*.5);
+    scale.set(width,(length+overhang)*.5,depth);
+    write(index);
+  }
+  function write(index) {
+    part.compose(point,rotation,scale);
+    mesh.setMatrixAt(offset+index,world.multiplyMatrices(root,part));
+  }
   return {
     mesh,
-    draw(slot, player, model, elapsed, visible) {
-      if (!visible) {
-        if (active[slot]) {
-          for(let i=0;i<PARTS;i++)mesh.setMatrixAt(slot*PARTS+i,hidden);
-          active[slot]=0;
-          dirty=true;
-        }
-        return;
+    draw(slot,player,model,elapsed,visible,subtick=0,snap=false) {
+      const state=slots[slot];
+      if(!visible){state.previousX=NaN;return null;}
+      const {x,z}=model.position,heading=model.rotation.y;
+      const j=samplePlayerStride(state,player,x,z,heading,elapsed,subtick,snap);
+      offset=visibleCount*DISTANCE_PLAYER_PARTS;
+      if(owners[visibleCount]!==slot){
+        owners[visibleCount]=slot;
+        for(let i=0;i<DISTANCE_PLAYER_PARTS;i++)mesh.setColorAt(offset+i,palettes[slot][i]);
+        changedPalette=true;
       }
-      active[slot]=1;
-      dirty=true;
-      const speed=Math.hypot(player.vx,player.vy);
-      strides[slot]=(strides[slot]+speed*elapsed*2.6)%(Math.PI*2);
-      const gait=Math.sin(strides[slot])*Math.min(.62,speed*.095);
-      const action=player.kick>0?Math.sin(Math.min(1,player.kick/10)*Math.PI)*.64:0;
-      const torsoLean=Math.min(.16,speed*.017)+(player.tackle>0?.24:0);
-      root.makeRotationY(model.rotation.y);
-      root.setPosition(model.position.x,0,model.position.z);
-      place(slot,0,0,1.32,0,.55,.37,.32,torsoLean);
-      place(slot,1,0,1.95,.025,.30,.167,.29);
-      place(slot,2,0,.96,0,.48,.15,.29);
-      place(slot,11,0,2.04,.012,.303,.11,.292);
+      visibleCount++;
+      root.makeRotationY(heading);root.setPosition(x,.035,z);
+      place(j,J.pelvis,0,.324,.117,.221,-.044);
+      bone(j,J.pelvis,J.neck,1,.375,.238,.115);
+      bone(j,J.neck,J.head,2,.101,.104,.037);
+      place(j,J.head,3,.154,.113,.161);
+      place(j,J.head,14,.160,.066,.159,.064,-.006);
       for(let side=0;side<2;side++){
-        const f=side*2-1,swing=gait*f+(side===1?action:0),lift=Math.abs(swing)*.13;
-        place(slot,3+side,f*.32,1.37,0,.17,.22,.17,-swing*.6,f*.16);
-        place(slot,5+side,f*.37,1.10,swing*-.12,.125,.18,.128,-swing*.65,f*.10);
-        place(slot,7+side,f*.15,.49+lift,swing*.15,.19,.36,.19,swing);
-        place(slot,9+side,f*.15,.10+lift,swing*.34+.08,.187,.094,.31,swing*.5);
+        const arm=J.shoulderL+side*9,leg=J.hipL+side*12;
+        bone(j,arm,arm+3,4+side*2,.127,.125,.060);
+        bone(j,arm+3,arm+6,5+side*2,.095,.092,.056);
+        bone(j,leg,leg+3,8+side*2,.177,.162,.079);
+        bone(j,leg+3,leg+6,9+side*2,.128,.117,.055);
+        place(j,leg+9,12+side,.127,.054,.235);
       }
+      return state;
     },
     finish() {
-      if(dirty){mesh.instanceMatrix.needsUpdate=true;dirty=false;}
+      mesh.count=visibleCount*DISTANCE_PLAYER_PARTS;
+      if(visibleCount)mesh.instanceMatrix.needsUpdate=true;
+      if(changedPalette)mesh.instanceColor.needsUpdate=true;
+      visibleCount=0;changedPalette=false;
     },
   };
 }

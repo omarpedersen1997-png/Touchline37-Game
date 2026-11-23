@@ -45,7 +45,7 @@ import{goalInputLocked}from'./goal-hud.js';
 export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,onFinish,busy,players=[],practice=null}){
  const lastCatchup=useRef(false),matchAudio=useRef(null),audioFeed=useRef(null);audioFeed.current||=createMatchAudioFeed();
  const version=match.manual?.version||match.manual?.config.matchVersion||1,modern=version>=3,direct=version===11&&(match.manual?.config.engineRevision||1)>=3,duration=(match.manual?.duration||60000)/1000;
- const revision=match.manual?.config.engineRevision||1,r4=version===11&&revision>=4,r5=r4&&revision===5,practiceReady=useRef(false);
+ const revision=match.manual?.config.engineRevision||1,r4=version===11&&revision>=4,r5=r4&&revision>=5,practiceReady=useRef(false);
  const inputOwners=useRef(null),inputLatency=useRef(null),chargeFeedback=useRef(null),chargePanel=useRef(null);inputOwners.current||=createInputOwnership();inputLatency.current||=createInputLatencyTracker();chargeFeedback.current||=createChargeFeedback();
  const markInput=kind=>{if(direct)inputLatency.current.mark(kind,performance.now());};
  const acceptInput=()=>!inputBlocked.current&&(!direct||!!session.current?.state&&matchPhase(session.current.state)==='PLAYING');

@@ -1,3 +1,4 @@
+import {createMatch2DPlayers} from './match-2d-players.js';
 import {createDistancePlayers,keepDetailedPlayer} from './match-distance-players.js';
 import { applyFastMatchMaterials, takeMatchPose, usesFastMatchRender } from './match-fast-render.js';
 import {r4PoseFrame,sampleR4Player,sampleR4Ball} from '../shared/football-pose-r4.js';
@@ -219,11 +220,17 @@ function webglScene(container,options){
    const range=(p.x-shownBall.x)**2+(p.y-shownBall.y)**2;
    const detailed=!fast||keepDetailedPlayer(p,focused,inView,view==='tactical',range,wasDetailed);
    model.visible=inView&&detailed;data.inView=inView;data.wasDetailed=detailed;data.sentOff=false;
-   if(distancePlayers)distancePlayers.draw((team==='home'?0:count)+i,p,model,s.replayHold?0:elapsed,inView&&!detailed);
+   const farPose=distancePlayers?.draw((team==='home'?0:count)+i,p,model,s.replayHold?0:elapsed,inView&&!detailed,prediction,kickoffCut||first);
    const poseSnap=wasVisible===false||settled||fast&&!wasDetailed&&detailed;
    const priority=focused||i===0||p.kick>0||p.tackle>0||!!s.goalSequence;
    const poseElapsed=fast?takeMatchPose(data,renderTime,priority,inView&&detailed,poseSnap,elapsed):elapsed;
-   if(poseElapsed>=0)animateFootballPlayer(model,p,s,team,i,s.replayHold?0:poseElapsed,inView,poseSnap,s.version===11&&s.engineRevision>=3?prediction:0);model.userData.label.visible=(s.version>=11||view==='follow')&&team==='home'&&i===s.controlled;if(spatialR3){const shadow=playerContactShadow(p,model.rotation.y,shadowPose);shadowRotation.setFromAxisAngle(shadowUp,shadow.angle);shadowPosition.set(model.position.x,.061,model.position.z);shadowScale.set(shadow.width,1,shadow.depth);contactMatrix.compose(shadowPosition,shadowRotation,shadowScale);}else contactMatrix.makeTranslation(model.position.x,.055,model.position.z);contact.setMatrixAt((team==='home'?0:count)+i,contactMatrix);return;}model.position.lerp(pose.set(p.x+p.vx*prediction,p.dive>0?.2:-.085,p.y+p.vy*prediction),blend);const turn=Math.atan2(p.facingX,p.facingY)-model.rotation.y;if(s.version===11&&s.engineRevision>=3)model.rotation.y=samplePlayerPose(p,prediction,model.userData.presentationPose||={}).angle;else model.rotation.y+=Math.atan2(Math.sin(turn),Math.cos(turn))*(settled?1:1-Math.exp(-18*elapsed));if(s.version>=4&&team==='home'&&i===s.controlled&&s.skillTicks>0)model.rotation.y=Math.atan2(p.facingX,p.facingY)+(1-s.skillTicks/10)*Math.PI*2;model.rotation.z=p.dive>0?1.15:0;const stride=Math.min(1,Math.hypot(p.vx,p.vy)/7),phase=(model.userData.gait??i*1.7)+Math.hypot(p.vx,p.vy)*elapsed*1.8;model.userData.gait=phase;model.userData.torso.rotation.x=-stride*.09;model.userData.torso.rotation.y=p.cooldown>12?Math.sin((18-p.cooldown)*.45)*.18:0;model.userData.legs.forEach((leg,n)=>{leg.rotation.x=Math.sin(phase+n*Math.PI)*.68*stride+(p.cooldown>12&&n===1?-.65:0);});model.userData.knees.forEach((knee,n)=>{knee.rotation.x=Math.max(0,Math.sin(phase+n*Math.PI))*.85*stride;});model.userData.arms.forEach((arm,n)=>{const celebrating=isGoalCelebrant(s,team,i,p);arm.rotation.x=celebrating?-2.6:-Math.sin(phase+n*Math.PI)*.55*stride;arm.rotation.z=celebrating?(n===0?-.3:.3):0;});model.userData.elbows.forEach(elbow=>{elbow.rotation.x=-.3-stride*.45;});if(spatialR3){const shadow=playerContactShadow(p,model.rotation.y,shadowPose);shadowRotation.setFromAxisAngle(shadowUp,shadow.angle);shadowPosition.set(model.position.x,.061,model.position.z);shadowScale.set(shadow.width,1,shadow.depth);contactMatrix.compose(shadowPosition,shadowRotation,shadowScale);}else contactMatrix.makeTranslation(model.position.x,.055,model.position.z);contact.setMatrixAt((team==='home'?0:count)+i,contactMatrix);model.userData.label.visible=team==='home'&&i===s.controlled;});
+   if(poseElapsed>=0)animateFootballPlayer(model,p,s,team,i,s.replayHold?0:poseElapsed,inView,poseSnap,s.version===11&&s.engineRevision>=3?prediction:0);model.userData.label.visible=(s.version>=11||view==='follow')&&team==='home'&&i===s.controlled;if(spatialR3){const shadow=playerContactShadow(p,model.rotation.y,shadowPose);shadowRotation.setFromAxisAngle(shadowUp,shadow.angle);let supportX=0,supportZ=0;
+   if(farPose){
+    const foot=farPose.plant[0]?0:3,cos=Math.cos(model.rotation.y),sin=Math.sin(model.rotation.y);
+    const x=farPose.feet[foot]*.48,z=farPose.feet[foot+2]*.48;
+    supportX=x*cos+z*sin;supportZ=z*cos-x*sin;
+   }
+   shadowPosition.set(model.position.x+supportX,.061,model.position.z+supportZ);shadowScale.set(shadow.width,1,shadow.depth);contactMatrix.compose(shadowPosition,shadowRotation,shadowScale);}else contactMatrix.makeTranslation(model.position.x,.055,model.position.z);contact.setMatrixAt((team==='home'?0:count)+i,contactMatrix);return;}model.position.lerp(pose.set(p.x+p.vx*prediction,p.dive>0?.2:-.085,p.y+p.vy*prediction),blend);const turn=Math.atan2(p.facingX,p.facingY)-model.rotation.y;if(s.version===11&&s.engineRevision>=3)model.rotation.y=samplePlayerPose(p,prediction,model.userData.presentationPose||={}).angle;else model.rotation.y+=Math.atan2(Math.sin(turn),Math.cos(turn))*(settled?1:1-Math.exp(-18*elapsed));if(s.version>=4&&team==='home'&&i===s.controlled&&s.skillTicks>0)model.rotation.y=Math.atan2(p.facingX,p.facingY)+(1-s.skillTicks/10)*Math.PI*2;model.rotation.z=p.dive>0?1.15:0;const stride=Math.min(1,Math.hypot(p.vx,p.vy)/7),phase=(model.userData.gait??i*1.7)+Math.hypot(p.vx,p.vy)*elapsed*1.8;model.userData.gait=phase;model.userData.torso.rotation.x=-stride*.09;model.userData.torso.rotation.y=p.cooldown>12?Math.sin((18-p.cooldown)*.45)*.18:0;model.userData.legs.forEach((leg,n)=>{leg.rotation.x=Math.sin(phase+n*Math.PI)*.68*stride+(p.cooldown>12&&n===1?-.65:0);});model.userData.knees.forEach((knee,n)=>{knee.rotation.x=Math.max(0,Math.sin(phase+n*Math.PI))*.85*stride;});model.userData.arms.forEach((arm,n)=>{const celebrating=isGoalCelebrant(s,team,i,p);arm.rotation.x=celebrating?-2.6:-Math.sin(phase+n*Math.PI)*.55*stride;arm.rotation.z=celebrating?(n===0?-.3:.3):0;});model.userData.elbows.forEach(elbow=>{elbow.rotation.x=-.3-stride*.45;});if(spatialR3){const shadow=playerContactShadow(p,model.rotation.y,shadowPose);shadowRotation.setFromAxisAngle(shadowUp,shadow.angle);shadowPosition.set(model.position.x,.061,model.position.z);shadowScale.set(shadow.width,1,shadow.depth);contactMatrix.compose(shadowPosition,shadowRotation,shadowScale);}else contactMatrix.makeTranslation(model.position.x,.055,model.position.z);contact.setMatrixAt((team==='home'?0:count)+i,contactMatrix);model.userData.label.visible=team==='home'&&i===s.controlled;});
   distancePlayers?.finish();castShadows?.update(models);contact.instanceMatrix.needsUpdate=true;
   const focus=models.home[s.controlled].position;ring.position.set(focus.x,.07,focus.z);ring.scale.setScalar(1+(s.shotCharge||s.passCharge||0)/60);marker.position.set(focus.x,professional?2.34:2.97,focus.z);ball.position.lerp(pose.set(shownBall.x,spatialR3?shownBall.z:Math.max(professional?.155:.22,ballPoint.z-(professional?.065:0)),shownBall.y),r4?1:blend);const tickDelta=Math.max(0,Math.min(4,s.tick-previousTick));const spinStep=ballSpinStep(s.version,{elapsed,tickDelta,paused:!!s.replayHold||s.freeze>0});if(s.version===11&&s.engineRevision>=3)ballRoll.update(ball,ballPoint,s.ball,elapsed,{reset:first||kickoffCut,paused:!!s.replayHold||s.freeze>0,radius:renderRadius});else{ ball.rotation.x+=s.ball.vy*spinStep;ball.rotation.z-=s.ball.vx*spinStep; }previousTick=s.tick;ballShadow.position.set(ball.position.x,.05,ball.position.z);ballShadow.scale.setScalar(1+Math.min(2,s.ball.z)*.16);
  for(const net of nets){const positions=net.geometry.attributes.position,active=deformGoalNet(positions.array,net.userData.restNet,s,net.userData.netSign,field,prediction);if(active){positions.needsUpdate=true;net.userData.netDeformed=true;}else if(net.userData.netDeformed){positions.array.set(net.userData.restNet);positions.needsUpdate=true;net.userData.netDeformed=false;}}
@@ -236,7 +243,8 @@ function simpleScene(container,options){
  const canvas=document.createElement('canvas');container.appendChild(canvas);
  const ctx=canvas.getContext('2d');if(!ctx)throw Error('Banegrafikken kan ikke åbnes.');
  const background=document.createElement('canvas'),pitch=background.getContext('2d');
- const r4Ball={},r4Player={};
+ const r4Ball={},r4Player={},drawPlayer=createMatch2DPlayers(),frameStats=createMatchFrameStats();
+ let lastRender=0,lastPeriod,lastKickoff=false;
  let lastState=null,disposed=false,api,cachedField='',scale=1,landscape=true;
  const drawPitch=field=>{
   background.width=canvas.width;background.height=canvas.height;
@@ -256,8 +264,12 @@ function simpleScene(container,options){
  };
  const resize=()=>{if(disposed)return;canvas.width=Math.max(1,Math.round(container.clientWidth*1.3));canvas.height=Math.max(1,Math.round(container.clientHeight*1.3));cachedField='';if(lastState)api.render(lastState);};
  const observer=new ResizeObserver(resize);observer.observe(container);resize();
- return api={mode:'simple',get controlView(){return landscape?'diagram':'stadium';},prepare:()=>Promise.resolve({status:disposed?'disposed':'skipped'}),render(state,view='broadcast',snap=false){
+ return api={mode:'simple',get controlView(){return landscape?'diagram':'stadium';},prepare:()=>Promise.resolve({status:disposed?'disposed':'skipped'}),resume(){lastRender=0;frameStats.reset();},render(state,view='broadcast',snap=false){
   if(disposed)return;lastState=state;
+  const now=performance.now(),elapsed=lastRender?Math.min(.12,Math.max(0,(now-lastRender)/1000)):0;
+  const atKickoff=!!state.openingKickoff||state.goalSequence?.stage==='kickoff';
+  const poseSnap=snap||!lastRender||atKickoff&&!lastKickoff||lastPeriod!==state.period;
+  lastRender=now;lastPeriod=state.period;lastKickoff=atKickoff;
   const field=state.field||{width:40,length:64},key=field.width+':'+field.length;
   if(cachedField!==key){drawPitch(field);cachedField=key;}
   ctx.drawImage(background,0,0);ctx.save();ctx.translate(canvas.width/2,canvas.height/2);if(landscape)ctx.rotate(Math.PI/2);
@@ -265,15 +277,21 @@ function simpleScene(container,options){
   const prediction=matchTickPhase({elapsedMs:options.getMatchTime?.(),tick:state.tick,stepMs,maxMs:r4?stepMs:45,snap:snap||state.version<3||!!state.replay,freeze:state.freeze,fallbackMs:0});
   const r4Pose=r4&&!snap&&!state.replay&&!state.freeze?r4PoseFrame(state):null,fraction=prediction*1000/stepMs;
   for(const team of ['home','away'])for(let i=0;i<state[team].length;i++){
-   const player=state[team][i];if(r4&&player.sentOff)continue;
-   const shown=r4?sampleR4Player(state,r4Pose,team,i,fraction,r4Player):null;
-   const x=(shown?.x??player.x+(player.vx||0)*prediction)*scale,y=(shown?.y??player.y+(player.vy||0)*prediction)*scale,radius=Math.max(4,scale*.9);
+   const player=state[team][i];
+   const shown=r4?sampleR4Player(state,r4Pose,team,i,fraction,r4Player):state.version===11&&state.engineRevision>=3?samplePlayerPose(player,prediction,r4Player):null;
+   const px=shown?.x??player.x+(player.vx||0)*prediction,py=shown?.y??player.y+(player.vy||0)*prediction;
+   if(shown){
+    const color=i===0?'#e7c56d':team==='home'?options.color||'#c1f66b':opponentKitColor(options.color);
+    drawPlayer(ctx,state,team,i,player,px,py,shown.angle,scale,landscape,state.replayHold?0:elapsed,prediction,color,poseSnap);continue;
+   }
+   const x=px*scale,y=py*scale,radius=Math.max(4,scale*.9);
    ctx.fillStyle='#071e2d66';ctx.beginPath();ctx.ellipse(x,y+scale*.4,radius,radius*.6,0,0,Math.PI*2);ctx.fill();
    ctx.fillStyle=i===0?'#e7c56d':team==='home'?options.color||'#c1f66b':opponentKitColor(options.color);ctx.strokeStyle='#102a33';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.fill();ctx.stroke();
    if(team==='home'&&i===state.controlled){ctx.strokeStyle='#eaffab';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,radius+3,0,Math.PI*2);ctx.stroke();}
   }
   const point=r4&&!state.replay?sampleR4Ball(state,r4Pose,fraction,r4Ball):goalBallPosition(state,r4?0:safeMatchPrediction(state,prediction));
   ctx.fillStyle='#f7f9ee';ctx.strokeStyle='#102a33';ctx.lineWidth=1;ctx.beginPath();ctx.arc(point.x*scale,(point.y-point.z*.4)*scale,Math.max(3,.35*scale),0,Math.PI*2);ctx.fill();ctx.stroke();ctx.restore();
+  const measured=frameStats(now);if(measured)options.onPerformance?.({...measured,profile:'canvas-2d',renderMs:performance.now()-now});
  },dispose(){disposed=true;lastState=null;observer.disconnect();canvas.remove();background.width=background.height=0;}};
 }
 

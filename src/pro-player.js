@@ -101,7 +101,7 @@ export function animateFootballPlayer(model,p,state,team,index,elapsed,visible=t
    arm.quaternion.copy(qa.slerp(arm.quaternion,reach)).normalize();
   }
  }else if(d.richPack&&p.tackle>0){model.rotation.x=.35;model.position.y=0;}else if(p.dive>0){const progress=Math.min(1,Math.max(0,((p.actionDuration||16)-p.dive)/16));model.rotation.z=(p.diveX>=0?-1:1)*Math.sin(progress*Math.PI)*1.4;model.position.y=.18+Math.sin(progress*Math.PI)*.3;d.swing('LeftArm',-.8,0,(d.sides.LeftArm||1)*1.2);d.swing('RightArm',-.8,0,(d.sides.RightArm||-1)*1.2);}else if(p.tackle>0){model.rotation.x=.6;model.position.y=-.15;d.swing('RightUpLeg',-1.25);d.swing('RightLeg',.15);}else{model.rotation.z=0;model.rotation.x=0;}
- if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
+ if(state.version===11&&state.engineRevision>=3){const response=d.response.update(p,elapsed,{snap,athletic:state.engineRevision>=6,disabled:!!(p.dive>0||p.tackle>0||celebrate)});d.human.rotation.x=response.forward;d.human.rotation.z=-response.side;}
  if(d.richPack&&p.tackle>0)d.grounding.apply(.035,{rotation:model.quaternion,rootHeight:model.position.y});else if(!(p.dive>0)&&!(p.tackle>0))d.grounding.apply();else d.human.position.y=0;
  if(!d.richPack)d.jersey.position.y=1.38;
  d.label.visible=team==='home'&&index===state.controlled;

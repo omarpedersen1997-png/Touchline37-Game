@@ -58,8 +58,21 @@ export function buildRichStadium(scene,field,quality,pack,fast=false){
  // Camera-side clipping prevents benches/roof geometry crossing the lens.
  const planes=[new THREE.Plane(new THREE.Vector3(-1,0,0),w+3),new THREE.Plane(new THREE.Vector3(0,0,-1),l+3)];
  for(const mesh of [...structures,...crowds]){mesh.material=broadcastSurfaceMaterial(mesh.material);mesh.material.clippingPlanes=planes;}
- let brightness=.8;const lampsMaterials=structures.map(m=>m.material).filter(m=>m.emissive?.r>.1);
- return {layout:{pitchY:.03},crowds,react(state,dt,reducedMotion){if(fast)return;const target=!reducedMotion&&['net','celebration'].includes(state.goalSequence?.stage)?1.1:.8;brightness+=(target-brightness)*(1-Math.exp(-3*Math.min(.1,dt)));for(const m of lampsMaterials)m.emissiveIntensity=brightness;},setCameraView(eye,target){const dx=eye.x-target.x,dz=eye.z-target.z;planes[0].normal.x=dx>=0?-1:1;planes[1].normal.z=dz>=0?-1:1;}};
+ let brightness=.8,goalTint=0;
+ const lampsMaterials=structures.map(m=>m.material).filter(m=>m.emissive?.r>.1);
+ return {layout:{pitchY:.03},crowds,react(state,dt,reducedMotion){
+  const goal=!reducedMotion&&(state.goalSequence?.stage==='net'||state.goalSequence?.stage==='celebration');
+  if(fast&&(!goal&&goalTint<=.005||state.engineRevision!==6))return;
+  const fade=reducedMotion?1:1-Math.exp(-3*Math.min(.1,dt));
+  if(state.engineRevision===6&&(goal||goalTint>.005)){
+   goalTint+=((goal?1:0)-goalTint)*fade;
+   if(goalTint<.005)goalTint=0;
+   boardMat.color.setRGB(1+goalTint*.09,1+goalTint*.29,1+goalTint*.12);
+  }
+  if(fast)return;
+  brightness+=((goal?1.1:.8)-brightness)*fade;
+  for(const m of lampsMaterials)m.emissiveIntensity=brightness;
+ },setCameraView(eye,target){const dx=eye.x-target.x,dz=eye.z-target.z;planes[0].normal.x=dx>=0?-1:1;planes[1].normal.z=dz>=0?-1:1;}};
 }
 export function buildRichGoals(scene,field,pack){
  const nets=[];

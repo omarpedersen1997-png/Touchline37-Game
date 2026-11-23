@@ -20,18 +20,20 @@ export function createR4CameraPlan(){
     const distance=48-Math.abs(ball.y);
     const threat=!kickoff&&!reducedMotion&&distance<24&&Math.abs(ball.x)<20;
     const height=clamp(ball.z-.6,0,4);
-    const carry=state.ball.owner ? .075 : .105;
+    const shot=state.engineRevision===6&&state.ball.shot&&!state.ball.owner&&!reducedMotion&&!kickoff&&!setPiece;
+    const leadWeight=shot?clamp(1-(state.ball.flight||0)/24,0,1):0;
+    const carry=state.ball.owner ? .075 : .105+leadWeight*.057;
     const share=(!kickoff&&Math.hypot(player.x-ball.x,player.y-ball.y)<13)?.13:0;
     const lead=reducedMotion||kickoff||setPiece?0:carry;
     const lookX=kickoff?0:clamp(ball.x+(player.x-ball.x)*share+state.ball.vx*lead,-27,27);
     const lookY=kickoff?0:clamp(ball.y+(player.y-ball.y)*share+state.ball.vy*lead+(threat ? f*2.3 : 0),-46,46);
     const weight=threat?clamp((24-distance)/24,0,1):0;
     const close=view==='close'&&!kickoff&&!reducedMotion;
-    const woodwork=state.engineRevision===5&&!reducedMotion&&state.lastAction?.kind==='woodwork'?Math.max(0,1-(state.tick-state.lastAction.tick)/5):0;
-    const zoom=(close?.42:setPiece&&!reducedMotion?.52:.58)*(1-weight*.13+height*.035)*fit;
+    const woodwork=state.engineRevision>=5&&!reducedMotion&&state.lastAction?.kind==='woodwork'?Math.max(0,1-(state.tick-state.lastAction.tick)/5):0;
+    const zoom=(close?.42:setPiece&&!reducedMotion?.52:.58)*(1-weight*.13+height*.035+leadWeight*.06)*fit;
     plan.eye[0]=lookX+BROADCAST_OFFSET.x*zoom;plan.eye[1]=(close?9.6:12.3)*fit*(1-weight*.16+height*.06);plan.eye[2]=lookY+BROADCAST_OFFSET.z*zoom;
     plan.target[0]=lookX+woodwork*.18;plan.target[1]=.72+height*.54;plan.target[2]=lookY;
-    plan.fov=kickoff?44:(close?41:42)-weight*1.5;
+    plan.fov=kickoff?44:(close?41:42)-weight*1.5+leadWeight*1.2;
     return plan;
   };
 }

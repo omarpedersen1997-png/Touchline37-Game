@@ -1,3 +1,4 @@
+import {applyStrikeMechanics,reboundFromWoodwork} from './football-r6-contact.js';
 import { R5_ADDED_TICKS, clockWithAddedTime } from './football-r5-clock.js';
 import { HIGH_PRESS_COMMAND, FREE_KICK_SHOT, FREE_KICK_PASS, isR5Command, estimateGroundFlight, resolveShoulderMomentum, firstTouchError, redirectHeader } from './football-r5-dynamics.js';
 import {moveLivingPlayer,turnFacing} from './football-motion-r3.js';
@@ -13,10 +14,10 @@ export const FIXED_DELTA_TIME = 1 / 20;
 export const STEP_MS = 50, INPUT_MS = 50, DURATION_MS = 250000, INPUT_COUNT = DURATION_MS / INPUT_MS;
 export const HALF_MS=120000,HALFTIME_MS=10000,PLAY_MS=240000;
 export const R5_INPUT_COUNT=INPUT_COUNT+2*R5_ADDED_TICKS;
-const maxTicks=state=>state.engineRevision===5?R5_INPUT_COUNT:INPUT_COUNT;
+const maxTicks=state=>state.engineRevision>=5?R5_INPUT_COUNT:INPUT_COUNT;
 function eventMinute(state){
  const elapsed=state.tick*STEP_MS;
- const minute=state.engineRevision===5?clockWithAddedTime(elapsed,{stepMs:STEP_MS,halfMs:HALF_MS,halftimeMs:HALFTIME_MS}).regular/60:playingTime(elapsed)/PLAY_MS*90;
+ const minute=state.engineRevision>=5?clockWithAddedTime(elapsed,{stepMs:STEP_MS,halfMs:HALF_MS,halftimeMs:HALFTIME_MS}).regular/60:playingTime(elapsed)/PLAY_MS*90;
  return clamp(Math.ceil(minute),1,90);
 }
 export function playingTime(ms){return Math.min(HALF_MS,Math.max(0,ms))+Math.max(0,Math.min(HALF_MS,ms-HALF_MS-HALFTIME_MS));}
@@ -98,8 +99,8 @@ export function createVersionedArcade(seed, config = {}, revision = ENGINE_REVIS
   const personal = { ANG: 10, MID: 6, FOR: 2, 'MÅL': 0 };
   const personalIndex = Object.hasOwn(personal, config.personalPosition) ? personal[config.personalPosition] : null;
   const state = {
-    version: ARCADE_VERSION, engineRevision: revision, ...(revision===5?{surface:config.surface==='wet'?'wet':'dry'}:{}), formation:shapeName, positions:shape.map(p=>[...p]), awayPositions:shape.map(p=>[...p]), field: FIELD,
-    tactic: (config.tactic==='attacking'||config.tactic==='defensive'||revision===5&&config.tactic==='pressing') ? config.tactic : 'balanced',
+    version: ARCADE_VERSION, engineRevision: revision, ...(revision>=5?{surface:config.surface==='wet'?'wet':'dry'}:{}), formation:shapeName, positions:shape.map(p=>[...p]), awayPositions:shape.map(p=>[...p]), field: FIELD,
+    tactic: (config.tactic==='attacking'||config.tactic==='defensive'||revision>=5&&config.tactic==='pressing') ? config.tactic : 'balanced',
     tick: 0, rng: hash(seed), homeRating: clamp(Number(config.homeRating) || 48, 1, 99), awayRating: clamp(Number(config.awayRating) || 48, 1, 99),
     skills: { technique: clamp(Number(config.technique) || 48, 1, 99), physical: clamp(Number(config.physical) || 48, 1, 99), reading: clamp(Number(config.reading) || 48, 1, 99) },
     personalIndex, personalRating: clamp(Number(config.personalRating) || Number(config.homeRating) || 48, 1, 99), startingEnergy: clamp(Number(config.fitness) || 100, 25, 100),
@@ -109,7 +110,7 @@ export function createVersionedArcade(seed, config = {}, revision = ENGINE_REVIS
     homeScore: 0, awayScore: 0, lastMask: 0, freeze: 0, events: [], shotSequence: 0, goalSequence: null,
     substitutions:{home:0,away:0}, refereeEvents:[], advantage:null, possessionTeam:null, turnoverTick:-100, restart:null,
     phase: { home: 'possession', away: 'defending' },
-    stats: { ...(revision===5?{homeXg:0,awayXg:0}:{}), homeShots: 0, awayShots: 0, homeSaves: 0, awaySaves: 0, passes: 0, completedPasses: 0, tackles: 0, userGoals: 0, userAssists: 0, userSaves: 0, userPasses: 0, userPassAttempts: 0, userTackles: 0, homePossession: 0, awayPossession: 0, tacticalChanges:0, homePassAttempts:0, awayPassAttempts:0, homeCompletedPasses:0, awayCompletedPasses:0, homeTackles:0, awayTackles:0 },
+    stats: { ...(revision>=5?{homeXg:0,awayXg:0}:{}), homeShots: 0, awayShots: 0, homeSaves: 0, awaySaves: 0, passes: 0, completedPasses: 0, tackles: 0, userGoals: 0, userAssists: 0, userSaves: 0, userPasses: 0, userPassAttempts: 0, userTackles: 0, homePossession: 0, awayPossession: 0, tacticalChanges:0, homePassAttempts:0, awayPassAttempts:0, homeCompletedPasses:0, awayCompletedPasses:0, homeTackles:0, awayTackles:0 },
     ball: newBall()
   };kickoff(state,'home');captureR4Pose(state);return state;
 }
@@ -222,7 +223,7 @@ function separate(s) {
       a.y = q(clamp(a.y - ny * push, -47.4, 47.4));
       b.x = q(clamp(b.x + nx * push, -29.5, 29.5));
       b.y = q(clamp(b.y + ny * push, -47.4, 47.4));
-      if (s.engineRevision===5 && pass===0) resolveShoulderMomentum(a,b,nx,ny,s.surface);
+      if (s.engineRevision>=5 && pass===0) resolveShoulderMomentum(a,b,nx,ny,s.surface);
     }
   }
 }
@@ -279,9 +280,9 @@ function restart(s, team, kind, x, y, indirect=false) {
   Object.assign(p,{x,y,vx:0,vy:0,ax:0,ay:0,cooldown:0,possessionTicks:0,facingX:0,facingY:direction,pendingTackle:null});
   if (team==='home' && s.personalIndex===null) s.controlled=taker;
   s.ball=newBall(team,taker,x,y,0);
-  if(s.engineRevision===5)s.ball.surface=s.surface;
+  if(s.engineRevision>=5)s.ball.surface=s.surface;
   s.restart={kind,team,tick:s.tick,x,y,taker,indirect,released:false};
-  s.freeze=kind==='penalty'?28:kind==='free-kick'?(s.engineRevision===5&&team==='home'?60:22):13;
+  s.freeze=kind==='penalty'?28:kind==='free-kick'?(s.engineRevision>=5&&team==='home'?60:22):13;
   s.shotCharge=0;
   s.passCharge=0;
   setPieceLayout(s,team,kind,s.restart,taker);
@@ -376,7 +377,7 @@ function kick(s, team, index, shoot, mask = 0, options = {}) {
     b.flightKind='shot';
     s.lastAction = { kind: 'shot', team, index, power, tick: s.tick };
     s.stats[team === 'home' ? 'homeShots' : 'awayShots']++;
-    if(s.engineRevision===5)s.stats[team+'Xg']=q((s.stats[team+'Xg']||0)+(penalty?.76:shotQuality(s,team,p)));
+    if(s.engineRevision>=5)s.stats[team+'Xg']=q((s.stats[team+'Xg']||0)+(penalty?.76:shotQuality(s,team,p)));
   } else {
     target = options.target ?? passTarget(s, team, index, mask);
     if (target === null || target < 0 || target === index || !isActive(s[team][target])) return false;
@@ -408,7 +409,13 @@ function kick(s, team, index, shoot, mask = 0, options = {}) {
   if(options.restart&&options.restart!=='kickoff'){b.x=p.x;b.y=p.y;}
   const throwIn=options.restart==='throw-in';
   b.owner = null; b.vx = dx / d * speed + p.vx * .12; b.vy = dy / d * speed + p.vy * .12;
-  b.vz = throwIn ? Math.max(4,vz) : vz; b.z = throwIn ? 1.85 : Math.max(.22,b.z); b.lastTouchTick=s.tick; b.lastTeam = team; b.lastTouch = { team, index }; b.protected = 2; b.flight = 0;
+  b.vz = throwIn ? Math.max(4,vz) : vz;
+  if(s.engineRevision===6&&!options.restart){
+    applyStrikeMechanics(b,p,skill,pressure);
+    const pace=length(b.vx,b.vy)||1;
+    p.kickFacingX=b.vx/pace;p.kickFacingY=b.vy/pace;
+  }
+  b.z = throwIn ? 1.85 : Math.max(.22,b.z); b.lastTouchTick=s.tick; b.lastTeam = team; b.lastTouch = { team, index }; b.protected = 2; b.flight = 0;
   p.cooldown = shoot ? 15 : 8; p.possessionTicks = 0; animate(p, 'kick', shoot ? 10 : 7);
   if (user) { s.shotCharge = 0; s.passCharge = 0; }
   return true;
@@ -503,7 +510,7 @@ function kickoff(s, team) {
   const receiver = isActive(s[team][6]) && taker !== 6 ? 6 : nearestActive(s,team,0,4*sign,{outfield:true,exclude:taker});
   if(receiver>=0)Object.assign(s[team][receiver],{x:2.35,y:sign*4.2});
   s.controlled=s.personalIndex??(team==='home'?taker:Math.max(0,nearestActive(s,'home',0,0,{outfield:true})));
-  s.ball=newBall(team,taker,0,0,22); if(s.engineRevision===5)s.ball.surface=s.surface; s.openingKickoff=team; s.kickoffTaker=taker; s.kickoffReceiver=receiver;
+  s.ball=newBall(team,taker,0,0,22); if(s.engineRevision>=5)s.ball.surface=s.surface; s.openingKickoff=team; s.kickoffTaker=taker; s.kickoffReceiver=receiver;
   s.restart=null; s.advantage=null;
   s.freeze = 24; s.skillTicks = 0; s.shotCharge = 0; s.passCharge = 0;
 }
@@ -586,7 +593,7 @@ function keeperAI(s, team, p) {
   p.role = 'keeper';
   if (b.owner?.team === team && b.owner.index === 0) {
     move(p, clamp(p.x, -9, 9), -f * 40, 4.2, true);
-    if (p.possessionTicks > (s.engineRevision===5&&nearestOpponentDistance(s,team,p)<6?8:12) && p.cooldown === 0) {
+    if (p.possessionTicks > (s.engineRevision>=5&&nearestOpponentDistance(s,team,p)<6?8:12) && p.cooldown === 0) {
       const target = passTarget(s, team, 0);
       const safe = target !== null && laneDanger(s, team, p, s[team][target]) < 1.6 && nearestOpponentDistance(s, team, s[team][target]) > 4;
       if (safe) kick(s, team, 0, false);
@@ -611,7 +618,7 @@ function keeperAI(s, team, p) {
       return;
     }
   }
-  if (s.engineRevision===5&&!b.owner&&!b.shot&&b.flightKind==='loft'&&b.y*-f>28&&b.vy*-f>2) {
+  if (s.engineRevision>=5&&!b.owner&&!b.shot&&b.flightKind==='loft'&&b.y*-f>28&&b.vy*-f>2) {
     const line=-f*clamp(Math.abs(b.y)+5,34,42);
     const cross=predictCrossing(b,line,18);
     if(cross&&cross.z<2.12&&cross.z>.65&&Math.abs(cross.x)<11&&Math.hypot(cross.x-p.x,line-p.y)<2+cross.ticks*dt*(base+1.8)){
@@ -760,8 +767,9 @@ function ai(s, team) {
         const wide = Math.abs(p.homeX)>15 && Math.sign(p.homeX)===Math.sign(carrier.x) && Math.abs(carrier.x)>10;
         const overlap = wide && carrier.y*f>2 && carrier.y*f<35 && nearestOpponentDistance(s,team,carrier)>3.4;
         if (overlap) {
-          p.role='overlap';
-          move(p,Math.sign(p.homeX)*26,clamp(carrier.y*f+10,-33,lastLine-.7)*f,sprintFor(p,base),true);
+          const underlap=s.engineRevision===6&&Math.abs(carrier.x)>17;
+          p.role=underlap?'underlap':'overlap';
+          move(p,Math.sign(p.homeX)*(underlap?14:26),clamp(carrier.y*f+(underlap?8:10),-33,lastLine-.7)*f,sprintFor(p,base),true);
           tire(p,base);
           continue;
         }
@@ -984,7 +992,7 @@ function ballContacts(s, previous, endpoint, endT = 1, frame = contactMotion(s))
     if(!hit&&!hands&&b.shot){const shooter=b.lastShooter&&s[b.lastShooter.team]?.[b.lastShooter.index],near=shooter&&b.lastShooter.team!==team&&distance(p,shooter)<ENGINE.blockRange;hit=sweptContact(previous,endpoint,before,p,near?ENGINE.blockRadius:.43,near?1.3:1.65,endT);block=!!hit;}
     // Motor 11: målmandens krop kan også stoppe et skud, der går lige på ham.
     if(!hit&&hands&&b.shot){hit=sweptContact(previous,endpoint,before,p,.45,1.9,endT);}
-    if(!hit&&!hands&&s.engineRevision===5&&!b.shot&&Math.min(previous.z,endpoint.z)>=1.43){
+    if(!hit&&!hands&&s.engineRevision>=5&&!b.shot&&Math.min(previous.z,endpoint.z)>=1.43){
       hit=sweptContact(previous,endpoint,before,p,.37,2.05,endT);
       header=!!hit;
     }
@@ -1038,7 +1046,7 @@ function ballContacts(s, previous, endpoint, endT = 1, frame = contactMotion(s))
   // Motor 11: førsteberøring. En hård eller høj bold under pres kan springe fra en
   // svagere spiller; sandsynligheden falder med rating og stiger med fart og pres.
   const skill=rating(s,team,i),pressure=nearestOpponentDistance(s,team,p);
-  const miss=clamp((speed-(9+skill*.12))*.035+Math.max(0,b.z-.6)*.12+Math.max(0,2.5-pressure)*.06-skill*.0015+(s.engineRevision===5?firstTouchError(p,b,skill,pressure,s.surface):0),0,s.engineRevision===5?.5:.4);
+  const miss=clamp((speed-(9+skill*.12))*.035+Math.max(0,b.z-.6)*.12+Math.max(0,2.5-pressure)*.06-skill*.0015+(s.engineRevision>=5?firstTouchError(p,b,skill,pressure,s.surface):0),0,s.engineRevision>=5?.5:.4);
   if(miss>0&&random(s)<miss){
     const fx=p.facingX||0,fy=p.facingY||forward(team);
     b.vx=b.vx*.3+fx*2.4;b.vy=b.vy*.3+fy*2.4;b.vz=.6;b.lastTeam=team;b.lastTouch={team,index:i};b.lastPassFrom=b.lastPassFrom?.team===team?b.lastPassFrom:null;
@@ -1069,7 +1077,8 @@ function leavePitch(s, crossing) {
   const bar = Math.abs(crossing.z - 2.4) < .12 && Math.abs(crossing.x) < 4.14;
   if (post || bar) {
     b.owner = null; b.x = clamp(crossing.x, -29.8, 29.8); b.y = Math.sign(crossing.y) * 47.86; b.z = Math.max(.22, crossing.z);
-    b.vy *= -.55; if (post) b.vx = (crossing.x > 0 ? -1 : 1) * Math.max(3, Math.abs(b.vx) * .6); if (bar) b.vz = -Math.abs(b.vz) * .6;
+    if(s.engineRevision===6)reboundFromWoodwork(b,crossing,post,bar);
+    else{b.vy *= -.55; if (post) b.vx = (crossing.x > 0 ? -1 : 1) * Math.max(3, Math.abs(b.vx) * .6); if (bar) b.vz = -Math.abs(b.vz) * .6;}
     b.protected = 2; s.lastAction = { kind: 'woodwork', tick: s.tick }; return;
   }
   if (Math.abs(crossing.x) < 3.86 && crossing.z < 2.28) {
@@ -1104,7 +1113,7 @@ function carryBall(s) {
   b.touchPhase = (b.touchPhase + dt * (2.8 + speed * .35)) % 1;
   p.touch = Math.max(0, p.touch - .075);
   const stride = .55 + speed * .052 + Math.max(0, Math.sin(b.touchPhase * Math.PI * 2)) * (speed * .027) + p.touch * .35;
-  let fx = p.facingX, fy = p.facingY || f;
+  let fx = p.facingX, fy = s.engineRevision===6 ? p.facingY : p.facingY || f;
   if (s.skillTicks > 0 && team === 'home' && index === s.controlled) {
     const angle = (1 - s.skillTicks / 12) * Math.PI * 2, x = fx;
     fx = x * Math.cos(angle) - fy * Math.sin(angle); fy = x * Math.sin(angle) + fy * Math.cos(angle);
@@ -1233,7 +1242,7 @@ function stepPlayingArcade(s, mask) {
 }
 
 export function stepArcade(s,mask){
- const extended=s.engineRevision===5&&isR5Command(mask);
+ const extended=s.engineRevision>=5&&isR5Command(mask);
  if(!extended&&!validateMask(mask))throw Error('Ugyldig kampstyring.');
  if(s.tick>=maxTicks(s))return s;
  if(extended){
@@ -1248,7 +1257,7 @@ export function stepArcade(s,mask){
    mask=0;
  }
  if(isTacticalCommand(mask)){applyTacticalCommand(s,mask);mask=0;}
- const half=HALF_MS/STEP_MS+(s.engineRevision===5?R5_ADDED_TICKS:0),pause=HALFTIME_MS/STEP_MS;
+ const half=HALF_MS/STEP_MS+(s.engineRevision>=5?R5_ADDED_TICKS:0),pause=HALFTIME_MS/STEP_MS;
  if(s.tick>=half&&s.tick<half+pause){s.tick++;s.intermissionRemaining=(half+pause-s.tick)*STEP_MS;s.lastMask=mask;if(s.tick===half+pause){kickoff(s,'away');s.period='second';s.half=2;s.freeze=24;s.lastMask=0;}return s;}
  stepPlayingArcade(s,mask);
  if(s.tick===half){s.goalSequence=null;s.restart=null;s.advantage=null;s.freeze=0;for(const side of SIDES)substitute(s,side,side==='home'&&s.substitutionRequested);s.substitutionRequested=false;for(const team of ['home','away'])for(const p of s[team]){p.vx=0;p.vy=0;p.energy=Math.min(100,p.energy+25);}s.period='halftime';s.half=1;s.intermissionRemaining=HALFTIME_MS;s.shotCharge=0;s.passCharge=0;}
