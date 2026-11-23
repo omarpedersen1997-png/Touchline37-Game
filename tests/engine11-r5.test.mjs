@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { BoxGeometry, Group, Mesh, MeshStandardMaterial, Scene, Texture } from 'three';
+import { BoxGeometry, Group, Mesh, MeshStandardMaterial, Scene, Texture, Matrix4 } from 'three';
 import * as r4 from '../shared/football-engine11-r4.js';
 import * as r5 from '../shared/football-engine11-r5.js';
 import { estimateGroundFlight, firstTouchError, redirectHeader, resolveShoulderMomentum, HIGH_PRESS_COMMAND, FREE_KICK_SHOT, FREE_KICK_PASS } from '../shared/football-r5-dynamics.js';
@@ -11,6 +11,7 @@ import { createManualSession } from '../src/manual-session.js';
 import { applyFastMatchMaterials, takeMatchPose, usesFastMatchRender } from '../src/match-fast-render.js';
 import { matchResolution } from '../src/match-quality.js';
 import { createR4CameraPlan } from '../src/broadcast-r4.js';
+import { createDistancePlayers, keepDetailedPlayer } from '../src/match-distance-players.js';
 import { screenToPitch } from '../src/match-camera.js';
 
 test('R5 commands stay in the isolated revision and round trip with its own tape',()=>{
@@ -156,4 +157,23 @@ test('an aerial contact can turn into a headed shot and the keeper comes out for
  Object.assign(claim.ball,{y:35,vy:16,vz:1});
  r5.stepArcade(claim,0);
  assert.equal(claim.home[0].role,'claim');
+});
+
+
+test('distant players share one submission, move at the rendered pose and hide their instances',()=>{
+ const scene=new Scene(),players=createDistancePlayers(scene,11,'#c1f66b','#c94058');
+ const proxy={vx:3,vy:5,kick:0,tackle:0};
+ const model=new Group();model.position.set(4,0,-9);model.rotation.y=.25;
+ const matrix=new Matrix4();
+ assert.equal(scene.children.length,1);
+ players.draw(3,proxy,model,.016,true);players.finish();
+ players.mesh.getMatrixAt(36,matrix);
+ assert.equal(matrix.elements[12],4);assert.equal(matrix.elements[14],-9);
+ players.draw(3,proxy,model,0,false);players.finish();
+ players.mesh.getMatrixAt(36,matrix);
+ assert.equal(matrix.elements[0],0);assert.equal(matrix.elements[5],0);
+ assert(keepDetailedPlayer(proxy,true,true,true,99,false));
+ assert(!keepDetailedPlayer(proxy,false,true,true,5,true));
+ assert(keepDetailedPlayer(proxy,false,true,false,85,true));
+ assert(!keepDetailedPlayer(proxy,false,true,false,85,false));
 });

@@ -15,6 +15,7 @@
   isolation:isolate;
   display:grid;
   align-content:end;
+  min-height:100svh;
   min-height:100dvh;
   padding:max(74px, calc(var(--tl-safe-top) + 62px)) max(6vw, var(--tl-safe-right)) max(36px, var(--tl-safe-bottom)) max(6vw, var(--tl-safe-left));
   background:var(--broadcast-deep);
@@ -58,7 +59,7 @@
   font:750 .9rem/1.16 "DM Sans",sans-serif;
 }
 .match-test-back {position:absolute;top:max(13px,var(--tl-safe-top));left:max(6vw,var(--tl-safe-left))}
-.game-console .match-test-entry .match-test-actions .primary,
+.match-test-entry .match-test-actions .primary,
 .app-shell .game-match[data-active=true] .manual-return {
   background:var(--broadcast-acid);
   color:var(--broadcast-ink);
@@ -124,3 +125,5 @@
 .app-shell .game-match[data-active=true] .match-set-piece-choice button {pointer-events:auto;background:var(--broadcast-acid);color:var(--broadcast-ink)}
 @keyframes match-entry-in {from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.match-test-entry>div{animation:none}}
+
+.match-test-entry button:focus-visible {outline:2px solid var(--broadcast-acid);outline-offset:3px}

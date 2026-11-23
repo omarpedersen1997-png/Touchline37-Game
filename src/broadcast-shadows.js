@@ -14,7 +14,7 @@ export function createBroadcastShadows(scene,field,playersPerTeam){
  };
  material.customProgramCacheKey=()=> 'touchline-projected-shadow-58';
  const mesh=new THREE.InstancedMesh(geometry,material,total);mesh.name='R3 foot, body and goal shadows';mesh.renderOrder=2;mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.frustumCulled=false;scene.add(mesh);
- const matrix=new THREE.Matrix4(),rotation=new THREE.Quaternion(),scale=new THREE.Vector3(),position=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),dx=25/55,dz=-20/55,angle=Math.atan2(dx,dz);
+ const hidden=new THREE.Matrix4().makeScale(0,0,0),matrix=new THREE.Matrix4(),rotation=new THREE.Quaternion(),scale=new THREE.Vector3(),position=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),dx=25/55,dz=-20/55,angle=Math.atan2(dx,dz);
  const place=(index,x,z,width,length,heading)=>{position.set(x,.06,z);rotation.setFromAxisAngle(up,heading);scale.set(width/1.1,1,length/.8);matrix.compose(position,rotation,scale);mesh.setMatrixAt(index,matrix);};
  let goalIndex=players*3;
  const segment=(x,z,xx,zz)=>{const length=Math.hypot(xx-x,zz-z);place(goalIndex++,(x+xx)/2,(z+zz)/2,.23,length,Math.atan2(xx-x,zz-z));};
@@ -24,7 +24,8 @@ export function createBroadcastShadows(scene,field,playersPerTeam){
  }
  return {mesh,update(models){
   for(const team of ['home','away'])for(let i=0;i<playersPerTeam;i++){
-   const p=models[team][i].position,index=(team==='home'?0:playersPerTeam)+i,height=Math.max(0,p.y);
+   const model=models[team][i],p=model.position,index=(team==='home'?0:playersPerTeam)+i,height=Math.max(0,p.y);
+   if(model.userData.sentOff){mesh.setMatrixAt(players+index,hidden);mesh.setMatrixAt(players*2+index,hidden);continue;}
    place(players+index,p.x+dx*(1+height),p.z+dz*(1+height),.54+height*.1,1.12+height*.1,angle);
    place(players*2+index,p.x+dx*(1.72+height),p.z+dz*(1.72+height),.33+height*.09,.38+height*.09,angle);
   }
