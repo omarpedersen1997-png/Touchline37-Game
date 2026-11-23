@@ -17,7 +17,8 @@ export function createR4CameraPlan(){
     const setPiece=state.restart&&!state.restart.released;
     const kickoff=state.openingKickoff||state.goalSequence?.stage==='kickoff';
     const f=ball.y<0?-1:1;
-    const distance=48-Math.abs(ball.y);
+    const halfLength=state.field.length*.5;
+    const distance=halfLength-Math.abs(ball.y);
     const threat=!kickoff&&!reducedMotion&&distance<24&&Math.abs(ball.x)<20;
     const height=clamp(ball.z-.6,0,4);
     const shot=state.engineRevision===6&&state.ball.shot&&!state.ball.owner&&!reducedMotion&&!kickoff&&!setPiece;
@@ -29,9 +30,10 @@ export function createR4CameraPlan(){
     const lookY=kickoff?0:clamp(ball.y+(player.y-ball.y)*share+state.ball.vy*lead+(threat ? f*2.3 : 0),-46,46);
     const weight=threat?clamp((24-distance)/24,0,1):0;
     const close=view==='close'&&!kickoff&&!reducedMotion;
-    const woodwork=state.engineRevision>=5&&!reducedMotion&&state.lastAction?.kind==='woodwork'?Math.max(0,1-(state.tick-state.lastAction.tick)/5):0;
+    const woodwork=state.engineRevision===5&&!reducedMotion&&state.lastAction?.kind==='woodwork'?Math.max(0,1-(state.tick-state.lastAction.tick)/5):0;
     const zoom=(close?.42:setPiece&&!reducedMotion?.52:.58)*(1-weight*.13+height*.035+leadWeight*.06)*fit;
-    plan.eye[0]=lookX+BROADCAST_OFFSET.x*zoom;plan.eye[1]=(close?9.6:12.3)*fit*(1-weight*.16+height*.06);plan.eye[2]=lookY+BROADCAST_OFFSET.z*zoom;
+    const cameraHeight=state.engineRevision>=6?11.9:12.3;
+    plan.eye[0]=lookX+BROADCAST_OFFSET.x*zoom;plan.eye[1]=(close?9.6:cameraHeight)*fit*(1-weight*.12+height*.09);plan.eye[2]=lookY+BROADCAST_OFFSET.z*zoom;
     plan.target[0]=lookX+woodwork*.18;plan.target[1]=.72+height*.54;plan.target[2]=lookY;
     plan.fov=kickoff?44:(close?41:42)-weight*1.5+leadWeight*1.2;
     return plan;

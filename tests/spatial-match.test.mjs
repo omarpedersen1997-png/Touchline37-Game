@@ -110,7 +110,7 @@ test('actual rich rigs gain athletic proportions, retain grounded soles and carr
  const prior={self:globalThis.self,document:globalThis.document};globalThis.self=globalThis;globalThis.document={createElement:()=>({getContext:()=>new Proxy({},{get:()=>()=>{},set:()=>true})})};
  try{for(const name of ['player-auto.glb','keeper-auto.glb']){
   const source=await richModel(name),keeper=name.startsWith('keeper'),model=createFootballPlayer({source,number:8,keeper,optimize:false,emblemMap:new THREE.Texture()}),d=model.userData,profile=footballBodyProfile(8,keeper);
-  assert.equal(d.human.scale.x,profile.width);assert(profile.width>=1.14&&profile.width<=1.25);assert.equal(d.jersey.parent,d.bones.Spine2);
+  assert.equal(d.human.scale.x,profile.width);assert(keeper ? profile.width>=1.14&&profile.width<=1.2 : profile.width>=1.06&&profile.width<=1.12);assert.equal(d.jersey.parent,d.bones.Spine2);
   const local=d.jersey.matrix.clone(),p={x:0,y:0,vx:0,vy:5,ax:8,ay:2,facingX:0,facingY:1,kick:0,dive:0,tackle:0},s=fieldState(),point=new THREE.Vector3();let sole;model.traverse(o=>{if(o.material?.name==='Sneaker outsole')sole=o;});assert(sole);
   for(let frame=0;frame<120;frame++){
    p.x+=p.vx/120;p.y+=p.vy/120;model.position.set(p.x,0,p.y);model.rotation.y=Math.min(Math.PI,frame/60);

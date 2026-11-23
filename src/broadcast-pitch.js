@@ -14,13 +14,23 @@ export function pitchSurfaceSample(x,z,field){
  return {band,variation,wear:Math.min(.18,goalWear+centreWear)};
 }
 
-export function createBroadcastPitch(field,textures){
+export function pitchFloodlightRows(x,z,field){
+ const side=Math.min(1,Math.abs(x)/(field.width*.5));
+ const end=Math.min(1,Math.abs(z)/(field.length*.5));
+ // Static pools roll into a quiet edge falloff. All lighting is baked into
+ // the existing vertex colour buffer, including on the Auto quality mode.
+ const pool=Math.exp(-((end-.59)**2)*11)*Math.exp(-((side-.42)**2)*4);
+ return .9+pool*.16-(side**3)*.085-(end**3)*.05;
+}
+
+export function createBroadcastPitch(field,textures,lighting=MATCH_LIGHTING){
  const geometry=new THREE.PlaneGeometry(field.width,field.length,Math.ceil(field.width/2),Math.ceil(field.length/2));
  const position=geometry.attributes.position,colours=new Float32Array(position.count*3);
- const light=new THREE.Color(MATCH_LIGHTING.pitchLight),dark=new THREE.Color(MATCH_LIGHTING.pitchDark),wear=new THREE.Color(0xb5ac78),colour=new THREE.Color();
+ const light=new THREE.Color(lighting.pitchLight),dark=new THREE.Color(lighting.pitchDark),wear=new THREE.Color(0xb5ac78),colour=new THREE.Color();
  for(let i=0;i<position.count;i++){
-  const surface=pitchSurfaceSample(position.getX(i),-position.getY(i),field);
-  colour.copy(dark).lerp(light,surface.band).multiplyScalar(surface.variation).lerp(wear,surface.wear);
+  const x=position.getX(i),z=-position.getY(i),surface=pitchSurfaceSample(x,z,field);
+  const lightPool=lighting===MATCH_LIGHTING?1:pitchFloodlightRows(x,z,field);
+  colour.copy(dark).lerp(light,surface.band).multiplyScalar(surface.variation*lightPool).lerp(wear,surface.wear);
   colour.toArray(colours,i*3);
  }
  geometry.setAttribute('color',new THREE.BufferAttribute(colours,3));

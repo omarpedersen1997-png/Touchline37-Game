@@ -1,13 +1,13 @@
 /* Match presentation follows the public Touchline design. */
 .match-test-entry,
 .app-shell .game-match[data-active=true] {
-  --broadcast-ink:#111713;
-  --broadcast-deep:#0d130f;
-  --broadcast-linen:#f0eee2;
-  --broadcast-acid:#dcf589;
-  --broadcast-muted:#b9c4b8;
-  --broadcast-edge:#3a463b;
-  --broadcast-display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --broadcast-ink:var(--tl-brand-bg);
+  --broadcast-deep:var(--tl-brand-deep);
+  --broadcast-linen:var(--tl-brand-text);
+  --broadcast-acid:var(--tl-brand-accent);
+  --broadcast-muted:var(--tl-brand-muted);
+  --broadcast-edge:var(--tl-brand-edge);
+  --broadcast-display:var(--tl-brand-display);
   --match-panel:var(--broadcast-ink);
 }
 .match-test-entry {
@@ -66,15 +66,6 @@
   border-color:var(--broadcast-acid);
   border-radius:0;
 }
-.app-shell .game-match[data-active=true] .manual-score,
-.app-shell .game-match[data-active=true] .manual-score>b {
-  background:var(--broadcast-linen);
-  color:var(--broadcast-ink);
-}
-.app-shell .game-match[data-active=true] .manual-score>small {
-  background:var(--broadcast-acid);
-  color:var(--broadcast-ink);
-}
 .app-shell .game-match[data-active=true] :is(.manual-settings,.manual-help,.match-live-pulse,.manual-kickoff,.r4-referee) {
   background:var(--broadcast-ink);
   border-color:var(--broadcast-edge);
@@ -127,3 +118,26 @@
 @media(prefers-reduced-motion:reduce){.match-test-entry>div{animation:none}}
 
 .match-test-entry button:focus-visible {outline:2px solid var(--broadcast-acid);outline-offset:3px}
+
+/* One compact, opaque scorebug plus the same lime action accent as the site. */
+.app-shell.game-console .game-match[data-active=true] .manual-score {
+  background:var(--broadcast-deep);
+  color:var(--broadcast-linen);
+  border:1px solid var(--broadcast-edge);
+  border-inline-start:3px solid var(--broadcast-acid);
+  border-radius:var(--tl-brand-radius);
+  font-variant-numeric:tabular-nums;
+}
+.app-shell.game-console .game-match[data-active=true] .manual-score :is(.score-team-name) {
+  color:var(--broadcast-linen);
+  opacity:1;
+}
+.app-shell.game-console .game-match[data-active=true] .manual-score>b {
+  background:var(--broadcast-deep);
+  color:var(--broadcast-acid);
+  font-family:var(--broadcast-display);
+}
+.app-shell.game-console .game-match[data-active=true] .manual-score>small {
+  background:var(--broadcast-acid);
+  color:var(--broadcast-ink);
+}

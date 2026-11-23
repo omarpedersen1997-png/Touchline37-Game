@@ -5,3 +5,12 @@ export const MATCH_LIGHTING=Object.freeze({
  key:0xfff0db,keyIntensity:3.05,rim:0xc0d9f5,rimIntensity:.6,
  pitchLight:0xa7c895,pitchDark:0x779f68,normalStrength:.2,kitRoughness:.78
 });
+
+// R6 presentation only. The same number of lights, no extra lighting pass.
+export const MATCH_NIGHT_LIGHTING=Object.freeze({
+ ...MATCH_LIGHTING,
+ exposure:.94,background:0x223844,fogNear:70,fogFar:230,
+ sky:0xd3e4f8,ground:0x354638,ambient:.96,
+ key:0xfff1dd,keyIntensity:3.05,rim:0xaacafa,rimIntensity:.76,
+ pitchLight:0xbdd7ad,pitchDark:0x92ae87,
+});

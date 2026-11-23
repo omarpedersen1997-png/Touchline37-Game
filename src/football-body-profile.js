@@ -1,8 +1,8 @@
 // Visual proportions only. The authoritative collision volumes never change.
 export function footballBodyProfile(number=1,keeper=false){
  const variant=((Math.trunc(number)-1)%4+4)%4;
- return {width:(keeper?1.2:1.14)+variant*.015,height:1+(variant-1.5)*.009,
-  depth:(keeper?1.15:1.1)+variant*.01};
+ return {width:(keeper?1.14:1.07)+variant*.015,height:1+(variant-1.5)*.009,
+  depth:(keeper?1.1:1.05)+variant*.01};
 }
 
 // Roll around the pelvis, not the soles. A foot-origin roll made a diving

@@ -3,7 +3,7 @@ import {contactShadowTexture} from './contact-shadow.js';
 
 // All foot, body, head and goal-frame shadows share ONE instanced submission.
 // These are soft projected approximations, not a real-time shadow-map pass.
-export function createBroadcastShadows(scene,field,playersPerTeam){
+export function createBroadcastShadows(scene,field,playersPerTeam,lightPosition){
  const players=playersPerTeam*2,total=players*3+6,geometry=new THREE.PlaneGeometry(1.1,.8).rotateX(-Math.PI/2);
  const strengths=new Float32Array(total);strengths.fill(1,0,players);strengths.fill(.38,players,players*2);strengths.fill(.25,players*2,players*3);strengths.fill(.6,players*3);
  geometry.setAttribute('shadowStrength',new THREE.InstancedBufferAttribute(strengths,1));
@@ -14,7 +14,8 @@ export function createBroadcastShadows(scene,field,playersPerTeam){
  };
  material.customProgramCacheKey=()=> 'touchline-projected-shadow-58';
  const mesh=new THREE.InstancedMesh(geometry,material,total);mesh.name='R3 foot, body and goal shadows';mesh.renderOrder=2;mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.frustumCulled=false;scene.add(mesh);
- const hidden=new THREE.Matrix4().makeScale(0,0,0),matrix=new THREE.Matrix4(),rotation=new THREE.Quaternion(),scale=new THREE.Vector3(),position=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),dx=25/55,dz=-20/55,angle=Math.atan2(dx,dz);
+ const hidden=new THREE.Matrix4().makeScale(0,0,0),matrix=new THREE.Matrix4(),rotation=new THREE.Quaternion(),scale=new THREE.Vector3(),position=new THREE.Vector3(),up=new THREE.Vector3(0,1,0);
+ const dx=lightPosition?-lightPosition.x/lightPosition.y:25/55,dz=lightPosition?-lightPosition.z/lightPosition.y:-20/55,angle=Math.atan2(dx,dz);
  const place=(index,x,z,width,length,heading)=>{position.set(x,.06,z);rotation.setFromAxisAngle(up,heading);scale.set(width/1.1,1,length/.8);matrix.compose(position,rotation,scale);mesh.setMatrixAt(index,matrix);};
  let goalIndex=players*3;
  const segment=(x,z,xx,zz)=>{const length=Math.hypot(xx-x,zz-z);place(goalIndex++,(x+xx)/2,(z+zz)/2,.23,length,Math.atan2(xx-x,zz-z));};

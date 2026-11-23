@@ -9,7 +9,9 @@ export function createAssetPlayerAnimation(clips,bones){
  const samples=new Map(clips.map(clip=>[clip.name,{duration:clip.duration,tracks:clip.tracks.map(track=>({bone:bones[track.name.slice(0,track.name.lastIndexOf('.'))],rotation:track.name.endsWith('.quaternion'),interpolant:track.createInterpolant()})).filter(t=>t.bone)}]));
  for(const clip of samples.values()){clip.byBone={};for(const track of clip.tracks){(clip.byBone[track.bone.name]||={})[track.rotation?'r':'p']=track;}}
  const turnTracks=(samples.get('turn')?.tracks||[]).filter(t=>t.rotation&&['Spine2','LeftShoulder','RightShoulder'].includes(t.bone.name)).map(t=>({...t,rest:new Quaternion().fromArray(t.interpolant.evaluate(0)).invert()})),delta=new Quaternion(),identity=new Quaternion();let turnWeight=0;
- const from=Object.fromEntries(Object.entries(bones).map(([key,bone])=>[key,bone.quaternion.clone()])),target=new Quaternion(),actionSample={};let previous='',blend=0,transition=.075,heading=null,sprinting=false;
+ const from=Object.fromEntries(Object.entries(bones).map(([key,bone])=>[key,bone.quaternion.clone()]));
+ const fromPosition=Object.fromEntries(Object.entries(bones).map(([key,bone])=>[key,bone.position.clone()]));
+ const target=new Quaternion(),actionSample={};let previous='',blend=0,transition=.075,heading=null,sprinting=false;
  return {apply(base,time,p,state,team,index,dt,renderedHeading,snap=false,subtick=0){
   let name=base,phase=time;
   const speed=Math.hypot(p.vx,p.vy);sprinting=base==='run'&&(sprinting?speed>6.8:speed>7.4);
@@ -24,14 +26,26 @@ export function createAssetPlayerAnimation(clips,bones){
   if(snap)turnWeight=0;else turnWeight+=(turnTarget-turnWeight)*(1-Math.exp(-18*Math.min(.1,Math.max(0,dt))));
   heading=nextHeading;
   const clip=samples.get(name)||samples.get(base);if(!clip)return;
-  if(previous!==name){for(const key in bones)from[key].copy(bones[key].quaternion);const sameStride=(previous==='run'||previous==='sprint')&&(name==='run'||name==='sprint');transition=actionSample.action ? .04 : .075;blend=sameStride||snap?0:transition;previous=name;}
-  blend=Math.max(0,blend-Math.max(0,Math.min(.1,dt)));const alpha=1-blend/transition,t=((phase%clip.duration)+clip.duration)%clip.duration;
+  if(previous!==name){
+   for(const key in bones){from[key].copy(bones[key].quaternion);fromPosition[key].copy(bones[key].position);}
+   const sameStride=(previous==='run'||previous==='sprint')&&(name==='run'||name==='sprint');
+   transition=actionSample.action ? .05 : sameStride ? .085 : .1;
+   blend=snap||!previous?0:transition;previous=name;
+  }
+  blend=snap?0:Math.max(0,blend-Math.max(0,Math.min(.1,dt)));
+  const progress=1-blend/transition,alpha=progress*progress*(3-2*progress),t=((phase%clip.duration)+clip.duration)%clip.duration;
   const movingStrike=speed>1.8&&(name==='pass'||name==='shoot'),charging=movingStrike&&!(p.kick>0);
   for(const track of clip.tracks){
    const keepStride=movingStrike&&(supportBones.has(track.bone.name)||charging&&strikeBones.has(track.bone.name));
    const gait=keepStride?locomotion?.byBone[track.bone.name]?.[track.rotation?'r':'p']:null;
    const value=(gait||track).interpolant.evaluate(gait?locomotionTime:t);
-   if(track.rotation){target.fromArray(value).normalize();track.bone.quaternion.copy(from[track.bone.name]).slerp(target,gait?1:alpha);}else track.bone.position.fromArray(value);
+   if(track.rotation){
+    target.fromArray(value).normalize();track.bone.quaternion.copy(from[track.bone.name]).slerp(target,gait?1:alpha);
+   }else if(gait||!blend)track.bone.position.fromArray(value);
+   else{
+    const position=fromPosition[track.bone.name];
+    track.bone.position.set(position.x+(value[0]-position.x)*alpha,position.y+(value[1]-position.y)*alpha,position.z+(value[2]-position.z)*alpha);
+   }
   }
   // Keep the running legs planted while the authored upper-body turn layers on.
   if(Math.abs(turnWeight)>.001){const t=samples.get('turn').duration*.5;for(const track of turnTracks){target.fromArray(track.interpolant.evaluate(t)).normalize();delta.copy(track.rest).multiply(target);if(turnWeight<0)delta.invert();delta.slerp(identity,1-Math.abs(turnWeight));track.bone.quaternion.multiply(delta).normalize();}}

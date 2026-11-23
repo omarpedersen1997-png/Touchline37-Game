@@ -4,10 +4,10 @@ import {Vector3,Matrix4} from 'three';
 // space around each actual bone axis; lengths, joints, UVs and weights survive.
 const regions={
  Hips:['Spine',1.07,.025],Spine:['Spine1',1.1,.03],Spine1:['Spine2',1.13,.035],Spine2:['Neck',1.13,.035],
- LeftArm:['LeftForeArm',1.24,.035],RightArm:['RightForeArm',1.24,.035],
- LeftForeArm:['LeftHand',1.18,.027],RightForeArm:['RightHand',1.18,.027],
- LeftUpLeg:['LeftLeg',1.28,.04],RightUpLeg:['RightLeg',1.28,.04],
- LeftLeg:['LeftFoot',1.26,.035],RightLeg:['RightFoot',1.26,.035],
+ LeftArm:['LeftForeArm',1.20,.032],RightArm:['RightForeArm',1.20,.032],
+ LeftForeArm:['LeftHand',1.13,.023],RightForeArm:['RightHand',1.13,.023],
+ LeftUpLeg:['LeftLeg',1.23,.04],RightUpLeg:['RightLeg',1.23,.04],
+ LeftLeg:['LeftFoot',1.16,.029],RightLeg:['RightFoot',1.16,.029],
  LeftFoot:['LeftToeBase',1.12,.022],RightFoot:['RightToeBase',1.12,.022],
  LeftHand:[null,1.16,.018],RightHand:[null,1.16,.018]
 };

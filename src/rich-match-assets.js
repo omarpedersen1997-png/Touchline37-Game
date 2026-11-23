@@ -1,4 +1,5 @@
 import {broadcastSurfaceMaterial} from './broadcast-surfaces.js';
+import {createStadiumBeams} from './stadium-light-effects.js';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {matchAssetRoot} from './match-asset-config.js';
@@ -34,7 +35,7 @@ export function instanceRichPart(scene,pack,name,placements,{tint=false}={}){
   mesh.computeBoundingSphere();mesh.receiveShadow=true;scene.add(mesh);meshes.push(mesh);
  });return meshes;
 }
-export function buildRichStadium(scene,field,quality,pack,fast=false){
+export function buildRichStadium(scene,field,quality,pack,fast=false,night=false){
  const w=field.width/2,l=field.length/2,stands=[],audience=[],lamps=[],benches=[],flags=[];
  for(const side of [-1,1]){
   for(let z=-l+7;z<l;z+=12.5)stands.push({x:side*(w+8),z,angle:side<0?Math.PI/2:-Math.PI/2});
@@ -49,12 +50,14 @@ export function buildRichStadium(scene,field,quality,pack,fast=false){
  const board=pack.textures['stadium-board-2048.png'],boardMat=new THREE.MeshBasicMaterial({map:board});
  const boardSlots=[];
  for(const side of [-1,1])for(let z=-l+10;z<l;z+=22)boardSlots.push({side,z});
+ if(night)for(const side of [-1,1])for(let x=-w+8;x<w;x+=20)boardSlots.push({end:side,x});
  const boardMesh=new THREE.InstancedMesh(new THREE.PlaneGeometry(20,1.1),boardMat,boardSlots.length),boardMatrix=new THREE.Matrix4();
- boardSlots.forEach(({side,z},i)=>{
-  boardMatrix.makeRotationY(side<0?Math.PI/2:-Math.PI/2);
-  boardMatrix.setPosition(side*(w+4),.8,z);boardMesh.setMatrixAt(i,boardMatrix);
+ boardSlots.forEach(({side,z,end,x},i)=>{
+  boardMatrix.makeRotationY(end?(end<0?0:Math.PI):(side<0?Math.PI/2:-Math.PI/2));
+  boardMatrix.setPosition(end?x:side*(w+4),.8,end?end*(l+4):z);boardMesh.setMatrixAt(i,boardMatrix);
  });
  scene.add(boardMesh);
+ if(night&&!fast)scene.add(createStadiumBeams(lamps));
  // Camera-side clipping prevents benches/roof geometry crossing the lens.
  const planes=[new THREE.Plane(new THREE.Vector3(-1,0,0),w+3),new THREE.Plane(new THREE.Vector3(0,0,-1),l+3)];
  for(const mesh of [...structures,...crowds]){mesh.material=broadcastSurfaceMaterial(mesh.material);mesh.material.clippingPlanes=planes;}
