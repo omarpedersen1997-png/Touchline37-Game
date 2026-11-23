@@ -108,3 +108,22 @@ test('camera anticipates a confirmed shot, respects reduced motion and reports w
  assert.equal(event.kind,'woodwork');
  assert.deepEqual(feed.observe(state),[event]);
 });
+
+test('Canvas 2D reuses the same articulated sprite within a phase',()=>{
+ let atlasStrokes=0,images=0;
+ const path={
+  beginPath(){},ellipse(){},fill(){},stroke(){},moveTo(){},lineTo(){},arc(){},
+ };
+ const paint={...path,clearRect(){},save(){},rect(){},clip(){},translate(){},restore(){},stroke(){atlasStrokes++;}};
+ const canvas={getContext:()=>paint};
+ const draw=createMatch2DPlayers(()=>canvas);
+ const context={...path,drawImage(){images++;}};
+ const state={controlled:1};
+ draw(context,state,'away',2,runner,9,14,0,7,true,.016,0,'#c94058',true);
+ const before=atlasStrokes;
+ assert(before>=4);
+ draw(context,state,'away',2,runner,9,14,0,7,true,.016,0,'#c94058',false);
+ assert.equal(atlasStrokes,before);
+ assert.equal(images,2);
+ assert.equal(canvas.width,960);
+});

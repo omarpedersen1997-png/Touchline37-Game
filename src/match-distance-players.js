@@ -26,6 +26,7 @@ export function createDistancePlayers(scene, count, home, away) {
     return [0x20262b,shirt,skin,skin,shirt,skin,shirt,skin,0x20262b,0xe5e7dd,0x20262b,0xe5e7dd,0x142222,0x142222,0x282322].map(color=>new Color(color));
   });
   mesh.setColorAt(0,palettes[0][0]);mesh.instanceColor.setUsage(DynamicDrawUsage);
+  const matrixRange={start:0,count:0},paletteRange={start:0,count:0};
   let visibleCount=0,changedPalette=false,offset=0;
   mesh.count=0;
 
@@ -77,8 +78,16 @@ export function createDistancePlayers(scene, count, home, away) {
     },
     finish() {
       mesh.count=visibleCount*DISTANCE_PLAYER_PARTS;
-      if(visibleCount)mesh.instanceMatrix.needsUpdate=true;
-      if(changedPalette)mesh.instanceColor.needsUpdate=true;
+      if(visibleCount){
+        matrixRange.count=mesh.count*16;
+        mesh.instanceMatrix.updateRanges[0]=matrixRange;
+        mesh.instanceMatrix.needsUpdate=true;
+      }
+      if(changedPalette){
+        paletteRange.count=mesh.count*3;
+        mesh.instanceColor.updateRanges[0]=paletteRange;
+        mesh.instanceColor.needsUpdate=true;
+      }
       visibleCount=0;changedPalette=false;
     },
   };
