@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST63",
+    "title": "Fælles design og Motor 11 i stadionlys",
+    "date": "2026-11-23",
+    "sourceCommit": "6b4d01186c788993c30e43ab8253153702b3d759",
+    "summary": "Touchlines menuer, statusvisninger og hjemmesideudkast deler nu en farve- og typografifil. Motor 11 R6 har en ny aftenbelysning, skarpere stadionramme, slankere spillerfaconer og blødere overgange."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 63,
+    "versionName": "1.0.0-test-match63",
+    "fileName": "Touchline37-Motor11-TEST63.apk",
+    "bytes": 46262796,
+    "sha256": "107a10826302c62e6491d863534876098220a9c74dceadd789b4d00da0cd3845",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test63-shared-design/dev/artifacts/Touchline37-Motor11-TEST63.apk"
+  },
+  "tests": {
+    "passed": 849,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "Automatiske kode- og pakkekontroller kan ikke måle billedtid, varme, fingerrespons eller Android WebView på fysisk hardware.",
+    "checks": [
+      "Node-tests dækkede design, spillerfodfæste, determinisme, stadion, kamera og replays. R6 åbnede i både 3D (software-WebGL, 986 × 426) og 2D i Chromium uden JavaScript- eller shaderfejl.",
+      "Samme testcertifikat og app-id som TEST62, opdateret versionskode, CRC valideret. Native DEX og ressourcer matchede TEST62.",
+      "35 websitetests bestod. Fire sider blev prøvet i Chromium på seks skærmstørrelser uden vandret scroll eller JavaScript-fejl. Live-lancering er uændret."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Fælles ramme",
+      "detail": "DM Sans og Barlow Condensed, mørkegrønne flader, lime-handlinger og genkendelige statuskort i appen og websiteudkastet."
+    },
+    {
+      "title": "Mobil og undersider",
+      "detail": "Roligere hero, nedtælling i eget felt, 48 px trykflader og mere luft i kontosletning. Mailtjenesten Resend forklares på dansk."
+    },
+    {
+      "title": "Lys, bold, krop og TV-grafik",
+      "detail": "Lysfelter bagt ind i banens geometri, målbaglinjebander, slankere ledvolumener, blødere sprint- og aktionstrin, flyvespor, netkontrast og kort lys ved reelt træværkstræf. Lyskeglerne er forbeholdt de højere grafikvalg."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Signeret Android-testpakke",
+      "before": 47249209,
+      "after": 46262796,
+      "unit": "bytes",
+      "note": "Identisk Android-testcertifikat og test-app-id."
+    }
+  ],
+  "preserved": [
+    "APK 37, motor 1–10, R1/R2 og alle simulations- og replayfiler.",
+    "Produktionsdata, DNS, hovedgren og den aktive hjemmeside.",
+    "Lyd, splash, klub og lokal lagring i den separate testapp."
+  ],
+  "limitations": [
+    "Ingen fysisk FPS-, touch- eller varmetest på OnePlus Nord 4.",
+    "Grafikken bygger på de eksisterende modeller og animationsklip.",
+    "Hjemmesiden afventer særskilt udgivelsesgodkendelse. Lokalt udkast: 98443e07."
+  ],
+  "installSteps": [
+    "Hent TEST63 og vælg Opdater oven på Touchline TEST.",
+    "Vælg Spil lokal testkamp · R6. Prøv først Automatisk 3D i bredformat."
+  ],
+  "nextTest": [
+    "Prøv sprint, vending, flad aflevering og et hårdt indlæg. Se støvler, krop og boldens højde.",
+    "Skift mellem Broadcast, Taktisk og Mål / nær. Prøv også Enkel 2D.",
+    "Se billedtid under kampstatistik, og mærk efter varme og hak efter nogle minutters kamp."
+  ]
+}
