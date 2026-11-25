@@ -66,7 +66,12 @@ namespace Touchline.Runtime
             try
             {
                 simulation=Data.ActiveMatch!=null?new MatchSimulation(Data.ActiveMatch):new MatchSimulation(Data.Club,(uint)(DateTime.UtcNow.Ticks&0xffffffff));
-                stepper=new MatchStepper(simulation);world.Start(simulation.State);cameraRig.Reset();world.Present(simulation.State,1,matchCamera);cameraRig.Present(simulation.State,world.Ball.position,Data.Preferences.ReducedMotion);ui.ShowMatch();
+                stepper=new MatchStepper(simulation);
+                world.Start(simulation.State);
+                cameraRig.Reset();
+                Vector3 shownBall=world.Present(simulation.State,1,matchCamera);
+                cameraRig.Present(simulation.State,shownBall,1,Data.Preferences.ReducedMotion,Time.unscaledDeltaTime);
+                ui.ShowMatch();
             }
             catch(Exception error){failure=error;}
             if(failure!=null){preparing=false;world.Root.SetActive(false);Screen.orientation=previousOrientation;ui.ShowClub("Banen kunne ikke klargøres: "+failure.Message);yield break;}
@@ -93,7 +98,9 @@ namespace Touchline.Runtime
         private void LateUpdate()
         {
             if(!inMatch||background)return;
-            Vector3 shown=world.Present(simulation.State,paused?1:stepper.Alpha,matchCamera,paused);cameraRig.Present(simulation.State,shown,Data.Preferences.ReducedMotion);
+            float interpolation=paused?1:stepper.Alpha;
+            Vector3 shown=world.Present(simulation.State,interpolation,matchCamera,paused);
+            cameraRig.Present(simulation.State,shown,interpolation,Data.Preferences.ReducedMotion,Time.unscaledDeltaTime);
         }
         public void TogglePause(){if(!inMatch)return;paused=!paused;Input.Reset();stepper.ResetClock();audioFeed.SetPaused(paused||background);lastHud=0;Save();}
         public void ToggleSound(bool enabled){Data.Preferences.Sound=enabled;audioFeed.SetEnabled(enabled);if(enabled)StartCoroutine(PrepareSound());Save();lastHud=0;}

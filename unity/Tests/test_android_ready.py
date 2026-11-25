@@ -1,4 +1,5 @@
 """Structural checks against committed native Unity settings, not an Editor build."""
+import json
 from pathlib import Path
 import re
 import unittest
@@ -74,8 +75,7 @@ class AndroidReadyTests(unittest.TestCase):
         self.assertEqual(global_settings['guid'], guid(folder + 'TouchlineGlobalSettings.asset'))
         self.assertIn(guid(folder + 'DefaultVolumeProfile.asset'), (ROOT / (folder + 'TouchlineGlobalSettings.asset')).read_text())
 
-    def test_models_textures_ui_and_text_rendering_are_present(self):
-        import json
+    def test_models_textures_and_ui_are_present(self):
         resources = ROOT / 'Assets/Touchline/Resources/Touchline'
         self.assertEqual(sorted(p.stem for p in (resources / 'Models').glob('*.fbx')),
                          ['keeper-auto', 'keeper-detail', 'player-auto', 'player-detail', 'stadium-kit'])
@@ -84,9 +84,17 @@ class AndroidReadyTests(unittest.TestCase):
         for name in ['grass-color-2048.png', 'grass-normal-2048.png', 'kit-fabric-1024.png', 'kit-normal-1024.png', 'boot-leather-1024.png']:
             self.assertTrue((resources / 'Textures' / name).is_file())
         self.assertTrue((resources / 'UI/TouchlineTheme.tss').is_file())
+
+    def test_manifest_uses_ui_toolkit_without_unresolvable_text_packages(self):
         packages = json.loads((ROOT / 'Packages/manifest.json').read_text())['dependencies']
-        self.assertIn('com.unity.modules.textrendering', packages)
-        self.assertIn('com.unity.modules.textcoretextengine', packages)
+        self.assertEqual(packages['com.unity.modules.uielements'], '1.0.0')
+        # Unity's text assemblies expose Font and TextMesh without these package IDs.
+        unavailable = {
+            'com.unity.modules.textcorefontengine',
+            'com.unity.modules.textcoretextengine',
+            'com.unity.modules.textrendering',
+        }
+        self.assertEqual(unavailable.intersection(packages), set())
 
 
 if __name__ == '__main__':
