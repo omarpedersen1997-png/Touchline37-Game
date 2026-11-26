@@ -119,8 +119,35 @@ with sync_playwright() as playwright:
     assert any('Halvleg' in phase for phase in stopped), stopped
     assert page.locator('#clock').inner_text() == '90:00'
     wait(page, 'SLUTFLØJT · KAMPRAPPORT')
+    page.goto(origin+'/play/index.html#overview')
+    page.set_viewport_size({'width':390,'height':840})
+    no_overflow(page)
+    page.get_by_role('button', name='Spil ligakamp', exact=True).or_(
+        page.get_by_role('button', name='Åbn ligakampen', exact=True)).wait_for()
+    if len(sys.argv) > 2:
+        page.screenshot(path=sys.argv[2]+'/motor12-klubmenu.png')
+    saved = page.evaluate('localStorage.getItem("touchline:motor12:local:v1")')
+    page.get_by_role('button', name='Kampsituationer', exact=False).click()
+    page.get_by_role('button', name='Spil Hold føringen').click()
+    assert page.locator('#clock').inner_text()=='78:00'
+    assert page.locator('#score').inner_text()=='2 : 1'
+    page.clock.run_for(600)
+    assert page.locator('#clock').inner_text()=='78:00'
+    page.get_by_role('link',name='Taktik',exact=True).click()
+    page.get_by_label('Mentalitet').select_option('defend')
+    page.get_by_role('button',name='Tilbage til kampen').click()
+    page.get_by_role('button',name='Taktisk',exact=True).click()
+    page.get_by_role('button',name='4×').click()
+    page.get_by_role('button',name='Kick Off').click()
+    page.clock.run_for(7500)
+    assert page.locator('#clock').inner_text()=='90:00'
+    assert 'Målet er nået' in page.locator('.scenario-outcome').inner_text()
+    assert page.evaluate('localStorage.getItem("touchline:motor12:local:v1")')==saved
+    page.get_by_role('link',name='Til situationer').click()
+    page.get_by_role('link',name='Kamp',exact=True).click()
+    assert page.locator('#clock').inner_text()=='00:00'
     assert not errors, errors
     assert not missing, missing
     browser.close()
 
-print('BESTÅET: 5 sider, links, 320/384 px, liggende mobil, kickoff, pause, taktik, trup, genindlæsning, mål, halvleg og slutrapport.')
+print('BESTÅET: web, mobil, ligakamp, klubmenu og adskilt situation fra 78:00 til slutfløjt med kontrolleret klubsave.')

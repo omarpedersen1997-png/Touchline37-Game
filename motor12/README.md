@@ -46,6 +46,9 @@ Buildet bruger repositoryets installerede esbuild og Three.js til arenaen.
   produktionssider, når en eksisterende Touchline-konto skal håndteres.
   Klubhus og web bruger nu lys papirbaggrund, rød accent og Barlow Condensed.
   Kampskærmen har en mørk scoretavle over banen og analyse under banen.
+- `src/scenarios.js` starter korte Motor 12-situationer ved et aftalt
+  tidspunkt og resultat. Der kræves manuelt afspark, og resultatet afregnes
+  aldrig til klubben. Scenariets trup, kampplan og rapport er adskilt fra ligaen.
 
 Kampen starter i PRE_KICKOFF med bolden på midterpletten. Nyt afspark efter
 et mål eller i anden halvleg kræver samme aktive valg i KICKOFF_READY.

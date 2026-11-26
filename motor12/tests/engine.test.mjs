@@ -4,6 +4,7 @@ import {createMatch,kickOff,stepMatch,swapRoles,substitute,setTactics,PHASE,HALF
 import {FIELD,STEP,integrateBall,kickBall} from '../src/physics.js';
 import {createMatchLoop} from '../src/loop.js';
 import {newClub,trainClub,loadClub,saveClub,nextMatch,settleMatch} from '../src/club.js';
+import {SCENARIOS,scenarioMatch,scenarioResult} from '../src/scenarios.js';
 
 function checkKickoff(s){
   assert.deepEqual([s.ball.x,s.ball.y,s.ball.vx,s.ball.vy,s.ball.vz],[0,0,0,0,0]);
@@ -131,4 +132,31 @@ test('save and resume preserve determinism and match winnings apply once',()=>{
   assert.equal(club.budget,old+receipt.revenue);assert.equal(settleMatch(club,s),null);
   assert.equal(club.played,1);
   value='corrupt';assert.deepEqual(loadClub(storage),newClub());
+});
+test('short situations keep manual kickoff and never settle into the league',()=>{
+  const club=newClub(),league=nextMatch(club);
+  const saved=structuredClone(league);
+  for(const scenario of SCENARIOS){
+    const s=scenarioMatch(scenario);
+    checkKickoff(s);
+    assert.equal(timeLabel(s),scenario.minute+':00');
+    assert.equal(s.phase,PHASE.KICKOFF_READY);
+    assert.equal(stepMatch(s),false);
+    assert.equal(scenarioResult(scenario,s),null);
+    finish(s);
+    assert.equal(timeLabel(s),'90:00');
+    assert.equal(scenarioResult(scenario,s),scenario.result(s.teams[0].stats.goals-s.teams[1].stats.goals));
+    assert.equal(settleMatch(club,s),null);
+  }
+  assert.deepEqual(club.active,saved);
+  assert.equal(club.played,0);
+});
+test('the scenario objectives can be reached by changing the match plan',()=>{
+  for(const [item,mentality] of [[SCENARIOS[0],'attack'],[SCENARIOS[1],'defend']]){
+    const ordinary=scenarioMatch(item), changed=scenarioMatch(item);
+    assert.ok(setTactics(changed,0,{mentality}));
+    finish(ordinary);finish(changed);
+    assert.equal(scenarioResult(item,ordinary),false);
+    assert.equal(scenarioResult(item,changed),true);
+  }
 });

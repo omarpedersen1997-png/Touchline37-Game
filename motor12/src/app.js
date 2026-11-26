@@ -4,6 +4,7 @@ import { loadClub, saveClub, newClub, nextMatch, nextOpponent, trainClub, settle
 import { pitchView } from './pitch.js';
 import { createMatchLoop } from './loop.js';
 import { matchAudio } from './audio.js';
+import { SCENARIOS, scenarioMatch, scenarioResult } from './scenarios.js';
 
 const container=document.querySelector('#game');
 const demo=new URLSearchParams(location.search).get('demo')==='1';
@@ -11,6 +12,7 @@ let storage;
 try{storage=localStorage;}catch{}
 let club=demo?newClub():loadClub(storage);
 let match=demo?createMatch():club.active;
+let scenario=null;
 let paused=true, speed=1, frame=0, lastPaint=0, lastEvent=0, savedTime=0, loop, pitch, observer;
 let arena, arenaToken=0, arenaMode='2d', arenaLoading=false;
 let notice='', view=initialView();
@@ -24,9 +26,9 @@ const selected=(value,current)=>value===current?' selected':'';
 function initialView(){
   if(demo)return 'match';
   const hash=location.hash.slice(1);
-  return ['overview','match','tactics','squad','club'].includes(hash)?hash:'overview';
+  return ['overview','match','tactics','squad','club','scenarios'].includes(hash)?hash:'overview';
 }
-function save(){if(!demo&&!saveClub(club,storage))notice='Lokal lagring er utilgængelig. Behold fanen åben.';}
+function save(){if(!demo&&!scenario&&!saveClub(club,storage))notice='Lokal lagring er utilgængelig. Behold fanen åben.';}
 function prepare(){
   if(!match)match=demo?createMatch():nextMatch(club);
   loop=createMatchLoop(match);lastEvent=match.eventId;
@@ -38,16 +40,28 @@ function title(head,sub,label){
 function overview(){
   const opponent=match?.teams[1]||nextOpponent(club);
   const strength=Math.round(club.roster.slice(0,11).reduce((sum,p)=>sum+p.skill,0)/11);
-  return title(escape(club.name),'', 'DIT KLUBHUS')+
-    `<section class="fixture"><div class="fixture-info"><p class="kicker">NÆSTE KAMP</p><span>${escape(opponent.formation)} · Styrke ${opponent.rating}</span></div>
-    <div class="fixture-teams"><span>${escape(club.name)}</span><span>mod</span><strong>${escape(opponent.name)}</strong></div>
-    <div class="fixture-actions"><button class="primary" data-action="arena-launch">Arena 3D</button><button data-action="tactical-launch">Taktisk kamp</button><button data-action="tactics">Sæt kampplan</button></div></section>
-    <dl class="club-ledger"><div><dt>Klubkasse</dt><dd>${money(club.budget)}</dd></div><div><dt>Ligapoint</dt><dd>${club.points}</dd></div><div><dt>Startelleverens rating</dt><dd>${strength}</dd></div></dl>`;
+  return `<div class="club-hub">
+    <div class="hub-heading"><h1>${escape(club.name)}</h1><span>${money(club.budget)} <span>i klubkassen</span></span></div>
+    <section class="hub-fixture"><div class="hub-fixture-copy"><p class="kicker">NÆSTE LIGAKAMP</p>
+    <h2>${escape(opponent.name)}</h2><p>${escape(opponent.formation)} · Holdstyrke ${opponent.rating}</p>
+    <div class="hub-actions"><button class="primary" data-action="arena-launch">${match?'Åbn ligakampen':'Spil ligakamp'}</button><button data-action="tactical-launch">Taktisk 2D</button></div></div></section>
+    <div class="hub-modes"><button class="hub-mode hub-scenarios" data-action="scenarios"><span class="mode-tag">KORT KAMP</span><strong>Kampsituationer</strong><span>Vend kampen eller hold føringen.</span></button>
+    <button class="hub-mode hub-squad" data-action="squad"><span class="mode-tag">STARTELLEVER</span><strong>Trup</strong><span>Vælg spillere efter form og kondition.</span></button>
+    <button class="hub-mode hub-tactics" data-action="tactics"><span class="mode-tag">KAMPPLAN</span><strong>Taktik</strong><span>Justér formation og pres.</span></button></div>
+    <dl class="club-ledger"><div><dt>Ligapoint</dt><dd>${club.points}</dd></div><div><dt>Spillede kampe</dt><dd>${club.played}</dd></div><div><dt>Startelleverens rating</dt><dd>${strength}</dd></div></dl></div>`;
+}
+function scenarioMenu(){
+  return title('Kampsituationer','Spil de sidste minutter med en fast stilling og et klart mål.','MOTOR 12')+
+    `<div class="scenario-list">${SCENARIOS.map(item=>`<article class="scenario-card"><div class="scenario-score"><b>${item.goals} : ${item.conceded}</b><time>${item.minute}:00</time></div>
+    <div><h2>${item.title}</h2><p>${item.description}</p><p><strong>Mål:</strong> ${item.target}</p></div>
+    <button class="primary" data-scenario="${item.id}" aria-label="Spil ${item.title}">Spil situation</button></article>`).join('')}</div>
+    <p class="scenario-note">Situationer bruger en fast trup. Resultaterne påvirker ikke din ligakamp eller klubkasse.</p>`;
 }
 function phaseLabel(){
   switch(match.phase){
     case PHASE.PRE_KICKOFF:return 'Klar til afspark';
-    case PHASE.KICKOFF_READY:return match.kickReason==='half'?'Halvleg · klar til 2. halvleg':'Mål · klar til nyt afspark';
+    case PHASE.KICKOFF_READY:return scenario&&match.tick===scenario.minute*60?'Klar til situationen':
+      match.kickReason==='half'?'Halvleg · klar til 2. halvleg':'Mål · klar til nyt afspark';
     case PHASE.FULL_TIME:return 'Slutfløjt';
     case PHASE.DEAD_BALL:return 'Dødbold';
     default:return paused?'Pause':'I gang';
@@ -72,7 +86,8 @@ function reportMarkup(){
   const home=match.teams[0],away=match.teams[1];
   const profile=[...home.players,...home.used,...away.players,...away.used].sort((a,b)=>b.impact-a.impact)[0];
   return `<section class="report"><p class="kicker">SLUTFLØJT · KAMPRAPPORT</p><h2>${home.stats.goals} : ${away.stats.goals}</h2><p>Kampens profil <strong>${escape(profile.name)}</strong> · ${decimal(home.stats.xg)} / ${decimal(away.stats.xg)} xG</p>
-    <button class="primary" data-action="settle">${demo?'Spil igen':'Afregn og gå til klubben'}</button></section>`;
+    ${scenario?`<p class="scenario-outcome" role="status">${scenarioResult(scenario,match)?'Målet er nået':'Målet blev ikke nået'} · ${scenario.title}</p>`:''}
+    <button class="primary" data-action="settle">${demo||scenario?'Spil igen':'Afregn og gå til klubben'}</button></section>`;
 }
 function matchMarkup(){
   const [home,away]=match.teams;
@@ -189,8 +204,10 @@ function render(){
   arena?.dispose();arena=null;
   renderedEvent=-1;renderedStats='';renderedPhase='';
   if(view==='match')prepare();
-  const content=({overview,match:matchMarkup,tactics:tactical,squad,club:clubView})[view]();
-  container.innerHTML=`${demo?'<div class="preview-bar"><span>LOKAL PRØVEKAMP</span><a href="./index.html">Til klubhuset</a></div>':`<nav class="app-nav" aria-label="Klubmenu">${nav.map(([id,label])=>`<a href="#${id}" ${id===view?'aria-current="page"':''}>${label}</a>`).join('')}</nav>`}${content}`;
+  const content=({overview,match:matchMarkup,tactics:tactical,squad,club:clubView,scenarios:scenarioMenu})[view]();
+  const scenarioNav=[['scenarios','Til situationer'],['match','Kamp'],['tactics','Taktik'],['squad','Trup']];
+  container.innerHTML=`${demo?'<div class="preview-bar"><span>LOKAL PRØVEKAMP</span><a href="./index.html">Til klubhuset</a></div>':`<nav class="app-nav${scenario?' scenario-nav':''}" aria-label="${scenario?'Situationsmenu':'Klubmenu'}">${(scenario?scenarioNav:nav).map(([id,label])=>`<a href="#${id}" ${id===view?'aria-current="page"':''}>${label}</a>`).join('')}</nav>`}
+  ${scenario?`<div class="scenario-context"><strong>${scenario.title}</strong><span>${scenario.target}</span></div>`:''}${content}`;
   if(view==='match'){
     const canvas=document.querySelector('#pitch');
     pitch=pitchView(canvas);
@@ -208,8 +225,9 @@ function render(){
   }
 }
 function go(next){
+  if(scenario&&!['match','tactics','squad'].includes(next)){scenario=null;match=club.active;arenaMode='2d';speed=1;}
   notice='';view=next;
-  if(!demo)history.replaceState(null,'','#'+next);
+  if(!demo)history.replaceState(null,'','#'+(scenario?'scenarios':next));
   render();save();
 }
 function onFrame(now){
@@ -235,6 +253,11 @@ container.addEventListener('click',event=>{
   const link=event.target.closest('.app-nav a');
   if(link){event.preventDefault();go(link.hash.slice(1));return;}
   if(!button)return;
+  if(button.dataset.scenario){
+    scenario=SCENARIOS.find(item=>item.id===button.dataset.scenario);
+    if(scenario){match=scenarioMatch(scenario);arenaMode='tv';speed=1;go('match');}
+    return;
+  }
   if(button.dataset.camera){showCamera(button.dataset.camera);return;}
   if(button.dataset.speed){
     speed=Number(button.dataset.speed);
@@ -255,8 +278,9 @@ container.addEventListener('click',event=>{
     button.textContent=club.sound?'Lyd til':'Lyd fra';button.setAttribute('aria-pressed',String(club.sound));save();
   }else if(action==='arena-launch'){arenaMode='tv';go('match');}
   else if(action==='tactical-launch'){arenaMode='2d';go('match');}
-  else if(action==='match'||action==='tactics'){go(action);}
+  else if(['match','tactics','squad','scenarios'].includes(action)){go(action);}
   else if(action==='settle'){
+    if(scenario){match=scenarioMatch(scenario);go('match');return;}
     if(demo){match=createMatch();go('match');return;}
     if(settleMatch(club,match)){match=null;go('club');}
   }else if(action==='train'){
@@ -271,7 +295,7 @@ container.addEventListener('change',event=>{
   const control=event.target;
   if(!match)prepare();
   if(setTactics(match,0,{[key]:control.value})){
-    if(!demo)club.formation=match.teams[0].formation;
+    if(!demo&&!scenario)club.formation=match.teams[0].formation;
     save();render();container.querySelector(`[data-setting="${key}"]`)?.focus();
   }
 });
@@ -293,7 +317,7 @@ container.addEventListener('submit',event=>{
   const changed=substitute(match,0,Number(form.get('slot')),form.get('bench'));
   notice=changed?'Skiftet er gennemført.':'Spilleren kan ikke bruges til det valgte skift.';
   if(changed){
-    if(!demo&&match.phase===PHASE.PRE_KICKOFF){
+    if(!demo&&!scenario&&match.phase===PHASE.PRE_KICKOFF){
       const rosterById=new Map(club.roster.map(p=>[p.id,p]));
       const team=match.teams[0];
       club.roster=[...team.players,...team.bench].map(p=>rosterById.get(p.id));
