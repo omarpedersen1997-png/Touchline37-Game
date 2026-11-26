@@ -38,9 +38,14 @@ with sync_playwright() as playwright:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.route('**/*', serve)
     page.goto(origin+'/index.html')
+    assert page.locator('h1').inner_text().split() == ['SIDELINJEN', 'ER', 'DIN.']
+    page.wait_for_function('document.querySelector(".hero-cover img").naturalWidth > 0')
+    assert page.locator('body').evaluate('el=>getComputedStyle(el).backgroundColor') == 'rgb(245, 239, 227)'
     for width in [320, 384, 1280]:
         page.set_viewport_size({'width': width, 'height': 850})
         no_overflow(page)
+        if width == 384 and len(sys.argv) > 2:
+            page.screenshot(path=sys.argv[2]+'/motor12-forside-mobil.png')
     if len(sys.argv) > 2:
         page.screenshot(path=sys.argv[2]+'/motor12-forside.png', full_page=True)
     assert page.locator('.countdown b').count() == 4
@@ -53,12 +58,16 @@ with sync_playwright() as playwright:
     page.goto(origin+'/index.html')
     page.get_by_role('link', name='Start prøvekamp').click()
     page.get_by_role('button', name='Kick Off').wait_for()
+    assert page.locator('.scoreboard strong').first.inner_text() == 'PRØVELUND BK'
+    assert page.locator('.match-sheet canvas').count() == 1
     page.clock.install()
     page.clock.run_for(600)
     assert page.locator('#clock').inner_text() == '00:00'
     for width,height in [(320,800),(390,830),(844,390),(1280,850)]:
         page.set_viewport_size({'width':width,'height':height})
         no_overflow(page)
+        if width == 390 and len(sys.argv) > 2:
+            page.screenshot(path=sys.argv[2]+'/motor12-kamp-mobil.png')
     if len(sys.argv) > 2:
         page.screenshot(path=sys.argv[2]+'/motor12-kamp.png')
     page.get_by_role('button', name='4×').click()
@@ -78,6 +87,9 @@ with sync_playwright() as playwright:
     assert page.get_by_role('button',name='Genoptag').is_visible()
     assert '3-5-2' in page.locator('#events').inner_text()
     page.goto(origin+'/play/index.html')
+    page.set_viewport_size({'width':390,'height':820})
+    assert page.locator('.app-nav').evaluate('el=>getComputedStyle(el).position') == 'fixed'
+    no_overflow(page)
     page.get_by_role('link', name='Trup').click()
     page.get_by_label('Spiller ud').select_option('4')
     page.get_by_role('button', name='Bekræft skift').click()

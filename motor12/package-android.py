@@ -14,12 +14,12 @@ APP_ID = 'dk.touchline.footballidle.test'
 ASSETS = 'assets/public/'
 LAUNCHER = b'''<!doctype html><html lang="da"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=/motor12/play/index.html"><title>Touchline Motor 12</title><p><a href="/motor12/play/index.html">Klubhuset</a></p><p><a href="/legacy.html">Motor 11</a></p></html>'''
 
-def manifest(source):
+def manifest(source, build):
     data = bytearray(source)
     found = 0
     for encoding in ('utf-8', 'utf-16-le'):
         old = '1.0.0-test-match65'.encode(encoding)
-        new = '1.0.0-test-match66'.encode(encoding)
+        new = f'1.0.0-test-match{build}'.encode(encoding)
         found += data.count(old)
         data = data.replace(old, new)
     assert found == 1
@@ -38,7 +38,7 @@ def manifest(source):
                 name = struct.unpack_from('<I', data, pos+4)[0]
                 if name < len(resources) and resources[name] == 0x0101021b:
                     assert data[pos+15] == 0x10 and struct.unpack_from('<I', data, pos+16)[0] == 65
-                    struct.pack_into('<I', data, pos+16, 66)
+                    struct.pack_into('<I', data, pos+16, build)
                     changed += 1
         cursor += size
     assert changed == 1
@@ -48,6 +48,7 @@ def main():
     parser = argparse.ArgumentParser()
     for name in ('shell','web','sdk','signing','output'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--build-number', type=int, choices=[66, 67], default=67)
     args = parser.parse_args()
     assert sha256(args.shell.read_bytes()).hexdigest() == BASELINE
     assert b'/legacy.html' in (args.web/'play/index.html').read_bytes()
@@ -68,7 +69,7 @@ def main():
                     continue
                 data=old.read(entry)
                 if path=='AndroidManifest.xml':
-                    data=manifest(data)
+                    data=manifest(data,args.build_number)
                 if path==ASSETS+'index.html':
                     result.writestr(ASSETS+'legacy.html',data)
                     data=LAUNCHER
@@ -82,7 +83,7 @@ def main():
     assert cert(args.shell)==cert(args.output)
     run('zipalign','-c','-P','16','4',args.output)
     info=run('aapt','dump','badging',args.output).splitlines()[0]
-    assert f"name='{APP_ID}'" in info and "versionCode='66'" in info and "versionName='1.0.0-test-match66'" in info
+    assert f"name='{APP_ID}'" in info and f"versionCode='{args.build_number}'" in info and f"versionName='1.0.0-test-match{args.build_number}'" in info
     with ZipFile(args.shell) as old, ZipFile(args.output) as result:
         assert result.testzip() is None
         assert result.read(ASSETS+'index.html')==LAUNCHER

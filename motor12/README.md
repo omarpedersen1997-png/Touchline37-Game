@@ -38,6 +38,8 @@ valgfrie browsertest kræver Python Playwright og Chromium og køres med
   `assets/ui.css` indeholder de fælles designprincipper.
   Support, privatliv og kontosletning fører videre til de officielle
   produktionssider, når en eksisterende Touchline-konto skal håndteres.
+  Klubhus og web bruger nu lys papirbaggrund, rød accent og Barlow Condensed.
+  Kampskærmen har en mørk scoretavle over banen og analyse under banen.
 
 Kampen starter i PRE_KICKOFF med bolden på midterpletten. Nyt afspark efter
 et mål eller i anden halvleg kræver samme aktive valg i KICKOFF_READY.

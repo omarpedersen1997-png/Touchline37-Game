@@ -36,10 +36,12 @@ function title(head,sub,label){
 }
 function overview(){
   const opponent=match?.teams[1]||nextOpponent(club);
-  return title(escape(club.name),'Træning, trup og den næste kamp på samme sted.','KLUBOVERBLIK')+
-    `<div class="overview-grid"><section class="fixture"><p class="kicker">KAMPDAG</p><h2>${escape(club.name)}<br><em>mod ${escape(opponent.name)}</em></h2><p>${opponent.formation} · Holdstyrke ${opponent.rating}</p><button class="primary" data-action="match">${match?'Åbn kampen':'Gør klar til kamp'}</button></section>
-    <div class="dashboard"><section class="tile"><p class="kicker">KLUBKASSE</p><strong>${money(club.budget)}</strong><p>Indtægter tilskrives efter slutfløjt.</p></section>
-    <section class="tile"><p class="kicker">LIGAFORLØB</p><strong>${club.points} point</strong><p>${club.played} afviklede kampe</p></section></div></div>`;
+  const strength=Math.round(club.roster.slice(0,11).reduce((sum,p)=>sum+p.skill,0)/11);
+  return title(escape(club.name),'', 'DIT KLUBHUS')+
+    `<section class="fixture"><div class="fixture-info"><p class="kicker">NÆSTE KAMP</p><span>${escape(opponent.formation)} · Styrke ${opponent.rating}</span></div>
+    <div class="fixture-teams"><span>${escape(club.name)}</span><span>mod</span><strong>${escape(opponent.name)}</strong></div>
+    <div class="fixture-actions"><button class="primary" data-action="match">${match?'Åbn kampen':'Gør klar til kamp'}</button><button data-action="tactics">Sæt kampplan</button></div></section>
+    <dl class="club-ledger"><div><dt>Klubkasse</dt><dd>${money(club.budget)}</dd></div><div><dt>Ligapoint</dt><dd>${club.points}</dd></div><div><dt>Startelleverens rating</dt><dd>${strength}</dd></div></dl>`;
 }
 function phaseLabel(){
   switch(match.phase){
@@ -73,13 +75,17 @@ function reportMarkup(){
 }
 function matchMarkup(){
   const [home,away]=match.teams;
-  return `<div class="broadcast"><div class="scoreboard"><span class="badge home">${home.code}</span><strong id="score"></strong><span class="badge away">${away.code}</span><div><time id="clock">00:00</time><span id="phase"></span></div></div>
-    <div class="match-options"><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div>
-    <div class="match-grid"><section class="pitch-card" aria-label="Kampvisning"><div class="field-head"><span>${escape(home.name)} <span class="muted">mod</span> ${escape(away.name)}</span><span class="tag">KAMPANALYSE</span></div>
-      <canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas>
-      <div class="controls"><button id="play-control" class="primary" data-action="play">Kick Off</button><div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div></div><div id="match-report">${match.phase===PHASE.FULL_TIME?reportMarkup():''}</div></section>
-      <aside class="insights"><section class="tile live-stats"><h2>Kampstatistik</h2><div id="stats"></div><div class="momentum"><span>Momentum</span><meter id="momentum" min="0" max="100" value="50" aria-label="Momentum for hjemmeholdet"></meter></div></section>
-      <section class="tile timeline"><h2>Kampforløb</h2><ol id="events"></ol></section></aside></div>`;
+  return `<section class="match-sheet" aria-label="Kampvisning">
+    <div class="scoreboard"><div class="score-team home"><span class="team-code">${escape(home.code)}</span><strong>${escape(home.name)}</strong></div>
+    <div class="score-centre"><time id="clock">00:00</time><strong id="score"></strong></div>
+    <div class="score-team away"><span class="team-code">${escape(away.code)}</span><strong>${escape(away.name)}</strong></div></div>
+    <div class="arena"><canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas></div>
+    <div class="match-desk"><div class="play-state"><span id="phase" role="status"></span><button id="play-control" class="primary" data-action="play">Kick Off</button></div>
+    <div class="controls"><div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div>
+    <div class="match-options"><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
+    <div id="match-report">${match.phase===PHASE.FULL_TIME?reportMarkup():''}</div></section>
+    <div class="insights"><section class="live-stats"><h2>Kampstatistik</h2><div id="stats"></div><div class="momentum"><span>Momentum</span><meter id="momentum" min="0" max="100" value="50" aria-label="Momentum for hjemmeholdet"></meter></div></section>
+    <section class="timeline"><h2>Kampforløb</h2><ol id="events"></ol></section></div>`;
 }
 function tactical(){
   const team=match?.teams[0];
