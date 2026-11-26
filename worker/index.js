@@ -24,7 +24,8 @@ export default {async fetch(request,env){
  const uploaded=await privateApkUploadRoute(request,url,env.BUCKET,downloadArtifact,ownerApk);if(uploaded)return uploaded;
  const privateBuild=await privateApkRoute(request,url,env.BUCKET||launchApk,downloadArtifact,ownerApk);if(privateBuild)return privateBuild;
  const launch=launchInfo();
- const releaseHeaders={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'};
+ const securityHeaders={'Strict-Transport-Security':'max-age=31536000','Permissions-Policy':'camera=(), microphone=(), geolocation=()','Content-Security-Policy':"frame-ancestors 'self'; base-uri 'self'; object-src 'none'"};
+ const releaseHeaders={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...securityHeaders};
  if(url.pathname==='/api/launch'){
   if(!['GET','HEAD'].includes(request.method))return new Response(null,{status:405,headers:{...releaseHeaders,Allow:'GET, HEAD'}});
   return new Response(request.method==='HEAD'?null:JSON.stringify(launch),{headers:{...releaseHeaders,'Content-Type':'application/json; charset=utf-8'}});
@@ -79,6 +80,6 @@ export default {async fetch(request,env){
  if(url.pathname==='/favicon.svg')return new Response(touchlineMarkSvg(),{headers:{'Content-Type':'image/svg+xml','Cache-Control':'public, max-age=86400'}});
  if(url.pathname==='/robots.txt')return new Response('User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /play\nDisallow: /owner-builds/\nSitemap: https://playtouchline.dk/sitemap.xml\n',{headers:{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'public, max-age=3600'}});
  if(url.pathname==='/sitemap.xml')return new Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+publicSitePaths.map(path=>'<url><loc>https://playtouchline.dk'+path+'</loc></url>').join('')+'</urlset>',{headers:{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600'}});
- if(!['/','/privacy','/delete-account','/contact'].includes(url.pathname))return new Response('Ikke fundet',{status:404});
- return new Response(applySiteHead(page,url.pathname),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin'}});
+ if(!['/','/privacy','/delete-account','/contact'].includes(url.pathname))return new Response('Ikke fundet',{status:404,headers:{'X-Content-Type-Options':'nosniff'}});
+ return new Response(applySiteHead(page,url.pathname),{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin',...securityHeaders}});
 }};
