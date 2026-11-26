@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST65",
+    "title": "Touchline · aflevering i billedet og styring under resize",
+    "date": "2026-11-26",
+    "sourceCommit": "5617eac7c745aa4875a47290109b12f2f7b8cfe0",
+    "summary": "TEST65 fortsætter web-/Capacitor-spillet fra TEST64. Broadcast holder mere af afleveringsruten i billedet, mens styrepude og sprint bevarer aktive berøringer, når visningen ændrer størrelse uden at rotere."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 65,
+    "versionName": "1.0.0-test-match65",
+    "fileName": "Touchline37-Motor11-TEST65.apk",
+    "bytes": 46262796,
+    "sha256": "a0313ab94368122af568fa082b0b9ce9947e1ca59cea85b7aacea369adba82ee",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/test65-match-feel/dev/artifacts/Touchline37-Motor11-TEST65.apk"
+  },
+  "tests": {
+    "passed": 858,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "Browserkontrollen brugte Chromium med software-WebGL. Fysisk FPS, varme og fingerrespons på OnePlus Nord 4 afventer måling.",
+    "checks": [
+      "Samme R7-kamp og inputpakke ved 60 og 120 opdateringer pr. sekund i simulationstesten.",
+      "Chromium beholdt en trykket styrepude gennem resize i bredformat og kontrollerede release, Taktisk og Enkel 2D.",
+      "Det matematiske kameratjek projekterede bold og modtagelsespunkt på samme billede.",
+      "APK-CRC, justering, app-id, version og testsignatur verifieret mod TEST64."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Broadcast ved aflevering",
+      "detail": "Kameraet indrammer afleveringsruten mod modtagelsespunktet i R7 og trækker sig lidt tilbage, når begge punkter kræver plads. Indramningen fader ind og ud efter afstand. Taktisk overblik, reduceret bevægelse og de eksisterende replays er bevaret."
+    },
+    {
+      "title": "Styrepude gennem resize",
+      "detail": "Ved størrelsesskift uden rotation genmåles styrepuden ved næste bevægelse. Træk, sprint og knaphold bevares. Ved egentlig rotation nulstilles styringen."
+    },
+    {
+      "title": "Læsning af styring",
+      "detail": "Tastaturvalg og baneprojektion bruger en genbrugt retningsværdi. Tastatur, berøring og eksisterende inputmasker bevarer samme regler og akser."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Signeret testpakke",
+      "before": 46262796,
+      "after": 46262796,
+      "unit": "bytes",
+      "note": "Bygget med en frisk webpakke. Native DEX og Android-ressourcer svarer byte for byte til TEST64."
+    },
+    {
+      "label": "Modtagelsespunkt på en 1.000 px bred testvisning",
+      "before": 1275,
+      "after": 890,
+      "unit": "pixels",
+      "note": "Perspektivberegnet placering i én lang stikning. Den lodrette kant ligger ved 1.000 px."
+    }
+  ],
+  "preserved": [
+    "APK 37, app-id og certifikat for Touchline TEST, kampmotorernes simulationskode, R2-checksum og optagelsesformat.",
+    "Din klub, indstillinger, lydvalg, splash, main, DNS, hjemmeside og produktionsmiljø."
+  ],
+  "limitations": [
+    "Det nye kameraplan gælder R7 i den lokale testkamp. Fysisk Android-test afventer."
+  ],
+  "installSteps": [
+    "Hent TEST65, og vælg Opdater oven på Touchline TEST.",
+    "Åbn Spil lokal testkamp · R7. Vælg tør bane og Automatisk 3D."
+  ],
+  "nextTest": [
+    "Spil en lang flad aflevering, en stikning og et indlæg. Følg bolden og modtageren i samme udsnit.",
+    "Hold styrepude og sprint nede, og prøv at åbne og lukke telefonens systembjælke. Drej telefonen og kontrollér, at styringen nulstilles ved rotation.",
+    "Spil et par minutter. Tjek kampstatistik, varme og touchrespons på din OnePlus Nord 4."
+  ]
+}
