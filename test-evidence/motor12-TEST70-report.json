@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST70",
+    "title": "Motor 12 · Spil selv og kæmp om oprykning",
+    "date": "2026-11-26",
+    "sourceCommit": "76e3ed24188e3441f3aba9f5fff51b3a8de07ef8",
+    "summary": "Direkte spillerstyring i 3D og 2D, en bred klubmenu og 15 forskellige modstandere pr. sæson fra League 10 til League 1."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 70,
+    "versionName": "1.0.0-test-match70",
+    "fileName": "Touchline37-Motor12-TEST70.apk",
+    "bytes": 50443361,
+    "sha256": "0603262e9a768137c9abf57e8709a809e874188b8449c9967b24323081872295",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor12-redesign/dev/artifacts/Touchline37-Motor12-TEST70.apk"
+  },
+  "tests": {
+    "passed": 15,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "13 Node-tests og to Chromium-prøver. Fysisk telefonmåling afventer.",
+    "checks": [
+      "To samtidige berøringer på styrepude og skudknap i Chromium.",
+      "Afspark, ligakamp, scenarie, save, 3D og skift mellem kameravinkler.",
+      "15 runder før sæsonafslutning, oprykning, nedrykning og titlen i League 1.",
+      "APK-signatur, indhold og tidligere Motor 11-filer er verificeret."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Direkte kontrol",
+      "detail": "Flyt spilleren, sprint, aflever, send en stikning og afslut. Uden bold kan du skifte forsvarer og tackle. Styrepuden følger kameravinklen."
+    },
+    {
+      "title": "Klubmenu",
+      "detail": "Bredformat med græsgrønne flader, kridthvid tekst og gule kampknapper. Android bruger appens eksisterende orienteringsmodul."
+    },
+    {
+      "title": "League 10 til 1",
+      "detail": "15 kampe mod 15 modstandere. 30 point giver oprykning eller mesterskabet. Under 12 point giver nedrykning inden for ligaens grænser."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Android-testpakke",
+      "before": 50434999,
+      "after": 50443361,
+      "unit": "bytes",
+      "note": "Målt filstørrelse for TEST69 og TEST70."
+    },
+    {
+      "label": "Statisk webpakke",
+      "before": 4168197,
+      "after": 4169826,
+      "unit": "bytes",
+      "note": "Målt filstørrelse for TEST69 og TEST70."
+    }
+  ],
+  "preserved": [
+    "Eksisterende klub, historik, samlede point og aktiv kamp kan indlæses.",
+    "Tidligere motorer og APK-filer."
+  ],
+  "limitations": [
+    "Android-rotation, GPU-ydelse og fysisk fingerrespons er endnu ikke målt på OnePlus Nord 4."
+  ],
+  "installSteps": [
+    "Installér TEST70 over Touchline TEST.",
+    "Åbn Spil ligakamp og tryk Kick Off."
+  ],
+  "nextTest": [
+    "Hold styrepuden fremad med venstre tommel og aflever eller skyd med højre.",
+    "Prøv at skifte forsvarer og tackle under modstanderens angreb."
+  ],
+  "screenshots": {
+    "club": {
+      "file": "Touchline-Motor12-TEST70-club.webp",
+      "width": 844,
+      "height": 390
+    },
+    "arena": {
+      "file": "Touchline-Motor12-TEST70-arena.webp",
+      "width": 1080,
+      "height": 510
+    }
+  },
+  "web": {
+    "file": "Touchline-Motor12-Web-TEST70.zip",
+    "bytes": 4169826,
+    "sha256": "aa72627f4f7e9257715bd04ef1ffa044efd0ed83f2bc01ac5ed83a0542bae42a"
+  }
+}
