@@ -20,7 +20,18 @@ android {
     if (uploadKeyVariables.any { System.getenv(it) } && !uploadKeyVariables.every { System.getenv(it) }) {
         throw new GradleException("Upload signing requires all four TOUCHLINE signing environment variables.")
     }
+    // The redesign preview installs next to the released app and never shares its certificate.
+    def redesignKeyVariables = ["TOUCHLINE_REDESIGN_KEYSTORE", "TOUCHLINE_REDESIGN_STORE_PASSWORD", "TOUCHLINE_REDESIGN_KEY_ALIAS", "TOUCHLINE_REDESIGN_KEY_PASSWORD"]
+    def redesignSigning = redesignKeyVariables.every { System.getenv(it) }
     signingConfigs {
+        redesign {
+            if (redesignSigning) {
+                storeFile file(System.getenv("TOUCHLINE_REDESIGN_KEYSTORE"))
+                storePassword System.getenv("TOUCHLINE_REDESIGN_STORE_PASSWORD")
+                keyAlias System.getenv("TOUCHLINE_REDESIGN_KEY_ALIAS")
+                keyPassword System.getenv("TOUCHLINE_REDESIGN_KEY_PASSWORD")
+            }
+        }
         upload {
             if (System.getenv("TOUCHLINE_KEYSTORE")) {
                 storeFile file(System.getenv("TOUCHLINE_KEYSTORE"))
@@ -41,6 +52,15 @@ android {
         sideload {
             initWith release
             signingConfig signingConfigs.debug
+            debuggable false
+            matchingFallbacks = ['release']
+        }
+        // Preview of the redesign: separate application id and name, own test certificate.
+        redesign {
+            initWith release
+            applicationIdSuffix ".redesign"
+            versionNameSuffix "-redesign"
+            signingConfig redesignSigning ? signingConfigs.redesign : null
             debuggable false
             matchingFallbacks = ['release']
         }
@@ -78,6 +98,9 @@ try {
 
 // A fresh default key would break updates for installed APK users.
 gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.toLowerCase().contains('redesign') } && !["TOUCHLINE_REDESIGN_KEYSTORE", "TOUCHLINE_REDESIGN_STORE_PASSWORD", "TOUCHLINE_REDESIGN_KEY_ALIAS", "TOUCHLINE_REDESIGN_KEY_PASSWORD"].every { System.getenv(it) }) {
+        throw new GradleException('The redesign preview requires all four TOUCHLINE_REDESIGN signing environment variables.')
+    }
     if (graph.allTasks.any { it.path.startsWith(':app:') && it.name.toLowerCase().contains('sideload') }) {
         if (!android.signingConfigs.debug.storeFile.isFile()) {
             throw new GradleException('The existing APK signing store must be restored before building a sideload update.')

@@ -1,4 +1,5 @@
 import RecoveryAccess from './RecoveryAccess.jsx';
+import footballerArt from '../assets/game/footballer.webp';
 import{TouchlineMark}from'./TouchlineBrand.jsx';
 import {publisher} from './publisher.js';
 import {apiFetch,gameHome,documentLink} from './api.js';
@@ -14,21 +15,18 @@ export default function AuthScreen({onAuthenticated,checking=false,connectionErr
  const editEmail=()=>{setStep('email');setPassword('');setConfirm('');setError('')};
  useEffect(()=>{const back=e=>{if(step==='password'){e.preventDefault();editEmail()}else if(mode!=='login'){e.preventDefault();choose('login')}};window.addEventListener('touchline:back',back);return()=>window.removeEventListener('touchline:back',back)},[mode,step]);
  async function submit(e){e.preventDefault();if(busy)return;if(step==='email'){setEmail(email.trim());setError('');setStep('password');return}if(mode==='signup'&&password!==confirm){setError('De to adgangskoder skal være ens.');return}setBusy(true);setError('');try{const r=await apiFetch('/api/auth/'+(mode==='signup'?'register':'login'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});const d=await r.json();if(!r.ok)throw Error(d.error||'Kunne ikke logge ind.');setPassword('');setConfirm('');onAuthenticated(d.user)}catch(e){setError(e.message||'Ingen forbindelse. Prøv igen.')}finally{setBusy(false)}}
- return <div className={'auth-page'+(mode==='mail'?' auth-recovery':'')}>
+ return <div className={'auth-page kd-auth'+(mode==='mail'?' auth-recovery':'')}>
   <header className="auth-top">
-   <a className="brand" href={gameHome} aria-label="Touchline forside"><TouchlineMark size={44}/><div>touchline<span>FOOTBALL IDLE</span></div></a>
+   <a className="brand" href={gameHome} aria-label="Touchline forside"><TouchlineMark size={34}/><span className="kd-wordmark">Touchline<small>Football Idle</small></span></a>
    <a className="auth-support-link" href={documentLink(publisher.contactPath)}>Hjælp & support<ArrowRight size={15}/></a>
   </header>
   {mode==='mail'?<div className="auth-recovery-content"><MailRecovery onBack={()=>choose('login')} onRecovered={data=>onAuthenticated(data.user)}/></div>:<main className="auth-layout">
-   <section className="auth-story" aria-labelledby="auth-story-title">
-    <span className="eyebrow"><span className="tiny-line"/>Fra lokal til legende.</span>
-    <h1 id="auth-story-title">Din klub.<br/>{' '}Dit næste <em>kapitel.</em></h1>
-    <p>Et lille stadion. Et hold med store drømme.<br/>Resten af historien er din.</p>
-    <div className="auth-stadium" aria-hidden="true">
-     <div className="auth-pitch"><div className="auth-pitch-circle"/>{[[17,68],[38,72],[62,72],[83,68],[24,45],[50,48],[76,45],[24,22],[50,17],[76,22],[50,88]].map(([x,y],i)=><span className={i===10?'gold':''} key={i} style={{left:x+'%',top:y+'%'}}>{[2,4,5,3,6,8,10,7,9,11,1][i]}</span>)}</div>
-     <div className="auth-stadium-caption"><span>DIT KLUBHUS ER ÅBENT</span><b>11 spillere. Én fælles drøm.</b></div>
-    </div>
-    <div className="auth-features"><span><Users size={17}/>Byg dit hold</span><span><TrendingUp size={17}/>Udvikl din klub</span><span><Trophy size={17}/>Spil dig til toppen</span></div>
+   <section className="kd-auth-cover" aria-labelledby="auth-story-title">
+    <img src={footballerArt} alt="" decoding="async"/>
+    <span className="kd-auth-kicker">Fra lokal til legende</span>
+    <h1 id="auth-story-title">Din klub.<br/>Dit næste kapitel.</h1>
+    <p>Et lille stadion. Et hold med store drømme. Resten af historien er din.</p>
+    <ul className="kd-auth-points"><li><Users size={16}/>Byg dit hold</li><li><TrendingUp size={16}/>Udvikl din klub</li><li><Trophy size={16}/>Spil dig til toppen</li></ul>
    </section>
    <section className="auth-card panel" aria-labelledby="auth-title">
     {checking?<div className="auth-checking" role="status"><LoaderCircle className="spin" size={25}/><h2 id="auth-title">Åbner klubhuset…</h2></div>:connectionError?<div className="auth-checking"><ShieldCheck size={30}/><h2 id="auth-title">Vi kan ikke åbne klubhuset.</h2><p>{connectionError}</p><button className="primary full" onClick={onRetry}><RefreshCw size={17}/>Prøv igen</button></div>:<>

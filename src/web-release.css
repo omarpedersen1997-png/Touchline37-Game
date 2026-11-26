@@ -4,4 +4,4 @@
 .web-game .modal-backdrop{overflow-y:auto;overscroll-behavior:contain}
 .web-game .modal{overscroll-behavior:contain}
 @media(max-width:760px){.web-game input,.web-game textarea,.web-game select{font-size:16px}.web-game .page-heading h1{overflow-wrap:anywhere}}
-@media(max-height:560px){.web-game .modal-backdrop,.web-game .match-backdrop{align-items:flex-start;padding-top:10px;padding-bottom:10px}.web-game .modal,.web-game .match-dialog{max-height:calc(100dvh - 20px)}}
+@media(max-height:560px){.web-game .modal-backdrop{align-items:flex-start;padding-top:10px;padding-bottom:10px}.web-game .match-backdrop{align-items:flex-start;padding-top:10px;padding-bottom:10px}.web-game .modal{max-height:calc(100dvh - 20px)}.web-game .match-dialog{max-height:calc(100dvh - 20px)}}
