@@ -210,12 +210,17 @@ export async function createArena(canvas){
       scene.add(a.root);actors.push(a);
     }
     const motion=matchMedia('(prefers-reduced-motion: reduce)');
-    return {dispose,layout(){
+    return {dispose,mapAxes(input){
+      const e=camera.matrixWorld.elements, x=input.x, y=input.y;
+      const length=Math.hypot(e[0],e[2])||1;
+      input.x=(x*e[0]-y*e[2])/length;
+      input.y=(x*e[2]+y*e[0])/length;
+    },layout(){
       const bounds=canvas.getBoundingClientRect();if(!bounds.width||!bounds.height)return false;
       const pixel=Math.min(devicePixelRatio||1,1.18,Math.sqrt(1000000/(bounds.width*bounds.height)));
       renderer.setPixelRatio(pixel);renderer.setSize(bounds.width,bounds.height,false);
       camera.aspect=bounds.width/bounds.height;camera.updateProjectionMatrix();return true;
-    },render(state,previous,alpha=1,running=false,view='tv',rate=1){
+    },render(state,previous,alpha=1,running=false,view='tv',rate=1,slot=-1){
       const now=performance.now(),seconds=last?clamp((now-last)/1000,0,.05):0;
       last=now;
       const b=state.ball,snap=first||state.phase!==lastPhase,cut=snap||lastView!==view;
@@ -243,9 +248,9 @@ export async function createArena(canvas){
         shadowPos.set(a.root.position.x+.08,.035,a.root.position.z+.12);
         shadowMatrix.compose(shadowPos,shadowRot,shadowScale);shadows.setMatrixAt(i++,shadowMatrix);
       }
-      ring.visible=b.owner>=0;
+      ring.visible=slot>=0||b.owner>=0;
       if(ring.visible){
-        const carrier=actors[(b.owner>>4)*11+b.owner%16].root.position;
+        const carrier=actors[slot>=0?slot:(b.owner>>4)*11+b.owner%16].root.position;
         ring.position.set(carrier.x,.041,carrier.z);
       }
       if(key)lastRelease=key;

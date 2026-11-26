@@ -1,6 +1,7 @@
+import {bindControls} from './controls.js';
 import { PHASE, createMatch, kickOff,timeLabel,setTactics,substitute,swapRoles } from './engine.js';
 import { FORMATIONS, TACTICS, PRESS, fieldRole } from './teams.js';
-import { loadClub, saveClub, newClub, nextMatch, nextOpponent, trainClub, settleMatch, money } from './club.js';
+import { SEASON_LENGTH,PROMOTION_POINTS,SAFETY_POINTS,loadClub, saveClub, newClub, nextMatch, nextOpponent, trainClub, settleMatch, money } from './club.js';
 import { pitchView } from './pitch.js';
 import { createMatchLoop } from './loop.js';
 import { matchAudio } from './audio.js';
@@ -12,7 +13,7 @@ let storage;
 try{storage=localStorage;}catch{}
 let club=demo?newClub():loadClub(storage);
 let match=demo?createMatch():club.active;
-let scenario=null;
+let scenario=null, manual=true, controls=null;
 let paused=true, speed=1, frame=0, lastPaint=0, lastEvent=0, savedTime=0, loop, pitch, observer;
 let arena, arenaToken=0, arenaMode='2d', arenaLoading=false;
 let notice='', view=initialView();
@@ -42,7 +43,7 @@ function overview(){
   const strength=Math.round(club.roster.slice(0,11).reduce((sum,p)=>sum+p.skill,0)/11);
   return `<div class="club-hub">
     <div class="hub-heading"><h1>${escape(club.name)}</h1><span>${money(club.budget)} <span>i klubkassen</span></span></div>
-    <section class="hub-fixture"><div class="hub-fixture-copy"><p class="kicker">NÆSTE LIGAKAMP</p>
+    <section class="hub-fixture"><div class="hub-fixture-copy"><p class="kicker">LEAGUE ${club.division} · RUNDE ${club.round+1}/${SEASON_LENGTH}</p>
     <h2>${escape(opponent.name)}</h2><p>${escape(opponent.formation)} · Holdstyrke ${opponent.rating}</p>
     <div class="hub-actions"><button class="primary" data-action="arena-launch">${match?'Åbn ligakampen':'Spil ligakamp'}</button><button data-action="tactical-launch">Taktisk 2D</button></div></div></section>
     <div class="hub-modes"><button class="hub-mode hub-scenarios" data-action="scenarios"><span class="mode-tag">KORT KAMP</span><strong>Kampsituationer</strong><span>Vend kampen eller hold føringen.</span></button>
@@ -95,11 +96,13 @@ function matchMarkup(){
     <div class="scoreboard"><div class="score-team home"><span class="team-code">${escape(home.code)}</span><strong>${escape(home.name)}</strong></div>
     <div class="score-centre"><time id="clock">00:00</time><strong id="score"></strong></div>
     <div class="score-team away"><span class="team-code">${escape(away.code)}</span><strong>${escape(away.name)}</strong></div></div>
-    <div class="arena"><canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas><canvas id="pitch3d" hidden aria-label="Touchline stadion med animerede spillere"></canvas></div>
+    <div class="arena"><canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas><canvas id="pitch3d" hidden aria-label="Touchline stadion med animerede spillere"></canvas>
+    <div class="field-input" ${manual?'':'hidden'}><button class="field-stick" aria-label="Styrepude"><i></i></button>
+    <output id="active-player"></output><div class="field-actions">${[['switch','Skift'],['tackle','Tackl'],['sprint','Sprint'],['through','Stikning'],['pass','Aflever'],['shoot','Skyd']].map(([id,label])=>`<button data-field="${id}">${label}</button>`).join('')}</div></div></div>
     <div class="camera-desk" role="group" aria-label="Kampkamera"><button data-camera="tv" aria-pressed="false">Arena 3D</button><button data-camera="near" aria-pressed="false">Nærkamera</button><button data-camera="2d" aria-pressed="true">Taktisk</button><button data-action="expand" aria-pressed="false">Udvid</button><span id="arena-status" role="status"></span></div>
     <div class="match-desk"><div class="play-state"><span id="phase" role="status"></span><button id="play-control" class="primary" data-action="play">Kick Off</button></div>
     <div class="controls"><div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div>
-    <div class="match-options"><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
+    <div class="match-options"><button data-action="control-mode">${manual?'Skift til manager':'Styr selv'}</button><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
     <div id="match-report">${match.phase===PHASE.FULL_TIME?reportMarkup():''}</div></section>
     <div class="insights"><section class="live-stats"><h2>Kampstatistik</h2><div id="stats"></div><div class="momentum"><span>Momentum</span><meter id="momentum" min="0" max="100" value="50" aria-label="Momentum for hjemmeholdet"></meter></div></section>
     <section class="timeline"><h2>Kampforløb</h2><ol id="events"></ol></section></div>`;
@@ -135,7 +138,8 @@ function squad(){
 }
 function clubView(){
   return title('Klubstatus','Fremdrift, træning og resultater for denne enhed.','KLUBDRIFT')+
-  `<div class="dashboard dashboard-three"><section class="tile"><p class="kicker">BUDGET</p><strong>${money(club.budget)}</strong></section><section class="tile"><p class="kicker">POINT</p><strong>${club.points}</strong></section><section class="tile"><p class="kicker">KAMPE</p><strong>${club.played}</strong></section></div>
+  `<section class="league-table"><h2>League ${club.division}</h2><p>${club.seasonPoints} point efter ${club.round} af ${SEASON_LENGTH} kampe. ${PROMOTION_POINTS} point giver ${club.division===1?'mesterskabet':'oprykning'}. Under ${SAFETY_POINTS} point giver ${club.division===10?'en ny sæson i League 10':'nedrykning'}.</p>${club.history[0]?.seasonResult?'<strong>'+escape(club.history[0].seasonResult)+'</strong>':''}</section>
+    <div class="dashboard dashboard-three"><section class="tile"><p class="kicker">BUDGET</p><strong>${money(club.budget)}</strong></section><section class="tile"><p class="kicker">POINT</p><strong>${club.points}</strong></section><section class="tile"><p class="kicker">KAMPE</p><strong>${club.played}</strong></section></div>
     <div class="club-details"><section class="tile"><h2>Restitutionstræning</h2><p>8.500 kr. giver op til 10 konditionspoint og ét formpoint før næste kamp.</p><button class="primary" data-action="train" ${club.active||club.trained||club.budget<8500?'disabled':''}>Planlæg træning</button><p role="status">${escape(notice)}</p></section>
     <section class="tile"><h2>Seneste resultater</h2>${club.history.length?club.history.slice(0,6).map(item=>`<div class="history"><b>${item.goals} : ${item.conceded}</b><span>${escape(item.opponent)}</span><strong>${money(item.revenue)}</strong></div>`).join(''):'<p class="muted">Spil den første kamp for at se dit resultat og din indtægt.</p>'}</section></div>
     ${demo?'':'<details class="local-data"><summary>Lokale data</summary><p>Slet din Motor 12-klub og den aktive kamp på denne enhed.</p><button data-action="reset">Slet lokal klub</button></details>'}`;
@@ -143,6 +147,8 @@ function clubView(){
 function put(id,value){const el=document.getElementById(id);if(el&&el.textContent!==value)el.textContent=value;}
 let renderedEvent=-1, renderedStats='', renderedPhase='';
 function paintHUD(){
+  const focus=match.teams[0].players[controls?.state.slot];
+  put('active-player',focus?focus.number+' · '+focus.name:'');
   put('clock',timeLabel(match));
   put('score',match.teams[0].stats.goals+' : '+match.teams[1].stats.goals);
   put('phase',phaseLabel());
@@ -159,7 +165,7 @@ function paintHUD(){
     renderedEvent=match.eventId;
   }
 }
-function stop(){paused=true;loop?.reset();cancelAnimationFrame(frame);frame=0;}
+function stop(){controls?.reset();paused=true;loop?.reset();cancelAnimationFrame(frame);frame=0;}
 function expandMatch(expanded){
   const sheet=container.querySelector('.match-sheet'),button=container.querySelector('[data-action="expand"]');
   if(!sheet||!button)return;
@@ -169,8 +175,8 @@ function expandMatch(expanded){
   button.setAttribute('aria-pressed',String(expanded));
 }
 function drawPitch(previous,alpha=1,running=false){
-  if(arena&&arenaMode!=='2d')arena.render(match,previous,alpha,running,arenaMode,speed);
-  else pitch.render(match,previous,alpha);
+  if(arena&&arenaMode!=='2d')arena.render(match,previous,alpha,running,arenaMode,speed,manual?(controls?.state.slot??-1):-1);
+  else pitch.render(match,previous,alpha,manual?(controls?.state.slot??-1):-1);
 }
 function showCamera(mode){
   if(view!=='match')return;
@@ -198,7 +204,7 @@ function showCamera(mode){
   });
 }
 function render(){
-  stop();observer?.disconnect();
+  stop();controls?.dispose();controls=null;observer?.disconnect();
   document.body.classList.remove('match-on-top');
   arenaToken++;arenaLoading=false;
   arena?.dispose();arena=null;
@@ -210,6 +216,7 @@ function render(){
   ${scenario?`<div class="scenario-context"><strong>${scenario.title}</strong><span>${scenario.target}</span></div>`:''}${content}`;
   if(view==='match'){
     const canvas=document.querySelector('#pitch');
+    controls=bindControls(container,()=>manual&&!paused&&match.phase===PHASE.PLAYING);
     pitch=pitchView(canvas);
     const layout=()=>{
       if(arena&&arenaMode!=='2d'){if(arena.layout())drawPitch(null);}
@@ -231,7 +238,8 @@ function go(next){
   render();save();
 }
 function onFrame(now){
-  const alpha=loop.advance(now,speed);
+  const input=manual?controls.sample(arenaMode==='2d'?null:arena):null;
+  const alpha=loop.advance(now,speed,input);
   drawPitch(loop.previous,alpha,true);
   if(now-lastPaint>145){paintHUD();lastPaint=now;}
   const latest=match.events[0];
@@ -255,7 +263,7 @@ container.addEventListener('click',event=>{
   if(!button)return;
   if(button.dataset.scenario){
     scenario=SCENARIOS.find(item=>item.id===button.dataset.scenario);
-    if(scenario){match=scenarioMatch(scenario);arenaMode='tv';speed=1;go('match');}
+    if(scenario){manual=true;match=scenarioMatch(scenario);arenaMode='tv';speed=1;go('match');}
     return;
   }
   if(button.dataset.camera){showCamera(button.dataset.camera);return;}
@@ -265,7 +273,8 @@ container.addEventListener('click',event=>{
     return;
   }
   const action=button.dataset.action;
-  if(action==='expand'){
+  if(action==='control-mode'){manual=!manual;render();}
+  else if(action==='expand'){
     expandMatch(button.getAttribute('aria-pressed')!=='true');
   }else if(action==='play'){
     if(kickOff(match)){
@@ -276,11 +285,11 @@ container.addEventListener('click',event=>{
   }else if(action==='sound'){
     club.sound=!club.sound;void audio.enable(club.sound);
     button.textContent=club.sound?'Lyd til':'Lyd fra';button.setAttribute('aria-pressed',String(club.sound));save();
-  }else if(action==='arena-launch'){arenaMode='tv';go('match');}
-  else if(action==='tactical-launch'){arenaMode='2d';go('match');}
+  }else if(action==='arena-launch'){manual=true;arenaMode='tv';go('match');if(matchMedia('(orientation:landscape)').matches)expandMatch(true);}
+  else if(action==='tactical-launch'){manual=true;arenaMode='2d';go('match');}
   else if(['match','tactics','squad','scenarios'].includes(action)){go(action);}
   else if(action==='settle'){
-    if(scenario){match=scenarioMatch(scenario);go('match');return;}
+    if(scenario){manual=true;match=scenarioMatch(scenario);go('match');return;}
     if(demo){match=createMatch();go('match');return;}
     if(settleMatch(club,match)){match=null;go('club');}
   }else if(action==='train'){

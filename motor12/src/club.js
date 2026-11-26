@@ -4,7 +4,7 @@ const KEY='touchline:motor12:local:v1';
 const number=new Intl.NumberFormat('da-DK');
 export const money = value => number.format(Math.round(value))+' kr.';
 export function newClub(){
-  return {schema:1,name:HOME.name,budget:250000,played:0,points:0,formation:HOME.formation,
+  return {schema:1,division:10,round:0,seasonPoints:0,name:HOME.name,budget:250000,played:0,points:0,formation:HOME.formation,
     roster:makeSquad(HOME,0),history:[],trained:false,sound:false,active:null};
 }
 function validPlayer(p){
@@ -31,13 +31,20 @@ export function loadClub(storage){
       ||!Array.isArray(s.history)||!Number.isFinite(s.budget)||!Number.isInteger(s.played)||s.played<0
       ||!Number.isFinite(s.points)||typeof s.name!=='string')return newClub();
     if(s.active&&!validMatch(s.active))s.active=null;
+    if(!Number.isInteger(s.division)||s.division<1||s.division>10) {
+      Object.assign(s,{division:10,round:0,seasonPoints:0});
+    }
     return s;
   } catch {return newClub();}
 }
 export function saveClub(club,storage){
   try{storage.setItem(KEY,JSON.stringify(club));return true;}catch{return false;}
 }
-export const nextOpponent=club=>LEAGUE[club.played%LEAGUE.length];
+export const SEASON_LENGTH=15, PROMOTION_POINTS=30, SAFETY_POINTS=12;
+export function nextOpponent(club){
+  const opponent=LEAGUE[club.played%LEAGUE.length];
+  return {...opponent,rating:opponent.rating+2*(10-club.division)};
+}
 export function nextMatch(club){
   if(club.active)return club.active;
   const match=createMatch({home:{...HOME,name:club.name},away:nextOpponent(club),roster:club.roster,
@@ -64,6 +71,16 @@ export function settleMatch(club,match){
     return {...p,energy:Math.min(100,played?played.energy+28:p.energy+15),
       form:Math.max(3,Math.min(10,p.form+(points===3?1:points===0?-1:0)))};
   });
+  summary.division=club.division;
+  club.round++;
+  club.seasonPoints+=points;
+  if(club.round===SEASON_LENGTH){
+    const total=club.seasonPoints;
+    if(total>=PROMOTION_POINTS&&club.division>1)club.division--;
+    else if(total<SAFETY_POINTS&&club.division<10)club.division++;
+    summary.seasonResult=club.division<summary.division?'Oprykning':club.division>summary.division?'Nedrykning':total>=PROMOTION_POINTS&&club.division===1?'Ligamester':'Pladsen sikret';
+    club.round=0;club.seasonPoints=0;
+  }
   club.history.unshift(summary);
   club.played++;club.points+=points;club.budget+=revenue;club.trained=false;club.active=null;
   return summary;

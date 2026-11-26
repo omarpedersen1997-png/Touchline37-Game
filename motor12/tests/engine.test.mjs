@@ -160,3 +160,33 @@ test('the scenario objectives can be reached by changing the match plan',()=>{
     assert.equal(scenarioResult(item,changed),true);
   }
 });
+
+test('direct control steers the carrier and releases once on demand',()=>{
+  for(const action of ['pass','through','shoot']){
+    const s=createMatch();kickOff(s);
+    const p=s.teams[0].players[9];
+    Object.assign(s.ball,{owner:9,kind:'carry',age:1});
+    const input={slot:9,x:0,y:1,sprint:true,action:''};
+    for(let i=0;i<12;i++)stepMatch(s,{},input);
+    assert.ok(p.y>.45);assert.equal(s.ball.owner,9);
+    input.action=action;stepMatch(s,{},input);
+    assert.equal(input.action,'');assert.equal(s.ball.owner,-1);
+    assert.equal(s.ball.kind,action==='shoot'?'shot':'pass');
+  }
+});
+
+test('fifteen settled fixtures determine promotion, relegation and league one title',()=>{
+  for(const [division,wins,expected] of [[10,10,9],[2,10,1],[1,15,1],[4,0,5],[10,0,10],[5,6,5]]){
+    const club=newClub();club.division=division;
+    const opponents=new Set();
+    for(let i=0;i<15;i++){
+      const m=nextMatch(club);opponents.add(m.teams[1].name);m.phase=PHASE.FULL_TIME;
+      m.teams[i<wins?0:1].stats.goals=1;
+      const summary=settleMatch(club,m);
+      if(i<14){assert.equal(club.division,division);assert.equal(club.round,i+1);}
+      if(division===1&&i===14)assert.equal(summary.seasonResult,'Ligamester');
+    }
+    assert.equal(club.division,expected);assert.equal(club.round,0);
+    assert.equal(club.seasonPoints,0);assert.equal(club.played,15);assert.equal(opponents.size,15);
+  }
+});

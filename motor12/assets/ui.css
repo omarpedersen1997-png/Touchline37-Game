@@ -239,3 +239,57 @@ select{max-width:100%;width:100%;background:var(--white)}
   .scoreboard{min-height:55px}
   #pitch,#pitch3d{height:clamp(127px,49dvh,350px)}
 }
+
+/* Klubhusets farver følger banens græs, kridt og anførerbind. */
+body:has(#game){
+  --paper:#eef6ed;--ink:#102e28;--navy:#102e28;--red:#17624f;--muted:#486359;
+  background:var(--paper)
+}
+body:has(#game) .top{background:#0c2824;color:#f4fff4;border-bottom:3px solid #e6ff54}
+body:has(#game) .mark i{background:#e6ff54;color:#102e28}
+body:has(#game) .app-nav a[aria-current]{background:#183e34;color:white;box-shadow:inset 0 -3px #cbee44}
+.club-hub{background:#0b302b;color:#f5fff1;padding:clamp(12px,2vw,26px);border-radius:10px}
+.hub-heading{align-items:center;margin:0 0 12px}
+.hub-heading h1{font-size:clamp(25px,3.6vw,48px)}
+.hub-heading>span span{color:#c6ddd1}
+.hub-fixture::before{background:linear-gradient(90deg,#102820f7,#0d291dcc 35%,transparent 84%),url("club-cover.webp") center 43%/cover}
+.hub-fixture{border:1px solid #5a8774;border-bottom:4px solid #e4ff56;border-radius:5px;overflow:hidden}
+.hub-fixture .kicker{color:#e7ff7b}
+.hub-actions .primary{background:#e6ff54;border-color:#e6ff54;color:#102e28}
+.hub-scenarios,.hub-scenarios:not(.primary):not(:disabled):hover{background:repeating-linear-gradient(130deg,#175547 0 22px,#195b4b 22px 44px)}
+.hub-squad,.hub-squad:not(.primary):not(:disabled):hover{background:#e6b85a;color:#28220c}
+.hub-tactics,.hub-tactics:not(.primary):not(:disabled):hover{background:radial-gradient(circle at 93% 65%,transparent 25px,#8cd4cd66 26px,transparent 28px),#204e59}
+.club-ledger dt{color:#c6ddd1}
+.league-table{border-left:4px solid #306f51;padding:.8em 1em;margin-bottom:1em;background:#dbeadf}
+.arena{position:relative}
+.field-input{position:absolute;inset:0;pointer-events:none;user-select:none}
+.field-input[hidden]{display:none}
+.field-input button{min-height:44px;pointer-events:auto;touch-action:none;color:#fff;background:#073d36d9;border:1px solid #d3ffe48c;box-shadow:0 2px 8px #102c2852}
+.field-input .field-stick{position:absolute;left:max(2%,env(safe-area-inset-left));bottom:5%;width:clamp(68px,11vmin,105px);aspect-ratio:1;border-radius:50%;padding:0;display:grid;place-items:center;background:#103b3699}
+.field-stick i{width:44%;height:44%;border:2px solid #d1f1df;background:#89bda8aa;border-radius:50%}
+.field-actions{position:absolute;right:max(2%,env(safe-area-inset-right));bottom:4%;display:grid;grid-template-columns:repeat(3,auto);gap:4px}
+.field-actions button{border-radius:13px 13px 4px 4px;padding:3px 7px;font:600 clamp(12px,2.8vmin,18px) var(--display);text-transform:uppercase}
+.field-actions [data-field=shoot],.field-actions .held{background:#e6ff54;color:#14382d}
+#active-player{position:absolute;bottom:3%;left:40%;color:white;background:#0b2d24db;font:600 14px var(--display);padding:2px 5px}
+#active-player:empty{display:none}
+@media (orientation:landscape) and (min-width:510px){
+ .club-hub{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:8px 12px}
+ .hub-heading,.club-ledger{grid-column:1/-1;margin:0}
+ .hub-modes{margin:0;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px}
+ .hub-scenarios{grid-column:1/-1}
+ .hub-mode{min-height:0;padding:8px 12px}
+ .hub-fixture{min-height:clamp(170px,48dvh,400px)}
+ .hub-fixture-copy{padding:clamp(12px,2vw,36px)}
+ .hub-fixture h2{font-size:clamp(35px,5vw,85px)}
+ .hub-mode strong{font-size:clamp(20px,3vw,46px)}
+}
+@media (orientation:landscape) and (max-height:550px){
+ body:has(#game) .top{display:none}
+ .app-main{--gutter:14px}
+ .hub-mode .mode-tag{font-size:10px}
+ .hub-mode>span:not(.mode-tag){font-size:12px}
+ .match-expanded .scoreboard{min-height:32px}
+ .match-expanded .camera-desk,.match-expanded .match-desk{padding:1px 6px;gap:4px}
+ .match-expanded .controls,.match-expanded .play-state{width:auto}
+ .match-expanded .match-desk button,.match-expanded .camera-desk button{min-height:32px;padding:3px 7px}
+}

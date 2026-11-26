@@ -103,6 +103,7 @@ with sync_playwright() as playwright:
     assert page.locator('#clock').inner_text() == '00:00'
     page.goto(origin+'/play/index.html?demo=1')
     page.get_by_role('button', name='4×').click()
+    page.get_by_role('button',name='Skift til manager').click()
     stopped = []
     for _ in range(5):
         page.get_by_role('button', name='Kick Off').click()
@@ -129,6 +130,7 @@ with sync_playwright() as playwright:
     saved = page.evaluate('localStorage.getItem("touchline:motor12:local:v1")')
     page.get_by_role('button', name='Kampsituationer', exact=False).click()
     page.get_by_role('button', name='Spil Hold føringen').click()
+    page.get_by_role('button',name='Skift til manager').click()
     assert page.locator('#clock').inner_text()=='78:00'
     assert page.locator('#score').inner_text()=='2 : 1'
     page.clock.run_for(600)
@@ -146,6 +148,33 @@ with sync_playwright() as playwright:
     page.get_by_role('link',name='Til situationer').click()
     page.get_by_role('link',name='Kamp',exact=True).click()
     assert page.locator('#clock').inner_text()=='00:00'
+    page.set_viewport_size({'width':844,'height':390})
+    page.get_by_role('link',name='Forside').click()
+    assert 'LEAGUE 10 · RUNDE 1/15' in page.locator('.hub-fixture').inner_text()
+    if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/club-landscape.png')
+    page.get_by_role('button',name='Taktisk 2D').click()
+    page.get_by_role('button',name='Udvid').click()
+    page.get_by_role('button',name='Kick Off').click()
+    page.clock.run_for(1300)
+    assert page.locator('#active-player').inner_text()
+    pad=page.locator('.field-stick').bounding_box()
+    x,y=pad['x']+pad['width']/2,pad['y']+pad['height']/2
+    cdp=page.context.new_cdp_session(page)
+    def touch(kind,points):
+        cdp.send('Input.dispatchTouchEvent',{'type':kind,'touchPoints':points})
+    finger={'id':1,'x':x,'y':y}
+    touch('touchStart',[finger])
+    finger['y']+=pad['height']*.38
+    touch('touchMove',[finger])
+    assert page.locator('.field-stick i').evaluate('el=>el.style.transform.includes("px")')
+    page.clock.run_for(240)
+    shot=page.locator('[data-field="shoot"]').bounding_box()
+    touch('touchStart',[finger,{'id':2,'x':shot['x']+shot['width']/2,'y':shot['y']+shot['height']/2}])
+    page.clock.run_for(150)
+    touch('touchEnd',[])
+    assert 'Afslutning' in page.locator('#events').inner_text()
+    assert page.locator('.field-stick i').evaluate('el=>el.style.transform===""')
+    if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/match-landscape.png')
     assert not errors, errors
     assert not missing, missing
     browser.close()

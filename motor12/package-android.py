@@ -48,7 +48,7 @@ def main():
     parser = argparse.ArgumentParser()
     for name in ('shell','web','sdk','signing','output'):
         parser.add_argument('--'+name, type=Path, required=True)
-    parser.add_argument('--build-number', type=int, choices=[66, 67, 68, 69], default=69)
+    parser.add_argument('--build-number', type=int, choices=[66, 67, 68, 69, 70], default=70)
     args = parser.parse_args()
     assert sha256(args.shell.read_bytes()).hexdigest() == BASELINE
     assert b'/legacy.html' in (args.web/'play/index.html').read_bytes()

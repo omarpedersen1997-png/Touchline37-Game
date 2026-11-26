@@ -14,6 +14,13 @@ export const LEAGUE = [
   {name:'Havneby IF',code:'HIF',color:'#8fb4ff',formation:'4-2-3-1',rating:65},
   {name:'Skovlund GF',code:'SGF',color:'#81c7ff',formation:'3-5-2',rating:69},
   {name:'Vesterbro 1910',code:'V10',color:'#bba3ff',formation:'4-3-3',rating:72},
+  ...[
+    ['Nordvig BK','NVB'],['Engholm IF','EHI'],['Lindehavn FK','LHF'],
+    ['Søndermark BK','SMB'],['Fjordby 1924','F24'],['Birkedal GF','BDG'],
+    ['Østerbro Atletik','ØBA'],['Klitborg FF','KBF'],['Ådalens IF','ÅDI'],
+    ['Teglværkets BK','TVB'],['Vestengen FK','VEF'],['Møllehøj United','MHU'],
+  ].map(([name,code],i)=>({name,code,color:['#8fb4ff','#81c7ff','#bba3ff'][i%3],
+    formation:['4-3-3','3-5-2','4-2-3-1'][i%3],rating:64+i%8})),
 ];
 const names = ['Emil Bæk','Kasper Hald','Adam Kjær','Victor Berg','Noah Lange','Mads Storm','Elias Birk','Tobias Lund','Lucas Friis','Anton Holm','Oscar Dahl','Felix Sø','Liam Ravn','Malthe Due','Karl Møller','Alfred Boye'];
 const opponents = ['Nikolaj Krog','Jonas Skov','Lasse Juul','Oliver Beck','Mikkel Høgh','Simon Buhl','Mathias Gram','Aksel Fog','August Viig','Magnus Bro','William Falk','Theo Tran','Silas Lind','Isak Hede','Sofus Dal','Asger Bank'];

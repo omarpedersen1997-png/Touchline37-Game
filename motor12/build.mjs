@@ -19,7 +19,7 @@ const shell=({title,body,base='./',match=false,script='',description='Touchline 
 <meta property="og:type" content="website"><title>${title}</title>
 <link rel="icon" href="${base}assets/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="${base}${styles}">${script?`<script type="module" src="${base}src/${script}"></script>`:''}</head>
-<body><a class="skip" href="#main">Gå til indhold</a>${header(base,match)}${body}${footer(base)}</body></html>`;
+<body>${match&&android?'<script type="module" src="../assets/landscape.js"></script>':''}<a class="skip" href="#main">Gå til indhold</a>${header(base,match)}${body}${footer(base)}</body></html>`;
 
 const landing=`<main id="main">
 <section class="hero wrap"><div class="hero-copy">
@@ -52,6 +52,13 @@ const pages=[['index.html',shell({title:siteName+' · Sidelinjen er din',body:la
 await mkdir(output,{recursive:true});
 await cp(resolve(base,'src'),resolve(output,'src'),{recursive:true});
 await cp(resolve(base,'assets'),resolve(output,'assets'),{recursive:true});
+if(android){
+  await build({stdin:{contents:`import {enterMatchDisplay,exitMatchDisplay} from './src/match-display.js';
+    window.addEventListener('pageshow',()=>enterMatchDisplay().catch(()=>{}));
+    window.addEventListener('pagehide',()=>exitMatchDisplay().catch(()=>{}));
+    enterMatchDisplay().catch(()=>{});`,resolveDir:resolve(base,'..')},
+    bundle:true,format:'esm',minify:true,target:'chrome100',outfile:resolve(output,'assets/landscape.js')});
+}
 const stadiumAssets=resolve(output,'assets/arena');
 await mkdir(stadiumAssets,{recursive:true});
 for(const file of ['player-auto.glb','keeper-auto.glb','FOOTBALL-ASSET-LICENSES.md']){

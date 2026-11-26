@@ -49,7 +49,7 @@ export function pitchView(canvas) {
     bg.restore();
   }
   const px=x=>ox+(x+L/2)*scale, py=y=>oy+(y+W/2)*scale;
-  function render(state, previous, alpha=1){
+  function render(state, previous, alpha=1,slot=-1){
     ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(field,0,0);
     ctx.setTransform(ratio,0,0,ratio,0,0);
     const ball=state.ball;
@@ -70,7 +70,7 @@ export function pitchView(canvas) {
         ctx.lineTo(x+radius,y-radius*.61);ctx.lineTo(x+radius*.84,y+radius*.73);
         ctx.lineTo(x,y+radius);ctx.lineTo(x-radius*.84,y+radius*.73);
         ctx.lineTo(x-radius,y-radius*.61);ctx.closePath();ctx.fill();
-        const carrier=ball.owner===side*16+p.slot;
+        const carrier=slot>=0?side===0&&slot===p.slot:ball.owner===side*16+p.slot;
         ctx.strokeStyle=carrier?'#fff4d8':'#fff0cd9c';ctx.lineWidth=carrier?2:.72;ctx.stroke();
         ctx.fillStyle=p.slot===0?'#221e26':'#fffdf3';ctx.fillText(p.number,x,y+.17);
       }

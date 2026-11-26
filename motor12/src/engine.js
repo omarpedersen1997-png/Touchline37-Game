@@ -209,13 +209,56 @@ function challenge(s,side,p,owner) {
   } else if(draw(s)<chance) controlBall(s,side,p);
   else p.wait=.6;
 }
-export function stepMatch(s, scratch={}) {
+export function controlledSlot(s,input, cycle=false){
+  const b=s.ball,team=s.teams[0];
+  if(b.owner>=0&&b.owner<11)return b.owner;
+  if(b.target>=0&&b.target<11)return b.target;
+  if(!cycle&&team.players[input.slot]&&!team.players[input.slot].red)return input.slot;
+  let best=-1,range=Infinity;
+  for(const p of team.players){
+    if(p.red||p.slot===0||(cycle&&p.slot===input.slot))continue;
+    const gap=distanceSquared(p,b);
+    if(gap<range){range=gap;best=p.slot;}
+  }
+  return best;
+}
+function userKick(s,p,input,action){
+  const team=s.teams[0],dir=team.direction;
+  if(action==='shoot'){
+    const aim=clamp((input.y||p.fy)*3.3,-3.5,3.5);
+    const xg=clamp(.48*Math.exp(-Math.hypot(halfLength*dir-p.x,p.y)/22),.015,.5);
+    team.stats.shots++;team.stats.onTarget++;team.stats.xg+=xg;
+    release(s,0,p,(halfLength+1)*dir,aim,{kind:'shot',speed:29+p.skill*.05,loft:2.6,xg});
+    event(s,'shot',0,'Afslutning · '+p.name);
+    return;
+  }
+  let mate=null,best=-Infinity;
+  const aiming=Math.hypot(input.x,input.y)>.12;
+  for(const q of team.players){
+    if(q===p||q.red)continue;
+    const dx=q.x-p.x,dy=q.y-p.y,range=Math.hypot(dx,dy)||1;
+    const score=(dx*(aiming?input.x:dir)+dy*(aiming?input.y:0))/range*12-range*.32;
+    if(score>best){best=score;mate=q;}
+  }
+  if(mate){
+    const lead=action==='through'?4.5:0, x=mate.x+dir*lead,y=mate.y+mate.vy*.25;
+    release(s,0,p,x,y,{kind:'pass',speed:Math.min(41,7+Math.hypot(x-p.x,y-p.y)*1.25),target:mate.slot});
+  }
+}
+export function stepMatch(s, scratch={},input=null) {
   if(s.phase!==PHASE.PLAYING&&s.phase!==PHASE.DEAD_BALL)return false;
   if(s.phase===PHASE.DEAD_BALL) {s.tick++;if(s.tick>=s.restart.end)restartPlay(s);if(s.phase!==PHASE.PLAYING){checkClock(s);return true;}}
   else s.tick++;
   const dt=STEP, b=s.ball;
   const ownSide=b.owner<0?-1:b.owner>>4;
   const owner=ownSide<0?null:s.teams[ownSide].players[b.owner%16];
+  const action=input?.action;
+  if(input){
+    if(b.owner>=16&&input.opponentPossession!==true)input.slot=-1;
+    input.opponentPossession=b.owner>=16||(b.owner<0&&b.lastTeam===1);
+    input.slot=controlledSlot(s,input,action==='switch');
+    input.action='';
+  }
   const playSide=ownSide<0?b.lastTeam:ownSide;
   if(playSide>=0)s.teams[playSide].stats.possession++;
   s.momentum+=((playSide===0?clamp(.58+b.x*.004,.25,.86):playSide===1?clamp(.42+b.x*.004,.14,.75):.5)-s.momentum)*.018;
@@ -243,7 +286,9 @@ export function stepMatch(s, scratch={}) {
         target.x=b.x+b.vx*.105;target.y=b.y+b.vy*.105;
       }
       const speed=(p.slot===0?5.6:5.1+(p.skill-52)*.073)*(.67+.0033*p.energy)*(p===owner?.91:1);
-      movePlayer(p,target.x,target.y,speed,dt);
+      if(input&&side===0&&p.slot===input.slot&&(owner===p||input.x||input.y||b.target!==p.slot)){
+        movePlayer(p,p.x+input.x*8,p.y+input.y*8,speed*(input.sprint?1.47:1),dt);
+      }else movePlayer(p,target.x,target.y,speed,dt);
     }
   }
   b.age+=dt;
@@ -251,12 +296,17 @@ export function stepMatch(s, scratch={}) {
     b.x=owner.x+owner.fx*.67;b.y=owner.y+owner.fy*.67;b.z=.11;b.vx=owner.vx;b.vy=owner.vy;
     if(b.age>.15){
       for(const p of s.teams[1-ownSide].players) {
-        if(!p.red&&p.slot>0&&p.wait===0&&distanceSquared(p,owner)<1.95**2&&draw(s)<.17){
+        const manual=input&&ownSide===1&&p.slot===input.slot;
+        if(!p.red&&p.slot>0&&p.wait===0&&distanceSquared(p,owner)<(manual?2.5:1.95)**2&&(manual?action==='tackle':draw(s)<.17)){
           challenge(s,1-ownSide,p,owner);break;
         }
       }
     }
-    if(b.owner===playerId(ownSide,owner.slot)&&s.phase===PHASE.PLAYING)dribble(s,ownSide,owner,s.teams[1-ownSide]);
+    if(b.owner===playerId(ownSide,owner.slot)&&s.phase===PHASE.PLAYING){
+      if(input&&ownSide===0){
+        if(action==='pass'||action==='through'||action==='shoot')userKick(s,owner,input,action);
+      }else dribble(s,ownSide,owner,s.teams[1-ownSide]);
+    }
   }
   if(!owner||b.owner<0&&s.phase===PHASE.PLAYING){
     const bx=b.x,by=b.y,bz=b.z;

@@ -11,14 +11,14 @@ export function createMatchLoop(state){
   };
   const reset=()=>{last=null;remainder=0;capture();};
   reset();
-  return {previous,reset,advance(now,rate=1){
+  return {previous,reset,advance(now,rate=1,input=null){
     if(last===null){last=now;return 1;}
     const elapsed=clamp((now-last)/1000,0,.1);
     last=now;
     remainder+=elapsed*rate;
     while(remainder>=STEP){
       capture();
-      if(!stepMatch(state,scratch)){reset();return 1;}
+      if(!stepMatch(state,scratch,input)){reset();return 1;}
       remainder-=STEP;
       if(state.phase!==PHASE.PLAYING&&state.phase!==PHASE.DEAD_BALL){reset();return 1;}
     }
