@@ -1,7 +1,7 @@
 # Touchline Motor 12
 
 Motor 12 er et selvstændigt fodboldmanager-udkast i JavaScript. Hjemmesiden,
-den browserlokale klub og den taktiske kamp bruger samme statiske build og
+den browserlokale klub og 2D- og 3D-kampen bruger samme statiske build og
 samme CSS. Previewet bruger opdigtede hold og spillere. Demoen har sit eget
 matchobjekt i hukommelsen, og klubhuset gemmer sin tilstand på en særskilt
 Motor 12-nøgle i browseren eller i Android-appen.
@@ -20,6 +20,8 @@ fra forsiden og fra prøvekampen.
 `node --test motor12/tests/engine.test.mjs` kører simuleringstests. Den
 valgfrie browsertest kræver Python Playwright og Chromium og køres med
 `python motor12/tests/browser.py motor12/dist`.
+Kør `python motor12/tests/arena-browser.py motor12/dist` for WebGL-kontrollen.
+Buildet bruger repositoryets installerede esbuild og Three.js til arenaen.
 
 ## Kode
 
@@ -29,12 +31,16 @@ valgfrie browsertest kræver Python Playwright og Chromium og køres med
 - `src/loop.js` holder kampens step adskilt fra requestAnimationFrame og
   interpolerer tidligere og aktuelle positioner. `src/pitch.js` tegner
   en 2D-taktisk bane på canvas med cachet græs, linjer, spillere og bold.
+- `src/arena.js` tegner samme Motor 12-kamp i WebGL med genbrug af de
+  licenserede lokale spiller- og målmandsmodeller fra `match-assets55`.
+  Arena 3D indlæses efter brugerens valg. TV-vinkel, nærkamera, udvidet bane
+  og 2D kan skiftes i samme kamp. Ved WebGL-fejl vises den taktiske bane.
 - `src/club.js` gemmer lokale klubdata, aktive kampe og præferencer i skema
   1. Kampens indtægt afregnes én gang, og form og kondition følger spillerne.
 - `src/app.js` binder visningerne Forside, Kamp, Taktik, Trup og Klubstatus
   sammen. `src/audio.js` spiller valgfrie dommersignaler ved brugerhandlinger
   og kampbegivenheder.
-- `build.mjs` bygger fem sider uden pakkestart eller browserrammeværk.
+- `build.mjs` bygger fem statiske sider uden et browserrammeværk.
   `assets/ui.css` indeholder de fælles designprincipper.
   Support, privatliv og kontosletning fører videre til de officielle
   produktionssider, når en eksisterende Touchline-konto skal håndteres.
@@ -48,6 +54,6 @@ antal simulationstrin, som bliver afviklet pr. reelt sekund.
 
 Udkastet kan fungere som statisk webside og pakkes i Android-testskallen.
 Pakken har ingen serverkonto, synkronisering eller vandring af gamle
-Motor 11-klubber. Sky-backend, 3D-transmission, komplet regelsæt og
+Motor 11-klubber. Sky-backend, direkte styring af spillere, komplet regelsæt og
 fysisk FPS-måling er særskilt arbejde. Offentlig produktion og den aftalte
 lancering **1. januar 2027 kl. 10.00 i København** er uden for dette build.

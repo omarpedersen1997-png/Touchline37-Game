@@ -59,7 +59,7 @@ with sync_playwright() as playwright:
     page.get_by_role('link', name='Start prøvekamp').click()
     page.get_by_role('button', name='Kick Off').wait_for()
     assert page.locator('.scoreboard strong').first.inner_text() == 'Prøvelund BK'
-    assert page.locator('.match-sheet canvas').count() == 1
+    assert page.locator('.match-sheet canvas:visible').count() == 1
     page.clock.install()
     page.clock.run_for(600)
     assert page.locator('#clock').inner_text() == '00:00'

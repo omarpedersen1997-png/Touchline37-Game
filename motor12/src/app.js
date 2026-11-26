@@ -12,6 +12,7 @@ try{storage=localStorage;}catch{}
 let club=demo?newClub():loadClub(storage);
 let match=demo?createMatch():club.active;
 let paused=true, speed=1, frame=0, lastPaint=0, lastEvent=0, savedTime=0, loop, pitch, observer;
+let arena, arenaToken=0, arenaMode='2d', arenaLoading=false;
 let notice='', view=initialView();
 const audio=matchAudio();
 const nav=[['overview','Forside'],['match','Kamp'],['tactics','Taktik'],['squad','Trup'],['club','Klubstatus']];
@@ -40,7 +41,7 @@ function overview(){
   return title(escape(club.name),'', 'DIT KLUBHUS')+
     `<section class="fixture"><div class="fixture-info"><p class="kicker">NÆSTE KAMP</p><span>${escape(opponent.formation)} · Styrke ${opponent.rating}</span></div>
     <div class="fixture-teams"><span>${escape(club.name)}</span><span>mod</span><strong>${escape(opponent.name)}</strong></div>
-    <div class="fixture-actions"><button class="primary" data-action="match">${match?'Åbn kampen':'Gør klar til kamp'}</button><button data-action="tactics">Sæt kampplan</button></div></section>
+    <div class="fixture-actions"><button class="primary" data-action="arena-launch">Arena 3D</button><button data-action="tactical-launch">Taktisk kamp</button><button data-action="tactics">Sæt kampplan</button></div></section>
     <dl class="club-ledger"><div><dt>Klubkasse</dt><dd>${money(club.budget)}</dd></div><div><dt>Ligapoint</dt><dd>${club.points}</dd></div><div><dt>Startelleverens rating</dt><dd>${strength}</dd></div></dl>`;
 }
 function phaseLabel(){
@@ -79,7 +80,8 @@ function matchMarkup(){
     <div class="scoreboard"><div class="score-team home"><span class="team-code">${escape(home.code)}</span><strong>${escape(home.name)}</strong></div>
     <div class="score-centre"><time id="clock">00:00</time><strong id="score"></strong></div>
     <div class="score-team away"><span class="team-code">${escape(away.code)}</span><strong>${escape(away.name)}</strong></div></div>
-    <div class="arena"><canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas></div>
+    <div class="arena"><canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas><canvas id="pitch3d" hidden aria-label="Touchline stadion med animerede spillere"></canvas></div>
+    <div class="camera-desk" role="group" aria-label="Kampkamera"><button data-camera="tv" aria-pressed="false">Arena 3D</button><button data-camera="near" aria-pressed="false">Nærkamera</button><button data-camera="2d" aria-pressed="true">Taktisk</button><button data-action="expand" aria-pressed="false">Udvid</button><span id="arena-status" role="status"></span></div>
     <div class="match-desk"><div class="play-state"><span id="phase" role="status"></span><button id="play-control" class="primary" data-action="play">Kick Off</button></div>
     <div class="controls"><div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div>
     <div class="match-options"><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
@@ -143,8 +145,48 @@ function paintHUD(){
   }
 }
 function stop(){paused=true;loop?.reset();cancelAnimationFrame(frame);frame=0;}
+function expandMatch(expanded){
+  const sheet=container.querySelector('.match-sheet'),button=container.querySelector('[data-action="expand"]');
+  if(!sheet||!button)return;
+  sheet.classList.toggle('match-expanded',expanded);
+  document.body.classList.toggle('match-on-top',expanded);
+  button.textContent=expanded?'Luk udvidet':'Udvid';
+  button.setAttribute('aria-pressed',String(expanded));
+}
+function drawPitch(previous,alpha=1,running=false){
+  if(arena&&arenaMode!=='2d')arena.render(match,previous,alpha,running,arenaMode,speed);
+  else pitch.render(match,previous,alpha);
+}
+function showCamera(mode){
+  if(view!=='match')return;
+  arenaMode=mode;
+  const canvas=document.querySelector('#pitch'),gl=document.querySelector('#pitch3d');
+  const ready=arena&&mode!=='2d';
+  canvas.hidden=!!ready;gl.hidden=!ready;
+  for(const button of container.querySelectorAll('[data-camera]')){
+    button.setAttribute('aria-pressed',String(button.dataset.camera===(ready?mode:'2d')));
+  }
+  if(ready){arena.layout();drawPitch(null);put('arena-status','');return;}
+  pitch.layout();drawPitch(null);
+  if(mode==='2d'){put('arena-status','');return;}
+  put('arena-status','Stadionet gøres klar…');
+  if(arenaLoading)return;
+  arenaLoading=true;
+  const token=arenaToken;
+  import('../assets/arena.js').then(module=>module.createArena(gl)).then(result=>{
+    if(token!==arenaToken){result.dispose();return;}
+    arena=result;arenaLoading=false;showCamera(arenaMode);
+  }).catch(()=>{
+    if(token!==arenaToken)return;
+    arenaLoading=false;showCamera('2d');
+    put('arena-status','3D kunne ikke åbnes. Taktisk visning er aktiv.');
+  });
+}
 function render(){
   stop();observer?.disconnect();
+  document.body.classList.remove('match-on-top');
+  arenaToken++;arenaLoading=false;
+  arena?.dispose();arena=null;
   renderedEvent=-1;renderedStats='';renderedPhase='';
   if(view==='match')prepare();
   const content=({overview,match:matchMarkup,tactics:tactical,squad,club:clubView})[view]();
@@ -152,9 +194,16 @@ function render(){
   if(view==='match'){
     const canvas=document.querySelector('#pitch');
     pitch=pitchView(canvas);
-    const layout=()=>{if(pitch.layout())pitch.render(match,null);};
-    if(typeof ResizeObserver==='function'){observer=new ResizeObserver(layout);observer.observe(canvas);}
-    layout();
+    const layout=()=>{
+      if(arena&&arenaMode!=='2d'){if(arena.layout())drawPitch(null);}
+      else if(pitch.layout())drawPitch(null);
+    };
+    if(typeof ResizeObserver==='function'){observer=new ResizeObserver(layout);observer.observe(canvas.parentElement);}
+    document.querySelector('#pitch3d').addEventListener('webglcontextlost',event=>{
+      event.preventDefault();arena?.dispose();arena=null;showCamera('2d');
+      put('arena-status','3D-forbindelsen blev afbrudt. Taktisk visning er aktiv.');
+    });
+    showCamera(arenaMode);
     paintHUD();
   }
 }
@@ -165,7 +214,7 @@ function go(next){
 }
 function onFrame(now){
   const alpha=loop.advance(now,speed);
-  pitch.render(match,loop.previous,alpha);
+  drawPitch(loop.previous,alpha,true);
   if(now-lastPaint>145){paintHUD();lastPaint=now;}
   const latest=match.events[0];
   if(latest?.id>lastEvent){
@@ -186,13 +235,16 @@ container.addEventListener('click',event=>{
   const link=event.target.closest('.app-nav a');
   if(link){event.preventDefault();go(link.hash.slice(1));return;}
   if(!button)return;
+  if(button.dataset.camera){showCamera(button.dataset.camera);return;}
   if(button.dataset.speed){
     speed=Number(button.dataset.speed);
     for(const item of container.querySelectorAll('[data-speed]'))item.setAttribute('aria-pressed',String(Number(item.dataset.speed)===speed));
     return;
   }
   const action=button.dataset.action;
-  if(action==='play'){
+  if(action==='expand'){
+    expandMatch(button.getAttribute('aria-pressed')!=='true');
+  }else if(action==='play'){
     if(kickOff(match)){
       lastEvent=match.eventId;void audio.enable(club.sound).then(()=>audio.whistle('kickoff'));
       save();start();
@@ -201,7 +253,9 @@ container.addEventListener('click',event=>{
   }else if(action==='sound'){
     club.sound=!club.sound;void audio.enable(club.sound);
     button.textContent=club.sound?'Lyd til':'Lyd fra';button.setAttribute('aria-pressed',String(club.sound));save();
-  }else if(action==='match'||action==='tactics'){go(action);}
+  }else if(action==='arena-launch'){arenaMode='tv';go('match');}
+  else if(action==='tactical-launch'){arenaMode='2d';go('match');}
+  else if(action==='match'||action==='tactics'){go(action);}
   else if(action==='settle'){
     if(demo){match=createMatch();go('match');return;}
     if(settleMatch(club,match)){match=null;go('club');}
@@ -251,4 +305,9 @@ container.addEventListener('submit',event=>{
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();save();if(view==='match')paintHUD();}});
 window.addEventListener('pagehide',()=>{stop();save();});
 window.addEventListener('hashchange',()=>{if(!demo&&view!==initialView())go(initialView());});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&document.body.classList.contains('match-on-top')){
+    expandMatch(false);container.querySelector('[data-action="expand"]')?.focus();
+  }
+});
 render();

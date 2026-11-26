@@ -1,6 +1,7 @@
 import { readFile, mkdir, writeFile, cp } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
+import { build } from 'esbuild';
 
 const base=dirname(fileURLToPath(import.meta.url));
 const output=resolve(process.argv[2]||base+'/dist');
@@ -32,7 +33,7 @@ const landing=`<main id="main">
  <header><p class="kicker">MOTOR 12</p><h2>Kampen<br>på din måde.</h2></header>
  <div class="analysis-list">
  <article><h3>Giv signalet</h3><p>To hold står klar ved midten. Vælg <strong>Kick Off</strong> ved kampstart, efter mål og ved anden halvleg.</p></article>
- <article><h3>Læs spillet</h3><p>Følg afleveringer, chancer og xG. Se bolden rulle, skru og hoppe, mens begge hold organiserer sig.</p></article>
+ <article><h3>Læs spillet</h3><p>Se bevægelserne fra Arena 3D, eller skift til taktisk overblik. Følg afleveringer, chancer og xG gennem kampen.</p></article>
  <article><h3>Grib ind</h3><p>Justér formation, mentalitet og pres. Skift en træt spiller, og se kampplanen forme de næste minutter.</p></article>
  </div>
 </section>
@@ -51,6 +52,13 @@ const pages=[['index.html',shell({title:siteName+' · Sidelinjen er din',body:la
 await mkdir(output,{recursive:true});
 await cp(resolve(base,'src'),resolve(output,'src'),{recursive:true});
 await cp(resolve(base,'assets'),resolve(output,'assets'),{recursive:true});
+const stadiumAssets=resolve(output,'assets/arena');
+await mkdir(stadiumAssets,{recursive:true});
+for(const file of ['player-auto.glb','keeper-auto.glb','FOOTBALL-ASSET-LICENSES.md']){
+  await cp(resolve(base,'../public/match-assets55',file),resolve(stadiumAssets,file));
+}
+await build({entryPoints:[resolve(base,'src/arena.js')],outfile:resolve(output,'assets/arena.js'),
+  bundle:true,format:'esm',minify:true,target:'chrome100',legalComments:'linked'});
 for(const[path,html] of pages){
   await mkdir(dirname(resolve(output,path)),{recursive:true});
   await writeFile(resolve(output,path),html);

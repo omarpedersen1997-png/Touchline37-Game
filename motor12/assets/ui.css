@@ -109,7 +109,17 @@ nav a{padding-block:.55rem}
 .score-centre time{display:block;color:#ffc1aa;font-weight:740;font-size:.84rem}
 .score-centre strong{font:850 clamp(1.95rem,4.7vw,3.65rem)/.95 var(--display);letter-spacing:.03em}
 .arena{padding:clamp(3px,1vw,12px);background:#181826}
-#pitch{width:100%;height:clamp(190px,45vw,500px);display:block;background:#181826}
+#pitch,#pitch3d{width:100%;height:clamp(190px,45vw,500px);display:block;background:#181826}
+.arena [hidden]{display:none!important}
+.camera-desk{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;padding:.4rem .65rem;border-top:1px solid #635b68}
+.camera-desk button{color:var(--white);border-color:#82788d;min-height:44px;font-size:.82rem}
+.camera-desk button[aria-pressed="true"]{background:var(--white);color:var(--navy);border-color:var(--white)}
+.camera-desk button[aria-pressed="false"]:hover{background:#413649}
+#arena-status{font-size:.8rem;color:#f6e5da}
+.match-on-top{overflow:hidden}
+.match-expanded{position:fixed;inset:0;z-index:9;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto auto;overflow:auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.match-expanded .arena{min-height:0;padding:0}
+.match-expanded #pitch,.match-expanded #pitch3d{height:100%}
 .match-desk,.controls,.play-state,.speeds,.match-options{display:flex;align-items:center;gap:.44rem;flex-wrap:wrap}
 .match-desk{justify-content:space-between;padding:.65rem;border-top:1px solid #635b68}
 .play-state{align-items:stretch}
@@ -194,5 +204,5 @@ select{max-width:100%;width:100%;background:var(--white)}
   .app-main{padding-top:5px}
   .app-nav,.preview-bar{margin-bottom:.4rem}
   .scoreboard{min-height:55px}
-  #pitch{height:clamp(127px,44dvh,330px)}
+  #pitch,#pitch3d{height:clamp(127px,49dvh,350px)}
 }
