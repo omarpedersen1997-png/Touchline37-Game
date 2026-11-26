@@ -406,8 +406,10 @@ body{background:var(--kd-paper);color:var(--kd-ink);font-family:var(--kd-body);-
 .kd-shell :is(.right-column,.match-panel) .match-mode-choices{grid-template-columns:1fr}
 
 @media(orientation:landscape) and (max-width:1200px),(orientation:landscape) and (max-height:700px){
- .app-shell.kd-shell .game-squad-pitch{height:clamp(236px,calc(100dvh - 150px),420px);margin:0 10px 10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 68' preserveAspectRatio='none'%3E%3Cg fill='%2331905b'%3E%3Crect width='10.5' height='68'/%3E%3Crect x='21' width='10.5' height='68'/%3E%3Crect x='42' width='10.5' height='68'/%3E%3Crect x='63' width='10.5' height='68'/%3E%3Crect x='84' width='10.5' height='68'/%3E%3C/g%3E%3Cg fill='none' stroke='%23fffdf8' stroke-opacity='.75' stroke-width='.45'%3E%3Crect x='2' y='2' width='101' height='64'/%3E%3Cpath d='M52.5 2v64M2 13.8h16.5v40.4H2M2 24.8h5.5v18.4H2M103 13.8H86.5v40.4H103M103 24.8h-5.5v18.4h5.5'/%3E%3Ccircle cx='52.5' cy='34' r='9.15'/%3E%3C/g%3E%3C/svg%3E")}
- .kd-shell .game-squad-player{left:calc(104% - var(--py) * 1.08);top:calc(var(--px) * .86 + 4%)}
+ .app-shell.kd-shell .game-squad-pitch{height:clamp(300px,calc(100dvh - 86px),440px);margin:0 10px 10px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105 68' preserveAspectRatio='none'%3E%3Cg fill='%2331905b'%3E%3Crect width='10.5' height='68'/%3E%3Crect x='21' width='10.5' height='68'/%3E%3Crect x='42' width='10.5' height='68'/%3E%3Crect x='63' width='10.5' height='68'/%3E%3Crect x='84' width='10.5' height='68'/%3E%3C/g%3E%3Cg fill='none' stroke='%23fffdf8' stroke-opacity='.75' stroke-width='.45'%3E%3Crect x='2' y='2' width='101' height='64'/%3E%3Cpath d='M52.5 2v64M2 13.8h16.5v40.4H2M2 24.8h5.5v18.4H2M103 13.8H86.5v40.4H103M103 24.8h-5.5v18.4h5.5'/%3E%3Ccircle cx='52.5' cy='34' r='9.15'/%3E%3C/g%3E%3C/svg%3E")}
+ .kd-shell .game-squad-player{left:calc(104% - var(--py) * 1.08)!important;top:calc((var(--px) - 50%) * 1.2 + 50%)!important;width:auto;min-width:44px;height:auto;min-height:44px}
+ .kd-shell .game-squad-player>.game-player-portrait{width:36px;height:36px}
+ .kd-shell .game-squad-player>b{margin-top:2px}
  .kd-shell .game-pitch-caption{display:none}
 }
 

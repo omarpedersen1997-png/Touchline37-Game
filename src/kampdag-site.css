@@ -264,7 +264,7 @@ ol,ul{padding:0;list-style:none}
  .strategy-grid article:nth-child(n+3){border-top:1px solid #ffffff2e}
  .site-footer>.kd-wrap{grid-template-columns:1fr}
 }
-@media(max-width:720px){
+@media(max-width:760px){
  body{font-size:16px}
  .site-nav>.kd-wrap{min-height:64px;gap:8px}
  .site-brand>span{font-size:22px}
