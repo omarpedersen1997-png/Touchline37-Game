@@ -21,6 +21,31 @@ import {matchPhase,MATCH_PHASE} from '../src/match-flow.js';
 import {createGoalAudioObserver} from '../src/match-audio-feed.js';
 const config={matchVersion:11,engineRevision:3,homeRating:65,awayRating:62,formation:'4-3-3'};
 
+test('a same-orientation resize refreshes the joystick rectangle without losing the held direction',()=>{
+ let left=0,reads=0;
+ const element={getBoundingClientRect(){reads++;return{left,top:0,width:100,height:100}}};
+ const joystick=createJoystickProjector({responsive:true});
+ joystick.begin(element);
+ assert.ok(joystick.project(element,58,50).x>.2);
+ left=9;
+ joystick.invalidate();
+ assert.ok(joystick.project(element,63,50).x>.2);
+ assert.ok(joystick.project(element,63,50).x>.2);
+ assert.equal(reads,2);
+ joystick.reset();
+ assert.deepEqual(joystick.project(element,63,50),{x:0,y:0});
+});
+
+test('reusing directional input preserves all legacy and modern input masks',()=>{
+ const point={};
+ for(const version of [1,3,5,11])for(const view of ['broadcast','diagram','tactical','pro','stadium','close']){
+  const keys=new Set(['w','d','arrowdown','shift']);
+  const controls={x:-.8,y:-.3,passHeld:true,through:true};
+  assert.equal(matchControlMask(keys,controls,view,version,point),matchControlMask(keys,controls,view,version));
+  assert.equal(matchControlMask(new Set(),controls,view,version,point),matchControlMask(new Set(),controls,view,version));
+ }
+});
+
 test('independent fingers retain joystick/sprint/action ownership and release/reset feedback without layout work',()=>{
  const owners=createInputOwnership(),joy={dataset:{}},sprint={dataset:{}},shoot={dataset:{}};
  assert(!owners.owns('joystick',undefined));assert(owners.claim('joystick',1,joy));assert(owners.claim('sprint',2,sprint));assert(owners.claim('shoot',3,shoot));assert(!owners.claim('joystick',4,joy));

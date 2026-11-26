@@ -4,6 +4,7 @@ export function createJoystickProjector({responsive=false}={}){
  let owner=null,bounds=null,engaged=false;
  return{
   begin(element){owner=element;bounds=element.getBoundingClientRect();},
+  invalidate(){bounds=null;},
   reset(){owner=null;bounds=null;engaged=false;},
   project(element,clientX,clientY){
    if(!bounds||owner!==element){owner=element;bounds=element.getBoundingClientRect();}

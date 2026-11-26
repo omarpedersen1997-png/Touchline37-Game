@@ -86,7 +86,13 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  useEffect(()=>{if(!showField)return;let mounted=true;const refresh=()=>{if(mounted)setExpanded(matchDisplayExpanded());};void enterMatchDisplay().then(refresh).catch(()=>{});document.addEventListener('fullscreenchange',refresh);return()=>{mounted=false;document.removeEventListener('fullscreenchange',refresh);void exitMatchDisplay().catch(()=>{});};},[match.id,showField]);
  useEffect(()=>{
   const media=window.matchMedia?.('(orientation: portrait)');
-  const update=()=>{const next=media?media.matches:window.innerHeight>window.innerWidth;resetControls();setPortrait(next);if(next){setSettingsOpen(false);setHelp(false);}};
+  let previous=null;
+  const update=()=>{
+   const next=media?media.matches:window.innerHeight>window.innerWidth;
+   if(next===previous){joystickProjection.current.invalidate();return;}
+   previous=next;resetControls();setPortrait(next);
+   if(next){setSettingsOpen(false);setHelp(false);}
+  };
   update();media?.addEventListener?.('change',update);window.addEventListener('resize',update);
   return()=>{media?.removeEventListener?.('change',update);window.removeEventListener('resize',update);};
  },[match.id]);
@@ -121,7 +127,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
  useEffect(()=>{
   if(!match.manual||!showField)return;
   let disposed=false,raf=0,lastHud=0,lastSave=0,lastHudCount=-1,lastSavedCount=-1,lastGoalPhase=null,lastGoalTick=null,lastKickoff=-1,lastFlowPhase=null,scene,visibleLoop;
-  const initialization=new AbortController(),criticalHud=createCriticalHudGate();
+  const initialization=new AbortController(),criticalHud=createCriticalHudGate(),inputDirection={};
   const host=canvas.current,drawDue=createMatchFramePacer(version>=11?renderHz:matchRenderBudget(version,quality).targetFps||30),saves=createIdleMatchSave({save:()=>session.current?.save()});saveWork.current=saves;
   const lost=e=>{e.preventDefault();setQuality('simple');};
   setSceneLoading(true);setRecoveryProgress(null);setError('');setResolution(null);setFrameStats(null);
@@ -141,7 +147,7 @@ export default function ManualMatch({match,club,clubStyle,now,live=true,onClose,
     const frame=t=>{
      if(disposed)return;
      if(practice)practice.pause(!practiceReady.current||isAppHidden()||overlayState.current.portrait||overlayState.current.settingsOpen||overlayState.current.help||overlayState.current.replay,performance.now());
-     const s=session.current,c=controls.current,command=version>=8&&!overlayState.current.portrait&&!overlayState.current.help?commands.current[0]:null,mask=command??(!acceptInput()||s.state.openingKickoff&&s.state.freeze>0||goalInputLocked(s.state)?0:matchControlMask(keys.current,c,scene.mode==='3d'?camera.current:scene.controlView||'stadium',version)),before=s.count;
+     const s=session.current,c=controls.current,command=version>=8&&!overlayState.current.portrait&&!overlayState.current.help?commands.current[0]:null,mask=command??(!acceptInput()||s.state.openingKickoff&&s.state.freeze>0||goalInputLocked(s.state)?0:matchControlMask(keys.current,c,scene.mode==='3d'?camera.current:scene.controlView||'stadium',version,inputDirection));
      if(live)s.advance(time(),isAppHidden()?0:mask,version>=11?{maxInputs:4,maxWorkMs:2}:undefined);
      if(s.inputApplied&&command&&!isAppHidden())commands.current.shift();if(direct&&s.inputApplied&&!command&&acceptInput()&&!isAppHidden())inputLatency.current.applied(performance.now());
      if(direct){const owned=s.state.ball.owner?.team==='home'&&s.state.ball.owner.index===s.state.controlled;chargeFeedback.current.paint(chargePanel.current,Math.max(s.state.shotCharge||0,s.state.passCharge||0)/18,s.state.passCharge>0||c.passHeld?'Løftet aflevering':'Skudkraft',owned&&acceptInput()&&(!!c.shootHeld||!!c.passHeld));}

@@ -15,15 +15,16 @@ export function saveMatchPreferences(value,storage=localMatchStorage(),version=1
  const preferences={quality:['auto','sharp','4k','simple'].includes(value.quality)?value.quality:'auto',view:(version>=3?['pro','broadcast','stadium','follow']:['broadcast','stadium','follow']).includes(value.view)?value.view:version>=3?'pro':'follow'};
  try{storage?.setItem(key,JSON.stringify({...preferences,mobilePerformanceSchema:version>=11?1:undefined,claritySchema:version>=6?1:undefined,performanceSchema:1,cameraSchema:version>=5?4:version>=3?3:2}));}catch{}
 }
-export function matchControlMask(keys,controls,view='stadium',version=1){
- const held=(...names)=>names.some(name=>keys.has(name));
- const hasMovement=held('w','a','s','d','arrowup','arrowdown','arrowleft','arrowright');
- const x=hasMovement?Number(held('d','arrowright'))-Number(held('a','arrowleft')):controls.x;
- const y=hasMovement?Number(held('s','arrowdown'))-Number(held('w','arrowup')):controls.y;
- const pitch=screenToPitch(x,y,view);
- if(version>=3)return modernDirection(pitch.x,pitch.y)|(controls.shoot?SHOOT:0)|(controls.pass?PASS:0)|(controls.sprint||held('shift')?SPRINT:0)|(controls.shootHeld?SHOOT_HELD:0)|(controls.passHeld?PASS_HELD:0)|(version>=4&&controls.skill?SKILL:0)|(version>=5&&controls.through?16384:0);
+export function matchControlMask(keys,controls,view='stadium',version=1,directionPoint){
+ const right=keys.has('d')||keys.has('arrowright'),left=keys.has('a')||keys.has('arrowleft');
+ const down=keys.has('s')||keys.has('arrowdown'),up=keys.has('w')||keys.has('arrowup');
+ const keyboard=right||left||down||up;
+ const x=keyboard?Number(right)-Number(left):controls.x;
+ const y=keyboard?Number(down)-Number(up):controls.y;
+ const pitch=screenToPitch(x,y,view,directionPoint),sprint=controls.sprint||keys.has('shift');
+ if(version>=3)return modernDirection(pitch.x,pitch.y)|(controls.shoot?SHOOT:0)|(controls.pass?PASS:0)|(sprint?SPRINT:0)|(controls.shootHeld?SHOOT_HELD:0)|(controls.passHeld?PASS_HELD:0)|(version>=4&&controls.skill?SKILL:0)|(version>=5&&controls.through?16384:0);
  let direction=0;if(Math.hypot(x,y)>=.2)direction=((Math.round(Math.atan2(pitch.x,-pitch.y)/(Math.PI/4))+8)%8)+1;
- return direction|(controls.shoot?16:0)|(controls.pass?32:0)|(controls.sprint||held('shift')?64:0);
+ return direction|(controls.shoot?16:0)|(controls.pass?32:0)|(sprint?64:0);
 }
 export function isMatchShortcut(event){
  return !event.ctrlKey&&!event.metaKey&&!event.altKey&&!event.target?.isContentEditable&&!event.target?.closest?.('button,input,select,textarea,a');

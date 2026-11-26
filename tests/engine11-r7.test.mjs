@@ -9,6 +9,7 @@ import { createManualSession } from '../src/manual-session.js';
 import { createPlayerStride, JOINT, samplePlayerStride } from '../src/player-stride-pose.js';
 import { createR4CameraPlan } from '../src/broadcast-r4.js';
 import { deformGoalNet, goalCameraPlan } from '../src/goal-presentation.js';
+import { PerspectiveCamera, Vector3 } from 'three';
 
 test('R7 uses the same fixed clock and uploads the same tape at 60 and 120 Hz in the local sandbox', () => {
   assert.throws(() => getArcadeRules(11, 7), /revisionen understøttes ikke/);
@@ -116,4 +117,36 @@ test('Broadcast leads toward a cross while overview stays fixed and only the str
   assert.notEqual(destination[5], rest[5]);
   const shell = { eye: [0, 0, 0], target: [0, 0, 0] };
   assert.equal(goalCameraPlan(follow, state, 'broadcast', shell), shell);
+});
+
+test('R7 Broadcast fits a long flat pass and its receiving zone without changing the camera heading', () => {
+  const state = engine.createArcade('wide-through');
+  delete state.openingKickoff;
+  const receive = { x: 24, y: -20 };
+  Object.assign(state.ball, { x: 12, y: 0, z: .22, owner: null, flightKind: 'through', vx: 7.2, vy: -12 });
+  const aspect = 16/9, plan = createR4CameraPlan(), player = state.home[state.controlled];
+  const at = (revision, calm = false) => {
+    state.engineRevision = revision;
+    return structuredClone(plan(state, 'broadcast', aspect, state.ball, player, calm));
+  };
+  const project = (pose, point, height) => {
+    const camera = new PerspectiveCamera(pose.fov, aspect, .5, 800);
+    camera.position.set(...pose.eye);
+    camera.lookAt(new Vector3(...pose.target));
+    camera.updateMatrixWorld();
+    return new Vector3(point.x, height, point.y).project(camera);
+  };
+  const baseline = at(7), calmBaseline = at(7, true);
+  assert.ok(project(baseline, receive, .65).x > 1, 'receiver outside the previous frame');
+  state.ball.receivePoint = receive;
+  const fitted = at(7);
+  const receiver = project(fitted, receive, .65), ball = project(fitted, state.ball, state.ball.z);
+  assert.ok(Math.abs(receiver.x) <= .8 && Math.abs(receiver.y) <= .7);
+  assert.ok(Math.abs(ball.x) <= .8 && Math.abs(ball.y) <= .7);
+  const heading = (fitted.eye[2] - fitted.target[2]) / (fitted.eye[0] - fitted.target[0]);
+  assert.ok(Math.abs(heading - .3) < 1e-12);
+  assert.deepEqual(at(6), baseline);
+  assert.deepEqual(at(7, true), calmBaseline);
+  state.ball.receivePoint = { x: 80, y: 0 };
+  assert.deepEqual(at(7), baseline, 'a distant target does not affect the active frame');
 });

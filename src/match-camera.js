@@ -2,11 +2,13 @@ import {livingCameraPlan} from './living-camera.js';
 // Broadcast camera keeps a fixed heading so screen-relative input never flips.
 export const BROADCAST_OFFSET={x:40,z:12};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-export function screenToPitch(x,y,view){
- if(view==='diagram')return{x:y,y:-x};
- if(!['broadcast','pro','tactical','close'].includes(view))return{x,y};
- const {x:cx,z:cz}=view==='pro'?PRO_OFFSET:BROADCAST_OFFSET,r=Math.hypot(cx,cz);
- return{x:(x*cz+y*cx)/r,y:(-x*cx+y*cz)/r};
+export function screenToPitch(x,y,view,out={}){
+ if(view==='diagram'){out.x=y;out.y=-x;}
+ else if(view==='broadcast'||view==='pro'||view==='tactical'||view==='close'){
+  const {x:cx,z:cz}=view==='pro'?PRO_OFFSET:BROADCAST_OFFSET,r=Math.hypot(cx,cz);
+  out.x=(x*cz+y*cx)/r;out.y=(-x*cx+y*cz)/r;
+ }else{out.x=x;out.y=y;}
+ return out;
 }
 export function matchCamera(state,view,aspect=1,options={}){
  if(view==='pro')return proCamera(state,aspect,options);
