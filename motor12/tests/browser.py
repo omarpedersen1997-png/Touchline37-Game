@@ -58,7 +58,7 @@ with sync_playwright() as playwright:
     page.goto(origin+'/index.html')
     page.get_by_role('link', name='Start prøvekamp').click()
     page.get_by_role('button', name='Kick Off').wait_for()
-    assert page.locator('.scoreboard strong').first.inner_text() == 'PRØVELUND BK'
+    assert page.locator('.scoreboard strong').first.inner_text() == 'Prøvelund BK'
     assert page.locator('.match-sheet canvas').count() == 1
     page.clock.install()
     page.clock.run_for(600)
@@ -90,6 +90,8 @@ with sync_playwright() as playwright:
     page.set_viewport_size({'width':390,'height':820})
     assert page.locator('.app-nav').evaluate('el=>getComputedStyle(el).position') == 'fixed'
     no_overflow(page)
+    if len(sys.argv) > 2:
+        page.screenshot(path=sys.argv[2]+'/motor12-klub-mobil.png')
     page.get_by_role('link', name='Trup').click()
     page.get_by_label('Spiller ud').select_option('4')
     page.get_by_role('button', name='Bekræft skift').click()

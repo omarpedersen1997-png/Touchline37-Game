@@ -101,7 +101,7 @@ nav a{padding-block:.55rem}
 .club-ledger dd{font:850 clamp(1.65rem,4vw,3.15rem)/1.06 var(--display);font-variant-numeric:tabular-nums}
 .match-sheet{border:1px solid var(--ink);background:var(--navy);color:var(--white)}
 .scoreboard{display:grid;grid-template-columns:1fr minmax(76px,auto) 1fr;gap:.32rem;align-items:stretch;min-height:76px;border-bottom:1px solid #635b68}
-.score-team{display:flex;align-items:center;gap:.6rem;padding:clamp(.38rem,1.4vw,1rem);font:820 clamp(1.13rem,2.8vw,2.47rem)/.94 var(--display);text-transform:uppercase;min-width:0}
+.score-team{display:flex;align-items:center;gap:.6rem;padding:clamp(.38rem,1.4vw,1rem);font:820 clamp(1.13rem,2.8vw,2.47rem)/1 var(--display);min-width:0}
 .score-team.away{justify-content:end;text-align:right}
 .score-team.away .team-code{order:2;background:#3d52a3}
 .team-code{display:grid;place-items:center;min-width:40px;min-height:32px;background:var(--red);color:#fff;border:1px solid #ffffff2b;font-size:.8rem;letter-spacing:.05em}
@@ -167,10 +167,10 @@ select{max-width:100%;width:100%;background:var(--white)}
   .nav nav{gap:.55rem}
   .nav nav a:nth-child(2),.nav-play,.nav-meta{display:none}
   .hero{grid-template-columns:1fr;gap:.85rem;padding-block:22px 17px}
-  .hero::before{inset:46% var(--gutter) 26px 36%}
+  .hero::before{display:none}
   .hero-copy .kicker{margin-bottom:.65rem}
   .hero h1{font-size:clamp(3.7rem,15vw,7.1rem)}
-  .hero-cover{margin:.4rem .45rem .45rem 0}
+  .hero-cover{margin:.4rem .45rem .45rem 0;box-shadow:7px -6px 0 var(--red)}
   .hero-cover img{height:clamp(200px,58vw,330px);object-position:center 48%}
   .release-inner,.editorial,.club-band-inner,.strategy,.squad-grid,.club-details{grid-template-columns:minmax(0,1fr)}
   .release-inner{gap:.6rem}
@@ -183,7 +183,7 @@ select{max-width:100%;width:100%;background:var(--white)}
   .app-heading{display:grid}
   .insights{gap:1rem;grid-template-columns:1fr}
   .scoreboard{min-height:61px}
-  .score-team{font-size:clamp(1rem,4.7vw,1.7rem)}
+  .score-team{font:740 clamp(.83rem,3.5vw,1.12rem)/1.15 var(--ui)}
   .team-code{display:none}
   .play-state{width:100%;justify-content:space-between}
   .controls{justify-content:space-between;width:100%}
