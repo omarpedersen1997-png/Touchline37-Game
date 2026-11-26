@@ -260,3 +260,28 @@
  .game-career-feature{min-height:260px}
  .app-shell .player-career .pc-development-grid,.app-shell .player-career .pc-history-grid{grid-template-columns:minmax(0,1fr)}
 }
+
+/* Mobile polish: compact page headings on short landscape screens, readable text and larger touch targets. */
+@media(orientation:landscape) and (max-height:540px){
+ .app-shell:not([data-page=club]) .app-page-heading{margin-bottom:10px;align-items:center}
+ .app-shell:not([data-page=club]) .app-page-heading h1{font-size:26px;line-height:1.1}
+ .app-shell:not([data-page=club]) .app-page-heading p,.app-shell:not([data-page=club]) .app-page-heading .eyebrow{display:none}
+}
+/* Minimum readable text size (11px) for small labels. */
+.app-shell .sidebar-label,.app-shell .app-season-card span,.app-shell .app-topbar-identity div>span,.app-shell .app-page-heading .eyebrow,.app-shell .season-pill span,.app-shell .welcome-strip>span,.app-shell .game-club-name span,.app-shell .game-club-metrics span,.app-shell .game-next-fixture span,.app-shell .game-next-fixture small,.app-shell .match-mode-copy span,.app-shell .match-mode-copy small,.app-shell .game-section-heading span,.app-shell .hub-world-tag,.app-shell .hub-world-status span,.app-shell .game-tile-kicker,.app-shell .game-cup-progress{font-size:11px}
+/* Touch targets of at least 44 px. */
+.app-shell .app-home-mark{width:44px!important;height:44px!important}
+.app-shell .app-topbar .balance,.app-shell .app-topbar .avatar{min-height:44px}
+.app-shell .app-topbar .avatar{min-width:44px}
+.app-shell .welcome-strip{min-height:44px}
+.app-shell .game-stadium-caption button{min-height:44px;display:inline-flex;align-items:center}
+.footer-privacy{min-height:44px;display:inline-flex;align-items:center}
+/* Short landscape phones: keep match buttons from wrapping word by word and let squad names clear the next row. */
+@media(orientation:landscape) and (max-height:540px) and (max-width:1000px){
+ .app-shell .match-card .match-mode-option{flex-direction:column;align-items:flex-start;gap:4px;min-height:0;padding:10px 12px}
+ .app-shell .match-card .match-mode-option .match-mode-icon{display:none}
+ .app-shell .match-card .match-mode-copy{min-width:0}
+ .app-shell .game-squad-player>.game-player-portrait{width:34px;height:34px}
+ .app-shell .game-squad-number{top:23px}
+ .app-shell .game-squad-player>b{margin-top:3px;padding:1px 5px;font-size:11px}
+}

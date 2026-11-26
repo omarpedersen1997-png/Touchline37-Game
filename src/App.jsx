@@ -26,7 +26,7 @@ import {apiFetch,isAndroid,gameHome,documentLink} from './api.js';
 import React,{useState,useEffect,useRef} from 'react';
 import{isManualCompletion,manualSaveError,manualSaveAcknowledgement}from'./manual-save.js';
 import{createRoot}from'react-dom/client';
-import{LayoutDashboard,Users,ArrowUpRight,ArrowRight,TrendingUp,Trophy,Goal,Building2,Dumbbell,Handshake,ChevronRight,ChevronDown,Plus,Check,Play,Settings,LogOut,Shield,Coins,Clock3,X,LoaderCircle,Menu,Volume2,Flag,Activity,RefreshCw,Pencil,WifiOff,Mail}from'lucide-react';
+import{LayoutDashboard,Users,ArrowUpRight,ArrowRight,TrendingUp,Trophy,Goal,Building2,Dumbbell,Handshake,ChevronRight,ChevronDown,Plus,Check,Play,Settings,LogOut,Shield,Landmark,Coins,Clock3,X,LoaderCircle,Menu,Volume2,Flag,Activity,RefreshCw,Pencil,WifiOff,Mail}from'lucide-react';
 import{createGame,publicState,leagues,opponents,tactics,effectiveRating}from'../worker/game.js';
 import MatchExperience from './MatchExperience.jsx';
 import AuthScreen from './AuthScreen.jsx';
@@ -38,7 +38,7 @@ import HelpPanel from './HelpPanel.jsx';
 import{AppSidebar,AppTopbar,PageHeading,ClubContext,BottomNavigation,MoreNavigation,WorkspaceTabs}from'./AppChrome.jsx';
 const moneyFormatter=new Intl.NumberFormat('da-DK',{maximumFractionDigits:0});
 const money=n=>moneyFormatter.format(n);
-const nav=[['club','Kluboverblik',Shield],['team','Mit hold',Users],['transfers','Transfermarked',ArrowUpRight],['upgrades','Klubudvikling',Building2],['league','Liga & kampe',Trophy],['player-career','Spillerkarriere',Goal],['goals','Mål & karriere',Flag],['center','Klubcenter',Shield]];
+const nav=[['club','Kluboverblik',Shield],['team','Mit hold',Users],['transfers','Transfermarked',ArrowUpRight],['upgrades','Klubudvikling',Building2],['league','Liga & kampe',Trophy],['player-career','Spillerkarriere',Goal],['goals','Mål & karriere',Flag],['center','Klubcenter',Landmark]];
 const upgradeInfo={stadium:{name:'Stadion',sub:'Flere fans. Større indtægter.',icon:Building2,benefit:'+0,8 kr. / sek.',color:'green'},training:{name:'Træningsanlæg',sub:'Gør hele holdet stærkere.',icon:Dumbbell,benefit:'Op til +2 i spillerstyrke',color:'purple'},sponsor:{name:'Sponsorater',sub:'Nye partnere. Nye muligheder.',icon:Handshake,benefit:'+1,2 kr. / sek.',color:'gold'}};
 function Crest({small=false,opponent=false,clubStyle,name}){if(!opponent&&clubStyle)return <ClubBadge style={clubStyle} name={name||'Touchline'} size={small?30:48}/>;return <span className={`crest ${small?'small':''} ${opponent?'opponent':''}`}><Shield size={small?28:46} strokeWidth={1.5}/><b>{opponent?'H':'N'}</b><i>★</i></span>}
 export function App(){const[account,setAccount]=useState(null);const[authNotice,setAuthNotice]=useState('');const[connected,setConnected]=useState(true);const[authChecked,setAuthChecked]=useState(false);const[authError,setAuthError]=useState(null);const requestEpoch=useRef(0);const[state,setState]=useState(()=>publicState(createGame(),Date.now()));const[tab,setTab]=useState('club');const[leagueTab,setLeagueTab]=useState('league');const[teamTab,setTeamTab]=useState('lineup');const[status,setStatus]=useState('loading');const[busy,setBusy]=useState(false);const[toast,setToast]=useState(null);const[modal,setModal]=useState(null);const[matchView,setMatchView]=useState(false);const[report,setReport]=useState(null);const restoredMatch=useRef(null);const restoredPersonal=useRef(null);const[personalView,setPersonalView]=useState(false);const[personalReport,setPersonalReport]=useState(null);const[name,setName]=useState('');const[tick,setTick]=useState(Date.now());const lastVersion=useRef(-1);const offset=useRef(0);const toastTimer=useRef(null);const requests=useRef(null);requests.current||=createGameRequests();const authAttempt=useRef(0);const connectionLost=useRef(false);const runtime=useRef({});
@@ -92,7 +92,7 @@ export function App(){const[account,setAccount]=useState(null);const[authNotice,
 
  {status==='ready'&&!connected&&<div className="connection-banner error"><WifiOff size={20}/><div><b>Forbindelsen til klubben er afbrudt.</b><span>De senest hentede tal vises. Forbind igen for at gemme og spille.</span></div><button className="primary" onClick={load}><RefreshCw size={16}/>Prøv igen</button></div>}
  {status==='error'&&<div className="connection-banner error"><WifiOff size={20}/><div><b>Vi kunne ikke hente din klub.</b><span>De viste starttal er en forhåndsvisning. Prøv forbindelsen igen.</span></div><button className="primary" onClick={load}><RefreshCw size={16}/>Prøv igen</button></div>}
- {status==='ready'&&!state.named&&<button className="welcome-strip" onClick={openName}><span>NY MANAGER</span> Gør klubben til din egen — vælg dit klubnavn.<ArrowRight size={16}/></button>}
+ {status==='ready'&&!state.named&&tab==='club'&&<button className="welcome-strip" onClick={openName}><span>NY MANAGER</span> Gør klubben til din egen — vælg dit klubnavn.<ArrowRight size={16}/></button>}
  {['team','transfers','upgrades'].includes(tab)&&<ClubContext state={state} onRename={openName}/>}
  {tab==='club'&&<ClubHub state={state} money={displayMoney} now={now} rank={rank} busy={buttonDisabled} onPlay={()=>active?setMatchView(true):action({type:'match',control:'manual'})} onSimulate={()=>action({type:'match'})} onNavigate={navigate}/>}
  {tab==='club'&&<CompetitionProgress state={state} compact onNavigate={navigate}/>}
