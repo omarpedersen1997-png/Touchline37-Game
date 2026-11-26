@@ -1,0 +1,73 @@
+name: Redesign test-APK
+
+# Bygger en test-APK af redesignet og lægger den som forhåndsudgivelse på GitHub.
+# Appen har eget navn og id (dk.touchline.footballidle.redesign) og installeres
+# ved siden af den udgivne app. Intet udrulles til playtouchline.dk.
+on:
+  workflow_dispatch:
+  push:
+    branches: [redesign-ny-identitet]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: redesign-apk
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Installér afhængigheder
+        run: npm ci
+      - name: Byg og test
+        run: npm test
+      - name: Synkronisér Android-projektet
+        run: npx cap sync android
+      - name: Byg signeret test-APK
+        working-directory: android
+        env:
+          KEYSTORE_BASE64: ${{ secrets.TOUCHLINE_REDESIGN_KEYSTORE_BASE64 }}
+          TOUCHLINE_REDESIGN_STORE_PASSWORD: ${{ secrets.TOUCHLINE_REDESIGN_STORE_PASSWORD }}
+          TOUCHLINE_REDESIGN_KEY_ALIAS: ${{ secrets.TOUCHLINE_REDESIGN_KEY_ALIAS }}
+          TOUCHLINE_REDESIGN_KEY_PASSWORD: ${{ secrets.TOUCHLINE_REDESIGN_KEY_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE_BASE64" || { echo "Test-nøglen mangler i repository secrets."; exit 1; }
+          export TOUCHLINE_REDESIGN_KEYSTORE="$RUNNER_TEMP/redesign.keystore"
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$TOUCHLINE_REDESIGN_KEYSTORE"
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          ./gradlew --no-daemon assembleRedesign
+          rm -f "$TOUCHLINE_REDESIGN_KEYSTORE"
+      - name: Navngiv og kontrollér APK
+        id: apk
+        run: |
+          apk="Touchline-Redesign-test-${GITHUB_SHA::7}.apk"
+          cp android/app/build/outputs/apk/redesign/app-redesign.apk "$apk"
+          "$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner" verify --print-certs "$apk" | head -3
+          sha256sum "$apk" | tee "$apk.sha256"
+          echo "file=$apk" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: touchline-redesign-apk
+          path: |
+            ${{ steps.apk.outputs.file }}
+            ${{ steps.apk.outputs.file }}.sha256
+      - name: Læg APK på GitHub som forhåndsudgivelse
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APK: ${{ steps.apk.outputs.file }}
+        run: |
+          notes="Test-APK af det nye design, bygget fra ${GITHUB_SHA::7} på grenen ${GITHUB_REF_NAME}. Installeres som en separat app (Touchline Redesign) ved siden af den udgivne Touchline og bruger den samme konto. Kun til afprøvning."
+          gh release delete redesign-test --yes --cleanup-tag 2>/dev/null || true
+          gh release create redesign-test "$APK" "$APK.sha256" --prerelease --target "$GITHUB_SHA" --title "Touchline Redesign – test-APK" --notes "$notes"
