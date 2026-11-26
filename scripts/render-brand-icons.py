@@ -50,20 +50,19 @@ def draw_brand_mark(draw, box, brand=None, tile=True, round_icon=False):
     left, top, right, bottom = box
     sx, sy = (right-left)/64, (bottom-top)/64
     point = lambda p: (left+p[0]*sx, top+p[1]*sy)
-    bounds = (*point((1, 1)), *point((63, 63)))
+    bounds = (*point((0, 0)), *point((64, 64)))
     if tile:
         if round_icon:
-            draw.ellipse(bounds, fill=brand['background'], outline=brand['border'], width=max(1, round(1.5*sx)))
+            draw.ellipse(bounds, fill=brand['background'])
         else:
-            draw.rounded_rectangle(bounds, radius=15*sx, fill=brand['background'], outline=brand['border'], width=max(1, round(1.5*sx)))
+            draw.rounded_rectangle(bounds, radius=13*sx, fill=brand['background'])
+    # Centre circle, its clearance around the halfway line, then the T on top.
+    ring = brand['ring']
+    cx, cy, r, w = ring['cx'], ring['cy'], ring['r'], ring['width']
+    draw.ellipse((*point((cx-r-w/2, cy-r-w/2)), *point((cx+r+w/2, cy+r+w/2))), fill=brand['accent'])
+    draw.ellipse((*point((cx-r+w/2, cy-r+w/2)), *point((cx+r-w/2, cy+r-w/2))), fill=brand['background'])
+    draw.polygon([point(p) for p in path_points(brand['gap'])], fill=brand['background'])
     draw.polygon([point(p) for p in path_points(brand['t'])], fill=brand['accent'])
-    # Axis-aligned square caps and mitered touchline corner, as in the SVG.
-    points = path_points(brand['line'])
-    for a, b in zip(points, points[1:]):
-        if a[0] != b[0] and a[1] != b[1]:
-            raise ValueError('Touchline must remain axis aligned')
-        draw.rectangle((*point((min(a[0], b[0])-1.5, min(a[1], b[1])-1.5)),
-                        *point((max(a[0], b[0])+1.5, max(a[1], b[1])+1.5))), fill=brand['accent'])
 
 
 def render_icon(size, brand, round_icon=False, opaque=False):
@@ -75,13 +74,17 @@ def render_icon(size, brand, round_icon=False, opaque=False):
 
 
 def adaptive_foreground(brand):
+    ring = brand['ring']
+    cx, cy, r = ring['cx'], ring['cy'], ring['r']
+    ring_path = f'M{cx-r} {cy}a{r} {r} 0 1 0 {2*r} 0a{r} {r} 0 1 0 {-2*r} 0Z'
     return ('<vector xmlns:android="http://schemas.android.com/apk/res/android" '
             'android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">'
             # Keep the full monogram inside Android's central 66dp safe circle.
             '<group android:translateX="18.8" android:translateY="18.8" android:scaleX="1.1" android:scaleY="1.1">'
-            f'<path android:fillColor="{brand["accent"]}" android:pathData="{brand["t"]}"/>'
             f'<path android:fillColor="#00000000" android:strokeColor="{brand["accent"]}" '
-            f'android:strokeWidth="3" android:strokeLineCap="square" android:strokeLineJoin="miter" android:pathData="{brand["line"]}"/>'
+            f'android:strokeWidth="{ring["width"]}" android:pathData="{ring_path}"/>'
+            f'<path android:fillColor="{brand["background"]}" android:pathData="{brand["gap"]}"/>'
+            f'<path android:fillColor="{brand["accent"]}" android:pathData="{brand["t"]}"/>'
             '</group></vector>\n')
 
 

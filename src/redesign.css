@@ -1,114 +1,114 @@
 /* Touchline's common app language: ink surfaces, clear hierarchy and one accent. */
-:root{--lime:#b8ed72;--muted:#a4b5bf;--line:#a8c0c224;--panel:#152a21;--side:#12241c;--app-bg:#12241c;--surface-raised:#1a3429;--text-main:#eef4f1;--text-secondary:#a4b5bf;color:var(--text-main);background:var(--app-bg);font-family:'DM Sans',sans-serif;font-size:16px;color-scheme:dark}
+:root{--accent:#cb2620;--muted:#3f4448;--line:#393d4224;--panel:#fdfaf3;--side:#fffcf5;--app-bg:#fffcf5;--surface-raised:#f9f6ee;--text-main:#161a1e;--text-secondary:#3f4448;color:var(--text-main);background:var(--app-bg);font-family:'Instrument Sans',sans-serif;font-size:16px;color-scheme:dark}
 body{background:var(--app-bg)}
-.app-shell{background:radial-gradient(ellipse at 85% 0,#274c3d15,transparent 40%),var(--app-bg);min-height:100dvh}
-.app-shell :is(h1,h2,h3,h4){color:#eef4f1;letter-spacing:-.2px}
+.app-shell{background:radial-gradient(ellipse at 85% 0,#dbeee515,transparent 40%),var(--app-bg);min-height:100dvh}
+.app-shell :is(h1,h2,h3,h4){color:#161a1e;letter-spacing:-.2px}
 .app-shell :is(p,label,select,input,textarea){line-height:1.6}
 .app-shell p{color:var(--text-secondary)}
-.app-shell .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 20px #0000000c}
+.app-shell .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 20px #14171a08}
 .app-shell .panel-head{padding:20px 22px;border-bottom:1px solid var(--line)}
-.app-shell .panel-head h2{font:600 28px/1.2 'Barlow Condensed',sans-serif}
-.app-shell .eyebrow{font-size:11px;letter-spacing:1.4px;line-height:1.5;color:#a6bcb5;font-weight:650}
-.app-shell .primary{min-height:48px;background:var(--lime);border:1px solid #c8f396;border-radius:12px;color:#162921;box-shadow:none;font-size:15px;font-weight:650;padding:12px 18px}
-.app-shell .primary:not(:disabled):hover{background:#caf79a;box-shadow:none}
+.app-shell .panel-head h2{font:600 28px/1.2 'Bricolage Grotesque',sans-serif}
+.app-shell .eyebrow{font-size:11px;letter-spacing:.4px;line-height:1.5;color:#3c4145;font-weight:650}
+.app-shell .primary{min-height:48px;background:var(--accent);border:1px solid #cb2620;border-radius:8px;color:#fdfaf3;box-shadow:none;font-size:15px;font-weight:650;padding:12px 18px}
+.app-shell .primary:not(:disabled):hover{background:#cb2620;box-shadow:none}
 .app-shell .primary:disabled{opacity:.5;box-shadow:none}
-.app-shell .quiet-button{min-height:44px;padding:10px 14px;white-space:normal;border:1px solid #91b1ad30;border-radius:11px;background:#1a3429;color:#d8e5df;box-shadow:none;font-size:14px}
-.app-shell .quiet-button:not(:disabled):hover{background:#244336;border-color:#b8ed7245}
-.app-shell :is(input,select,textarea){font-size:16px;border-radius:11px;background:#12241c;color:#e8efec;border-color:#718d8f55;box-shadow:none}
+.app-shell .quiet-button{min-height:44px;padding:10px 14px;white-space:normal;border:1px solid #464b4f30;border-radius:8px;background:#f9f6ee;color:#1e2327;box-shadow:none;font-size:14px}
+.app-shell .quiet-button:not(:disabled):hover{background:#f1efe7;border-color:#cb262045}
+.app-shell :is(input,select,textarea){font-size:16px;border-radius:8px;background:#fffcf5;color:#191d21;border-color:#5f646955;box-shadow:none}
 .app-shell input:not([type=radio]):not([type=checkbox]),.app-shell select{min-height:48px}
-.app-shell :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #b8ed72;outline-offset:3px}
+.app-shell :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #c31c18;outline-offset:3px}
 .app-shell :is(button,a){-webkit-tap-highlight-color:transparent}
 .app-shell :is(.text-button,.watch-match){min-height:44px;line-height:1.5}
-.skip-to-content{position:fixed;z-index:300;top:8px;left:8px;transform:translateY(-150%);padding:12px 18px;background:#b8ed72;color:#13231c;border-radius:10px}
+.skip-to-content{position:fixed;z-index:300;top:8px;left:8px;transform:translateY(-150%);padding:12px 18px;background:#cb2620;color:#fffcf5;border-radius:8px}
 .skip-to-content:focus{transform:none}
-.app-sidebar.sidebar{width:244px;padding:28px 18px 18px;background:#12241c;border-right:1px solid var(--line);overflow-y:auto;scrollbar-width:thin}
+.app-sidebar.sidebar{width:244px;padding:28px 18px 18px;background:#fffcf5;border-right:1px solid var(--line);overflow-y:auto;scrollbar-width:thin}
 .app-sidebar .brand{padding:2px 15px 30px;gap:11px}
 .app-sidebar .brand-mark{font-size:49px;line-height:.8}
 .app-sidebar .brand>div{font-size:25px;letter-spacing:-1px}
-.app-sidebar .brand>div>span{font-size:9px;letter-spacing:2.8px;color:#9cb0b7;margin-top:7px}
+.app-sidebar .brand>div>span{font-size:11px;letter-spacing:.4px;color:#43484d;margin-top:7px}
 .app-sidebar nav{gap:22px}
 .app-nav-group{display:grid;gap:5px}
-.app-nav-group .sidebar-label{font-size:10px;letter-spacing:1.5px;color:#7f98a2;margin:0 13px 9px}
-.app-sidebar .nav-item{font-size:14px;font-weight:500;min-height:46px;padding:11px 13px;border-radius:11px;border:1px solid transparent;background:none;color:#aebfc5;box-shadow:none;gap:12px}
-.app-sidebar .nav-item:hover{background:#1b372b;color:#edf5ef}
-.app-sidebar .nav-item.selected{border-color:#9ac46c22;background:#b8ed7212;color:#c8f497;box-shadow:none}
+.app-nav-group .sidebar-label{font-size:11px;letter-spacing:.4px;color:#565b60;margin:0 13px 9px}
+.app-sidebar .nav-item{font-size:14px;font-weight:500;min-height:46px;padding:11px 13px;border-radius:8px;border:1px solid transparent;background:none;color:#383d41;box-shadow:none;gap:12px}
+.app-sidebar .nav-item:hover{background:#f7f4ed;color:#161a1e}
+.app-sidebar .nav-item.selected{border-color:#cb262022;background:#cb262012;color:#c31c18;box-shadow:none}
 .app-sidebar .sidebar-bottom{margin-top:auto;padding-top:24px}
-.app-season-card{padding:15px;margin:0 5px 14px;border:1px solid var(--line);border-radius:13px;background:#152b22}
-.app-season-card>span{display:flex;align-items:center;gap:8px;color:#99b1b0;font-size:10px;letter-spacing:1px}
-.app-season-card>span svg{color:#b8ed72}
-.app-season-card>b{display:block;font:600 24px/1.2 'Barlow Condensed',sans-serif;margin:12px 0;color:#edf5ed}
-.app-season-card small{font-size:11px;color:#94aeb0}
-.app-season-card .journey-line{margin:0 0 10px;height:4px;background:#2b443a}
-.app-sidebar .sidebar-footer{padding:14px 7px 0;margin-top:10px;font-size:11px;color:#90aba5;border-top-color:var(--line);white-space:normal;line-height:1.5}
+.app-season-card{padding:15px;margin:0 5px 14px;border:1px solid var(--line);border-radius:10px;background:#fdfaf3}
+.app-season-card>span{display:flex;align-items:center;gap:8px;color:#44494d;font-size:11px;letter-spacing:.4px}
+.app-season-card>span svg{color:#c31c18}
+.app-season-card>b{display:block;font:600 24px/1.2 'Bricolage Grotesque',sans-serif;margin:12px 0;color:#161a1e}
+.app-season-card small{font-size:11px;color:#464b50}
+.app-season-card .journey-line{margin:0 0 10px;height:4px;background:#f0ede6}
+.app-sidebar .sidebar-footer{padding:14px 7px 0;margin-top:10px;font-size:11px;color:#494f53;border-top-color:var(--line);white-space:normal;line-height:1.5}
 .app-shell .main-shell{margin-left:244px}
-.app-shell .club-header{background:#12241ceb;border-bottom:1px solid var(--line);box-shadow:none;backdrop-filter:blur(16px)}
+.app-shell .club-header{background:#fffcf5eb;border-bottom:1px solid var(--line);box-shadow:none;backdrop-filter:blur(16px)}
 .app-topbar.topbar{height:78px;padding:0 32px;background:none;border:0;gap:18px}
 .app-topbar-identity{display:flex;align-items:center;gap:13px;min-width:0}
-.app-home-mark{background:#b8ed7212;border:1px solid #b8ed7225;color:#b8ed72;font:800 34px/.8 'Barlow Condensed',sans-serif;width:40px;height:40px;border-radius:12px;flex:0 0 40px;text-align:center;padding:0 0 3px;letter-spacing:-3px;transform:skew(-4deg)}
+.app-home-mark{background:#cb262012;border:1px solid #cb262025;color:#c31c18;font:800 34px/.8 'Bricolage Grotesque',sans-serif;width:40px;height:40px;border-radius:8px;flex:0 0 40px;text-align:center;padding:0 0 3px;letter-spacing:-3px;transform:skew(-4deg)}
 .app-home-mark span{font-size:29px}
 .app-topbar-identity>div{min-width:0;display:grid;gap:3px}
-.app-topbar-identity>div>span{font-size:9px;letter-spacing:2px;color:#86a2ab;font-weight:650}
-.app-topbar-identity b{font-size:14px;line-height:1.3;font-weight:550;color:#d1e0de;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.app-topbar-identity>div>span{font-size:11px;letter-spacing:.4px;color:#4f5559;font-weight:650}
+.app-topbar-identity b{font-size:14px;line-height:1.3;font-weight:550;color:#21262a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .app-topbar .topbar-right{gap:14px;min-width:0}
-.app-topbar .save-status{font-size:11px;gap:6px;white-space:nowrap;color:#97b4a7}
-.app-topbar .balance{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px 12px;border:1px solid #79999830;border-radius:11px;background:#162b22;font-size:12px;box-shadow:none;color:#a6bdb8;white-space:nowrap}
-.app-topbar .balance>svg:first-child{color:#d3c57b}
-.app-topbar .balance b{font-size:15px;color:#eef6ed;font-variant-numeric:tabular-nums}
-.app-topbar .balance>svg:last-child{margin:0;color:#9cb8a8}
-.app-topbar .avatar{width:40px;height:40px;border-radius:12px;background:#254035;border:1px solid #b8ed7233;color:#d5efbd;box-shadow:none;font-size:13px}
+.app-topbar .save-status{font-size:11px;gap:6px;white-space:nowrap;color:#43484d}
+.app-topbar .balance{display:flex;align-items:center;gap:8px;min-height:40px;padding:8px 12px;border:1px solid #575c6130;border-radius:8px;background:#fdfaf3;font-size:12px;box-shadow:none;color:#3b4044;white-space:nowrap}
+.app-topbar .balance>svg:first-child{color:#c31c18}
+.app-topbar .balance b{font-size:15px;color:#161a1e;font-variant-numeric:tabular-nums}
+.app-topbar .balance>svg:last-child{margin:0;color:#40454a}
+.app-topbar .avatar{width:40px;height:40px;border-radius:8px;background:#f3f0e8;border:1px solid #cb262033;color:#3b4f24;box-shadow:none;font-size:13px}
 .app-shell main{padding:30px 32px 0;max-width:1400px;min-width:0}
 .app-page-heading.page-heading{display:flex;align-items:center;gap:20px;margin-bottom:24px}
-.app-page-heading .eyebrow{margin:0 0 7px;color:#a5bfac;font-size:10px;letter-spacing:1.6px}
-.app-page-heading h1{font:600 clamp(36px,3.6vw,46px)/1.08 'Barlow Condensed',sans-serif;letter-spacing:-.4px;margin:0}
+.app-page-heading .eyebrow{margin:0 0 7px;color:#3b4044;font-size:11px;letter-spacing:.4px}
+.app-page-heading h1{font:600 clamp(36px,3.6vw,46px)/1.08 'Bricolage Grotesque',sans-serif;letter-spacing:-.4px;margin:0}
 .app-page-heading h1:focus{outline:none}
-.app-page-heading p{font-size:14px;line-height:1.6;max-width:580px;margin-top:9px;color:#a0b4bc}
-.app-page-heading .season-pill{min-height:48px;background:#152a21;border:1px solid var(--line);border-radius:12px;padding:10px 12px;gap:10px;box-shadow:none;flex-shrink:0}
+.app-page-heading p{font-size:14px;line-height:1.6;max-width:580px;margin-top:9px;color:#40454a}
+.app-page-heading .season-pill{min-height:48px;background:#fdfaf3;border:1px solid var(--line);border-radius:8px;padding:10px 12px;gap:10px;box-shadow:none;flex-shrink:0}
 .app-page-heading .season-pill>svg:last-child{margin-left:0}
-.app-page-heading .season-pill span{font-size:10px;color:#8ca6ac;gap:3px}
-.app-page-heading .season-pill b{font-size:12px;color:#d8e5df;max-width:160px;white-space:normal;line-height:1.4}
-.app-club-context{display:flex;align-items:center;gap:0;background:#142820;border:1px solid var(--line);border-radius:14px;margin-bottom:20px;padding:12px 16px;min-width:0}
+.app-page-heading .season-pill span{font-size:11px;color:#4c5156;gap:3px}
+.app-page-heading .season-pill b{font-size:12px;color:#1e2327;max-width:160px;white-space:normal;line-height:1.4}
+.app-club-context{display:flex;align-items:center;gap:0;background:#fefbf4;border:1px solid var(--line);border-radius:10px;margin-bottom:20px;padding:12px 16px;min-width:0}
 .app-club-context-name{display:flex;align-items:center;gap:10px;flex:1;background:none;text-align:left;min-width:0;padding:0 14px 0 0;font-size:14px;min-height:38px}
 .app-club-context-name b{overflow-wrap:anywhere;line-height:1.4}
-.app-club-context-name>svg{color:#99b1aa;flex-shrink:0}
+.app-club-context-name>svg{color:#44494e;flex-shrink:0}
 .app-club-context>div{padding:0 20px;border-left:1px solid var(--line);display:grid;gap:4px}
-.app-club-context>div>span{font-size:11px;color:#97aeb4}
-.app-club-context>div>b{font-size:16px;font-weight:600;color:#e3eee6;font-variant-numeric:tabular-nums}
-.app-club-context small{font-weight:400;font-size:10px;color:#8fa7ae;margin-left:4px}
+.app-club-context>div>span{font-size:11px;color:#464b4f}
+.app-club-context>div>b{font-size:16px;font-weight:600;color:#1a1e22;font-variant-numeric:tabular-nums}
+.app-club-context small{font-weight:400;font-size:11px;color:#4b5055;margin-left:4px}
 .app-shell .dashboard-grid{grid-template-columns:minmax(0,1fr) 320px;gap:20px}
 .app-shell .right-column{gap:18px}
 .app-shell .right-column>.panel{margin:0}
 .app-shell .main-column>.panel+.panel{margin-top:20px}
 .app-shell .tactic-picker{padding:20px;margin-bottom:20px}
-.app-shell .tactic-title h3{font:600 28px/1.2 'Barlow Condensed',sans-serif;margin-top:6px}
+.app-shell .tactic-title h3{font:600 28px/1.2 'Bricolage Grotesque',sans-serif;margin-top:6px}
 .app-shell .tactic-options{gap:8px;margin-top:18px}
-.app-shell .tactic-options>button{background:#14271f;border:1px solid #72918a35;border-radius:11px;min-height:48px;padding:11px;font-size:14px;color:#b8c9cd;box-shadow:none;gap:7px}
-.app-shell .tactic-options>button.chosen{background:#b8ed7215;color:#c8f49a;border-color:#b8ed7255}
-.app-shell .tactic-picker>p,.app-shell .management-note{font-size:14px;line-height:1.65;color:#a5b9bf}
-.app-shell .squad-panel .pitch{margin:16px 16px 0;border-radius:13px;box-shadow:none;border-color:#89a98735;background:#1f3e31}
-.app-shell .pitch-bar{border-top:0;padding:14px 20px;color:#adc3bb;font-size:13px;background:#12241c2b}
+.app-shell .tactic-options>button{background:#fefbf4;border:1px solid #5d636735;border-radius:8px;min-height:48px;padding:11px;font-size:14px;color:#31363a;box-shadow:none;gap:7px}
+.app-shell .tactic-options>button.chosen{background:#cb262015;color:#c31c18;border-color:#cb262055}
+.app-shell .tactic-picker>p,.app-shell .management-note{font-size:14px;line-height:1.65;color:#3d4246}
+.app-shell .squad-panel .pitch{margin:16px 16px 0;border-radius:10px;box-shadow:none;border-color:#3e5b3c35;background:#f4f1ea}
+.app-shell .pitch-bar{border-top:0;padding:14px 20px;color:#373c40;font-size:13px;background:#fffcf52b}
 .app-shell .squad-bottom{padding:16px 20px;font-size:12px;gap:12px;flex-wrap:wrap}
 .app-shell .squad-bottom button{min-height:36px;font-size:13px}
 .app-shell .management-panel{padding:22px}
-.app-shell .management-head h2{font:600 29px/1.2 'Barlow Condensed',sans-serif;margin-top:7px}
+.app-shell .management-head h2{font:600 29px/1.2 'Bricolage Grotesque',sans-serif;margin-top:7px}
 .app-shell .formation-buttons{gap:8px;margin:18px 0}
-.app-shell .formation-buttons button{border-radius:11px;background:#12251d;border-color:#6d8f8433;box-shadow:none;min-height:46px;font-size:14px}
-.app-shell .formation-buttons button.chosen{background:#b8ed7215;color:#d1f6ae;border-color:#b8ed7260}
+.app-shell .formation-buttons button{border-radius:8px;background:#fffcf4;border-color:#60656a33;box-shadow:none;min-height:46px;font-size:14px}
+.app-shell .formation-buttons button.chosen{background:#cb262015;color:#c31c18;border-color:#cb262060}
 .app-shell .lineup-row,.app-shell .reserve-row{border-color:var(--line);padding:14px 0;gap:10px}
 .app-shell .lineup-name b{font-size:14px}
-.app-shell .lineup-name small{font-size:12px;line-height:1.5;color:#a0b6bc}
-.app-shell .role-label,.app-shell .position-tag{border:1px solid #b8ed7228;background:#b8ed720c;color:#c1dea3;border-radius:7px;font-size:11px}
+.app-shell .lineup-name small{font-size:12px;line-height:1.5;color:#3f4449}
+.app-shell .role-label,.app-shell .position-tag{border:1px solid #cb262028;background:#cb26200c;color:#c31c18;border-radius:6px;font-size:11px}
 .app-shell .substitute-control select{min-height:40px;font-size:12px;max-width:145px;padding:8px}
 .app-shell .management-subhead{border-color:var(--line)}
-.app-shell .management-subhead h3{font:600 23px 'Barlow Condensed',sans-serif}
+.app-shell .management-subhead h3{font:600 23px 'Bricolage Grotesque',sans-serif}
 .app-shell .transfer-grid{gap:18px}
 .app-shell .transfer-card{display:flex;flex-direction:column}
 .app-shell .transfer-top{padding:18px 20px 0}
-.app-shell .transfer-age{font-size:11px;color:#93aab3}
-.app-shell .player-portrait{background:radial-gradient(ellipse at 50% 75%,#497a4e44,transparent 65%),#162b22;box-shadow:none;height:210px;border-bottom:1px solid var(--line);margin:0}
+.app-shell .transfer-age{font-size:11px;color:#484d52}
+.app-shell .player-portrait{background:#fdfaf3;box-shadow:none;height:210px;border-bottom:1px solid var(--line);margin:0}
 .app-shell .player-portrait:before,.app-shell .player-portrait:after{opacity:.25}
-.app-shell .player-portrait>b{font-family:'Barlow Condensed',sans-serif;border-radius:12px;background:#b8ed72;color:#1a2a23;box-shadow:none;border:0}
+.app-shell .player-portrait>b{font-family:'Bricolage Grotesque',sans-serif;font-stretch:84%;border-radius:8px;background:#cb2620;color:#fdfaf3;box-shadow:none;border:0}
 .app-shell .transfer-details{padding:20px;flex:1;display:flex;flex-direction:column}
-.app-shell .transfer-details h2{font:600 30px 'Barlow Condensed',sans-serif;line-height:1.2;margin:7px 0 0}
+.app-shell .transfer-details h2{font:600 30px 'Bricolage Grotesque',sans-serif;line-height:1.2;margin:7px 0 0}
 .app-shell .transfer-attributes{border-color:var(--line);margin:18px 0}
 .app-shell .transfer-attributes>span{font-size:12px;line-height:1.5}
 .app-shell .transfer-details .primary{margin-top:auto;gap:8px;flex-wrap:wrap}
@@ -116,184 +116,184 @@ body{background:var(--app-bg)}
 .app-shell .trade-help p{font-size:14px;line-height:1.6}
 .app-shell .list-heading{margin:20px 0;gap:10px;flex-wrap:wrap;line-height:1.6}
 .app-shell .list-heading>.muted{font-size:12px}
-.app-shell .upgrade-card{background:var(--panel);border:1px solid var(--line);box-shadow:none;border-radius:16px;padding:20px}
-.app-shell .upgrade-card h3{font:600 27px 'Barlow Condensed',sans-serif;margin-top:16px}
+.app-shell .upgrade-card{background:var(--panel);border:1px solid var(--line);box-shadow:none;border-radius:10px;padding:20px}
+.app-shell .upgrade-card h3{font:600 27px 'Bricolage Grotesque',sans-serif;margin-top:16px}
 .app-shell .upgrade-card p,.app-shell .upgrade-benefit{font-size:13px;line-height:1.6}
-.app-shell .icon-box,.app-shell .large-icon{background:#b8ed7210;border:1px solid #b8ed7228;box-shadow:none;transform:none;border-radius:13px;color:#c5e5a4}
-.app-shell .buy-button{background:#1b362b;border:1px solid #799d8a33;border-radius:11px;box-shadow:none;padding:12px;font-size:13px;min-height:50px;gap:8px}
-.app-shell .development-banner{padding:22px;border-radius:18px;border:1px solid var(--line);background:#162b22;box-shadow:none}
-.app-shell .development-banner h2{font:600 30px 'Barlow Condensed',sans-serif}
+.app-shell .icon-box,.app-shell .large-icon{background:#cb262010;border:1px solid #cb262028;box-shadow:none;transform:none;border-radius:10px;color:#c31c18}
+.app-shell .buy-button{background:#f8f5ed;border:1px solid #565b6033;border-radius:8px;box-shadow:none;padding:12px;font-size:13px;min-height:50px;gap:8px}
+.app-shell .development-banner{padding:22px;border-radius:10px;border:1px solid var(--line);background:#fdfaf3;box-shadow:none}
+.app-shell .development-banner h2{font:600 30px 'Bricolage Grotesque',sans-serif}
 .app-shell .development-banner p{font-size:14px;line-height:1.6}
-.app-shell .banner-metric{font:600 36px 'Barlow Condensed',sans-serif;color:#b8ed72}
-.app-shell .banner-metric small{font:500 10px 'DM Sans',sans-serif;letter-spacing:.8px;margin-top:6px;line-height:1.5}
+.app-shell .banner-metric{font:600 36px 'Bricolage Grotesque',sans-serif;color:#c31c18}
+.app-shell .banner-metric small{font:500 10px 'Instrument Sans',sans-serif;letter-spacing:.4px;margin-top:6px;line-height:1.5}
 .app-shell .hub-details{padding:0;margin-top:20px}
 .app-shell .hub-details>summary{padding:18px 20px;gap:13px;min-height:72px}
 .app-shell .hub-details>summary b{font-size:15px}
-.app-shell .hub-details>summary small{font-size:12px;color:#a0b5bb;line-height:1.5}
+.app-shell .hub-details>summary small{font-size:12px;color:#404549;line-height:1.5}
 .app-shell .hub-details[open] .fan-management{border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none}
 .app-shell .income-card{padding:22px}
-.app-shell .income-value{font-size:30px;color:#b8ed72;margin-top:10px}
+.app-shell .income-value{font-size:30px;color:#c31c18;margin-top:10px}
 .app-shell .income-value span{font-size:12px}
 .app-shell .offline-note{font-size:12px;border-top-color:var(--line)}
-.app-shell .page-footer{border-top:1px solid var(--line);font-size:11px;color:#8ca4ad;padding:22px 0;margin:30px 0 0;gap:14px;flex-wrap:wrap}
+.app-shell .page-footer{border-top:1px solid var(--line);font-size:11px;color:#4d5257;padding:22px 0;margin:30px 0 0;gap:14px;flex-wrap:wrap}
 .app-shell .page-footer a{min-height:34px;display:flex;align-items:center}
 .app-shell .page-footer>span:last-child{font-size:11px}
-/* Competition, cup and club development use the same surfaces. */
-.app-shell .league-tabs,.app-shell .center-navigation,.app-shell .exp-tablist{padding:5px;border:1px solid var(--line);border-radius:13px;background:#12251d;box-shadow:none;gap:5px;margin-bottom:20px}
-.app-shell .league-tabs button,.app-shell .center-navigation button,.app-shell .exp-tablist button{min-height:48px;padding:11px 14px;font-size:14px;border:1px solid transparent;border-radius:9px;background:none;box-shadow:none;color:#a6bec3;gap:8px}
-.app-shell .league-tabs button[aria-selected=true],.app-shell .center-navigation button[aria-pressed=true],.app-shell .exp-tablist button[aria-selected=true]{background:#b8ed7217;color:#d3f4b2;border-color:#b8ed7220;box-shadow:none}
+/* Competition,cup and club development use the same surfaces. */
+.app-shell .league-tabs,.app-shell .center-navigation,.app-shell .exp-tablist{padding:5px;border:1px solid var(--line);border-radius:10px;background:#fffcf4;box-shadow:none;gap:5px;margin-bottom:20px}
+.app-shell .league-tabs button,.app-shell .center-navigation button,.app-shell .exp-tablist button{min-height:48px;padding:11px 14px;font-size:14px;border:1px solid transparent;border-radius:8px;background:none;box-shadow:none;color:#3a3f43;gap:8px}
+.app-shell .league-tabs button[aria-selected=true],.app-shell .center-navigation button[aria-pressed=true],.app-shell .exp-tablist button[aria-selected=true]{background:#cb262017;color:#c31c18;border-color:#cb262020;box-shadow:none}
 .app-shell .league-tabs button:focus-visible,.app-shell .center-navigation button:focus-visible,.app-shell .exp-tablist button:focus-visible{outline-offset:-3px}
 .app-shell .league-panel .table-scroll{border:0}
 .app-shell .table-scroll table{font-size:14px;background:none}
-.app-shell .table-scroll th{font-size:10px;font-weight:550;letter-spacing:1px;background:#12251d;color:#9cb4bc;padding-top:14px;padding-bottom:14px}
-.app-shell .table-scroll td{height:52px;border-bottom:1px solid #a8c0c215;padding-top:12px;padding-bottom:12px;color:#c3d2d5}
-.app-shell .table-scroll tr.your-team{background:#b8ed720c;box-shadow:inset 3px 0 #b8ed72}
-.app-shell .table-scroll tr.your-team td{color:#d2f2ad}
-.app-shell .table-note{font-size:12px;line-height:1.7;padding:16px 20px;color:#91aab1}
+.app-shell .table-scroll th{font-size:11px;font-weight:550;letter-spacing:.4px;background:#fffcf4;color:#41464a;padding-top:14px;padding-bottom:14px}
+.app-shell .table-scroll td{height:52px;border-bottom:1px solid #393d4215;padding-top:12px;padding-bottom:12px;color:#2a2f33}
+.app-shell .table-scroll tr.your-team{background:#cb26200c;box-shadow:inset 3px 0 #cb2620}
+.app-shell .table-scroll tr.your-team td{color:#c31c18}
+.app-shell .table-note{font-size:12px;line-height:1.7;padding:16px 20px;color:#494e53}
 .app-shell .result-row{min-height:56px;padding:12px 20px;border-color:var(--line);background:none;font-size:13px;gap:12px}
 .app-shell .result-row>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere;line-height:1.4}
-.app-shell .result-badge{width:27px;height:27px;border-radius:8px;font-size:11px;box-shadow:none}
-.app-shell .competition-goal{padding:22px;margin:0 0 20px;background:#152b22;border-color:var(--line);box-shadow:none}
+.app-shell .result-badge{width:27px;height:27px;border-radius:6px;font-size:11px;box-shadow:none}
+.app-shell .competition-goal{padding:22px;margin:0 0 20px;background:#fdfaf3;border-color:var(--line);box-shadow:none}
 .app-shell .competition-goal.compact{padding:18px 20px}
-.app-shell .competition-goal h2{font:600 28px 'Barlow Condensed',sans-serif}
-.app-shell .competition-goal h3{font:600 24px 'Barlow Condensed',sans-serif}
+.app-shell .competition-goal h2{font:600 28px 'Bricolage Grotesque',sans-serif}
+.app-shell .competition-goal h3{font:600 24px 'Bricolage Grotesque',sans-serif}
 .app-shell .competition-goal p{font-size:13px;line-height:1.7}
-.app-shell .competition-license,.app-shell .competition-summary{background:#12241c3b;border-color:var(--line);box-shadow:none;border-radius:12px}
-.app-shell .competition-goal .quiet-button{background:#1b352a}
+.app-shell .competition-license,.app-shell .competition-summary{background:#fffcf53b;border-color:var(--line);box-shadow:none;border-radius:8px}
+.app-shell .competition-goal .quiet-button{background:#f8f5ee}
 .app-shell .cup-panel{padding:22px}
-.app-shell .cup-panel h2{font:600 31px 'Barlow Condensed',sans-serif}
+.app-shell .cup-panel h2{font:600 31px 'Bricolage Grotesque',sans-serif}
 .app-shell .cup-description{font-size:14px;line-height:1.7}
 .app-shell .cup-rounds{margin:22px 0}
-.app-shell .cup-rounds>div>span{width:36px;height:36px;border:1px solid #8fae7e44;background:#172c23;box-shadow:none;font-size:13px}
-.app-shell .cup-rounds>div.current>span{background:#b8ed7215;border-color:#b8ed7266;color:#d2f3b0}
+.app-shell .cup-rounds>div>span{width:36px;height:36px;border:1px solid #3d582c44;background:#fdfaf2;box-shadow:none;font-size:13px}
+.app-shell .cup-rounds>div.current>span{background:#cb262015;border-color:#cb262066;color:#c31c18}
 .app-shell .cup-rounds b{font-size:12px;line-height:1.5}
 .app-shell .europe-intro,.app-shell .europe-campaign{padding:22px;background:var(--panel);box-shadow:none}
-.app-shell .europe-emblem,.app-shell .center-emblem,.app-shell .exp-header-icon{width:48px;height:48px;border-radius:13px;border:1px solid #b8ed7224;background:#b8ed720b;color:#b8ed72;box-shadow:none;transform:none;flex-shrink:0}
-.app-shell .europe-heading h2{font:600 32px 'Barlow Condensed',sans-serif}
+.app-shell .europe-emblem,.app-shell .center-emblem,.app-shell .exp-header-icon{width:48px;height:48px;border-radius:10px;border:1px solid #cb262024;background:#cb26200b;color:#c31c18;box-shadow:none;transform:none;flex-shrink:0}
+.app-shell .europe-heading h2{font:600 32px 'Bricolage Grotesque',sans-serif}
 .app-shell .europe-heading p,.app-shell .europe-description,.app-shell .europe-next-match p{font-size:14px;line-height:1.65}
 .app-shell .europe-metrics{gap:14px;margin-top:22px}
-.app-shell .europe-metrics>span{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#13271f;box-shadow:none;font-size:12px;color:#a2b8bc}
-.app-shell .europe-metrics b{font:600 28px 'Barlow Condensed',sans-serif;margin-top:5px}
-.app-shell .europe-qualification{padding:18px;background:#13271f;border:1px solid var(--line);border-radius:13px;margin-top:20px}
+.app-shell .europe-metrics>span{padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fefbf4;box-shadow:none;font-size:12px;color:#3e4347}
+.app-shell .europe-metrics b{font:600 28px 'Bricolage Grotesque',sans-serif;margin-top:5px}
+.app-shell .europe-qualification{padding:18px;background:#fefbf4;border:1px solid var(--line);border-radius:10px;margin-top:20px}
 .app-shell .europe-qualification p{font-size:13px;line-height:1.7}
-.app-shell .europe-entry-rules span{border-radius:7px;background:#1c362b;border-color:#9ab19f28;font-size:12px;padding:7px 9px}
-.app-shell .europe-campaign h3{font:600 30px 'Barlow Condensed',sans-serif}
+.app-shell .europe-entry-rules span{border-radius:6px;background:#f7f4ed;border-color:#454a4e28;font-size:12px;padding:7px 9px}
+.app-shell .europe-campaign h3{font:600 30px 'Bricolage Grotesque',sans-serif}
 .app-shell .europe-stages{gap:10px;margin:22px 0}
 .app-shell .europe-stages>div{min-width:0}
-.app-shell .europe-stages>div>span{box-shadow:none;border-color:#92b48655;background:#142820}
+.app-shell .europe-stages>div>span{box-shadow:none;border-color:#36542b55;background:#fefbf4}
 .app-shell .europe-stages b{font-size:11px;line-height:1.5;overflow-wrap:anywhere}
 .app-shell .europe-next-match{padding:18px 0;border-top:1px solid var(--line);gap:15px}
-.app-shell .europe-next-match h4{font:600 27px 'Barlow Condensed',sans-serif}
-.app-shell .europe-format-note{font-size:12px;line-height:1.7;color:#92adb3}
+.app-shell .europe-next-match h4{font:600 27px 'Bricolage Grotesque',sans-serif}
+.app-shell .europe-format-note{font-size:12px;line-height:1.7;color:#474c51}
 .app-shell .europe-group-fixtures,.app-shell .europe-result-row{font-size:13px;line-height:1.6;border-color:var(--line)}
-.app-shell .modern-center .center-welcome{display:flex;align-items:center;gap:18px;padding:22px;background:#152b22;border-color:var(--line);margin:0 0 20px;box-shadow:none}
-.app-shell .center-section-number{font:600 42px 'Barlow Condensed',sans-serif;color:#b8ed7255}
-.app-shell .center-welcome h2{font:600 30px 'Barlow Condensed',sans-serif}
+.app-shell .modern-center .center-welcome{display:flex;align-items:center;gap:18px;padding:22px;background:#fdfaf3;border-color:var(--line);margin:0 0 20px;box-shadow:none}
+.app-shell .center-section-number{font:600 42px 'Bricolage Grotesque',sans-serif;color:#c31c1855}
+.app-shell .center-welcome h2{font:600 30px 'Bricolage Grotesque',sans-serif}
 .app-shell .center-welcome p{font-size:14px;line-height:1.65;max-width:650px}
 .app-shell .center-welcome .center-emblem{margin-left:auto}
 .app-shell .exp-header{margin:22px 0;gap:14px}
-.app-shell .exp-header h2{font:600 30px 'Barlow Condensed',sans-serif}
+.app-shell .exp-header h2{font:600 30px 'Bricolage Grotesque',sans-serif}
 .app-shell .exp-header p{font-size:14px;line-height:1.6}
-.app-shell .exp-resources{background:#152a21;border:1px solid var(--line);border-radius:15px;box-shadow:none;overflow:hidden;margin-bottom:20px}
+.app-shell .exp-resources{background:#fdfaf3;border:1px solid var(--line);border-radius:10px;box-shadow:none;overflow:hidden;margin-bottom:20px}
 .app-shell .exp-resources>div{padding:18px 20px;border-color:var(--line);gap:10px}
-.app-shell .exp-resources b{font:600 28px 'Barlow Condensed',sans-serif;color:#d9efc8}
-.app-shell .exp-resources span{font-size:12px;color:#a5bbbf}
+.app-shell .exp-resources b{font:600 28px 'Bricolage Grotesque',sans-serif;color:#3c4e2d}
+.app-shell .exp-resources span{font-size:12px;color:#3c4145}
 .app-shell .exp-tabpanel{padding-top:4px}
-.app-shell .exp-section-intro h3{font:600 30px 'Barlow Condensed',sans-serif;margin:8px 0 10px}
-.app-shell .exp-section-intro p{font-size:14px;line-height:1.7;color:#a3b9bf;max-width:850px}
-.app-shell .exp-dna-card,.app-shell .exp-research-node,.app-shell .exp-contract-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#152b22;box-shadow:none}
-.app-shell .exp-dna-card.selected{border-color:#b8ed7277;background:#183026;box-shadow:inset 0 3px #b8ed72}
-.app-shell .exp-dna-symbol,.app-shell .exp-contract-symbol{transform:none;box-shadow:none;width:48px;height:48px;border-radius:12px;border:1px solid #b8ed722a;background:#b8ed7211;color:#c1df9c}
+.app-shell .exp-section-intro h3{font:600 30px 'Bricolage Grotesque',sans-serif;margin:8px 0 10px}
+.app-shell .exp-section-intro p{font-size:14px;line-height:1.7;color:#3d4246;max-width:850px}
+.app-shell .exp-dna-card,.app-shell .exp-research-node,.app-shell .exp-contract-card{padding:22px;border:1px solid var(--line);border-radius:10px;background:#fdfaf3;box-shadow:none}
+.app-shell .exp-dna-card.selected{border-color:#cb262077;background:#fbf8f0;box-shadow:inset 0 3px #cb2620}
+.app-shell .exp-dna-symbol,.app-shell .exp-contract-symbol{transform:none;box-shadow:none;width:48px;height:48px;border-radius:8px;border:1px solid #cb26202a;background:#cb262011;color:#c31c18}
 .app-shell .exp-dna-symbol svg{width:27px;height:27px}
-.app-shell .exp-dna-card h4,.app-shell .exp-contract-card h4{font:600 29px 'Barlow Condensed',sans-serif;margin:16px 0 9px}
-.app-shell .exp-dna-card p,.app-shell .exp-contract-card p,.app-shell .exp-node-copy p{font-size:14px;line-height:1.65;color:#a7bec2}
+.app-shell .exp-dna-card h4,.app-shell .exp-contract-card h4{font:600 29px 'Bricolage Grotesque',sans-serif;margin:16px 0 9px}
+.app-shell .exp-dna-card p,.app-shell .exp-contract-card p,.app-shell .exp-node-copy p{font-size:14px;line-height:1.65;color:#3a3f43}
 .app-shell .exp-effect{font-size:13px;line-height:1.6;margin:18px 0}
-.app-shell .exp-badge{border-color:#8eaa8f33;background:#22392f55;font-size:11px;padding:7px 10px;box-shadow:none}
-.app-shell .exp-chosen{background:#b8ed7212;border-color:#b8ed7244;border-radius:10px;box-shadow:none;min-height:45px;font-size:13px;color:#cbe9ac}
-.app-shell .exp-benefits{background:#142920;border-color:var(--line);border-radius:14px;box-shadow:none}
+.app-shell .exp-badge{border-color:#4c515633;background:#f6f3ec55;font-size:11px;padding:7px 10px;box-shadow:none}
+.app-shell .exp-chosen{background:#cb262012;border-color:#cb262044;border-radius:8px;box-shadow:none;min-height:45px;font-size:13px;color:#c31c18}
+.app-shell .exp-benefits{background:#fefbf3;border-color:var(--line);border-radius:10px;box-shadow:none}
 .app-shell .exp-benefits>div{padding:14px 18px;border-color:var(--line);font-size:13px}
-.app-shell .exp-active-project,.app-shell .exp-contract-active{padding:22px;border-radius:16px;background:#172f25;border:1px solid #b8ed7244;box-shadow:none}
-.app-shell .exp-active-project h4,.app-shell .exp-contract-active h4{font:600 28px 'Barlow Condensed',sans-serif}
-.app-shell .exp-branch-heading h4{font:600 25px 'Barlow Condensed',sans-serif}
+.app-shell .exp-active-project,.app-shell .exp-contract-active{padding:22px;border-radius:10px;background:#fbf8f1;border:1px solid #cb262044;box-shadow:none}
+.app-shell .exp-active-project h4,.app-shell .exp-contract-active h4{font:600 28px 'Bricolage Grotesque',sans-serif}
+.app-shell .exp-branch-heading h4{font:600 25px 'Bricolage Grotesque',sans-serif}
 .app-shell .exp-branch-heading p{font-size:13px}
-.app-shell .exp-node-step{box-shadow:none;background:#223b31;border-color:#8eaa8f33;border-radius:10px}
+.app-shell .exp-node-step{box-shadow:none;background:#f5f2eb;border-color:#4c515633;border-radius:8px}
 .app-shell .exp-node-copy h5{font-size:16px;line-height:1.4;margin-bottom:8px}
 .app-shell .exp-node-costs{font-size:12px;gap:8px;flex-wrap:wrap}
 .app-shell .club-studio{background:transparent;border:0;box-shadow:none;padding:0}
-.app-shell .club-studio-heading,.app-shell .club-studio-preview,.app-shell .club-studio-controls{border-color:var(--line);box-shadow:none;background:#152a21;border-radius:16px}
+.app-shell .club-studio-heading,.app-shell .club-studio-preview,.app-shell .club-studio-controls{border-color:var(--line);box-shadow:none;background:#fdfaf3;border-radius:10px}
 .app-shell .club-studio-heading{padding:22px;margin-bottom:20px}
-.app-shell .club-studio-heading h2{font:600 31px 'Barlow Condensed',sans-serif}
+.app-shell .club-studio-heading h2{font:600 31px 'Bricolage Grotesque',sans-serif}
 .app-shell .club-studio-preview{overflow:hidden}
-.app-shell .club-studio-colors button,.app-shell .club-studio-patterns button,.app-shell .club-studio-badges button{border:1px solid var(--line);background:#172d24;border-radius:12px;box-shadow:none}
-.app-shell .club-studio-colors button[aria-pressed=true],.app-shell .club-studio-patterns button[aria-pressed=true],.app-shell .club-studio-badges button[aria-pressed=true]{border-color:#b8ed7277;background:#20382e}
-.app-shell .mission-card{padding:22px;box-shadow:none;background:var(--panel);border:1px solid var(--line);border-radius:16px}
-.app-shell .mission-card h3{font:600 27px 'Barlow Condensed',sans-serif}
+.app-shell .club-studio-colors button,.app-shell .club-studio-patterns button,.app-shell .club-studio-badges button{border:1px solid var(--line);background:#fcf9f2;border-radius:8px;box-shadow:none}
+.app-shell .club-studio-colors button[aria-pressed=true],.app-shell .club-studio-patterns button[aria-pressed=true],.app-shell .club-studio-badges button[aria-pressed=true]{border-color:#cb262077;background:#f6f3ec}
+.app-shell .mission-card{padding:22px;box-shadow:none;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.app-shell .mission-card h3{font:600 27px 'Bricolage Grotesque',sans-serif}
 .app-shell .mission-card>p{font-size:14px;line-height:1.6}
-.app-shell .mission-reward{background:#b8ed7210;border-color:#b8ed7227;border-radius:9px;font-size:12px}
+.app-shell .mission-reward{background:#cb262010;border-color:#cb262027;border-radius:8px;font-size:12px}
 .app-shell .journey-overview,.app-shell .journey-roadmap,.app-shell .journey-next{background:var(--panel);border-color:var(--line);box-shadow:none}
-/* Dialogs, match controls, live bars and the app's second navigation level. */
-.app-shell .modal-backdrop{background:#12241cc9;backdrop-filter:blur(10px);padding:22px}
-.app-shell .modal{background:#162b22;border-color:#829e9330;border-radius:22px;padding:28px;box-shadow:0 20px 80px #0008}
-.app-shell .modal h2{font:600 35px/1.1 'Barlow Condensed',sans-serif;margin:8px 0 12px}
-.app-shell .modal>p,.app-menu-description{font-size:14px;line-height:1.65;color:#a3b9bf}
-.app-shell .modal-close{width:38px;height:38px;min-height:38px;right:15px;top:15px;background:#ffffff08;border:1px solid var(--line);border-radius:11px;color:#bacbc8}
+/* Dialogs,match controls,live bars and the app's second navigation level. */
+.app-shell .modal-backdrop{background:#fffcf5c9;backdrop-filter:blur(10px);padding:22px}
+.app-shell .modal{background:#fdfaf3;border-color:#54595d30;border-radius:10px;padding:28px;box-shadow:0 20px 80px #14171a29}
+.app-shell .modal h2{font:600 35px/1.1 'Bricolage Grotesque',sans-serif;margin:8px 0 12px}
+.app-shell .modal>p,.app-menu-description{font-size:14px;line-height:1.65;color:#3d4246}
+.app-shell .modal-close{width:38px;height:38px;min-height:38px;right:15px;top:15px;background:#10141806;border:1px solid var(--line);border-radius:8px;color:#303539}
 .app-shell .modal form label{font-size:13px;line-height:1.5;margin:18px 0 8px}
 .app-shell .modal input{width:100%;padding:12px 14px}
 .app-shell .modal .account-details{padding:14px 0;border-color:var(--line);font-size:13px;gap:9px;overflow-wrap:anywhere}
 .app-shell .modal .signout-link,.app-shell .settings-help,.app-shell .delete-account-link{min-height:44px;font-size:14px;border-color:var(--line);gap:10px;margin-top:8px}
 .app-shell .app-more-menu{display:grid;grid-template-columns:1fr;gap:20px;margin-top:24px}
 .app-menu-group{display:grid;gap:3px}
-.app-menu-group>span{font-size:10px;letter-spacing:1.5px;color:#829ea9;margin:0 0 7px;padding:0 11px}
-.app-shell .app-menu-group>button{display:flex;align-items:center;gap:12px;min-height:48px;padding:11px;border:1px solid transparent;border-radius:11px;background:#12241c80;box-shadow:none;color:#b8cecc;font-size:14px;text-align:left}
+.app-menu-group>span{font-size:11px;letter-spacing:.4px;color:#52575c;margin:0 0 7px;padding:0 11px}
+.app-shell .app-menu-group>button{display:flex;align-items:center;gap:12px;min-height:48px;padding:11px;border:1px solid transparent;border-radius:8px;background:#fffcf580;box-shadow:none;color:#2e3337;font-size:14px;text-align:left}
 .app-shell .app-menu-group>button>b{font-size:14px;font-weight:500;flex:1}
-.app-shell .app-menu-group>button>svg:last-child{margin-left:auto;width:15px;color:#839fa9}
-.app-shell .app-menu-group>button[aria-current=page]{background:#b8ed7215;border-color:#b8ed7227;color:#d0efa8}
-.app-shell .live-match-banner{background:#1a3429;border-top:1px solid #b8ed7225;border-bottom:0;min-height:46px;padding:10px 32px;font-size:12px;box-shadow:none}
+.app-shell .app-menu-group>button>svg:last-child{margin-left:auto;width:15px;color:#51575b}
+.app-shell .app-menu-group>button[aria-current=page]{background:#cb262015;border-color:#cb262027;color:#c31c18}
+.app-shell .live-match-banner{background:#f9f6ee;border-top:1px solid #cb262025;border-bottom:0;min-height:46px;padding:10px 32px;font-size:12px;box-shadow:none}
 .app-shell .live-match-banner>b{font-size:16px;font-variant-numeric:tabular-nums}
-.app-shell .toast{border-radius:14px;background:#203c30;border:1px solid #b8ed7244;box-shadow:0 12px 36px #0005;font-size:14px;line-height:1.5;max-width:560px;padding:13px 16px}
-.app-shell .toast.error{background:#283f35;border-color:#d6aa8d55}
-.app-shell .match-card{padding:20px;background:#162b22;border-color:var(--line)}
+.app-shell .toast{border-radius:10px;background:#f5f2eb;border:1px solid #cb262044;box-shadow:0 12px 36px #14171a19;font-size:14px;line-height:1.5;max-width:560px;padding:13px 16px}
+.app-shell .toast.error{background:#f3f0e9;border-color:#5c371d55}
+.app-shell .match-card{padding:20px;background:#fdfaf3;border-color:var(--line)}
 .app-shell .match-card .match-league{font-size:13px;margin-top:22px}
 .app-shell .match-card .match-teams{margin:20px 0}
 .app-shell .match-card .match-teams b{font-size:13px;line-height:1.4}
-.app-shell .match-card .section-label{font-size:10px}
+.app-shell .match-card .section-label{font-size:11px}
 .app-shell .match-card .match-hint{font-size:12px;line-height:1.65;margin:14px 0 0}
-.app-shell .match-mode-option{border-radius:13px;box-shadow:none;min-height:116px;background:#b8ed72;border-color:#c5ee98;padding:15px;gap:10px}
-.app-shell .match-mode-option.manual{background:#1b352a;border-color:#779b8b44;box-shadow:none}
-.app-shell .match-mode-icon{width:32px;height:32px;flex-basis:32px;border-radius:9px}
+.app-shell .match-mode-option{border-radius:10px;box-shadow:none;min-height:116px;background:#cb2620;border-color:#cb2620;padding:15px;gap:10px}
+.app-shell .match-mode-option.manual{background:#f8f5ee;border-color:#575d6144;box-shadow:none}
+.app-shell .match-mode-icon{width:32px;height:32px;flex-basis:32px;border-radius:8px}
 .app-shell .match-mode-copy strong{font-size:15px}
 .app-shell .match-mode-copy>span,.app-shell .match-mode-copy small{font-size:12px}
-.app-shell .match-backdrop,.app-shell .manual-backdrop{background:#12241ce8;backdrop-filter:blur(8px)}
-.app-shell .match-dialog,.app-shell .manual-match{border-radius:22px;border-color:#89a69a44;background:#152921;box-shadow:0 20px 70px #0006}
-.app-shell .theatre-header,.app-shell .manual-match header{background:#162c23;border-bottom:1px solid var(--line);padding:16px 22px}
-.app-shell .theatre-header button,.app-shell .manual-match header>button{width:40px;min-height:40px;border-radius:10px;background:#1e3d30;border:1px solid var(--line);box-shadow:none}
-.app-shell .stadium-scene{background:radial-gradient(ellipse at top,#2b514150,transparent 60%),#152b22;padding-top:28px}
-.app-shell .stadium-scene h2{font:600 32px 'Barlow Condensed',sans-serif}
+.app-shell .match-backdrop,.app-shell .manual-backdrop{background:#1c2024e8;backdrop-filter:blur(8px)}
+.app-shell .match-dialog,.app-shell .manual-match{border-radius:22px;border-color:#9a9fa444;background:#212529;box-shadow:0 20px 70px #00000066}
+.app-shell .theatre-header,.app-shell .manual-match header{background:#23272c;border-bottom:1px solid var(--line);padding:16px 22px}
+.app-shell .theatre-header button,.app-shell .manual-match header>button{width:40px;min-height:40px;border-radius:10px;background:#32363b;border:1px solid var(--line);box-shadow:none}
+.app-shell .stadium-scene{background:radial-gradient(ellipse at top,#44494d50,transparent 60%),#22262b;padding-top:28px}
+.app-shell .stadium-scene h2{font:600 32px 'Bricolage Grotesque',sans-serif}
 .app-shell .theatre-score{margin:24px auto;max-width:600px}
-.app-shell .theatre-score>strong{font:600 76px 'Barlow Condensed',sans-serif;color:#c4ee98}
+.app-shell .theatre-score>strong{font:600 76px 'Bricolage Grotesque',sans-serif;color:#f1eee5}
 .app-shell .theatre-score b{font-size:14px}
 .app-shell .theatre-body{padding:22px}
-.app-shell .theatre-clock{font-size:13px;color:#aec5be}
-.app-shell .theatre-progress{height:5px;margin:20px 0 34px;background:#2d473c}
+.app-shell .theatre-clock{font-size:13px;color:#bac0c5}
+.app-shell .theatre-progress{height:5px;margin:20px 0 34px;background:#3d4146}
 .app-shell .theatre-actions{gap:15px;border-top:1px solid var(--line);padding-top:20px;margin-top:20px}
 .app-shell .theatre-actions>span{font-size:12px;line-height:1.6;max-width:220px}
 .app-shell .commentary-event{padding:17px 0;border-color:var(--line)}
-.app-shell .commentary-event p{font-size:14px;line-height:1.6;color:#b2c8c6}
+.app-shell .commentary-event p{font-size:14px;line-height:1.6;color:#bec3c9}
 .app-shell .commentary-event b{font-size:11px;letter-spacing:.8px}
-.app-shell .manual-match h2{font:600 27px 'Barlow Condensed',sans-serif}
-.app-shell .manual-score{background:#12241c;padding:12px 18px;gap:10px}
-.app-shell .manual-score b{font:600 46px 'Barlow Condensed',sans-serif;color:#d0f4af}
-.app-shell .manual-toolbar{background:#162c23;padding:10px 14px;border-top:1px solid var(--line)}
-.app-shell .manual-toolbar button{border-radius:10px;box-shadow:none;min-height:42px;font-size:12px;background:#203d31;border-color:var(--line)}
+.app-shell .manual-match h2{font:600 27px 'Bricolage Grotesque',sans-serif}
+.app-shell .manual-score{background:#1c2024;padding:12px 18px;gap:10px}
+.app-shell .manual-score b{font:600 46px 'Bricolage Grotesque',sans-serif;color:#f8f5ec}
+.app-shell .manual-toolbar{background:#23272c;padding:10px 14px;border-top:1px solid var(--line)}
+.app-shell .manual-toolbar button{border-radius:10px;box-shadow:none;min-height:42px;font-size:12px;background:#32373b;border-color:var(--line)}
 .app-shell .manual-toolbar select{min-height:40px;font-size:12px}
-.app-shell .manual-actions button{box-shadow:none;border-radius:15px;border-color:#99b99b44;background:#254236;font-size:13px}
-.app-shell .manual-actions .manual-shoot{background:#b8ed72;color:#162921}
-.app-shell .manual-controls{background:#162c23}
-.app-shell .manual-joystick{border-color:#a3c48b55;box-shadow:inset 0 2px 10px #0003;background:radial-gradient(circle,#65834d33,#1b352a)}
-.app-shell .manual-joystick i{background:#b8ed72;border-color:#d2efa7;box-shadow:0 4px 10px #0004}
+.app-shell .manual-actions button{box-shadow:none;border-radius:15px;border-color:#aab0b544;background:#373c40;font-size:13px}
+.app-shell .manual-actions .manual-shoot{background:#ece9e0;color:#212529}
+.app-shell .manual-controls{background:#23272c}
+.app-shell .manual-joystick{border-color:#cbc7bf55;box-shadow:inset 0 2px 10px #00000033;background:radial-gradient(circle,#65834d33,#2b2f34)}
+.app-shell .manual-joystick i{background:#ece9e0;border-color:#f6f3ea;box-shadow:0 4px 10px #00000044}
 .app-shell .manual-help p{font-size:14px;line-height:1.65}
-.app-shell .manual-match footer{background:#12241c;color:#8ba6ad;font-size:11px}
-.app-shell .connection-banner,.app-shell .welcome-strip{border-radius:13px;box-shadow:none;border-color:#c5df9838;background:#1e342b;font-size:14px}
+.app-shell .manual-match footer{background:#1c2024;color:#9ca1a7;font-size:11px}
+.app-shell .connection-banner,.app-shell .welcome-strip{border-radius:10px;box-shadow:none;border-color:#cb262038;background:#f8f5ee;font-size:14px}
 /* Responsive app frame. */
 @media(min-width:761px){.app-bottom-nav{display:none}}
 @media(min-width:1400px){.app-shell main{padding-top:36px}.app-topbar.topbar{padding-left:42px;padding-right:42px}}
@@ -302,49 +302,49 @@ body{background:var(--app-bg)}
  .app-sidebar.sidebar{display:none}.app-shell .main-shell{margin-left:0}
  .app-topbar.topbar{height:66px;padding:0 18px;gap:10px}
  .native-android .app-topbar.topbar{height:calc(66px + var(--top-safe,env(safe-area-inset-top,0px)));padding-top:var(--top-safe,env(safe-area-inset-top,0px))}
- .app-topbar-identity{gap:9px;flex:1;min-width:0}.app-home-mark{width:34px;height:36px;flex-basis:34px;border-radius:10px;font-size:31px}
- .app-topbar-identity>div>span{font-size:8px;letter-spacing:1.8px}.app-topbar-identity b{font-size:12px;max-width:120px}
- .app-topbar .topbar-right{gap:9px}.app-topbar .save-status{display:none}.app-topbar .balance{min-height:38px;padding:8px 9px;gap:5px}.app-topbar .balance b{font-size:14px}.app-topbar .balance>span{font-size:10px}.app-topbar .balance>svg:last-child{display:none}.app-topbar .balance>svg:first-child{width:15px;height:15px}.app-topbar .avatar{width:36px;height:36px;font-size:12px;border-radius:11px}
+ .app-topbar-identity{gap:9px;flex:1;min-width:0}.app-home-mark{width:34px;height:36px;flex-basis:34px;border-radius:8px;font-size:31px}
+ .app-topbar-identity>div>span{font-size:11px;letter-spacing:.4px}.app-topbar-identity b{font-size:12px;max-width:120px}
+ .app-topbar .topbar-right{gap:9px}.app-topbar .save-status{display:none}.app-topbar .balance{min-height:38px;padding:8px 9px;gap:5px}.app-topbar .balance b{font-size:14px}.app-topbar .balance>span{font-size:11px}.app-topbar .balance>svg:last-child{display:none}.app-topbar .balance>svg:first-child{width:15px;height:15px}.app-topbar .avatar{width:36px;height:36px;font-size:12px;border-radius:8px}
  .app-shell main{padding:24px 16px calc(92px + var(--bottom-safe,env(safe-area-inset-bottom,0px)));max-width:620px}
- .app-page-heading.page-heading{margin-bottom:22px;gap:12px;align-items:center}.app-page-heading h1{font-size:35px;letter-spacing:-.3px}.app-page-heading p{font-size:13px;line-height:1.6;margin-top:8px;max-width:390px}.app-page-heading .eyebrow{font-size:9px;letter-spacing:1.4px;margin-bottom:7px}
- .app-page-heading .season-pill{padding:9px;gap:7px;min-height:48px;border-radius:11px}.app-page-heading .season-pill>svg:last-child{display:none}.app-page-heading .season-pill>svg:first-child{width:15px}.app-page-heading .season-pill span{font-size:9px}.app-page-heading .season-pill b{font-size:11px;max-width:92px}
- .app-club-context{padding:12px 14px;flex-wrap:wrap;margin-bottom:18px}.app-club-context-name{flex:0 0 100%;padding:0 0 12px;gap:10px;font-size:14px}.app-club-context-name>svg:last-child{margin-left:auto}.app-club-context>div{flex:1;border-left:0;border-top:1px solid var(--line);padding:12px 8px 0;gap:4px}.app-club-context>div>span{font-size:10px}.app-club-context>div>b{font-size:16px}.app-club-context small{font-size:10px}
- .app-shell .dashboard-grid{grid-template-columns:minmax(0,1fr);gap:18px}.app-shell .right-column{gap:18px}.app-shell .panel-head{padding:18px}.app-shell .panel-head h2{font-size:27px}.app-shell .panel-head .eyebrow{font-size:10px}
- .app-shell .squad-panel .pitch{margin:12px 12px 0}.app-shell .pitch-bar{padding:12px 16px;gap:8px;font-size:12px}.app-shell .pitch-bar>span:last-child{font-size:10px}.app-shell .squad-bottom{padding:14px 16px;font-size:11px;gap:10px}
+ .app-page-heading.page-heading{margin-bottom:22px;gap:12px;align-items:center}.app-page-heading h1{font-size:35px;letter-spacing:-.3px}.app-page-heading p{font-size:13px;line-height:1.6;margin-top:8px;max-width:390px}.app-page-heading .eyebrow{font-size:11px;letter-spacing:.4px;margin-bottom:7px}
+ .app-page-heading .season-pill{padding:9px;gap:7px;min-height:48px;border-radius:8px}.app-page-heading .season-pill>svg:last-child{display:none}.app-page-heading .season-pill>svg:first-child{width:15px}.app-page-heading .season-pill span{font-size:11px}.app-page-heading .season-pill b{font-size:11px;max-width:92px}
+ .app-club-context{padding:12px 14px;flex-wrap:wrap;margin-bottom:18px}.app-club-context-name{flex:0 0 100%;padding:0 0 12px;gap:10px;font-size:14px}.app-club-context-name>svg:last-child{margin-left:auto}.app-club-context>div{flex:1;border-left:0;border-top:1px solid var(--line);padding:12px 8px 0;gap:4px}.app-club-context>div>span{font-size:11px}.app-club-context>div>b{font-size:16px}.app-club-context small{font-size:11px}
+ .app-shell .dashboard-grid{grid-template-columns:minmax(0,1fr);gap:18px}.app-shell .right-column{gap:18px}.app-shell .panel-head{padding:18px}.app-shell .panel-head h2{font-size:27px}.app-shell .panel-head .eyebrow{font-size:11px}
+ .app-shell .squad-panel .pitch{margin:12px 12px 0}.app-shell .pitch-bar{padding:12px 16px;gap:8px;font-size:12px}.app-shell .pitch-bar>span:last-child{font-size:11px}.app-shell .squad-bottom{padding:14px 16px;font-size:11px;gap:10px}
  .app-shell .tactic-picker,.app-shell .management-panel,.app-shell .cup-panel,.app-shell .europe-intro,.app-shell .europe-campaign{padding:20px}.app-shell .tactic-title h3{font-size:27px}.app-shell .tactic-options>button{font-size:12px;padding:10px 7px;gap:5px;min-height:46px}.app-shell .tactic-options>button>svg{width:15px}
  .app-shell .lineup-name b{font-size:13px}.app-shell .lineup-name small{font-size:11px}.app-shell .substitute-control select{max-width:120px;font-size:11px;min-height:40px}.app-shell .lineup-row{gap:8px}
- .app-shell .transfer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.app-shell .transfer-top{padding:14px 14px 0}.app-shell .player-portrait{height:175px}.app-shell .transfer-details{padding:16px 14px}.app-shell .transfer-details h2{font-size:25px}.app-shell .transfer-details>.eyebrow{font-size:9px;letter-spacing:.7px}.app-shell .transfer-age{font-size:9px}.app-shell .transfer-attributes>span{font-size:11px}.app-shell .transfer-details .primary{font-size:12px;padding:10px;gap:6px;justify-content:center}.app-shell .transfer-details .primary>svg{display:none}.app-shell .transfer-details .primary strong{font-size:13px}.app-shell .trade-help{padding:16px;align-items:flex-start;gap:14px;flex-direction:column}
+ .app-shell .transfer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.app-shell .transfer-top{padding:14px 14px 0}.app-shell .player-portrait{height:175px}.app-shell .transfer-details{padding:16px 14px}.app-shell .transfer-details h2{font-size:25px}.app-shell .transfer-details>.eyebrow{font-size:11px;letter-spacing:.4px}.app-shell .transfer-age{font-size:11px}.app-shell .transfer-attributes>span{font-size:11px}.app-shell .transfer-details .primary{font-size:12px;padding:10px;gap:6px;justify-content:center}.app-shell .transfer-details .primary>svg{display:none}.app-shell .transfer-details .primary strong{font-size:13px}.app-shell .trade-help{padding:16px;align-items:flex-start;gap:14px;flex-direction:column}
  .app-shell .upgrade-grid,.app-shell .mission-grid{gap:13px}.app-shell .upgrade-card{padding:19px}.app-shell .development-banner{padding:20px;gap:14px}.app-shell .development-banner h2{font-size:28px}.app-shell .banner-metric{display:none}.app-shell .development-banner .large-icon{width:46px;height:46px;flex-shrink:0}
- .app-shell .league-tabs,.app-shell .center-navigation,.app-shell .exp-tablist{padding:4px;gap:4px;border-radius:12px;margin-bottom:18px}.app-shell .league-tabs button,.app-shell .center-navigation button,.app-shell .exp-tablist button{font-size:12px;padding:10px 7px;min-height:46px;gap:6px;border-radius:9px}.app-shell .league-tabs button svg,.app-shell .center-navigation button svg,.app-shell .exp-tablist button svg{width:16px;height:16px}
- .app-shell .table-scroll table{font-size:12px}.app-shell .table-scroll td{height:51px}.app-shell .table-scroll th{font-size:9px}.app-shell .table-note{font-size:12px;padding:15px 18px}
+ .app-shell .league-tabs,.app-shell .center-navigation,.app-shell .exp-tablist{padding:4px;gap:4px;border-radius:8px;margin-bottom:18px}.app-shell .league-tabs button,.app-shell .center-navigation button,.app-shell .exp-tablist button{font-size:12px;padding:10px 7px;min-height:46px;gap:6px;border-radius:8px}.app-shell .league-tabs button svg,.app-shell .center-navigation button svg,.app-shell .exp-tablist button svg{width:16px;height:16px}
+ .app-shell .table-scroll table{font-size:12px}.app-shell .table-scroll td{height:51px}.app-shell .table-scroll th{font-size:11px}.app-shell .table-note{font-size:12px;padding:15px 18px}
  .app-shell .competition-goal{padding:20px}.app-shell .competition-goal.compact{padding:17px 18px}.app-shell .competition-goal h2{font-size:27px}.app-shell .competition-goal p{font-size:13px}.app-shell .cup-description,.app-shell .europe-description,.app-shell .europe-heading p{font-size:13px}
- .app-shell .europe-heading{align-items:flex-start;gap:13px}.app-shell .europe-heading h2{font-size:30px}.app-shell .europe-emblem{width:42px;height:42px;flex-basis:42px}.app-shell .europe-qualification{padding:16px}.app-shell .europe-entry-rules{gap:6px}.app-shell .europe-entry-rules span{font-size:11px;padding:6px 8px}.app-shell .europe-stages{gap:6px}.app-shell .europe-stages b{font-size:10px}.app-shell .europe-metrics>span{padding:12px;font-size:11px}
+ .app-shell .europe-heading{align-items:flex-start;gap:13px}.app-shell .europe-heading h2{font-size:30px}.app-shell .europe-emblem{width:42px;height:42px;flex-basis:42px}.app-shell .europe-qualification{padding:16px}.app-shell .europe-entry-rules{gap:6px}.app-shell .europe-entry-rules span{font-size:11px;padding:6px 8px}.app-shell .europe-stages{gap:6px}.app-shell .europe-stages b{font-size:11px}.app-shell .europe-metrics>span{padding:12px;font-size:11px}
  .app-shell .modern-center .center-welcome{display:flex;padding:18px;gap:12px}.app-shell .center-section-number{display:none}.app-shell .center-welcome h2{font-size:27px}.app-shell .center-welcome p{font-size:13px}.app-shell .center-welcome .center-emblem{display:none}.app-shell .exp-header{margin:20px 0;gap:12px}.app-shell .exp-header h2{font-size:27px}.app-shell .exp-header-icon{width:43px;height:43px;flex-basis:43px}
  .app-shell .exp-resources>div{padding:15px 12px}.app-shell .exp-resources span{font-size:11px}.app-shell .exp-resources b{font-size:26px}.app-shell .exp-section-intro h3{font-size:28px}.app-shell .exp-section-intro p{font-size:14px}.app-shell .exp-dna-card,.app-shell .exp-research-node,.app-shell .exp-contract-card{padding:20px}.app-shell .exp-dna-card h4{font-size:28px}
- .app-bottom-nav.mobile-nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;height:auto;min-height:72px;padding:6px 10px calc(6px + var(--bottom-safe,env(safe-area-inset-bottom,0px)));border-top:1px solid #92b1b22b;background:#13251df5;box-shadow:0 -8px 24px #0002;backdrop-filter:blur(16px);z-index:30}
- .app-bottom-nav.mobile-nav button{position:relative;background:none;border:0;border-radius:0;box-shadow:none;color:#91a9b3;min-height:56px;gap:4px;padding:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;line-height:1.3;font-weight:550}
- .app-bottom-nav.mobile-nav button.selected{color:#d4f3b2;background:none;border:0;box-shadow:none}
+ .app-bottom-nav.mobile-nav{position:fixed;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;height:auto;min-height:72px;padding:6px 10px calc(6px + var(--bottom-safe,env(safe-area-inset-bottom,0px)));border-top:1px solid #454a4e2b;background:#fefbf4f5;box-shadow:0 -8px 24px #14171a0a;backdrop-filter:blur(16px);z-index:30}
+ .app-bottom-nav.mobile-nav button{position:relative;background:none;border:0;border-radius:0;box-shadow:none;color:#494e53;min-height:56px;gap:4px;padding:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;line-height:1.3;font-weight:550}
+ .app-bottom-nav.mobile-nav button.selected{color:#c31c18;background:none;border:0;box-shadow:none}
  .app-bottom-nav.mobile-nav button:before{display:none}
- .app-nav-icon{position:relative;display:grid;place-items:center;width:47px;height:29px;border-radius:10px}
- .app-bottom-nav button.selected .app-nav-icon{background:#b8ed7216}
+ .app-nav-icon{position:relative;display:grid;place-items:center;width:47px;height:29px;border-radius:8px}
+ .app-bottom-nav button.selected .app-nav-icon{background:#cb262016}
  .app-bottom-nav .app-nav-icon svg{width:20px;height:20px}
  .app-bottom-nav .center-ready-dot{position:absolute;right:5px;top:3px;width:5px;height:5px;box-shadow:none}
  .app-shell .live-match-banner{padding:10px 18px;min-height:44px;font-size:11px;gap:10px}.app-shell .live-match-banner>b{font-size:15px}
- .app-shell .modal-backdrop{padding:14px}.app-shell .modal{padding:25px 20px;max-height:calc(100dvh - 28px);border-radius:20px}.app-shell .modal h2{font-size:32px}.app-shell .app-more-menu{margin-top:22px;gap:18px}.app-shell .app-menu-group>button{min-height:46px;padding:10px}
- .app-shell .toast{bottom:calc(88px + var(--bottom-safe,env(safe-area-inset-bottom,0px)));left:16px;right:16px;max-width:none;font-size:13px;padding:12px 14px}.app-shell .page-footer{font-size:10px;margin-top:26px;margin-bottom:0;padding:18px 0;gap:12px}.app-shell .page-footer>span:last-child{display:none}
+ .app-shell .modal-backdrop{padding:14px}.app-shell .modal{padding:25px 20px;max-height:calc(100dvh - 28px);border-radius:10px}.app-shell .modal h2{font-size:32px}.app-shell .app-more-menu{margin-top:22px;gap:18px}.app-shell .app-menu-group>button{min-height:46px;padding:10px}
+ .app-shell .toast{bottom:calc(88px + var(--bottom-safe,env(safe-area-inset-bottom,0px)));left:16px;right:16px;max-width:none;font-size:13px;padding:12px 14px}.app-shell .page-footer{font-size:11px;margin-top:26px;margin-bottom:0;padding:18px 0;gap:12px}.app-shell .page-footer>span:last-child{display:none}
  .app-shell .match-mode-option{min-height:130px;padding:13px 11px}.app-shell .match-mode-copy strong{font-size:14px}.app-shell .match-mode-copy>span,.app-shell .match-mode-copy small{font-size:11px}
  .app-shell .match-dialog,.app-shell .manual-match{border-radius:18px}.app-shell .theatre-header,.app-shell .manual-match header{padding:14px 18px}.app-shell .stadium-scene h2{font-size:28px}.app-shell .theatre-body{padding:20px 18px}.app-shell .theatre-score>strong{font-size:66px}.app-shell .theatre-score b{font-size:13px}.app-shell .commentary-event p{font-size:13px}.app-shell .manual-match h2{font-size:24px}.app-shell .manual-toolbar{padding:9px 10px;gap:7px}.app-shell .manual-toolbar button{min-height:40px;font-size:11px}.app-shell .manual-toolbar label{font-size:11px}.app-shell .manual-toolbar select{font-size:11px;max-width:120px}
 }
-@media(max-width:380px){.app-topbar.topbar{padding-left:13px;padding-right:13px}.app-topbar-identity>div{display:none}.app-topbar-identity{flex:1}.app-topbar .balance b{font-size:13px}.app-shell main{padding-left:13px;padding-right:13px}.app-page-heading h1{font-size:31px}.app-page-heading p{font-size:12px}.app-page-heading .season-pill b{max-width:75px;font-size:10px}.app-page-heading .season-pill{padding:8px}.app-shell .transfer-grid{grid-template-columns:1fr}.app-shell .player-portrait{height:205px}.app-shell .transfer-details .primary{font-size:14px}.app-shell .lineup-row{flex-wrap:wrap}.app-shell .substitute-control{margin-left:auto}.app-shell .exp-tablist button{font-size:11px;gap:4px;padding:10px 5px}.app-shell .exp-resources>div{padding:14px 9px}}
+@media(max-width:380px){.app-topbar.topbar{padding-left:13px;padding-right:13px}.app-topbar-identity>div{display:none}.app-topbar-identity{flex:1}.app-topbar .balance b{font-size:13px}.app-shell main{padding-left:13px;padding-right:13px}.app-page-heading h1{font-size:31px}.app-page-heading p{font-size:12px}.app-page-heading .season-pill b{max-width:75px;font-size:11px}.app-page-heading .season-pill{padding:8px}.app-shell .transfer-grid{grid-template-columns:1fr}.app-shell .player-portrait{height:205px}.app-shell .transfer-details .primary{font-size:14px}.app-shell .lineup-row{flex-wrap:wrap}.app-shell .substitute-control{margin-left:auto}.app-shell .exp-tablist button{font-size:11px;gap:4px;padding:10px 5px}.app-shell .exp-resources>div{padding:14px 9px}}
 @media(orientation:landscape) and (max-height:550px) and (min-width:600px){.app-shell .manual-match header{padding:8px 14px}.app-shell .manual-match h2{font-size:18px}.app-shell .manual-score b{font-size:24px}.app-shell .manual-score{padding:5px;gap:3px}.app-shell .manual-toolbar{padding:4px;gap:4px}.app-shell .manual-toolbar button{min-height:32px;font-size:10px}.app-shell .manual-toolbar select{min-height:30px;font-size:10px;max-width:92px}.app-shell .manual-actions button{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.app-shell *,.app-shell *:before,.app-shell *:after{scroll-behavior:auto!important;transition:none!important}.app-shell .score-pop,.app-shell .ball{animation:none!important}}
 /* Preserve native insets and override the former compact icon-only tablet rail. */
-.app-shell .competition-heading{gap:14px;align-items:flex-start}.app-shell .competition-heading h2{font:600 29px/1.15 'Barlow Condensed',sans-serif}.app-shell .competition-heading p{font-size:13px;line-height:1.65}.app-shell .competition-emblem{width:42px;height:42px;flex-basis:42px;border-radius:12px;background:#b8ed7212;border:1px solid #b8ed7226;box-shadow:none;transform:none}.app-shell .competition-points{min-width:73px;flex-shrink:0}.app-shell .competition-points b{font:600 33px 'Barlow Condensed',sans-serif}.app-shell .competition-status{font-size:12px;gap:12px;line-height:1.6;flex-wrap:wrap}.app-shell .competition-track{height:5px;border-radius:5px;background:#2c463b;margin:20px 0 12px}.app-shell .competition-license{padding:16px;margin-top:18px}.app-shell .competition-facilities>div{padding:12px;background:#12241c66;border-color:var(--line);border-radius:10px;font-size:12px}.app-shell .exp-benefits>div{font-size:13px;border-color:var(--line)}.app-shell .club-studio-controls{padding:22px;border:1px solid var(--line)}.app-shell .cup-rounds{margin:22px 0}.app-shell .cup-rounds>div>span{box-shadow:none;background:#152a21;border:1px solid #91b88044}.app-shell .cup-rounds>div.active>span{color:#cfeeab;background:#b8ed7212;border-color:#b8ed7277}
+.app-shell .competition-heading{gap:14px;align-items:flex-start}.app-shell .competition-heading h2{font:600 29px/1.15 'Bricolage Grotesque',sans-serif}.app-shell .competition-heading p{font-size:13px;line-height:1.65}.app-shell .competition-emblem{width:42px;height:42px;flex-basis:42px;border-radius:8px;background:#cb262012;border:1px solid #cb262026;box-shadow:none;transform:none}.app-shell .competition-points{min-width:73px;flex-shrink:0}.app-shell .competition-points b{font:600 33px 'Bricolage Grotesque',sans-serif}.app-shell .competition-status{font-size:12px;gap:12px;line-height:1.6;flex-wrap:wrap}.app-shell .competition-track{height:5px;border-radius:6px;background:#f0ede5;margin:20px 0 12px}.app-shell .competition-license{padding:16px;margin-top:18px}.app-shell .competition-facilities>div{padding:12px;background:#fffcf566;border-color:var(--line);border-radius:8px;font-size:12px}.app-shell .exp-benefits>div{font-size:13px;border-color:var(--line)}.app-shell .club-studio-controls{padding:22px;border:1px solid var(--line)}.app-shell .cup-rounds{margin:22px 0}.app-shell .cup-rounds>div>span{box-shadow:none;background:#fdfaf3;border:1px solid #cb262044}.app-shell .cup-rounds>div.active>span{color:#c31c18;background:#cb262012;border-color:#cb262077}
 @media(min-width:761px) and (max-width:1120px){.app-sidebar .brand>div,.app-sidebar .sidebar-label,.app-sidebar .nav-item>span,.app-sidebar .sidebar-bottom{display:block}.app-sidebar .nav-item{justify-content:flex-start}}
 @media(max-width:760px){.app-shell .toast{transform:none;width:auto}.app-shell .competition-heading h2{font-size:26px}.app-shell .competition-heading{gap:11px}.app-shell .competition-emblem{display:none}.app-shell .competition-facilities{gap:8px}}
 .native-android .app-shell .modal-backdrop{padding-top:calc(14px + var(--top-safe,env(safe-area-inset-top,0px)));padding-bottom:calc(14px + var(--bottom-safe,env(safe-area-inset-bottom,0px)))}
 .native-android .app-shell .modal{max-height:calc(100dvh - 28px - var(--top-safe,env(safe-area-inset-top,0px)) - var(--bottom-safe,env(safe-area-inset-bottom,0px)))}
-.app-workspace-tabs{display:flex;gap:6px;padding:5px;margin:0 0 20px;border:1px solid var(--line);background:#13251d;border-radius:13px;max-width:440px}.app-workspace-tabs button{flex:1;min-height:44px;padding:10px 14px;background:none;border:1px solid transparent;border-radius:9px;font-size:14px;color:#a8bfc3}.app-workspace-tabs button[aria-selected=true]{background:#b8ed7215;border-color:#b8ed7222;color:#d2efb0}.app-workspace-tabs button:focus-visible{outline-offset:-3px}.app-workspace-panel[hidden]{display:none}
+.app-workspace-tabs{display:flex;gap:6px;padding:5px;margin:0 0 20px;border:1px solid var(--line);background:#fefbf4;border-radius:10px;max-width:440px}.app-workspace-tabs button{flex:1;min-height:44px;padding:10px 14px;background:none;border:1px solid transparent;border-radius:8px;font-size:14px;color:#393e42}.app-workspace-tabs button[aria-selected=true]{background:#cb262015;border-color:#cb262022;color:#c31c18}.app-workspace-tabs button:focus-visible{outline-offset:-3px}.app-workspace-panel[hidden]{display:none}
 @media(max-width:760px){.app-workspace-tabs{margin-bottom:18px;max-width:none}.app-workspace-tabs button{font-size:13px}}
 .app-shell .modal{max-height:calc(100dvh - 44px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
 @media(max-width:760px){.app-shell .modal{max-height:calc(100dvh - 28px)}}
