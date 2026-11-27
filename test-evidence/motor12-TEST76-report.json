@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST76",
+    "date": "2026-11-27",
+    "motorVersion": 12,
+    "title": "Kampen fra midterpletten",
+    "summary": "To spillere tager afspark. Kameravalg, radar og ny kampmenu følger en manuelt spillet eller simuleret karrierekamp. Kildeleverancen indeholder hele det selvstændige Android-projekt.",
+    "sourceCommit": "bc7ac1347c1453af3f0d53dde552eeb8b856779a"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor12-TEST76.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 76,
+    "versionName": "1.0.0-test-match76",
+    "bytes": 1271080,
+    "sha256": "114c7f62676811d977026f1b829b4965d7a9ea4b78826a7af73088796590dd1f",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/touchline-android/dev/artifacts/Touchline37-Motor12-TEST76.apk"
+  },
+  "tests": {
+    "passed": 35,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "22 domæneforløb på JVM, 12 Android-forløb i Robolectric og én samlet pakkekontrol bestod. Android-testene brugte API 28 og 34. Fire grafikforløb brugte native Android-tegning på API 34.",
+    "checks": [
+      "Kampstart, mål og halvleg krævede tryk på KICK OFF i både motor og Activity. Begge hold stod på egen halvdel. En kort jordpasning blev modtaget af den anden spiller ved midten.",
+      "Ens input ved 60 og 120 renderkald gav samme kampdata. 12 AI-kampe nåede slutfløjt med i alt 175 skud og 41 mål. En separat karrieretest fulgte 11 sæsoner.",
+      "Tre samtidige berøringer blev sendt gennem Androids view-hierarki. Joystick, sprint og ladet skud var aktive samtidig. Motorprøven viste højere løbefart og energiforbrug ved sprint samt hurtigere bold ved ladet skud.",
+      "De fire kameravalg gav fire forskellige projektioner med midterpletten i billedet. Matchmenu, kameravalg, spillelås, lydstyrke, pause og indstillinger blev kontrolleret ved genåbning.",
+      "Backup til og fra Androids dokumentudbyder blev prøvet gennem ContentResolver. Import brugte en ledig plads. TEST75-format og afvisning af beskadiget backup blev afprøvet.",
+      "Bygningen skete i en ren kildemappe. Manifest, launcher, certifikat, offlineaktiver, native DEX, ZIP-integritet og justering bestod. Arkivet indeholder nul browserfiler."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Selvstændigt Android-projekt",
+      "detail": "Billeder, font, aktiver og færdigkodede lyde ligger i den native kildemappe. Den aktive Android-branch har egne byggefiler. Browserflow, hybridstarter og passive spilsløjfer er fjernet fra leverancen."
+    },
+    {
+      "title": "Kampdag og afspark",
+      "detail": "I spillerkarrieren vælges Min spiller eller Hele holdet før hver manuelt spillet kamp. Simulation har sin egen indgang. Bold og ur venter på et bevidst tryk ved hvert afspark. Motoren gennemfører tilløbet og afleveringen mellem to forskellige spillere."
+    },
+    {
+      "title": "Fire kameraer, radar og input",
+      "detail": "Broadcast, Spiller / bold, Taktisk oversigt og Målkamera interpolerer retning, zoom, fokus og perspektiv. Radar viser begge hold, mål, felter, bold og aktiv spiller. HUD følger navn, nummer, energi og kampform. Retning, trykvarighed og pasningskvalitet påvirker aktionerne."
+    },
+    {
+      "title": "Kampmenu og gemning",
+      "detail": "Statistik og kronologisk tidslinje kan åbnes ved banen. Trænere får kampplan og udskiftning. Lydstyrke, mute og kamera gemmes med karrieren. Ved tilbagevenden til klubhuset gemmes kampen. Gamle kampe viser en oplysning om delvise hændelsestal."
+    },
+    {
+      "title": "Karriere og sæson",
+      "detail": "Spiller og træner har hver tre baggrundshistorier og et frit forløb. Kampmål, sæsonmål og historiemissioner følges i briefing og klubhus. Ligastigen går fra League 10 til League 1 med 15 ligakampe pr. sæson. Pokal, kontrakter, træning, skader og økonomi fortsætter på tværs af sæsoner."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Signeret APK",
+      "before": 1254696,
+      "after": 1271080,
+      "unit": "bytes",
+      "note": "Faktisk filstørrelse for TEST75 og TEST76."
+    },
+    {
+      "label": "Billede af Android-kampen",
+      "before": null,
+      "after": 329160,
+      "unit": "pixels",
+      "note": "Skærmbillederne er tegnet i liggende Android-testlayout ved 844 × 390."
+    }
+  ],
+  "preserved": [
+    "APK 37, tidligere testudgivelser og historiske motorversioner er bevaret på deres eksisterende branches. Android-leverancen har en særskilt branch.",
+    "De fire lokale pladser og brugerens valgfrie backup gennem Androids dokumentudbyder fortsætter. TEST76 kan læse native TEST75-karrierer."
+  ],
+  "limitations": [
+    "Fysisk billedfrekvens, touchforsinkelse, lydoplevelse og varme er ikke målt på OnePlus Nord 4.",
+    "Backup er testet med en dokumentudbyder i testmiljøet. Overførsel til en rigtig cloudkonto er ikke afprøvet.",
+    "Skud på mål, hjørnespark, store chancer og kort kan kun rekonstrueres delvist for den allerede spillede del af en importeret TEST75-kamp."
+  ],
+  "installSteps": [
+    "Hent den signerede APK og vælg Installer eller Opdater.",
+    "Åbn en gemmeplads eller vælg karrieretype og historie. Fra Kampdag vælges Spil selv eller Simulér kampen.",
+    "Tryk KICK OFF. Styr løbet med venstre tommel. Hold Sprint for ekstra fart, og hold A længere for at lade skuddet.",
+    "Åbn Kampmenu for at vælge kamera, læse statistik eller ændre lyd. Til klubhuset gemmer den aktuelle kamp."
+  ],
+  "nextTest": [
+    "På telefonen kan du kontrollere berøringsafstanden ved skærmkanterne, prøve lydstyrken og følge en hel kamp gennem mål, halvleg og genoptagelse."
+  ]
+}

@@ -1,0 +1,23 @@
+OK to spillere ved midten og modtaget kort afspark
+OK halvleg og modstanderens afspark
+OK mål, scoring og nyt afspark til holdet der indkasserer
+OK samme kamptilstand ved 60 og 120 renderkald pr. sekund
+OK spillerlås, løb, kald på bold og personligt skud
+OK holdstyring i spillerkarriere, modtagerskift, forsvarsskift og gemning
+OK TEST75-karriere ved afspark åbner med ny opstilling og bevaret score
+OK igangværende afsparkssekvens fortsætter én gang efter genindlæsning
+OK sprint øger tempo og belastning, ladet rettet skud ændrer boldens fart
+OK mål, skud på mål og hjørnespark registreres på rette hold og følger gemmepladsen
+OK formation, pres og udskiftning uden genindtræden
+OK versioneret rundtur med aktiv kamp
+OK ukendt, afkortet og beskadiget backup afvises
+OK seks baggrunde, fri karriere og valg med konsekvenser én gang
+OK anlæg, transfervindue og træningsbelastning
+OK 15 forskellige ligamodstandere, pokalfinale, titel og oprykning
+OK 11 sæsoner, ligaloft og afgrænset historik
+OK nedrykning og ny sæson
+OK klubtilbud og personlig kontrakt
+OK skadet spiller, erstatning og kampbaseret restitution
+OK resten af holdet kan styres under egen skade
+OK 12 hele AI-kampe med afslutninger, mål og slutfløjt
+PASS 22   AI-mål [16, 25]   Skud 175
