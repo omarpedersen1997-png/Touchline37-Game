@@ -1,5 +1,6 @@
+import {matchRadar} from './radar.js';
 import {bindControls} from './controls.js';
-import { PHASE, createMatch, kickOff,timeLabel,setTactics,substitute,swapRoles } from './engine.js';
+import { PHASE, playerRestart, createMatch, kickOff,timeLabel,setTactics,substitute,swapRoles } from './engine.js';
 import { FORMATIONS, TACTICS, PRESS, fieldRole } from './teams.js';
 import { SEASON_LENGTH,PROMOTION_POINTS,SAFETY_POINTS,loadClub, saveClub, newClub, nextMatch, nextOpponent, trainClub, settleMatch, money } from './club.js';
 import { pitchView } from './pitch.js';
@@ -13,7 +14,7 @@ let storage;
 try{storage=localStorage;}catch{}
 let club=demo?newClub():loadClub(storage);
 let match=demo?createMatch():club.active;
-let scenario=null, manual=true, controls=null;
+let scenario=null, manual=match?.controlMode!=='simulation', controls=null, radar=null;
 let paused=true, speed=1, frame=0, lastPaint=0, lastEvent=0, savedTime=0, loop, pitch, observer;
 let arena, arenaToken=0, arenaMode='2d', arenaLoading=false;
 let notice='', view=initialView();
@@ -45,7 +46,7 @@ function overview(){
     <div class="hub-heading"><h1>${escape(club.name)}</h1><span>${money(club.budget)} <span>i klubkassen</span></span></div>
     <section class="hub-fixture"><div class="hub-fixture-copy"><p class="kicker">LEAGUE ${club.division} · RUNDE ${club.round+1}/${SEASON_LENGTH}</p>
     <h2>${escape(opponent.name)}</h2><p>${escape(opponent.formation)} · Holdstyrke ${opponent.rating}</p>
-    <div class="hub-actions"><button class="primary" data-action="arena-launch">${match?'Åbn ligakampen':'Spil ligakamp'}</button><button data-action="tactical-launch">Taktisk 2D</button></div></div></section>
+    <div class="hub-actions"><button class="primary" data-mode="manual">Spil selv</button><button data-mode="simulation">Simulér kampen</button></div></div></section>
     <div class="hub-modes"><button class="hub-mode hub-scenarios" data-action="scenarios"><span class="mode-tag">KORT KAMP</span><strong>Kampsituationer</strong><span>Vend kampen eller hold føringen.</span></button>
     <button class="hub-mode hub-squad" data-action="squad"><span class="mode-tag">STARTELLEVER</span><strong>Trup</strong><span>Vælg spillere efter form og kondition.</span></button>
     <button class="hub-mode hub-tactics" data-action="tactics"><span class="mode-tag">KAMPPLAN</span><strong>Taktik</strong><span>Justér formation og pres.</span></button></div>
@@ -55,7 +56,7 @@ function scenarioMenu(){
   return title('Kampsituationer','Spil de sidste minutter med en fast stilling og et klart mål.','MOTOR 12')+
     `<div class="scenario-list">${SCENARIOS.map(item=>`<article class="scenario-card"><div class="scenario-score"><b>${item.goals} : ${item.conceded}</b><time>${item.minute}:00</time></div>
     <div><h2>${item.title}</h2><p>${item.description}</p><p><strong>Mål:</strong> ${item.target}</p></div>
-    <button class="primary" data-scenario="${item.id}" aria-label="Spil ${item.title}">Spil situation</button></article>`).join('')}</div>
+    <div class="scenario-actions"><button class="primary" data-scenario="${item.id}" data-mode="manual" aria-label="Spil ${item.title}">Spil selv</button><button data-scenario="${item.id}" data-mode="simulation" aria-label="Simulér ${item.title}">Simulér</button></div></article>`).join('')}</div>
     <p class="scenario-note">Situationer bruger en fast trup. Resultaterne påvirker ikke din ligakamp eller klubkasse.</p>`;
 }
 function phaseLabel(){
@@ -64,7 +65,7 @@ function phaseLabel(){
     case PHASE.KICKOFF_READY:return scenario&&match.tick===scenario.minute*60?'Klar til situationen':
       match.kickReason==='half'?'Halvleg · klar til 2. halvleg':'Mål · klar til nyt afspark';
     case PHASE.FULL_TIME:return 'Slutfløjt';
-    case PHASE.DEAD_BALL:return 'Dødbold';
+    case PHASE.DEAD_BALL:return manual&&playerRestart(match)?(match.restart.kind==='goal-kick'?'Dit målspark':'Dit frispark'):'Dødbold';
     default:return paused?'Pause':'I gang';
   }
 }
@@ -92,17 +93,18 @@ function reportMarkup(){
 }
 function matchMarkup(){
   const [home,away]=match.teams;
-  return `<section class="match-sheet" aria-label="Kampvisning">
+  return `<section class="match-sheet ${manual?'user-match':'sim-match'}" aria-label="Kampvisning">
     <div class="scoreboard"><div class="score-team home"><span class="team-code">${escape(home.code)}</span><strong>${escape(home.name)}</strong></div>
     <div class="score-centre"><time id="clock">00:00</time><strong id="score"></strong></div>
     <div class="score-team away"><span class="team-code">${escape(away.code)}</span><strong>${escape(away.name)}</strong></div></div>
     <div class="arena"><canvas id="pitch" aria-label="Taktisk bane med begge holds spillere"></canvas><canvas id="pitch3d" hidden aria-label="Touchline stadion med animerede spillere"></canvas>
-    <div class="field-input" ${manual?'':'hidden'}><button class="field-stick" aria-label="Styrepude"><i></i></button>
-    <output id="active-player"></output><div class="field-actions">${[['switch','Skift'],['tackle','Tackl'],['sprint','Sprint'],['through','Stikning'],['pass','Aflever'],['shoot','Skyd']].map(([id,label])=>`<button data-field="${id}">${label}</button>`).join('')}</div></div></div>
+    ${manual?`<div class="field-input"><button class="field-stick" aria-label="Styrepude"><i></i></button>
+    <div class="radar"><canvas id="mini-pitch" width="180" height="100" aria-label="Minikort over spillere og bold"></canvas><output id="active-player"></output></div><div class="field-actions">${[['switch','Skift'],['tackle','Tackl'],['sprint','Sprint'],['through','Stikning'],['pass','Aflever'],['shoot','Skyd']].map(([id,label])=>`<button id="field-${id}" data-field="${id}">${label}</button>`).join('')}</div></div>`:''}</div>
+    <button class="broadcast-menu" data-action="broadcast-menu" aria-expanded="false">Kampmenu</button>
     <div class="camera-desk" role="group" aria-label="Kampkamera"><button data-camera="tv" aria-pressed="false">Arena 3D</button><button data-camera="near" aria-pressed="false">Nærkamera</button><button data-camera="2d" aria-pressed="true">Taktisk</button><button data-action="expand" aria-pressed="false">Udvid</button><span id="arena-status" role="status"></span></div>
     <div class="match-desk"><div class="play-state"><span id="phase" role="status"></span><button id="play-control" class="primary" data-action="play">Kick Off</button></div>
     <div class="controls"><div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div>
-    <div class="match-options"><button data-action="control-mode">${manual?'Skift til manager':'Styr selv'}</button><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
+    <div class="match-options"><span class="mode-label">${manual?'Spil selv':'Simulering'}</span><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
     <div id="match-report">${match.phase===PHASE.FULL_TIME?reportMarkup():''}</div></section>
     <div class="insights"><section class="live-stats"><h2>Kampstatistik</h2><div id="stats"></div><div class="momentum"><span>Momentum</span><meter id="momentum" min="0" max="100" value="50" aria-label="Momentum for hjemmeholdet"></meter></div></section>
     <section class="timeline"><h2>Kampforløb</h2><ol id="events"></ol></section></div>`;
@@ -148,7 +150,11 @@ function put(id,value){const el=document.getElementById(id);if(el&&el.textConten
 let renderedEvent=-1, renderedStats='', renderedPhase='';
 function paintHUD(){
   const focus=match.teams[0].players[controls?.state.slot];
-  put('active-player',focus?focus.number+' · '+focus.name:'');
+  put('field-shoot',playerRestart(match)&&match.restart.kind==='goal-kick'?'Langt':'Skyd');
+  radar?.(match,controls?.state.slot);
+  const actions=container.querySelector('.field-actions');
+  if(actions)actions.classList.toggle('defending',(match.ball.owner<0?match.ball.lastTeam:match.ball.owner>>4)===1);
+  put('active-player',manual&&playerRestart(match)?phaseLabel():focus?focus.number+' · '+focus.name:'');
   put('clock',timeLabel(match));
   put('score',match.teams[0].stats.goals+' : '+match.teams[1].stats.goals);
   put('phase',phaseLabel());
@@ -169,7 +175,10 @@ function stop(){controls?.reset();paused=true;loop?.reset();cancelAnimationFrame
 function expandMatch(expanded){
   const sheet=container.querySelector('.match-sheet'),button=container.querySelector('[data-action="expand"]');
   if(!sheet||!button)return;
+  if(match.phase===PHASE.FULL_TIME){expanded=false;button.disabled=true;}
   sheet.classList.toggle('match-expanded',expanded);
+  sheet.classList.remove('desk-open');
+  sheet.querySelector('.broadcast-menu').setAttribute('aria-expanded','false');
   document.body.classList.toggle('match-on-top',expanded);
   button.textContent=expanded?'Luk udvidet':'Udvid';
   button.setAttribute('aria-pressed',String(expanded));
@@ -204,7 +213,7 @@ function showCamera(mode){
   });
 }
 function render(){
-  stop();controls?.dispose();controls=null;observer?.disconnect();
+  stop();controls?.dispose();controls=null;radar=null;observer?.disconnect();
   document.body.classList.remove('match-on-top');
   arenaToken++;arenaLoading=false;
   arena?.dispose();arena=null;
@@ -216,7 +225,10 @@ function render(){
   ${scenario?`<div class="scenario-context"><strong>${scenario.title}</strong><span>${scenario.target}</span></div>`:''}${content}`;
   if(view==='match'){
     const canvas=document.querySelector('#pitch');
-    controls=bindControls(container,()=>manual&&!paused&&match.phase===PHASE.PLAYING);
+    if(manual){
+      controls=bindControls(container,()=>!paused&&(match.phase===PHASE.PLAYING||playerRestart(match)));
+      radar=matchRadar(container.querySelector('#mini-pitch'));
+    }
     pitch=pitchView(canvas);
     const layout=()=>{
       if(arena&&arenaMode!=='2d'){if(arena.layout())drawPitch(null);}
@@ -232,7 +244,7 @@ function render(){
   }
 }
 function go(next){
-  if(scenario&&!['match','tactics','squad'].includes(next)){scenario=null;match=club.active;arenaMode='2d';speed=1;}
+  if(scenario&&!['match','tactics','squad'].includes(next)){scenario=null;match=club.active;manual=match?.controlMode!=='simulation';arenaMode='2d';speed=1;}
   notice='';view=next;
   if(!demo)history.replaceState(null,'','#'+(scenario?'scenarios':next));
   render();save();
@@ -250,7 +262,7 @@ function onFrame(now){
   if(now-savedTime>4000){save();savedTime=now;}
   if(match.phase===PHASE.PLAYING||match.phase===PHASE.DEAD_BALL){frame=requestAnimationFrame(onFrame);return;}
   stop();save();paintHUD();
-  if(match.phase===PHASE.FULL_TIME)document.querySelector('#match-report').innerHTML=reportMarkup();
+  if(match.phase===PHASE.FULL_TIME){expandMatch(false);document.querySelector('#match-report').innerHTML=reportMarkup();}
 }
 function start(){
   if(paused||!frame){paused=false;loop.reset();frame=requestAnimationFrame(onFrame);}
@@ -261,9 +273,17 @@ container.addEventListener('click',event=>{
   const link=event.target.closest('.app-nav a');
   if(link){event.preventDefault();go(link.hash.slice(1));return;}
   if(!button)return;
-  if(button.dataset.scenario){
-    scenario=SCENARIOS.find(item=>item.id===button.dataset.scenario);
-    if(scenario){manual=true;match=scenarioMatch(scenario);arenaMode='tv';speed=1;go('match');}
+  if(button.dataset.mode){
+    if(button.dataset.scenario){
+      scenario=SCENARIOS.find(item=>item.id===button.dataset.scenario);
+      if(!scenario)return;
+      match=scenarioMatch(scenario);
+    }else if(!match)match=nextMatch(club);
+    match.controlMode=button.dataset.mode;
+    manual=match.controlMode==='manual';
+    speed=1;arenaMode=manual?'tv':'2d';
+    go('match');
+    if(manual&&matchMedia('(orientation:landscape)').matches)expandMatch(true);
     return;
   }
   if(button.dataset.camera){showCamera(button.dataset.camera);return;}
@@ -273,8 +293,10 @@ container.addEventListener('click',event=>{
     return;
   }
   const action=button.dataset.action;
-  if(action==='control-mode'){manual=!manual;render();}
-  else if(action==='expand'){
+  if(action==='broadcast-menu'){
+    const open=button.closest('.match-sheet').classList.toggle('desk-open');
+    button.setAttribute('aria-expanded',String(open));
+  }else if(action==='expand'){
     expandMatch(button.getAttribute('aria-pressed')!=='true');
   }else if(action==='play'){
     if(kickOff(match)){
@@ -285,11 +307,10 @@ container.addEventListener('click',event=>{
   }else if(action==='sound'){
     club.sound=!club.sound;void audio.enable(club.sound);
     button.textContent=club.sound?'Lyd til':'Lyd fra';button.setAttribute('aria-pressed',String(club.sound));save();
-  }else if(action==='arena-launch'){manual=true;arenaMode='tv';go('match');if(matchMedia('(orientation:landscape)').matches)expandMatch(true);}
-  else if(action==='tactical-launch'){manual=true;arenaMode='2d';go('match');}
+  }
   else if(['match','tactics','squad','scenarios'].includes(action)){go(action);}
   else if(action==='settle'){
-    if(scenario){manual=true;match=scenarioMatch(scenario);go('match');return;}
+    if(scenario){match=scenarioMatch(scenario);go('match');return;}
     if(demo){match=createMatch();go('match');return;}
     if(settleMatch(club,match)){match=null;go('club');}
   }else if(action==='train'){

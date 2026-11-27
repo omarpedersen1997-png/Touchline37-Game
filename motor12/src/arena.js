@@ -7,7 +7,7 @@ import {FIELD, STEP, clamp} from './physics.js';
 const {length: L, width: W, goal: G, bar: B}=FIELD;
 const modelRoot=new URL('./arena/',import.meta.url);
 const models=['player-auto.glb','keeper-auto.glb'];
-const strips=['#357649','#3e8051'];
+const strips=['#397e40','#519044'];
 
 function makePitch(scene){
   const canvas=document.createElement('canvas');
@@ -52,7 +52,7 @@ function stadium(scene){
   }
   block(0,-.19,0,150,.35,107,track);
   const standRows=8,colours=[0xa52a32,0xe7e2d8,0x555464,0x254d78,0x33303a,0xd8b58d];
-  const crowd=new THREE.InstancedMesh(box,new THREE.MeshLambertMaterial({color:0xffffff}),standRows*(106+2*55));
+  const crowd=new THREE.InstancedMesh(new THREE.CapsuleGeometry(.5,.55,2,5),new THREE.MeshLambertMaterial({color:0xffffff}),standRows*(106+2*55));
   const dummy=new THREE.Object3D(),color=new THREE.Color();
   let seat=0;
   for(let row=0;row<standRows;row++){
@@ -263,9 +263,11 @@ export async function createArena(canvas){
       const direction=restart?state.teams[restart.side].direction:state.teams[b.lastTeam===1?1:0].direction;
       point.set(centre?0:clamp(x*.75+(motion.matches?0:b.vx*.07),-44,44),1,centre?0:clamp(y*.42,-23,23));
       if(close&&!centre&&!motion.matches){
-        eye.set(x-direction*13*fit,7.8*fit,y+9*fit);
+        if(restart && (restart.kind==='free-kick'||restart.kind==='goal-kick')){
+          eye.set(x-direction*9*fit,3.8*fit,y+2.4*fit);
+        }else eye.set(x-direction*11*fit,5.8*fit,y+7*fit);
         point.set(clamp(x+direction*8,-52,52),.9,y);
-      }else eye.set(point.x+9*fit,(centre?31:26)*fit,point.z+(centre?43:37)*fit);
+      }else eye.set(point.x+7*fit,(centre?24:19)*fit,point.z+(centre?33:28)*fit);
       const mix=cut?1:1-Math.exp(-seconds*(motion.matches?3.8:6.5));
       camera.position.lerp(eye,mix);follow.lerp(point,mix);look.copy(follow);
       camera.lookAt(look);renderer.render(scene,camera);

@@ -245,8 +245,47 @@ function userKick(s,p,input,action){
     release(s,0,p,x,y,{kind:'pass',speed:Math.min(41,7+Math.hypot(x-p.x,y-p.y)*1.25),target:mate.slot});
   }
 }
+export function playerRestart(s){
+  return s.phase===PHASE.DEAD_BALL&&s.restart.side===0&&
+    (s.restart.kind==='free-kick'||s.restart.kind==='goal-kick');
+}
+function lineUpWall(s){
+  const dir=s.teams[0].direction;
+  const dx=halfLength*dir-s.ball.x,dy=-s.ball.y;
+  const range=Math.hypot(dx,dy);
+  if(range<1||range>35)return;
+  const nx=dx/range,ny=dy/range;
+  let count=0;
+  for(const p of s.teams[1].players){
+    if(p.slot===0||p.red)continue;
+    const across=(count-1.5)*.88;
+    p.x=clamp(s.ball.x+nx*9.15-ny*across,-halfLength+.5,halfLength-.5);
+    p.y=clamp(s.ball.y+ny*9.15+nx*across,-halfWidth+.5,halfWidth-.5);
+    p.vx=p.vy=0;p.fx=-nx;p.fy=-ny;
+    if(++count===4)break;
+  }
+}
 export function stepMatch(s, scratch={},input=null) {
   if(s.phase!==PHASE.PLAYING&&s.phase!==PHASE.DEAD_BALL)return false;
+  if(input&&playerRestart(s)){
+    const r=s.restart;
+    input.slot=r.slot;
+    if(!r.ready){
+      if(r.kind==='free-kick')lineUpWall(s);
+      r.ready=true;input.action='';
+    }
+    const action=input.action;
+    input.action='';
+    if(action==='pass'||action==='through'||action==='shoot'){
+      const kicker=s.teams[0].players[r.slot];
+      if(r.kind==='goal-kick'&&action==='shoot'){
+        const dir=s.teams[0].direction;
+        release(s,0,kicker,s.ball.x+dir*45,s.ball.y+input.y*24,{kind:'pass',speed:30,loft:8});
+      }else userKick(s,kicker,input,action);
+      s.restart=null;s.phase=PHASE.PLAYING;
+    }
+    return true;
+  }
   if(s.phase===PHASE.DEAD_BALL) {s.tick++;if(s.tick>=s.restart.end)restartPlay(s);if(s.phase!==PHASE.PLAYING){checkClock(s);return true;}}
   else s.tick++;
   const dt=STEP, b=s.ball;

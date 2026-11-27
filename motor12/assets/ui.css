@@ -293,3 +293,42 @@ body:has(#game) .app-nav a[aria-current]{background:#183e34;color:white;box-shad
  .match-expanded .controls,.match-expanded .play-state{width:auto}
  .match-expanded .match-desk button,.match-expanded .camera-desk button{min-height:32px;padding:3px 7px}
 }
+
+.scenario-actions{display:flex;flex-wrap:wrap;gap:6px}
+@media(max-width:700px){.scenario-actions{grid-column:2}}
+.mode-label{align-self:center;font:600 1rem var(--display);color:#d6f1d9}
+.broadcast-menu{display:none}
+.field-actions [data-field=switch],.field-actions [data-field=tackle],
+.field-actions.defending [data-field=pass],.field-actions.defending [data-field=shoot],
+.field-actions.defending [data-field=through]{display:none}
+.field-actions.defending [data-field=switch],.field-actions.defending [data-field=tackle]{display:block}
+.field-actions{grid-template-columns:repeat(2,auto);align-items:end;gap:5px}
+.field-actions button{border-radius:50%;width:clamp(46px,11vmin,70px);aspect-ratio:1;padding:2px;background:#0d322187;border:1px solid #f1ffedb0;text-shadow:0 1px 3px #001d12;box-shadow:inset 0 0 0 3px #dcf7df18;color:#fff}
+.field-actions [data-field=shoot]{background:#e7fc80dc;color:#103321;text-shadow:none}
+.field-actions [data-field=pass],.field-actions [data-field=tackle]{grid-column:1}
+.field-actions.defending [data-field=tackle]{grid-row:2}
+.field-actions.defending [data-field=sprint]{grid-column:2;grid-row:2}
+.radar{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);width:clamp(78px,17vmin,145px);background:#103724a8;border-radius:4px;overflow:hidden}
+#mini-pitch{display:block;width:100%;height:auto}
+.radar #active-player{display:block;position:static;text-align:center;font-size:12px;white-space:nowrap}
+@media(orientation:landscape){
+ .match-expanded.user-match{display:block;overflow:hidden}
+ .match-expanded.user-match .arena{height:100%;width:100%}
+ .match-expanded.user-match .scoreboard{position:absolute;z-index:1;top:max(8px,env(safe-area-inset-top));left:max(9px,env(safe-area-inset-left));display:flex;gap:0;align-items:center;min-height:36px;padding:0 8px;background:#082b24ed;border:0;border-left:4px solid #ddfc75;border-radius:3px}
+ .match-expanded.user-match .score-team{padding:0 3px}
+ .match-expanded.user-match .score-team strong{display:none}
+ .match-expanded.user-match .team-code{display:block;min-width:0;min-height:0;border:0;background:none;font:600 19px var(--display)}
+ .match-expanded.user-match .score-centre{display:flex;flex-direction:row-reverse;gap:7px;padding:0 7px;align-items:center}
+ .match-expanded.user-match .score-centre strong{font-size:24px}
+ .match-expanded.user-match .score-centre time{color:#edffce}
+ .match-expanded.user-match .broadcast-menu{display:block;position:absolute;top:max(8px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));min-height:40px;background:#082b24ed;color:white;border-color:#8fbfa3;z-index:2}
+ .match-expanded.user-match .match-desk{display:contents}
+ .match-expanded.user-match .play-state{position:absolute;top:max(49px,calc(env(safe-area-inset-top) + 44px));left:max(9px,env(safe-area-inset-left));width:auto}
+ .match-expanded.user-match .play-state span{display:none}
+ .match-expanded.user-match #play-control{min-height:40px;padding:4px 12px;background:#0a3028eb;border:1px solid #bbe3bc;color:white}
+ .match-expanded.user-match .controls,.match-expanded.user-match .camera-desk{display:none}
+ .match-expanded.user-match.desk-open .controls,.match-expanded.user-match.desk-open .camera-desk{display:flex;position:absolute;right:max(10px,env(safe-area-inset-right));width:min(450px,62%);justify-content:flex-end;background:#082b24f5;padding:5px;border:0;z-index:2}
+ .match-expanded.user-match.desk-open .camera-desk{top:max(54px,calc(env(safe-area-inset-top) + 48px))}
+ .match-expanded.user-match.desk-open .controls{top:max(100px,calc(env(safe-area-inset-top) + 94px))}
+ .match-expanded.user-match .field-stick{width:clamp(83px,21vmin,133px)}
+}

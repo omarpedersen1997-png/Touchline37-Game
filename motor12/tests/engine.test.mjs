@@ -190,3 +190,16 @@ test('fifteen settled fixtures determine promotion, relegation and league one ti
     assert.equal(club.seasonPoints,0);assert.equal(club.played,15);assert.equal(opponents.size,15);
   }
 });
+
+test('a user free kick waits for a fresh strike and puts four defenders in a wall',()=>{
+  const s=createMatch();kickOff(s);
+  s.ball.x=30;s.ball.y=2;
+  s.phase=PHASE.DEAD_BALL;s.restart={kind:'free-kick',side:0,slot:7,end:s.tick+28};
+  const input={x:1,y:0,action:'shoot',slot:7};
+  for(let i=0;i<40;i++)stepMatch(s,{},input);
+  assert.equal(s.phase,PHASE.DEAD_BALL);assert.equal(s.tick,0);
+  for(const p of s.teams[1].players.slice(1,5))assert.ok(Math.hypot(p.x-s.ball.x,p.y-s.ball.y)>=9.15);
+  input.action='shoot';stepMatch(s,{},input);
+  assert.equal(s.phase,PHASE.PLAYING);assert.equal(s.ball.kind,'shot');
+  assert.equal(s.teams[0].stats.shots,1);assert.equal(input.action,'');
+});

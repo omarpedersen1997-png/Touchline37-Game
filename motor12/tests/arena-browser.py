@@ -41,11 +41,14 @@ with sync_playwright() as playwright:
     if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/motor12-arena.png',timeout=18000)
     page.get_by_role('button',name='Kick Off').click()
     page.wait_for_function('document.querySelector("#clock").textContent!=="00:00"')
+    page.get_by_role('button',name='Kampmenu').click()
     page.get_by_role('button',name='Nærkamera').click()
     assert page.get_by_role('button',name='Nærkamera').get_attribute('aria-pressed')=='true'
+    page.get_by_role('button',name='Kampmenu').click()
     page.get_by_role('button',name='Pause',exact=True).click()
     if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/motor12-naer.png',timeout=18000)
     paused=page.locator('#clock').inner_text()
+    page.get_by_role('button',name='Kampmenu').click()
     page.get_by_role('button',name='Taktisk',exact=True).click()
     assert page.locator('#pitch').is_visible()
     assert not canvas.is_visible()
@@ -54,6 +57,26 @@ with sync_playwright() as playwright:
     assert page.locator('.match-expanded').count()==0
     page.set_viewport_size({'width':390,'height':840})
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+    page.set_viewport_size({'width':844,'height':390})
+    page.goto(origin+'/index.html')
+    page.evaluate("""async()=>{
+      const {newClub,nextMatch,saveClub}=await import('/src/club.js');
+      const {kickOff,PHASE}=await import('/src/engine.js');
+      const club=newClub(),m=nextMatch(club);kickOff(m);m.tick=730;
+      Object.assign(m.ball,{x:31,y:2,z:.11,vx:0,vy:0,vz:0,owner:-1,lastTeam:-1,target:-1});
+      Object.assign(m.teams[0].players[7],{x:30.3,y:2,vx:0,vy:0});
+      m.phase=PHASE.DEAD_BALL;m.restart={kind:'free-kick',side:0,slot:7,end:758};
+      saveClub(club,localStorage);
+    }""")
+    page.goto(origin+'/play/index.html#overview')
+    page.get_by_role('button',name='Spil selv').click()
+    page.locator('#pitch3d').wait_for(state='visible')
+    page.get_by_role('button',name='Genoptag').click()
+    page.wait_for_function("document.querySelector('#active-player').textContent==='Dit frispark'")
+    page.wait_for_function('JSON.parse(localStorage.getItem("touchline:motor12:local:v1")).active.restart.ready === true')
+    if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/motor12-frispark.png')
+    page.get_by_role('button',name='Skyd',exact=True).click()
+    page.wait_for_function("document.querySelector('#events').textContent.includes('Afslutning')")
     assert not issues,issues
     browser.close()
 print('BESTÅET: 3D-modeller, WebGL, manuelt afspark, udvidet bane, nærkamera, pause og skift til 2D.')

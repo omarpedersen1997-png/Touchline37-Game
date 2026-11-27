@@ -64,11 +64,11 @@ lancering **1. januar 2027 kl. 10.00 i København** er uden for dette build.
 
 ## TEST70 · Spil på banen
 
-Klubmenuen åbner i bredformat på Android. Vælg Spil ligakamp og Kick Off.
+Klubmenuen åbner i bredformat på Android. Vælg Spil selv og Kick Off.
 Venstre styrepude flytter den markerede spiller i skærmens retning. Højre hånd
 styrer aflevering, stikning, skud, sprint, spillerskift og tackling. På tastatur
 bruges WASD eller piletaster, Shift til sprint og J/K/L til aflevering, skud og
-stikning. E skifter spiller, F tackler. Managerstyring kan vælges under kampen.
+stikning. E skifter spiller, F tackler. Vælg Simulér kampen i klubmenuen for at lade begge hold spille automatisk.
 
 En sæson har 15 kampe mod 15 forskellige modstandere. Klubben starter i League 10.
 30 point giver oprykning eller mesterskabet i League 1. Under 12 point giver

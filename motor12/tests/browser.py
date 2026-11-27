@@ -59,7 +59,7 @@ with sync_playwright() as playwright:
     page.get_by_role('link', name='Start prøvekamp').click()
     page.get_by_role('button', name='Kick Off').wait_for()
     assert page.locator('.scoreboard strong').first.inner_text() == 'Prøvelund BK'
-    assert page.locator('.match-sheet canvas:visible').count() == 1
+    assert page.locator('.arena > canvas:visible').count() == 1
     page.clock.install()
     page.clock.run_for(600)
     assert page.locator('#clock').inner_text() == '00:00'
@@ -101,9 +101,15 @@ with sync_playwright() as playwright:
     page.reload()
     assert page.get_by_role('button', name='Kick Off').is_visible()
     assert page.locator('#clock').inner_text() == '00:00'
-    page.goto(origin+'/play/index.html?demo=1')
+    # Run a clean simulation while retaining the separate tactical/save fixture below.
+    original=page.evaluate('localStorage.getItem("touchline:motor12:local:v1")')
+    page.goto(origin+'/index.html')
+    page.evaluate('localStorage.removeItem("touchline:motor12:local:v1")')
+    page.goto(origin+'/play/index.html#overview')
+    page.get_by_role('button',name='Simulér kampen').click()
+    page.reload()
+    assert page.locator('.field-stick,[data-field]').count()==0
     page.get_by_role('button', name='4×').click()
-    page.get_by_role('button',name='Skift til manager').click()
     stopped = []
     for _ in range(5):
         page.get_by_role('button', name='Kick Off').click()
@@ -120,17 +126,18 @@ with sync_playwright() as playwright:
     assert any('Halvleg' in phase for phase in stopped), stopped
     assert page.locator('#clock').inner_text() == '90:00'
     wait(page, 'SLUTFLØJT · KAMPRAPPORT')
+    page.goto('about:blank')
+    page.goto(origin+'/index.html')
+    page.evaluate('(s)=>localStorage.setItem("touchline:motor12:local:v1",s)',original)
     page.goto(origin+'/play/index.html#overview')
     page.set_viewport_size({'width':390,'height':840})
     no_overflow(page)
-    page.get_by_role('button', name='Spil ligakamp', exact=True).or_(
-        page.get_by_role('button', name='Åbn ligakampen', exact=True)).wait_for()
+    page.get_by_role('button', name='Spil selv',exact=True).wait_for()
     if len(sys.argv) > 2:
         page.screenshot(path=sys.argv[2]+'/motor12-klubmenu.png')
     saved = page.evaluate('localStorage.getItem("touchline:motor12:local:v1")')
     page.get_by_role('button', name='Kampsituationer', exact=False).click()
-    page.get_by_role('button', name='Spil Hold føringen').click()
-    page.get_by_role('button',name='Skift til manager').click()
+    page.get_by_role('button', name='Simulér Hold føringen').click()
     assert page.locator('#clock').inner_text()=='78:00'
     assert page.locator('#score').inner_text()=='2 : 1'
     page.clock.run_for(600)
@@ -152,8 +159,14 @@ with sync_playwright() as playwright:
     page.get_by_role('link',name='Forside').click()
     assert 'LEAGUE 10 · RUNDE 1/15' in page.locator('.hub-fixture').inner_text()
     if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/club-landscape.png')
-    page.get_by_role('button',name='Taktisk 2D').click()
-    page.get_by_role('button',name='Udvid').click()
+    page.get_by_role('button',name='Simulér kampen').click()
+    assert page.locator('.field-stick').count()==0
+    page.get_by_role('link',name='Forside').click()
+    page.get_by_role('button',name='Spil selv').click()
+    assert page.locator('.field-stick').is_visible()
+    page.get_by_role('button',name='Kampmenu').click()
+    page.get_by_role('button',name='Taktisk',exact=True).click()
+    page.get_by_role('button',name='Kampmenu').click()
     page.get_by_role('button',name='Kick Off').click()
     page.clock.run_for(1300)
     assert page.locator('#active-player').inner_text()
