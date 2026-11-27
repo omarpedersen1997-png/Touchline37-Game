@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST72",
+    "date": "2026-11-27",
+    "title": "Motor 12 · Boldtempo og førsteberøring",
+    "summary": "Spil selv har vægtede afleveringer, løbende fodkontakt og redninger under boldens flugt. Fra klubhuset kan du desuden åbne hjemmesideudkastet på telefonen, se kampbilleder og afspille taktiske mønstre.",
+    "sourceCommit": "57db79037a0e30dcd9da74043396c31a27a1f471"
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 72,
+    "versionName": "1.0.0-test-match72",
+    "fileName": "Touchline37-Motor12-TEST72.apk",
+    "bytes": 50788887,
+    "sha256": "4dc1fcbc7a2772cc7aaca585b903511b9f60fabd2d3f9bdb358f5dd3caf03bd0",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor12-redesign/dev/artifacts/Touchline37-Motor12-TEST72.apk"
+  },
+  "tests": {
+    "passed": 31,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "21 motortests, to Chromium-kørsler af spillet, syv funktionstests af hjemmesiden og én test af de lokale forbindelser i den færdige APK bestod.",
+    "checks": [
+      "Flade afleveringer over 8, 20 og 35 meter. Farten aftager, indtil bolden ligger stille.",
+      "Berøring i løb, drejning, stikning, skud med skru, opspring og målmandsindgreb ved stregen.",
+      "Fuldt manuelt kampforløb til 90:00 og identisk tilstand ved 60/120 Hz renderinput.",
+      "WebGL, kameraskift, pause, multitouch, simulation og separat ligastilling i Chromium.",
+      "Kontrolleret spilgalleri, billedvisning og fokus, nedtælling, taktiske animationer, reduceret bevægelse, hjælpesider og lokale APK-links.",
+      "APK-certifikat, version, pakkens kontrolsum og indhold mod Android-buildet."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Aflevering og skud",
+      "detail": "Græsmodstand og ønsket modtagefart bestemmer sparkets styrke. Stikninger bliver lagt foran medspilleren. Løb, kropsretning og afstand påvirker skud, og frispark kan skrues."
+    },
+    {
+      "title": "Dribling og redninger",
+      "detail": "Bolden bevarer en del af sin fart ved modtagelsen og ruller frit mellem fodkontakter. Målmanden kan møde bolden på dens bane gennem hele simulationstrinnet."
+    },
+    {
+      "title": "Prøvekamp og hjemmeside",
+      "detail": "Hjemmesideudkastet viser faktiske kampbilleder, billedvisning i stor størrelse og en taktiktavle med tre boldforløb. Det kan åbnes offline fra testappens klubhus. Den medfølgende prøvekamp bruger TEST72."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Flad aflevering, 8 meter",
+      "before": 705,
+      "after": 1208,
+      "unit": "ms",
+      "note": "Tid til afstanden i den faste fysikløkke, uden modstandere. Interpoleret mellem de sidste to målepunkter."
+    },
+    {
+      "label": "Flad aflevering, 20 meter",
+      "before": 1170,
+      "after": 2153,
+      "unit": "ms",
+      "note": "Startfart ved 20 meter ændret fra 32,0 til 12,48 m/s. TEST72 passerer 20 meter med cirka 6,35 m/s."
+    }
+  ],
+  "preserved": [
+    "Eksisterende klub, historik, samlede point og aktiv kamp kan indlæses.",
+    "Tidligere motorer og APK-filer."
+  ],
+  "limitations": [
+    "Telefonens billedhastighed, varme og oplevet boldtempo kræver en fysisk OnePlus Nord 4. Hjemmesidens layout er ikke visuelt efterprøvet i denne kørsel."
+  ],
+  "installSteps": [
+    "Hent TEST72 og installér over Touchline TEST på OnePlus Nord 4.",
+    "Åbn klubmenuen i liggende format, vælg Spil selv og tryk Kick Off.",
+    "Rul ned i klubhuset, og tryk Hjemmesideudkast. Tryk Vis trækket på taktiktavlen eller Spil en prøvekamp for at vende tilbage til banen."
+  ],
+  "nextTest": [
+    "Spil en kort aflevering og en stikning i samme angreb. Vend med bolden under sprint, og prøv derefter en afslutning."
+  ],
+  "web": {
+    "file": "Touchline-Motor12-Web-TEST72.zip",
+    "bytes": 4174764,
+    "sha256": "09e151777097ac97891360dc6018aee3a26cbbda4997a5f48ad119c2af4e13a2"
+  },
+  "websiteDraft": {
+    "file": "Touchline-Hjemmeside-Motor12-TEST72.zip",
+    "sourceCommit": "9110804dcbbc8db5255f55d80f014282d473ce23",
+    "sha256": "f90006a9d202f7fb2e41b1f8e8eb4573fd63de401253eeaccbc547ec068d178b"
+  }
+}
