@@ -29,7 +29,7 @@ def wait(page, text):
     page.get_by_text(text, exact=True).first.wait_for()
 
 def no_overflow(page):
-    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), page.url
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), page.evaluate('''() => [innerWidth,document.documentElement.scrollWidth,...Array.from(document.querySelectorAll('body *')).filter(el=>el.getBoundingClientRect().right>innerWidth+1).slice(0,12).map(el=>[el.tagName,el.className,el.getBoundingClientRect().right])]''')
 
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(executable_path='/usr/bin/chromium', args=[
@@ -37,26 +37,7 @@ with sync_playwright() as playwright:
     page = browser.new_page(viewport={'width': 1280, 'height': 850}, reduced_motion='reduce')
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.route('**/*', serve)
-    page.goto(origin+'/index.html')
-    assert page.locator('h1').inner_text().split() == ['SIDELINJEN', 'ER', 'DIN.']
-    page.wait_for_function('document.querySelector(".hero-cover img").naturalWidth > 0')
-    assert page.locator('body').evaluate('el=>getComputedStyle(el).backgroundColor') == 'rgb(245, 239, 227)'
-    for width in [320, 384, 1280]:
-        page.set_viewport_size({'width': width, 'height': 850})
-        no_overflow(page)
-        if width == 384 and len(sys.argv) > 2:
-            page.screenshot(path=sys.argv[2]+'/motor12-forside-mobil.png')
-    if len(sys.argv) > 2:
-        page.screenshot(path=sys.argv[2]+'/motor12-forside.png', full_page=True)
-    assert page.locator('.countdown b').count() == 4
-    page.get_by_role('link', name='Support').click()
-    assert page.get_by_role('link', name='Åbn kontaktformularen').get_attribute('href') == 'https://playtouchline.dk/contact'
-    page.get_by_role('link', name='Læs om kontosletning').click()
-    assert page.get_by_role('link', name='Anmod om kontosletning').get_attribute('href').endswith('topic=deletion')
-    page.get_by_role('link', name='Privatliv').click()
-    wait(page, 'Motor 12-udgaven')
-    page.goto(origin+'/index.html')
-    page.get_by_role('link', name='Start prøvekamp').click()
+    page.goto(origin+'/play/index.html?demo=1')
     page.get_by_role('button', name='Kick Off').wait_for()
     assert page.locator('.scoreboard strong').first.inner_text() == 'Prøvelund BK'
     assert page.locator('.arena > canvas:visible').count() == 1
@@ -101,6 +82,14 @@ with sync_playwright() as playwright:
     page.reload()
     assert page.get_by_role('button', name='Kick Off').is_visible()
     assert page.locator('#clock').inner_text() == '00:00'
+    # Validate the real quick change and native data drawer without advancing the clock.
+    page.get_by_role('button',name='Skift spiller').click()
+    page.locator('#quick-change').get_by_role('button',name='Bekræft skift').click()
+    assert not page.locator('#quick-change').is_visible()
+    page.get_by_role('button',name='Kampdata').click()
+    assert page.locator('#match-data').is_visible()
+    page.keyboard.press('Escape')
+    assert page.locator('#clock').inner_text()=='00:00'
     # Run a clean simulation while retaining the separate tactical/save fixture below.
     original=page.evaluate('localStorage.getItem("touchline:motor12:local:v1")')
     page.goto(origin+'/index.html')
@@ -156,12 +145,12 @@ with sync_playwright() as playwright:
     page.get_by_role('link',name='Kamp',exact=True).click()
     assert page.locator('#clock').inner_text()=='00:00'
     page.set_viewport_size({'width':844,'height':390})
-    page.get_by_role('link',name='Forside').click()
+    page.get_by_role('button',name='Kampvalg').click()
     assert 'LEAGUE 10 · RUNDE 1/15' in page.locator('.hub-fixture').inner_text()
     if len(sys.argv)>2: page.screenshot(path=sys.argv[2]+'/club-landscape.png')
     page.get_by_role('button',name='Simulér kampen').click()
     assert page.locator('.field-stick').count()==0
-    page.get_by_role('link',name='Forside').click()
+    page.get_by_role('button',name='Kampvalg').click()
     page.get_by_role('button',name='Spil selv').click()
     assert page.locator('.field-stick').is_visible()
     page.get_by_role('button',name='Kampmenu').click()

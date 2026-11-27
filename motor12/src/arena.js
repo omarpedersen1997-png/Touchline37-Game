@@ -7,7 +7,7 @@ import {FIELD, STEP, clamp} from './physics.js';
 const {length: L, width: W, goal: G, bar: B}=FIELD;
 const modelRoot=new URL('./arena/',import.meta.url);
 const models=['player-auto.glb','keeper-auto.glb'];
-const strips=['#397e40','#519044'];
+const strips=['#2c7546','#448652'];
 
 function makePitch(scene){
   const canvas=document.createElement('canvas');
@@ -41,10 +41,11 @@ function makePitch(scene){
   grass.rotation.x=-Math.PI/2;grass.position.y=.018;scene.add(grass);
 }
 function stadium(scene){
+  const nets=[];
   const box=new THREE.BoxGeometry(1,1,1);
-  const concrete=new THREE.MeshStandardMaterial({color:0x726d74,roughness:.86});
-  const metal=new THREE.MeshStandardMaterial({color:0x3c404b,roughness:.8});
-  const track=new THREE.MeshStandardMaterial({color:0x3d4146,roughness:.9});
+  const concrete=new THREE.MeshStandardMaterial({color:0x505b56,roughness:.86});
+  const metal=new THREE.MeshStandardMaterial({color:0x273930,roughness:.8});
+  const track=new THREE.MeshStandardMaterial({color:0x33473b,roughness:.9});
   const white=new THREE.MeshStandardMaterial({color:0xf2eee3,roughness:.48});
   function block(x,y,z,w,h,d,material){
     const mesh=new THREE.Mesh(box,material);
@@ -86,9 +87,22 @@ function stadium(scene){
     dummy.position.set(side?(i-11.5)*4.58:i<29?-L/2-4:L/2+4,.51,side?-W/2-2.4:(i%5-2)*12);
     dummy.scale.set(side?4.48:.21,1.02,side?.23:11.83);
     dummy.updateMatrix();boards.setMatrixAt(i,dummy.matrix);
-    boards.setColorAt(i,color.setHex([0xb63830,0xf3e9d8,0x303248,0x375c83][i%4]));
+    boards.setColorAt(i,color.setHex([0xdfaa48,0xcfebc4,0x0e422c,0x337452][i%4]));
   }
   scene.add(boards);
+  // Shared geometry and instancing keep all 96 broadcast lamps in one draw call.
+  const bulbs=new THREE.InstancedMesh(box,new THREE.MeshBasicMaterial({color:0xfff6cd}),96);
+  let lamp=0;
+  for(const end of [-1,1])for(const edge of [-1,1]){
+    const x=end*58,z=edge*42;
+    block(x,10,z,.32,20,.32,metal);
+    block(x,20.4,z,5.8,2.3,.42,metal);
+    for(let row=0;row<3;row++)for(let col=0;col<8;col++){
+      dummy.position.set(x+(col-3.5)*.67,19.74+row*.65,z-edge*.28);
+      dummy.scale.set(.51,.45,.15);dummy.updateMatrix();bulbs.setMatrixAt(lamp++,dummy.matrix);
+    }
+  }
+  scene.add(bulbs);
   for(const side of [-1,1]){
     const x=side*L/2,z=G/2;
     for(const end of [-z,z]){
@@ -111,8 +125,10 @@ function stadium(scene){
     }
     const geometry=new THREE.BufferGeometry();
     geometry.setAttribute('position',new THREE.Float32BufferAttribute(segments,3));
-    scene.add(new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0xe8e4db,transparent:true,opacity:.52})));
+    scene.add(new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0xe8e4db,transparent:true,opacity:.64})));
+    nets.push({side,positions:geometry.attributes.position,rest:new Float32Array(segments)});
   }
+  return nets;
 }
 function actor(gltf, side, keeper) {
   const root=new THREE.Group(),figure=clone(gltf.scene);
@@ -168,11 +184,11 @@ function makeBall(scene){
 }
 export async function createArena(canvas){
   const renderer=new THREE.WebGLRenderer({canvas,antialias:false,alpha:false,powerPreference:'high-performance'});
-  renderer.setClearColor(0x1c2235);renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.setClearColor(0x10231e);renderer.outputColorSpace=THREE.SRGBColorSpace;
   const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(44,1,.4,290);
   const actors=[],point=new THREE.Vector3(),follow=new THREE.Vector3(),eye=new THREE.Vector3(),look=new THREE.Vector3();
   const shadowMatrix=new THREE.Matrix4(),shadowPos=new THREE.Vector3(),shadowScale=new THREE.Vector3(),shadowRot=new THREE.Quaternion();
-  let shadows,ball,ring,last=0,first=true,lastPhase='',lastView='',lastRelease='',oldX=0,oldY=0;
+  let nets,shadows,ball,ring,last=0,first=true,lastPhase='',lastView='',lastRelease='',oldX=0,oldY=0;
   const textureSet=new Set(),materialSet=new Set(),geometrySet=new Set(),skeletonSet=new Set();
   const dispose=()=>{
     scene.traverse(o=>{
@@ -193,7 +209,8 @@ export async function createArena(canvas){
     const [outfield,keeper]=await Promise.all(models.map(name=>loader.loadAsync(new URL(name,modelRoot).href)));
     const fill=new THREE.HemisphereLight(0xfff3e4,0x819589,2.18);scene.add(fill);
     const key=new THREE.DirectionalLight(0xfff1db,2.5);key.position.set(-40,45,18);scene.add(key);
-    makePitch(scene);stadium(scene);
+    scene.fog=new THREE.FogExp2(0x182c25,.006);
+    makePitch(scene);nets=stadium(scene);
     ball=makeBall(scene);
     ring=new THREE.Mesh(new THREE.RingGeometry(.55,.66,24),new THREE.MeshBasicMaterial({color:0xffefd1}));
     ring.rotation.x=-Math.PI/2;scene.add(ring);
@@ -210,6 +227,7 @@ export async function createArena(canvas){
       scene.add(a.root);actors.push(a);
     }
     const motion=matchMedia('(prefers-reduced-motion: reduce)');
+    let lastGoal=0,netAge=2,netSide=1,netLane=0;
     return {dispose,mapAxes(input){
       const e=camera.matrixWorld.elements, x=input.x, y=input.y;
       const length=Math.hypot(e[0],e[2])||1;
@@ -236,6 +254,21 @@ export async function createArena(canvas){
         ball.rotation.x+=(y-oldY)*roll;
         ball.rotation.z-=(x-oldX)*roll;
         if(manual&&running&&height>.16)ball.rotation.y+=b.spin*seconds*12;
+      }
+      const latest=state.events[0];
+      if(!first&&latest?.kind==='goal'&&latest.id!==lastGoal){
+        lastGoal=latest.id;netAge=0;netLane=clamp(oldY,-G/2,G/2);
+        netSide=state.teams[latest.side].direction;
+      }
+      if(netAge<1){
+        netAge=Math.min(1,netAge+seconds);
+        const net=nets[netSide===1?1:0],rest=net.rest,coords=net.positions.array;
+        const wave=Math.sin(netAge*18)*(1-netAge)**2;
+        for(let j=0;j<coords.length;j+=3){
+          const rear=Math.abs(rest[j])-L/2;
+          coords[j]=rest[j]+netSide*wave*rear*.32*Math.exp(-Math.abs(rest[j+2]-netLane)*.55);
+        }
+        net.positions.needsUpdate=true;
       }
       oldX=x;oldY=y;
       const kick=(b.kind==='pass'||b.kind==='shot')&&b.lastSlot>=0&&b.age<.13;

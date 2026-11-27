@@ -197,7 +197,7 @@ def build_pdf(data, output: Path, draft=False):
         canvas.setFillColor(colors.white)
         canvas.drawRightString(A4[0] - 18 * mm, A4[1] - 19 * mm, date_label)
         canvas.setFillColor(colors.HexColor('#B5C6CE'))
-        canvas.drawRightString(A4[0] - 18 * mm, A4[1] - 29 * mm, 'Motor 11 · Android-test')
+        canvas.drawRightString(A4[0] - 18 * mm, A4[1] - 29 * mm, f"Motor {update.get('motorVersion', 11)} · Android-test")
         if draft:
             canvas.setFillColor(LIME)
             canvas.drawRightString(A4[0] - 18 * mm, A4[1] - 37 * mm, 'KLADDE — APK-KONTROL AFVENTES')

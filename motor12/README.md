@@ -13,8 +13,7 @@ node motor12/build.mjs
 python -m http.server --bind 127.0.0.1 --directory motor12/dist 8012
 ```
 
-Forsiden åbner på `http://127.0.0.1:8012/`. Klik **Start prøvekamp** for at
-se afspark. Før først uret videre med **Kick Off**. Klubhuset er tilgængeligt
+Forsiden åbner på `http://127.0.0.1:8012/`. Vælg **Træd ind på banen** for at åbne den interaktive kampvisning. Før først uret videre med **Kick Off**. Klubhuset er tilgængeligt
 fra forsiden og fra prøvekampen.
 
 `node --test motor12/tests/engine.test.mjs` kører simuleringstests. Den
@@ -22,9 +21,7 @@ valgfrie browsertest kræver Python Playwright og Chromium og køres med
 `python motor12/tests/browser.py motor12/dist`.
 Kør `python motor12/tests/arena-browser.py motor12/dist` for WebGL-kontrollen.
 Buildet bruger repositoryets installerede esbuild og Three.js til arenaen.
-Android-testpakken kan medtage det statiske hjemmesideudkast. Byg med
-`node motor12/build.mjs /tmp/touchline-android --android --website-dir /sti/til/hjemmesidens/dist`.
-Åbn **Hjemmesideudkast** nederst i klubhuset for at se siden lokalt på telefonen.
+Android-testpakken bruger samme fire stadionscener. Byg med `node motor12/build.mjs /tmp/touchline-android --android`. Touchline-logoet i klubhuset åbner stadion lokalt på telefonen.
 
 ## Kode
 
@@ -40,15 +37,14 @@ Android-testpakken kan medtage det statiske hjemmesideudkast. Byg med
   og 2D kan skiftes i samme kamp. Ved WebGL-fejl vises den taktiske bane.
 - `src/club.js` gemmer lokale klubdata, aktive kampe og præferencer i skema
   1. Kampens indtægt afregnes én gang, og form og kondition følger spillerne.
-- `src/app.js` binder visningerne Forside, Kamp, Taktik, Trup og Klubstatus
+- `src/app.js` binder fanerne Kamp, Taktik, Trup og Klub
   sammen. `src/audio.js` spiller valgfrie dommersignaler ved brugerhandlinger
   og kampbegivenheder.
 - `build.mjs` bygger fem statiske sider uden et browserrammeværk.
-  `assets/ui.css` indeholder de fælles designprincipper.
+  `assets/stadium.css` indeholder fælles farver, skrifter, knapper og skuffer.
   Support, privatliv og kontosletning fører videre til de officielle
   produktionssider, når en eksisterende Touchline-konto skal håndteres.
-  Klubhus og web bruger nu lys papirbaggrund, rød accent og Barlow Condensed.
-  Kampskærmen har en mørk scoretavle over banen og analyse under banen.
+  `showcase.html` og `src/showcase.js` styrer stadionscener, afspark, taktiktavle og hjælpeskuffer. `assets/cockpit.css` og `assets/showcase.css` tilpasser de to visninger til skærmhøjde og skærmkanter. Kampdata og hurtigskift åbnes direkte fra banen.
 - `src/scenarios.js` starter korte Motor 12-situationer ved et aftalt
   tidspunkt og resultat. Der kræves manuelt afspark, og resultatet afregnes
   aldrig til klubben. Scenariets trup, kampplan og rapport er adskilt fra ligaen.

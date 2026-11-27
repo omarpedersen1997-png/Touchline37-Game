@@ -49,9 +49,21 @@ export function pitchView(canvas) {
     bg.restore();
   }
   const px=x=>ox+(x+L/2)*scale, py=y=>oy+(y+W/2)*scale;
-  function render(state, previous, alpha=1,slot=-1){
+  function render(state, previous, alpha=1,slot=-1,zones=false){
     ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(field,0,0);
     ctx.setTransform(ratio,0,0,ratio,0,0);
+    if(zones){
+      // Thirds follow the attacking direction after the change of ends.
+      const dir=state.teams[0].direction;
+      const third=L*scale/3;
+      ctx.fillStyle='#ffe08b22';ctx.fillRect(ox+(dir>0?0:2*third),oy,third,W*scale);
+      ctx.fillStyle='#8ee69a32';ctx.fillRect(ox+(dir>0?2*third:0),oy,third,W*scale);
+      ctx.strokeStyle='#fff6ce88';ctx.lineWidth=1;
+      for(let n=1;n<3;n++){
+        const x=ox+n*L*scale/3;
+        ctx.beginPath();ctx.moveTo(x,oy);ctx.lineTo(x,oy+W*scale);ctx.stroke();
+      }
+    }
     const ball=state.ball;
     let i=0;
     const radius=clamp(scale*1.3,4.2,10.6);
