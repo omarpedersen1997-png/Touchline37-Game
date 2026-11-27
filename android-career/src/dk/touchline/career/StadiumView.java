@@ -107,8 +107,19 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     if (running) input.action = cmd;
   }
 
+  private boolean graphicsClock;
+  int cameraMode() { return camera; }
+  void graphicsClock(boolean enabled) {
+    if (graphicsClock == enabled) return;
+    graphicsClock = enabled;
+    last = 0;
+    Choreographer.getInstance().removeFrameCallback(this);
+    queued = false;
+    schedule();
+    invalidate();
+  }
   private void schedule() {
-    if (attached && !queued && running) {
+    if (!graphicsClock && attached && !queued && running) {
       queued = true;
       Choreographer.getInstance().postFrameCallback(this);
     }
@@ -238,6 +249,7 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     w = getWidth();
     h = getHeight();
     if (w < 1 || h < 1) return;
+    if (graphicsClock) { radar(c); if (game.manual) joystick(c); return; }
     boolean setPiece =
         game.phase == Motor12.Phase.RESTART && (game.restartType == 1 || game.restartType == 2);
     boolean behind = camera == 3 || camera == 0 && setPiece;

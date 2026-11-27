@@ -108,6 +108,8 @@ public final class Motor12 {
   private final TeamShape shape = new TeamShape();
   private int rng, restartWait;
   private double decision, sinceKick, accum, pressureRun;
+  double netX, netY, netZ, netVX, netVY, netVZ;
+  int netEvent;
   double previousBallX, previousBallY, previousBallZ;
 
   double blend() {
@@ -700,6 +702,10 @@ public final class Motor12 {
       }
       int attack = (bx > 0) == (dir(0) > 0) ? 0 : 1;
       if (Math.abs(oldY + (by - oldY) * fx) < 3.66 - R && oldZ + (bz - oldZ) * fx < 2.44 - R) {
+        netX = Math.copySign(L + R, bx);
+        netY = oldY + (by - oldY) * fx;
+        netZ = Math.max(R, oldZ + (bz - oldZ) * fx);
+        netVX = bvx; netVY = bvy; netVZ = bvz; netEvent++;
         goals[attack]++;
         if (shotInFlight && last >= 0 && team(last) == attack) onTarget[attack]++;
         if (deflectedShot >= 0 && team(deflectedShot) == attack)

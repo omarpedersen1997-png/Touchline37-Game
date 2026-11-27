@@ -24,6 +24,36 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       MUTED = 0xffbfd1bf;
   private static final int F = -1, C = -2, EXPORT = 41, IMPORT = 42;
   private FrameLayout root, scene;
+  private ArenaView arena;
+  private final Motor12 lineup = new Motor12(12);
+  private long goalPresentationEnd;
+  private final StringBuilder packet = new StringBuilder(2300);
+  private void scalar(double value) { packet.append(',').append(Math.round(value * 1000)); }
+  private void arenaFrame() {
+    boolean match = "match".equals(screen) && pitch != null;
+    packet.setLength(0);
+    packet.append("receiveArena(").append(match ? 1 : "hub".equals(screen) ? 2+tab : "stories".equals(screen) ? 8 : "slots".equals(screen) ? 9 : 0);
+    if(match) {
+      pitch.graphicsClock(true);
+      pitch.doFrame(System.nanoTime());
+      Motor12 m = activeGame();
+      packet.append(',').append(pitch.cameraMode()).append(',').append(m.selected).append(',').append(m.netEvent);
+      scalar(m.netX);scalar(m.netY);scalar(m.netZ);scalar(m.netVX);scalar(m.netVY);scalar(m.netVZ);
+      double t = pitch.isPlaying() ? m.blend() : 1;
+      scalar(m.previousBallX+(m.bx-m.previousBallX)*t);scalar(m.previousBallY+(m.by-m.previousBallY)*t);scalar(m.previousBallZ+(m.bz-m.previousBallZ)*t);
+      packet.append(',').append(m.awaitingKickoff()?1:0).append(',').append(m.manual?1:0);
+      for(Motor12.Player p:m.players){
+        scalar(p.previousX+(p.x-p.previousX)*t);scalar(p.previousY+(p.y-p.previousY)*t);
+        scalar(p.previousFace+Locomotion.angleDelta(p.previousFace,p.face)*t);scalar(Math.hypot(p.vx,p.vy));
+        scalar(p.sprinting?1:0);scalar(p.delay);scalar(p.dive);scalar(p.diveSide);
+      }
+    }
+    else {
+      if(career!=null && lineup.formations[0]!=career.formation) lineup.tactics(career.formation,career.press,career.mentality);
+      for(Motor12.Player p:lineup.players){scalar(p.x);scalar(p.y);}
+    }
+    arena.present(packet.append(')').toString());
+  }
   private LinearLayout shell, body;
   private Bitmap night, cover, playerArt, kits, grandstand, grass;
   private Typeface display;
@@ -134,6 +164,11 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     kick = clip("kick-soft");
     hum = clip("ambience");
     setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    arena = new ArenaView(this, new ArenaView.Host() {
+      public void frame() { arenaFrame(); }
+      public void fallback() { if(pitch!=null) pitch.graphicsClock(false); }
+    });
+    root.addView(arena, new FrameLayout.LayoutParams(F,F));
     slots = new Slots(this);
     slot = slots.active();
     if (slot >= 0 && slot < Slots.COUNT) {
@@ -195,6 +230,7 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
   @Override
   public void whistle(boolean goal) {
     effect(goal ? cheer : whistle, .55f);
+    if (goal && arena.ready) goalPresentationEnd = android.os.SystemClock.elapsedRealtime()+1350;
     if (!pitch.isPlaying()) atmosphere(false);
   }
 
@@ -343,12 +379,13 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     menuPage = "";
     if (!view.equals("match")) practice = null;
     screen = view;
-    root.removeAllViews();
+    goalPresentationEnd=0;
+    if(arena!=null && arena.ready) arena.present("window.changeArena&&changeArena()");
+    if(scene != null) root.removeView(scene);
     scene = new FrameLayout(this);
     root.addView(scene, new FrameLayout.LayoutParams(F, F));
     if (!"match".equals(view)) {
-      image(scene, night);
-      shade(scene, 0xf20a1815, 0xbd0e211b);
+      shade(scene, 0xbb081b16, 0x450b1e19);
     }
     if (android.animation.ValueAnimator.areAnimatorsEnabled()) {
       scene.setAlpha(.35f);
@@ -1171,10 +1208,10 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     pitch.setCamera(career.camera);
     scene.addView(pitch, new FrameLayout.LayoutParams(F, F));
     scene.setMotionEventSplittingEnabled(true);
-    score = text("", 19, WHITE, true);
+    score = text("", small() ? 15 : 18, WHITE, true);
     score.setSingleLine(true);
-    score.setPadding(dp(10), 0, dp(10), 0);
-    score.setBackground(background(0xf0183128, 4));
+    score.setPadding(dp(3), 0, dp(3), 0);
+    score.setBackground(background(0xff172d25, 5));
     layer(scene, score, C, 32, Gravity.TOP | Gravity.LEFT, 8, 6);
     ticker = text("", 13, WHITE, true);
     ticker.setPadding(dp(7), 0, dp(7), 0);
@@ -1190,11 +1227,12 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     active.setBackground(background(0xbc112d22, 2));
     layer(scene, active, C, 22, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 7);
     if (m.manual) {
-      a = command("A", Motor12.SHOOT, 8, 10);
-      b = command("B", Motor12.PASS, 77, 12);
-      c = command("C", Motor12.THROUGH, 33, 81);
+      int dia = Math.max(48,Math.min(72,getResources().getConfiguration().screenHeightDp / 6));
+      a = command("A", Motor12.SHOOT, dia, 12, dia + 22);
+      b = command("B", Motor12.PASS, dia, dia + 34, 9);
+      c = command("C", Motor12.THROUGH, dia, dia + 23, dia + 15);
       sprint = button("Sprint", false, () -> {});
-      sprint.setBackground(controlBackground());
+      sprint.setBackground(controlBackground(0xff66df8d));
       sprint.setTextSize(13);
       sprint.setOnTouchListener(
           (v, e) -> {
@@ -1213,11 +1251,11 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       layer(
           scene,
           sprint,
-          51,
-          42,
-          Gravity.BOTTOM | Gravity.LEFT,
-          Math.max(95, Math.min(150, getResources().getConfiguration().screenHeightDp / 3)),
-          12);
+          dia+4,
+          dia+4,
+          Gravity.BOTTOM | Gravity.RIGHT,
+          10,
+          9);
     }
     previousKicks = m.kicks;
     hud();
@@ -1234,9 +1272,9 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
         : (m.owner >= 0 ? m.owner : m.last) >= 11;
   }
 
-  private Button command(String letter, int attack, int right, int bottom) {
+  private Button command(String letter, int attack, int size, int right, int bottom) {
     Button btn = button(letter, false, () -> {});
-    btn.setBackground(controlBackground());
+    btn.setBackground(controlBackground(attack == Motor12.SHOOT ? 0xfff38349 : attack == Motor12.THROUGH ? 0xffebc743 : 0xff50b1f7));
     final double[] power = {.45};
     btn.setOnClickListener(
         v -> {
@@ -1275,16 +1313,21 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
         });
     btn.setPadding(0, 0, 0, 0);
     btn.setTextSize(15);
-    int size = attack == Motor12.SHOOT ? 65 : 55;
+
     layer(scene, btn, size, size, Gravity.BOTTOM | Gravity.RIGHT, right, bottom);
     return btn;
   }
 
-  private StateListDrawable controlBackground() {
-    StateListDrawable state = new StateListDrawable();
-    state.addState(new int[] {android.R.attr.state_pressed}, background(0xeb927029, 40));
-    state.addState(new int[] {}, background(0xb0183429, 40));
-    return state;
+  private StateListDrawable controlBackground(int rim) {
+    StateListDrawable states = new StateListDrawable();
+    for (boolean down : new boolean[]{true,false}) {
+      GradientDrawable face = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+          down ? new int[]{rim,0xff284139} : new int[]{0xe63a4943,0xee101c18});
+      face.setShape(GradientDrawable.OVAL);
+      face.setStroke(dp(down ? 4 : 2),rim);
+      states.addState(down ? new int[]{android.R.attr.state_pressed} : new int[]{},face);
+    }
+    return states;
   }
 
   private void buttonText(Button btn, String s) {
@@ -1292,6 +1335,14 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       btn.setText(s);
       btn.setContentDescription(s.replace('\n', ' '));
     }
+  }
+
+  private static void scoreCell(android.text.SpannableStringBuilder strip, String value, int bg, int fg) {
+    int a = strip.length();
+    strip.append(" ").append(value).append(" ");
+    int flag = android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+    strip.setSpan(new android.text.style.BackgroundColorSpan(bg), a, strip.length(), flag);
+    strip.setSpan(new android.text.style.ForegroundColorSpan(fg), a, strip.length(), flag);
   }
 
   @Override
@@ -1302,18 +1353,13 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
         practice != null
             ? "TRÆ"
             : career.team(career.opposition()).substring(0, 3).toUpperCase(Locale.ROOT);
-    score.setText(
-        career.clubName.substring(0, 3).toUpperCase(Locale.ROOT)
-            + "    "
-            + m.goals[0]
-            + " – "
-            + m.goals[1]
-            + "    "
-            + away
-            + "     "
-            + m.clock()
-            + "   ·   "
-            + (m.phase == Motor12.Phase.FULL_TIME ? "FT" : m.half + ". HL"));
+    android.text.SpannableStringBuilder strip = new android.text.SpannableStringBuilder();
+    scoreCell(strip, career.clubName.substring(0,3).toUpperCase(Locale.ROOT), 0xffeeeede, INK);
+    scoreCell(strip, m.goals[0] + " – " + m.goals[1], INK, WHITE);
+    scoreCell(strip, away, 0xffeeeede, INK);
+    scoreCell(strip, m.clock(), 0xffbdf398, INK);
+    scoreCell(strip, m.phase == Motor12.Phase.FULL_TIME ? "FT" : m.half + "H", INK, WHITE);
+    score.setText(strip);
     ticker.setText(
         m.phase == Motor12.Phase.PRE_KICKOFF
             ? "Klar til afspark"
@@ -1322,7 +1368,10 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
         m.phase == Motor12.Phase.FULL_TIME
             ? "Kamprapport"
             : m.awaitingKickoff() ? "KICK OFF" : pitch.isPlaying() ? "Pause" : "Genoptag";
-    buttonText(startButton, control);
+    boolean presenting = android.os.SystemClock.elapsedRealtime() < goalPresentationEnd;
+    buttonText(startButton, presenting ? "MÅL" : control);
+    startButton.setEnabled(!presenting);
+    if(presenting) startButton.postDelayed(() -> { if(pitch!=null) hud(); },Math.max(1,goalPresentationEnd-android.os.SystemClock.elapsedRealtime()+1));
     if (m.manual) {
       boolean def = defence();
       String playB =
@@ -1386,7 +1435,7 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
   }
 
   private void togglePlay() {
-    if (pitch == null) return;
+    if (pitch == null || android.os.SystemClock.elapsedRealtime()<goalPresentationEnd) return;
     Motor12 m = activeGame();
     if (m.phase == Motor12.Phase.FULL_TIME) {
       if (practice != null) {
@@ -1808,6 +1857,7 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
 
   @Override
   protected void onPause() {
+    if(arena!=null) arena.rest(true);
     resumeAfterMenu = false;
     pauseMatch();
     if (sound != null) sound.autoPause();
@@ -1815,8 +1865,11 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     super.onPause();
   }
 
+  @Override protected void onResume() { super.onResume(); if(arena!=null) arena.rest(false); }
+
   @Override
   protected void onDestroy() {
+    if(arena!=null){root.removeView(arena);arena.closeArena();}
     documents.shutdown();
     if (sound != null) sound.release();
     super.onDestroy();

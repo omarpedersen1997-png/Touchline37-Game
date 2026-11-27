@@ -1,0 +1,1 @@
+{"name":"touchline-arena","private":true,"type":"module","scripts":{"build":"esbuild arena.js --bundle --minify --target=chrome100 --outfile=../assets/arena/arena.js"},"dependencies":{"three":"0.179.1"},"devDependencies":{"esbuild":"0.25.12"}}

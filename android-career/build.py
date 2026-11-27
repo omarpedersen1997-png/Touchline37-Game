@@ -38,6 +38,6 @@ with tempfile.TemporaryDirectory(dir=output.parent,prefix='career-build-') as tm
     run(tools/'apksigner','verify','--verbose','--print-certs',output)
     run(tools/'zipalign','-c','-P','16','4',output)
     with ZipFile(output) as apk:
-        assert apk.testzip() is None and not any(n.endswith(('.html','.js','.css')) for n in apk.namelist())
+        assert apk.testzip() is None and {'assets/arena/index.html','assets/arena/arena.js'} <= set(apk.namelist())
         assert all(apk.getinfo('assets/'+name+'.ogg').compress_type==ZIP_STORED for name in ('ambience','whistle','crowd-goal','kick-soft'))
 print(output)
