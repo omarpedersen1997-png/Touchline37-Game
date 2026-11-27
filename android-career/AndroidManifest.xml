@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dk.touchline.footballidle.test" android:versionCode="75" android:versionName="1.0.0-test-match75">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/>
+    <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
+    <application android:label="Touchline TEST" android:icon="@drawable/club" android:allowBackup="false"
+        android:supportsRtl="true" android:hardwareAccelerated="true" android:theme="@android:style/Theme.Material.NoActionBar"
+        android:usesCleartextTraffic="false" android:enableOnBackInvokedCallback="false">
+        <activity android:name="dk.touchline.career.TouchlineActivity" android:exported="true" android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
