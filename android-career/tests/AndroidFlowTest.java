@@ -56,6 +56,55 @@ public class AndroidFlowTest {
     assertTrue(get(a, s).performClick());
   }
 
+  static void selectControl(boolean personal) {
+    android.app.AlertDialog pick = org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+    pick.getButton(
+            personal
+                ? android.content.DialogInterface.BUTTON_POSITIVE
+                : android.content.DialogInterface.BUTTON_NEGATIVE)
+        .performClick();
+    org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+  }
+
+  @Test
+  public void settingsAndWholeTeamSurviveReopening() throws Exception {
+    ActivityController<TouchlineActivity> ctl =
+        Robolectric.buildActivity(TouchlineActivity.class).setup();
+    TouchlineActivity a = ctl.get();
+    click(a, "Vælg spillerkarriere");
+    click(a, "Start karriere");
+    click(a, "Spil selv");
+    selectControl(false);
+    Slots slots = new Slots(a);
+    assertEquals(-1, slots.load(0).match.locked);
+    click(a, "Kampmenu");
+    click(a, "Kampstatistik");
+    get(a, "På mål");
+    get(a, "Hjørnespark");
+    click(a, "Tilbage");
+    click(a, "Kamptidslinje");
+    click(a, "Tilbage");
+    click(a, "Skift kamera");
+    click(a, "Taktisk oversigt");
+    get(a, "Taktisk oversigt  ✓");
+    click(a, "Tilbage");
+    click(a, "Lydkontrol");
+    click(a, "Lyd fra · slå til");
+    SeekBar volume = PitchRenderTest.find(a.getWindow().getDecorView(), SeekBar.class);
+    assertNotNull(volume);
+    volume.setProgress(37);
+    click(a, "Tilbage");
+    click(a, "Til klubhuset");
+    click(a, "Fortsæt kampen");
+    get(a, "KICK OFF");
+    ctl.pause().stop().destroy();
+    Career state = slots.load(0);
+    assertTrue(state.sound);
+    assertEquals(2, state.camera);
+    assertEquals(37, state.volume);
+    assertEquals(0, state.match.tick);
+  }
+
   static void idleUntil(java.util.function.BooleanSupplier done) throws Exception {
     for (int i = 0; i < 120; i++) {
       org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
@@ -102,13 +151,18 @@ public class AndroidFlowTest {
     assertEquals(1, files.free());
     assertEquals(2, files.load(0).story);
     click(a, "Spil selv");
+    org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog().cancel();
+    assertNull(files.load(0).match);
+    click(a, "Spil selv");
+    selectControl(true);
+    assertTrue(files.load(0).match.locked >= 0);
     assertEquals("00:00", files.load(0).match.clock());
     get(a, "KICK OFF");
     get(a, "A\nSkyd");
     get(a, "B\nAflever");
     click(a, "KICK OFF");
     get(a, "Pause");
-    assertEquals(Motor12.Phase.PLAY, files.load(0).match.phase);
+    assertEquals(Motor12.Phase.KICKOFF_RUNUP, files.load(0).match.phase);
     ctl.pause();
     get(a, "Genoptag");
     ctl.stop().destroy();

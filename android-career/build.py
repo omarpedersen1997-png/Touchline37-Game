@@ -1,4 +1,4 @@
-"""Build the standalone Android game using the Android SDK, a JDK (17+) and ffmpeg."""
+"""Build the standalone Android game using the Android SDK, a JDK (17+)."""
 import argparse
 import os
 from pathlib import Path
@@ -8,7 +8,6 @@ import tempfile
 from zipfile import ZIP_STORED, ZipFile
 
 here=Path(__file__).resolve().parent
-repo=here.parent
 parser=argparse.ArgumentParser()
 for key in ('sdk','jdk','signing','output'):
     parser.add_argument('--'+key,required=True,type=Path)
@@ -24,13 +23,8 @@ def run(*cmd):
 with tempfile.TemporaryDirectory(dir=output.parent,prefix='career-build-') as tmp:
     work=Path(tmp);res=work/'res';assets=work/'assets';classes=work/'classes';dex=work/'dex'
     for path in (res/'drawable',assets,classes,dex):path.mkdir(parents=True)
-    shutil.copy(repo/'android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png',res/'drawable/club.png')
-    for src,dst in [('stadium-night.webp','stadium.webp'),('club-cover.webp','cover.webp'),('hero.webp','player.webp'),('Barlow-Condensed.ttf','display.ttf'),('Barlow-Condensed-LICENSE.txt','font-license.txt')]:
-        shutil.copy(repo/'motor12/assets'/src,assets/dst)
-    for art in ('kits.webp','tribune.webp','turf.webp'):shutil.copy(here/'assets'/art,assets/art)
-    shutil.copy(repo/'public/match-assets55/FOOTBALL-ASSET-LICENSES.md',assets/'football-licenses.txt')
-    for name in ('ambience','whistle','crowd-goal','kick-soft'):
-        run('ffmpeg','-v','error','-i',repo/'public/match-assets55'/(name+'.wav'),'-ac',1,'-ar',22050,'-c:a','libvorbis','-q:a',3,assets/(name+'.ogg'))
+    shutil.copytree(here/'res',res,dirs_exist_ok=True)
+    shutil.copytree(here/'assets',assets,dirs_exist_ok=True)
     run(tools/'aapt2','compile','--dir',res,'-o',work/'resources.zip')
     base=work/'base.apk'
     run(tools/'aapt2','link','-o',base,'-I',platform,'--manifest',here/'AndroidManifest.xml','-A',assets,'-0','ogg',work/'resources.zip')

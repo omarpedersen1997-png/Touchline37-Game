@@ -109,6 +109,7 @@ public final class Career {
       newsIndex,
       earned,
       personalShirt = 9;
+  public int camera, volume = 75;
   public boolean cupAlive = true, cupDue, sound;
   public String id = UUID.randomUUID().toString(),
       clubName = CLUBS[0],
@@ -421,11 +422,17 @@ public final class Career {
     return "Træningsanlæg niveau " + facilities;
   }
 
-  public Motor12 start(boolean play) {
+  public enum Control {
+    PLAYER,
+    TEAM,
+    SIMULATION
+  }
+
+  public Motor12 start(Control control) {
     if (match != null) return match;
     withdrawn = 0;
     match = new Motor12(13 + season * 199 + week * 907 + story * 7 + role);
-    match.manual = play;
+    match.manual = control != Control.SIMULATION;
     match.formations[0] = formation;
     match.press[0] = press;
     match.approach[0] = mentality;
@@ -448,9 +455,9 @@ public final class Career {
       p.energy = fitness[k];
       p.skill = grade[k] + (morale - 50) * .035;
       match.players[11 + i].skill += 2 * (10 - division) + (opposition() % 5 - 2);
-      if (role == 0 && k + 1 == personalShirt) match.locked = i;
+      if (control == Control.PLAYER && k + 1 == personalShirt) match.locked = i;
     }
-    if (role == 0 && match.locked < 0) match.manual = false;
+    if (control == Control.PLAYER && match.locked < 0) match.manual = false;
     match.tactics(formation, press, mentality);
     return match;
   }
@@ -482,14 +489,15 @@ public final class Career {
     Motor12.Player replacement = new Motor12.Player();
     replacement.x = p.x;
     replacement.y = p.y;
+    replacement.previousX = p.x;
+    replacement.previousY = p.y;
     replacement.face = p.face;
     replacement.shirt = reserve + 1;
     replacement.skill = grade[reserve];
     replacement.energy = fitness[reserve];
     match.players[out] = replacement;
     match.subCount++;
-    match.log.add(0, match.clock() + "  " + change);
-    if (match.log.size() > 30) match.log.remove(30);
+    match.record("Udskiftning · " + change);
     return true;
   }
 

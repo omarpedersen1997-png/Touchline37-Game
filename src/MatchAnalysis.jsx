@@ -1,5 +1,0 @@
-import React from 'react';
-export default function MatchAnalysis({analysis,halftime=false}){
- if(!analysis)return null;
- return <section className="match-analysis" aria-label={halftime?'Halvlegsanalyse':'Efterkamp-analyse'}><header><span className="eyebrow">{halftime?'PAUSENS OVERBLIK':'EFTER SLUTFLØJT'}</span><h4>{halftime?'Læs kampen. Vælg næste træk.':'Det kan du tage med videre.'}</h4></header><dl>{analysis.accuracy!==null&&<div><dt>Afleveringspræcision</dt><dd>{analysis.accuracy} %</dd></div>}{analysis.tired!==null&&<div><dt>Lav kampenergi</dt><dd>{analysis.tired} spillere</dd></div>}</dl>{analysis.star&&<div className="match-analysis-star"><span>{halftime?'Halvlegens profil':'Kampens spiller'} · målbidrag</span><b>{analysis.star.name}</b><small>{analysis.star.goals} mål · {analysis.star.assists} oplæg. Baseret på registrerede målbidrag.</small></div>}<ul>{analysis.advice.map(text=><li key={text}>{text}</li>)}</ul><small>Analyse af registrerede hændelser. Ingen automatisk ændring af din taktik.</small></section>;
-}

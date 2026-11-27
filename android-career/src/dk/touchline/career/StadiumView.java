@@ -20,7 +20,33 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
   private final Bitmap kits, crowd;
   private final BitmapShader turf;
   private final Matrix turfTransform = new Matrix();
-  private double perspective;
+  private LinearGradient floodlight;
+
+  @Override
+  protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+    super.onSizeChanged(w, h, oldW, oldH);
+    if (w > 0 && h > 0)
+      floodlight =
+          new LinearGradient(
+              0,
+              0,
+              w,
+              h,
+              new int[] {0x2ce1f2c5, 0x00edefd2, 0x0710261c, 0x3110241b},
+              new float[] {0f, .35f, .7f, 1f},
+              Shader.TileMode.CLAMP);
+  }
+
+  static final String[] CAMERAS = {"Broadcast", "Spiller / bold", "Taktisk oversigt", "Målkamera"};
+  private int camera;
+  private double perspective, tilt, heading;
+  private long lastProjection;
+  private boolean initialized;
+
+  private float density() {
+    return getResources().getDisplayMetrics().density;
+  }
+
   private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
   private final Path path = new Path();
   private final Rect src = new Rect();
@@ -28,7 +54,7 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
   private final int[] order = new int[22];
   private final float[] px = new float[22], py = new float[22], height = new float[22];
   private long last, lastHud, lastSave;
-  private boolean running, attached, queued, close;
+  private boolean running, attached, queued;
   private float w, h, focusX, focusY, joyX, joyY, joyR, joyDX, joyDY;
   private int finger = -1, signal;
   private long signalAt;
@@ -50,7 +76,7 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
   }
 
   void startPlay() {
-    if (game.phase != Motor12.Phase.PLAY && game.phase != Motor12.Phase.RESTART) return;
+    if (game.phase == Motor12.Phase.FULL_TIME || game.awaitingKickoff()) return;
     running = true;
     last = 0;
     game.resetClock();
@@ -72,8 +98,8 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     return running;
   }
 
-  void toggleCamera() {
-    close = !close;
+  void setCamera(int choice) {
+    camera = choice;
     invalidate();
   }
 
@@ -121,10 +147,8 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
       listener.whistle(signal == 1);
       listener.checkpoint();
     }
-    float follow = (float) (1 - Math.exp(-dt * 4));
-    focusX += (game.bx - focusX) * follow;
-    focusY += (game.by - focusY) * follow;
-    if (ns - lastHud > 150000000L || !running) {
+
+    if (previous != game.phase || ns - lastHud > 150000000L || !running) {
       listener.hud();
       lastHud = ns;
     }
@@ -152,7 +176,7 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
 
   private float y(double x, double y, double z) {
     double depth = (x - viewX) * forwardX + (y - viewY) * forwardY;
-    return (float) (h * .56 - (depth * .52 + z) * scale(x, y));
+    return (float) (h * .56 - (depth * tilt + z) * scale(x, y));
   }
 
   private void poly(
@@ -214,18 +238,16 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     w = getWidth();
     h = getHeight();
     if (w < 1 || h < 1) return;
-    boolean behind =
+    boolean setPiece =
         game.phase == Motor12.Phase.RESTART && (game.restartType == 1 || game.restartType == 2);
-    forwardX = behind ? game.dir(game.restartSide) : 0;
-    forwardY = behind ? 0 : -1;
-    perspective = behind ? .067 : .012;
-    viewX = behind ? game.bx + forwardX * 5.5 : focusX * .84;
-    viewY = behind ? game.by + forwardX * 2.3 : focusY * .63;
-    zoom = Math.max(w / (behind ? 35 : close ? 52 : 70), h / (behind ? 34 : 49));
+    boolean behind = camera == 3 || camera == 0 && setPiece;
+    updateCamera(behind);
+
     c.drawColor(0xff152825);
     ink(0xffffffff);
-    float edge = behind ? y(forwardX * 60, viewY, 0) : y(viewX, -38, 0);
-    float pan = behind ? (float) (viewY * .7) : (float) (focusX * 1.4);
+    float edge = y(viewX + forwardX * 64, viewY + forwardY * 64, 0);
+    edge = Math.max(h * .09f, Math.min(h * .40f, edge));
+    float pan = (float) (viewY * .7 * Math.abs(forwardX) + viewX * 1.4 * Math.abs(forwardY));
     dst.set(-64 - pan, edge - Math.max(h * .44f, edge), w + 64 - pan, edge + 2);
     c.drawBitmap(crowd, null, dst, paint);
     ink(0xff3c7546);
@@ -268,6 +290,12 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
       c.drawPath(path, paint);
       paint.setStyle(Paint.Style.FILL);
       goal(c, sign);
+    }
+    if (floodlight != null) {
+      ink(0xffffffff);
+      paint.setShader(floodlight);
+      c.drawRect(0, 0, w, h, paint);
+      paint.setShader(null);
     }
     line(c, 0, -34, 0, 34);
     path.rewind();
@@ -346,7 +374,7 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     c.drawCircle(ballX, ballY, radius, paint);
     ink(0xff323d36);
     c.drawCircle(ballX + .12f * radius, ballY - .18f * radius, radius * .41f, paint);
-    if (behind && game.manual && game.restartSide == 0) {
+    if (setPiece && game.manual && game.restartSide == 0) {
       double length = game.restartType == 1 ? Motor12.L - game.bx : 45,
           side = game.restartType == 1 ? input.y * 3.25 - game.by : input.y * 24;
       double norm = Math.max(1, Math.hypot(length, side)),
@@ -363,11 +391,9 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
           0xe7ffd77c,
           3);
     }
-    if (game.manual) {
-      radar(c);
-      joystick(c);
-    }
-    if (signal != 0 && !running && game.phase != Motor12.Phase.PLAY) {
+    radar(c);
+    if (game.manual) joystick(c);
+    if (signal != 0 && (game.awaitingKickoff() || game.phase == Motor12.Phase.FULL_TIME)) {
       long age = System.nanoTime() - signalAt;
       if (signal == 1
           && age >= 0
@@ -386,6 +412,8 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
         }
         postInvalidateOnAnimation();
       }
+      if (age > 1350000000L && game.phase != Motor12.Phase.FULL_TIME) return;
+      if (!running && game.phase != Motor12.Phase.FULL_TIME) postInvalidateOnAnimation();
       ink(0xffefd28a);
       paint.setTextAlign(Paint.Align.CENTER);
       paint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -398,18 +426,105 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     }
   }
 
+  // Interpolate all projection parameters, including while the simulation is paused.
+  private void updateCamera(boolean behind) {
+    long now = System.nanoTime();
+    double dt = Math.max(0, Math.min(.08, (now - lastProjection) * 1e-9));
+    double ease = initialized ? -Math.expm1(-6.5 * dt) : 1;
+    lastProjection = now;
+    boolean centre = game.awaitingKickoff() || game.phase == Motor12.Phase.KICKOFF_RUNUP;
+    Motor12.Player player = game.players[game.selected];
+    int attack =
+        game.dir(
+            game.phase == Motor12.Phase.RESTART
+                ? game.restartSide
+                : game.last >= 11 ? 1 : game.last >= 0 ? 0 : game.kickSide);
+    double tx = game.bx * .86,
+        ty = game.by * .68,
+        angle = 0,
+        fieldWidth = centre ? 47 : 71,
+        depth = .011,
+        slope = .54;
+    if (behind) {
+      angle = attack * Math.PI * .5;
+      depth = .045;
+      slope = .45;
+      fieldWidth = 39;
+      tx = game.bx + attack * 5;
+      ty = game.by;
+    } else if (camera == 1) {
+      angle = .16 * game.dir(0);
+      fieldWidth = 49;
+      depth = .017;
+      slope = .57;
+      double weight = centre || !game.manual ? 0 : .46;
+      tx = (1 - weight) * game.bx + weight * player.x + Motor12.clamp(game.bvx * .28, -5, 5);
+      ty = (1 - weight) * game.by + weight * player.y + Motor12.clamp(game.bvy * .22, -4, 4);
+    } else if (camera == 2) {
+      tx = 0;
+      ty = 0;
+      fieldWidth = 119;
+      depth = .001;
+      slope = .86;
+    }
+    tx = Motor12.clamp(tx, -47, 47);
+    ty = Motor12.clamp(ty, -29, 29);
+    double scaleGoal =
+        camera == 2
+            ? Math.min(w / fieldWidth, h / 83.)
+            : Math.min(w / fieldWidth, h / (behind ? 24. : 28.));
+    double turn = Math.atan2(Math.sin(angle - heading), Math.cos(angle - heading));
+    heading += turn * ease;
+    forwardX = Math.sin(heading);
+    forwardY = -Math.cos(heading);
+    viewX += (tx - viewX) * ease;
+    viewY += (ty - viewY) * ease;
+    zoom += (scaleGoal - zoom) * ease;
+    perspective += (depth - perspective) * ease;
+    tilt += (slope - tilt) * ease;
+    focusX = (float) viewX;
+    focusY = (float) viewY;
+    initialized = true;
+    if (!running
+        && (Math.abs(tx - viewX) + Math.abs(ty - viewY) + Math.abs(zoom - scaleGoal) > .025
+            || Math.abs(turn) > .001
+            || Math.abs(slope - tilt) > .001)) postInvalidateOnAnimation();
+  }
+
   private void radar(Canvas c) {
     float rw = Math.min(w * .19f, h * .34f),
         rh = rw * 68 / 105,
         left = (w - rw) / 2,
-        top = h - rh - 5;
-    ink(0xaf122e25);
-    c.drawRoundRect(left, top, left + rw, top + rh, 4, 4, paint);
-    ink(0xaca9c8ad);
-    paint.setStrokeWidth(1);
+        top = h - rh - 33 * density();
+    ink(0xe4163129);
+    c.drawRoundRect(left - 5, top - 4, left + rw + 5, top + rh + 4, 5, 5, paint);
+    ink(0xb9c0d7c8);
+    paint.setStyle(Paint.Style.STROKE);
+    paint.setStrokeWidth(Math.max(1f, rw * .008f));
+    c.drawRect(left, top, left + rw, top + rh, paint);
     c.drawLine(w / 2, top, w / 2, top + rh, paint);
+    c.drawCircle(w / 2, top + rh * .5f, rw * 9.15f / 105, paint);
+    for (int end = 0; end < 2; end++) {
+      float line = left + end * rw, dir = end == 0 ? 1 : -1;
+      float box = line + dir * rw * .157f;
+      c.drawRect(
+          Math.min(line, box), top + rh * .204f, Math.max(line, box), top + rh * .796f, paint);
+      float goal = line - dir * 3;
+      c.drawRect(
+          Math.min(line, goal), top + rh * .446f, Math.max(line, goal), top + rh * .554f, paint);
+    }
     for (int i = 0; i < 22; i++) {
       Motor12.Player p = game.players[i];
+      if (i == game.selected && game.manual) {
+        ink(0xffffcf62);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1.5f * density());
+        c.drawCircle(
+            left + (float) ((p.x + 52.5) / 105) * rw,
+            top + (float) ((p.y + 34) / 68) * rh,
+            Math.max(4, rw * .034f),
+            paint);
+      }
       ink(i < 11 ? 0xffff7771 : 0xffecf3ef);
       c.drawCircle(
           left + (float) ((p.x + 52.5) / 105) * rw,
@@ -435,7 +550,9 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     paint.setStyle(Paint.Style.STROKE);
     paint.setStrokeWidth(2);
     c.drawCircle(joyX, joyY, joyR, paint);
-    ink(0x90f4f1d9);
+    paint.setStrokeWidth(1);
+    c.drawCircle(joyX, joyY, joyR * .15f, paint);
+    ink(0xbaf4f1d9);
     c.drawCircle(joyX + joyDX * joyR * .6f, joyY + joyDY * joyR * .6f, joyR * .38f, paint);
   }
 
@@ -456,9 +573,10 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
     n = e.findPointerIndex(finger);
     if (n >= 0) {
       float dx = (e.getX(n) - joyX) / joyR, dy = (e.getY(n) - joyY) / joyR;
-      float len = Math.max(1, (float) Math.hypot(dx, dy));
-      joyDX = dx / len;
-      joyDY = dy / len;
+      float len = (float) Math.hypot(dx, dy);
+      float gain = len <= .15f ? 0 : Math.min(1, (len - .15f) / .85f) / len;
+      joyDX = dx * gain;
+      joyDY = dy * gain;
       input.x = -forwardY * joyDX - forwardX * joyDY;
       input.y = forwardX * joyDX - forwardY * joyDY;
     }

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://ara3dgen.com/sitemap.xml

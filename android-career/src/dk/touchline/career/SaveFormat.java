@@ -18,12 +18,24 @@ public final class SaveFormat {
 
   public static byte[] encode(Career c) throws IOException {
     ByteArrayOutputStream payload = new ByteArrayOutputStream();
-    c.write(new DataOutputStream(payload));
+    DataOutputStream state = new DataOutputStream(payload);
+    c.write(state);
+    state.writeByte(c.camera);
+    state.writeByte(c.volume);
+    if (c.match != null)
+      for (int[] pair :
+          new int[][] {c.match.onTarget, c.match.corners, c.match.cards, c.match.chances})
+        for (int value : pair) state.writeInt(value);
+    if (c.match != null) {
+      state.writeBoolean(c.match.openingPass);
+      state.writeBoolean(c.match.shotInFlight);
+      state.writeBoolean(c.match.partialStats);
+    }
     byte[] body = payload.toByteArray();
     ByteArrayOutputStream result = new ByteArrayOutputStream();
     DataOutputStream out = new DataOutputStream(result);
     out.writeInt(0x544c3132);
-    out.writeInt(1);
+    out.writeInt(2);
     out.writeInt(body.length);
     out.write(hash(body));
     out.write(body);
@@ -32,7 +44,9 @@ public final class SaveFormat {
 
   public static Career decode(InputStream stream) throws IOException {
     DataInputStream in = new DataInputStream(stream);
-    if (in.readInt() != 0x544c3132 || in.readInt() != 1) throw new IOException("Ukendt saveformat");
+    if (in.readInt() != 0x544c3132) throw new IOException("Ukendt saveformat");
+    int version = in.readInt();
+    if (version < 1 || version > 2) throw new IOException("Ukendt saveformat");
     int size = in.readInt();
     if (size < 0 || size > MAX) throw new IOException("Forkert filstørrelse");
     byte[] digest = new byte[32], body = new byte[size];
@@ -43,6 +57,32 @@ public final class SaveFormat {
     try {
       DataInputStream data = new DataInputStream(new ByteArrayInputStream(body));
       Career c = Career.read(data);
+      if (version == 1 && c.match != null) {
+        c.match.restoreLegacyKickoff();
+        c.match.partialStats = c.match.tick > 0;
+        for (int side = 0; side < 2; side++) {
+          c.match.onTarget[side] =
+              Math.min(c.match.shots[side], c.match.goals[side] + c.match.saves[1 - side]);
+          for (int j = 0; j < 11; j++) c.match.cards[side] += c.match.players[side * 11 + j].cards;
+        }
+      }
+      if (version == 2) {
+        c.camera = data.readUnsignedByte();
+        c.volume = data.readUnsignedByte();
+        if (c.camera >= 4 || c.volume > 100) throw new IOException("Kampindstillinger");
+        if (c.match != null)
+          for (int[] pair :
+              new int[][] {c.match.onTarget, c.match.corners, c.match.cards, c.match.chances})
+            for (int side = 0; side < 2; side++) {
+              pair[side] = data.readInt();
+              if (pair[side] < 0) throw new IOException("Kampstatistik");
+            }
+      }
+      if (version == 2 && c.match != null) {
+        c.match.openingPass = data.readBoolean();
+        c.match.shotInFlight = data.readBoolean();
+        c.match.partialStats = data.readBoolean();
+      }
       if (data.available() != 0) throw new IOException("Ekstra data");
       return c;
     } catch (RuntimeException e) {

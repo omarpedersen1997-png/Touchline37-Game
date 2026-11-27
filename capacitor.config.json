@@ -1,8 +1,0 @@
-{
-  "appId": "dk.touchline.footballidle",
-  "appName": "Touchline Football Idle",
-  "webDir": "native-web",
-  "server": { "hostname": "localhost", "androidScheme": "https", "cleartext": false },
-  "android": { "allowMixedContent": false, "webContentsDebuggingEnabled": false },
-  "plugins": { "SplashScreen": { "launchShowDuration": 0 } }
-}

@@ -40,6 +40,10 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
 
   private TextView score, ticker, active;
   private Button startButton, a, b, c, sprint;
+  private FrameLayout matchOverlay;
+  private String menuPage = "";
+  private boolean resumeAfterMenu;
+  private int effectStream;
   private SoundPool sound;
   private int whistle, cheer, kick, hum, crowdStream, previousKicks;
   private final ExecutorService documents = Executors.newSingleThreadExecutor();
@@ -86,12 +90,26 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
                         | WindowInsets.Type.systemBars()
                         | WindowInsets.Type.mandatorySystemGestures());
             v.setPadding(a.left, a.top, a.right, a.bottom);
-          } else
-            v.setPadding(
-                i.getSystemWindowInsetLeft(),
-                i.getSystemWindowInsetTop(),
-                i.getSystemWindowInsetRight(),
-                i.getSystemWindowInsetBottom());
+          } else {
+            int left = i.getSystemWindowInsetLeft(),
+                top = i.getSystemWindowInsetTop(),
+                right = i.getSystemWindowInsetRight(),
+                bottom = i.getSystemWindowInsetBottom();
+            if (Build.VERSION.SDK_INT >= 28 && i.getDisplayCutout() != null) {
+              DisplayCutout cut = i.getDisplayCutout();
+              left = Math.max(left, cut.getSafeInsetLeft());
+              top = Math.max(top, cut.getSafeInsetTop());
+              right = Math.max(right, cut.getSafeInsetRight());
+              bottom = Math.max(bottom, cut.getSafeInsetBottom());
+            }
+            if (Build.VERSION.SDK_INT >= 29) {
+              android.graphics.Insets gestures = i.getMandatorySystemGestureInsets();
+              left = Math.max(left, gestures.left);
+              right = Math.max(right, gestures.right);
+              bottom = Math.max(bottom, gestures.bottom);
+            }
+            v.setPadding(left, top, right, bottom);
+          }
           return i;
         });
     try {
@@ -162,12 +180,21 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       sound.stop(crowdStream);
       crowdStream = 0;
     }
-    if (on && career.sound) crowdStream = sound.play(hum, .17f, .17f, 1, -1, 1);
+    if (on && career.sound) crowdStream = sound.play(hum, level(.17f), level(.17f), 1, -1, 1);
+  }
+
+  private float level(float gain) {
+    return gain * career.volume / 100f;
+  }
+
+  private void effect(int clip, float gain) {
+    if (career.sound && career.volume > 0)
+      effectStream = sound.play(clip, level(gain), level(gain), 2, 0, 1);
   }
 
   @Override
   public void whistle(boolean goal) {
-    if (career.sound) sound.play(goal ? cheer : whistle, .55f, .55f, 2, 0, 1);
+    effect(goal ? cheer : whistle, .55f);
     if (!pitch.isPlaying()) atmosphere(false);
   }
 
@@ -312,6 +339,8 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       atmosphere(false);
       pitch = null;
     }
+    matchOverlay = null;
+    menuPage = "";
     if (!view.equals("match")) practice = null;
     screen = view;
     root.removeAllViews();
@@ -532,9 +561,8 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     if (career.match != null)
       cell(actions, button("Fortsæt kampen", true, this::matchScreen), 1, 43);
     else {
-      if (career.role == 1 || career.playerAvailable())
-        cell(actions, button("Spil selv", true, () -> begin(true)), 1, 43);
-      cell(actions, button("Simulér kampen", false, () -> begin(false)), 1, 43);
+      cell(actions, button("Spil selv", true, this::chooseControl), 1, 43);
+      cell(actions, button("Simulér kampen", false, () -> begin(Career.Control.SIMULATION)), 1, 43);
     }
     block(l, actions, 46);
     LinearLayout side = panel();
@@ -575,8 +603,28 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       block(side, button("Beslutning før kampen", true, this::decision), 35);
   }
 
-  private void begin(boolean play) {
-    career.start(play);
+  private void chooseControl() {
+    if (career.role == 1) {
+      begin(Career.Control.TEAM);
+      return;
+    }
+    boolean fit = career.playerAvailable();
+    AlertDialog dialog =
+        new AlertDialog.Builder(this)
+            .setTitle("Hvem vil du styre?")
+            .setMessage(
+                fit
+                    ? "Følg din egen spiller, eller skift mellem holdets spillere i denne kamp."
+                    : "Din spiller er skadet. Du kan stadig spille kampen med resten af holdet.")
+            .setPositiveButton("Min spiller", (d, n) -> begin(Career.Control.PLAYER))
+            .setNegativeButton("Hele holdet", (d, n) -> begin(Career.Control.TEAM))
+            .setNeutralButton("Tilbage", null)
+            .show();
+    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(fit);
+  }
+
+  private void begin(Career.Control control) {
+    career.start(control);
     if (save()) matchScreen();
   }
 
@@ -1112,6 +1160,7 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
   }
 
   private void matchScreen() {
+
     mount("match");
     Motor12 m = activeGame();
     if (m == null) {
@@ -1119,9 +1168,11 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       return;
     }
     pitch = new StadiumView(this, m, kits, grandstand, grass, this);
+    pitch.setCamera(career.camera);
     scene.addView(pitch, new FrameLayout.LayoutParams(F, F));
     scene.setMotionEventSplittingEnabled(true);
     score = text("", 19, WHITE, true);
+    score.setSingleLine(true);
     score.setPadding(dp(10), 0, dp(10), 0);
     score.setBackground(background(0xf0183128, 4));
     layer(scene, score, C, 32, Gravity.TOP | Gravity.LEFT, 8, 6);
@@ -1132,22 +1183,24 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
     Button menu = button("Kampmenu", false, this::matchMenu);
     layer(scene, menu, 87, 36, Gravity.TOP | Gravity.RIGHT, 8, 6);
     startButton = button("", true, this::togglePlay);
-    layer(scene, startButton, 105, 41, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 8);
+    startButton.setPadding(dp(3), 0, dp(3), 0);
+    layer(scene, startButton, 83, 36, Gravity.TOP | Gravity.RIGHT, 101, 6);
     active = text("", 13, WHITE, true);
     active.setGravity(Gravity.CENTER);
     active.setBackground(background(0xbc112d22, 2));
-    layer(scene, active, C, 22, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 1);
+    layer(scene, active, C, 22, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 7);
     if (m.manual) {
       a = command("A", Motor12.SHOOT, 8, 10);
       b = command("B", Motor12.PASS, 77, 12);
       c = command("C", Motor12.THROUGH, 33, 81);
       sprint = button("Sprint", false, () -> {});
-      sprint.setBackground(background(0x9b183629, 30));
+      sprint.setBackground(controlBackground());
       sprint.setTextSize(13);
       sprint.setOnTouchListener(
           (v, e) -> {
             int ev = e.getActionMasked();
             if (ev == MotionEvent.ACTION_DOWN) {
+              if (!pitch.isPlaying()) return false;
               pitch.input.sprint = true;
               v.setPressed(true);
             }
@@ -1157,11 +1210,18 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
             }
             return true;
           });
-      layer(scene, sprint, 51, 42, Gravity.BOTTOM | Gravity.LEFT, 8, 7);
+      layer(
+          scene,
+          sprint,
+          51,
+          42,
+          Gravity.BOTTOM | Gravity.LEFT,
+          Math.max(95, Math.min(150, getResources().getConfiguration().screenHeightDp / 3)),
+          12);
     }
     previousKicks = m.kicks;
     hud();
-    if (practice != null) {
+    if (practice != null && m.phase != Motor12.Phase.FULL_TIME) {
       pitch.startPlay();
       atmosphere(true);
     }
@@ -1175,29 +1235,56 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
   }
 
   private Button command(String letter, int attack, int right, int bottom) {
-    Button btn =
-        button(
-            letter,
-            false,
-            () -> {
-              if (pitch != null)
-                pitch.action(
-                    defence()
-                        ? (attack == Motor12.SHOOT
-                            ? Motor12.TACKLE
-                            : attack == Motor12.PASS ? Motor12.SWITCH : Motor12.PRESS_BALL)
-                        : attack);
-            });
-    btn.setBackground(
-        new RippleDrawable(
-            android.content.res.ColorStateList.valueOf(0x9996d7bb),
-            background(0x97162b20, 50),
-            null));
+    Button btn = button(letter, false, () -> {});
+    btn.setBackground(controlBackground());
+    final double[] power = {.45};
+    btn.setOnClickListener(
+        v -> {
+          if (pitch == null || !pitch.isPlaying()) return;
+          int cmd = attack;
+          if (defence())
+            cmd =
+                attack == Motor12.PASS
+                    ? Motor12.PRESS_BALL
+                    : attack == Motor12.THROUGH && activeGame().locked < 0
+                        ? Motor12.SWITCH
+                        : Motor12.TACKLE;
+          pitch.input.power = power[0];
+          pitch.action(cmd);
+          power[0] = .45;
+          v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        });
+    btn.setOnTouchListener(
+        (v, e) -> {
+          if (!v.isEnabled()) return false;
+          switch (e.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+              v.setPressed(true);
+              return true;
+            case MotionEvent.ACTION_UP:
+              v.setPressed(false);
+              power[0] = Motor12.clamp(.22 + (e.getEventTime() - e.getDownTime()) / 720., .22, 1);
+              v.performClick();
+              return true;
+            case MotionEvent.ACTION_CANCEL:
+              v.setPressed(false);
+              return true;
+            default:
+              return true;
+          }
+        });
     btn.setPadding(0, 0, 0, 0);
     btn.setTextSize(15);
     int size = attack == Motor12.SHOOT ? 65 : 55;
     layer(scene, btn, size, size, Gravity.BOTTOM | Gravity.RIGHT, right, bottom);
     return btn;
+  }
+
+  private StateListDrawable controlBackground() {
+    StateListDrawable state = new StateListDrawable();
+    state.addState(new int[] {android.R.attr.state_pressed}, background(0xeb927029, 40));
+    state.addState(new int[] {}, background(0xb0183429, 40));
+    return state;
   }
 
   private void buttonText(Button btn, String s) {
@@ -1224,34 +1311,65 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
             + "    "
             + away
             + "     "
-            + m.clock());
+            + m.clock()
+            + "   ·   "
+            + (m.phase == Motor12.Phase.FULL_TIME ? "FT" : m.half + ". HL"));
     ticker.setText(
         m.phase == Motor12.Phase.PRE_KICKOFF
             ? "Klar til afspark"
             : m.phase == Motor12.Phase.RESTART ? m.restartName() : m.newest());
     String control =
-        (m.phase == Motor12.Phase.PRE_KICKOFF || m.phase == Motor12.Phase.KICKOFF_READY)
-            ? "KICK OFF"
-            : m.phase == Motor12.Phase.FULL_TIME
-                ? "Kamprapport"
-                : pitch.isPlaying() ? "Pause" : "Genoptag";
+        m.phase == Motor12.Phase.FULL_TIME
+            ? "Kamprapport"
+            : m.awaitingKickoff() ? "KICK OFF" : pitch.isPlaying() ? "Pause" : "Genoptag";
     buttonText(startButton, control);
     if (m.manual) {
       boolean def = defence();
       String playB =
-          career.role == 0 && m.owner >= 0 && m.owner < 11 && m.owner != m.locked
-              ? "Kald"
-              : "Aflever";
+          m.locked >= 0 && m.owner >= 0 && m.owner < 11 && m.owner != m.locked ? "Kald" : "Aflever";
       buttonText(
           a,
           def
               ? "A\nTackl"
               : m.phase == Motor12.Phase.RESTART && m.restartType == 2 ? "A\nLangt" : "A\nSkyd");
-      buttonText(b, def ? "B\nSkift" : "B\n" + playB);
-      b.setEnabled(!def || m.locked < 0);
-      buttonText(c, def ? "C\nPres" : "C\nStikning");
+      buttonText(b, def ? "B\nPres" : "B\n" + playB);
+      buttonText(c, def ? (m.locked < 0 ? "C\nSkift" : "C\nTackl") : "C\nStikning");
+      boolean live = pitch.isPlaying();
+      a.setEnabled(live);
+      b.setEnabled(live);
+      c.setEnabled(live);
+      sprint.setEnabled(live);
+      if (!live) sprint.setPressed(false);
       Motor12.Player p = m.players[m.selected];
-      active.setText("  " + career.name(p.shirt - 1) + "  ·  " + (int) p.energy + " %  ");
+      active.setText(
+          "  #"
+              + p.shirt
+              + " "
+              + career.name(p.shirt - 1)
+              + " · "
+              + (m.locked == m.selected ? "dig" : m.selected == 0 ? "målmand" : "styret")
+              + "   "
+              + (int) p.energy
+              + " % · "
+              + (p.energy < 40
+                  ? "Træt"
+                  : pitch.input.sprint
+                      ? "Sprint"
+                      : "Kampform "
+                          + String.format(
+                              Locale.getDefault(),
+                              "%.1f",
+                              Motor12.clamp(
+                                  6
+                                      + p.goals * .9
+                                      + p.assists * .65
+                                      + p.complete * .04
+                                      + p.tackles * .10
+                                      - p.cards * .6,
+                                  1,
+                                  10)))
+              + "  ");
+      active.setTextColor(p.energy < 40 ? 0xffffa180 : pitch.input.sprint ? GOLD : WHITE);
     } else
       active.setText(
           "  "
@@ -1261,8 +1379,7 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
               + "   ·   "
               + pitch.speed
               + "×  ");
-    if (career.sound && pitch.isPlaying() && m.kicks > previousKicks)
-      sound.play(kick, .24f, .24f, 1, 0, 1);
+    if (career.sound && pitch.isPlaying() && m.kicks > previousKicks) effect(kick, .24f);
     previousKicks = m.kicks;
   }
 
@@ -1286,9 +1403,9 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
       pauseMatch();
       return;
     }
-    boolean began = m.kickOff();
+    boolean kickoff = m.kickOff();
     pitch.startPlay();
-    if (began) whistle(false);
+    if (kickoff) whistle(false);
     atmosphere(true);
     save();
   }
@@ -1303,6 +1420,7 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
   }
 
   private void matchMenu() {
+    resumeAfterMenu = pitch != null && pitch.isPlaying();
     pauseMatch();
     if (practice != null) {
       boolean free = practice.log.stream().anyMatch(e -> e.contains("Frispark"));
@@ -1321,79 +1439,274 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
           });
       return;
     }
-    ArrayList<String> ops =
-        new ArrayList<>(Arrays.asList("Kampstatistik", "Kamptidslinje", "Skift kamera"));
-    if (career.role == 1) {
-      ops.add("Kampplan");
-      ops.add("Udskiftning");
+    showMatchPanel("Kampmenu");
+  }
+
+  private void closeMatchPanel(boolean resume) {
+    if (matchOverlay != null) scene.removeView(matchOverlay);
+    matchOverlay = null;
+    menuPage = "";
+    for (int n = 0; n < scene.getChildCount(); n++)
+      scene.getChildAt(n).setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_AUTO);
+    if (resume
+        && resumeAfterMenu
+        && pitch != null
+        && !activeGame().awaitingKickoff()
+        && activeGame().phase != Motor12.Phase.FULL_TIME) {
+      pitch.startPlay();
+      atmosphere(true);
     }
-    if (!career.match.manual) ops.add("Hastighed");
-    ops.add(career.sound ? "Slå lyden fra" : "Slå lyden til");
-    ops.add("Til klubhuset");
-    options(
-        "Kampmenu · " + career.match.clock(),
-        ops.toArray(new String[0]),
-        n -> {
-          Motor12 m = career.match;
-          String item = ops.get(n);
-          switch (item) {
-            case "Kampstatistik":
-              int poss =
-                  (int) (m.possession[0] * 100.0 / Math.max(1, m.possession[0] + m.possession[1]));
-              note(
-                  "Kampstatistik",
-                  "Skud   "
-                      + m.shots[0]
-                      + " – "
-                      + m.shots[1]
-                      + "\nForventede mål   "
-                      + String.format(Locale.ROOT, "%.2f – %.2f", m.xg[0], m.xg[1])
-                      + "\nBoldbesiddelse   "
-                      + poss
-                      + " / "
-                      + (100 - poss)
-                      + " %\nAfleveringer   "
-                      + m.passes[0]
-                      + " – "
-                      + m.passes[1]
-                      + "\nRedninger   "
-                      + m.saves[0]
-                      + " – "
-                      + m.saves[1]);
-              break;
-            case "Kamptidslinje":
-              note(
-                  item,
-                  m.log.isEmpty() ? "Klar til afspark" : android.text.TextUtils.join("\n", m.log));
-              break;
-            case "Skift kamera":
-              pitch.toggleCamera();
-              break;
-            case "Kampplan":
-              plan();
-              break;
-            case "Udskiftning":
-              substitute(true);
-              break;
-            case "Hastighed":
-              options(
-                  item,
-                  new String[] {"1×", "2×", "4×"},
-                  i -> {
-                    pitch.speed = 1 << i;
-                    hud();
-                  });
-              break;
-            case "Til klubhuset":
-              tab = 0;
-              hub();
-              break;
-            default:
-              career.sound = !career.sound;
-              save();
-              hud();
+    resumeAfterMenu = false;
+  }
+
+  private void showMatchPanel(String title) {
+    if (matchOverlay != null) scene.removeView(matchOverlay);
+    menuPage = title;
+    Motor12 m = activeGame();
+    matchOverlay = new FrameLayout(this);
+    matchOverlay.setBackgroundColor(0x36091813);
+    matchOverlay.setClickable(true);
+    matchOverlay.setElevation(dp(24));
+    for (int n = 0; n < scene.getChildCount(); n++)
+      scene
+          .getChildAt(n)
+          .setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+    scene.addView(matchOverlay, new FrameLayout.LayoutParams(F, F));
+    LinearLayout sheet = col();
+    sheet.setPadding(dp(13), dp(8), dp(9), dp(8));
+    GradientDrawable surface =
+        new GradientDrawable(
+            GradientDrawable.Orientation.TL_BR, new int[] {0xff244336, 0xff0b211b});
+    surface.setStroke(dp(1), 0xff698474);
+    surface.setCornerRadius(dp(7));
+    sheet.setBackground(surface);
+    View stripe = new View(this);
+    stripe.setBackgroundColor(GOLD);
+    block(sheet, stripe, 2);
+    int width =
+        Math.min(415, Math.max(250, (int) (getResources().getConfiguration().screenWidthDp * .52)));
+    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(dp(width), F, Gravity.RIGHT);
+    lp.setMargins(dp(6), dp(6), dp(6), dp(6));
+    matchOverlay.addView(sheet, lp);
+    LinearLayout heading = row();
+    block(sheet, heading, 36);
+    cell(heading, text(title, 24, WHITE, true), 2, 35);
+    boolean main = title.equals("Kampmenu");
+    cell(
+        heading,
+        button(
+            main ? "Luk" : "Tilbage",
+            false,
+            () -> {
+              if (main) closeMatchPanel(true);
+              else showMatchPanel("Kampmenu");
+            }),
+        .8f,
+        32);
+    block(
+        sheet,
+        text(
+            career.clubName
+                + "   "
+                + m.goals[0]
+                + " – "
+                + m.goals[1]
+                + "   "
+                + career.team(career.opposition())
+                + "    ·    "
+                + m.clock(),
+            14,
+            GOLD,
+            true),
+        24);
+    ScrollView scroll = new ScrollView(this);
+    scroll.setFillViewport(false);
+    flex(sheet, scroll, 1);
+    LinearLayout content = col();
+    scroll.addView(content);
+    switch (title) {
+      case "Kampmenu":
+        ArrayList<String> actions =
+            new ArrayList<>(
+                Arrays.asList("Kampstatistik", "Kamptidslinje", "Skift kamera", "Lydkontrol"));
+        if (career.role == 1) {
+          actions.add("Kampplan");
+          actions.add("Udskiftning");
+        }
+        if (!m.manual) actions.add("Hastighed");
+        actions.add("Til klubhuset");
+        for (int j = 0; j < actions.size(); j += 2) {
+          LinearLayout pair = row();
+          block(content, pair, 40);
+          for (String item : actions.subList(j, Math.min(j + 2, actions.size()))) {
+            cell(
+                pair,
+                button(
+                    item,
+                    false,
+                    () -> {
+                      switch (item) {
+                        case "Til klubhuset":
+                          if (save()) {
+                            closeMatchPanel(false);
+                            tab = 0;
+                            hub();
+                          }
+                          break;
+                        case "Kampplan":
+                          plan();
+                          break;
+                        case "Udskiftning":
+                          substitute(true);
+                          break;
+                        default:
+                          showMatchPanel(item);
+                      }
+                    }),
+                1,
+                38);
           }
-        });
+        }
+        block(content, text("Seneste hændelse", 14, MUTED, true), 20);
+        block(content, text(m.newest(), 18, WHITE, true), 25);
+        LinearLayout summary = row();
+        block(content, summary, 29);
+        cell(summary, text("Skud  " + m.shots[0] + " – " + m.shots[1], 16, GOLD, true), 1, 28);
+        cell(
+            summary,
+            text(
+                String.format(Locale.getDefault(), "xG  %.2f – %.2f", m.xg[0], m.xg[1]),
+                16,
+                WHITE,
+                true),
+            1.2f,
+            28);
+        break;
+      case "Kampstatistik":
+        if (m.partialStats)
+          block(
+              content,
+              text("Kampen er fra TEST75. Nye hændelsestal er delvise.", 14, MUTED, false),
+              32);
+        int total = m.possession[0] + m.possession[1],
+            home = total == 0 ? 0 : Math.round(100f * m.possession[0] / total);
+        String[] labels = {
+          "Mål",
+          "Forventede mål (xG)",
+          "Store chancer",
+          "Skud",
+          "På mål",
+          "Boldbesiddelse",
+          "Afleveringer",
+          "Hjørnespark",
+          "Gule kort",
+          "Redninger"
+        };
+        int[][] values = {
+          m.goals, null, m.chances, m.shots, m.onTarget, null, m.passes, m.corners, m.cards, m.saves
+        };
+        for (int j = 0; j < labels.length; j++) {
+          String left, right;
+          if (j == 1) {
+            left = String.format(Locale.getDefault(), "%.2f", m.xg[0]);
+            right = String.format(Locale.getDefault(), "%.2f", m.xg[1]);
+          } else if (j == 5) {
+            left = total == 0 ? "—" : home + " %";
+            right = total == 0 ? "—" : (100 - home) + " %";
+          } else {
+            left = String.valueOf(values[j][0]);
+            right = String.valueOf(values[j][1]);
+          }
+          LinearLayout line = row();
+          block(content, line, 22);
+          cell(line, text(left, 16, GOLD, true), .5f, 22);
+          TextView label = text(labels[j], 15, WHITE, false);
+          label.setGravity(Gravity.CENTER);
+          cell(line, label, 2, 22);
+          TextView value = text(right, 16, WHITE, true);
+          value.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+          cell(line, value, .5f, 22);
+        }
+        break;
+      case "Kamptidslinje":
+        if (m.log.isEmpty())
+          block(content, text("Holdene er klar ved midterlinjen", 16, MUTED, false), 34);
+        for (int i = m.log.size() - 1; i >= 0; i--)
+          block(content, text(m.log.get(i), 16, WHITE, false), 29);
+        break;
+      case "Skift kamera":
+        for (int i = 0; i < StadiumView.CAMERAS.length; i++) {
+          final int selected = i;
+          block(
+              content,
+              button(
+                  StadiumView.CAMERAS[i] + (i == career.camera ? "  ✓" : ""),
+                  i == career.camera,
+                  () -> {
+                    career.camera = selected;
+                    pitch.setCamera(selected);
+                    save();
+                    showMatchPanel(title);
+                  }),
+              38);
+        }
+        break;
+      case "Lydkontrol":
+        block(
+            content,
+            button(
+                career.sound ? "Lyd til · slå fra" : "Lyd fra · slå til",
+                career.sound,
+                () -> {
+                  career.sound = !career.sound;
+                  if (!career.sound) {
+                    sound.autoPause();
+                    if (effectStream != 0) sound.stop(effectStream);
+                  } else effect(whistle, .55f);
+                  save();
+                  showMatchPanel(title);
+                }),
+            40);
+        TextView volume =
+            text("Stadion, dommer og spark · " + career.volume + " %", 16, WHITE, false);
+        block(content, volume, 32);
+        SeekBar fader = new SeekBar(this);
+        fader.setContentDescription("Lydstyrke");
+        fader.setMax(100);
+        fader.setProgress(career.volume);
+        fader.setOnSeekBarChangeListener(
+            new SeekBar.OnSeekBarChangeListener() {
+              public void onStartTrackingTouch(SeekBar bar) {}
+
+              public void onProgressChanged(SeekBar bar, int n, boolean user) {
+                career.volume = n;
+                volume.setText("Stadion, dommer og spark · " + n + " %");
+                if (crowdStream != 0) sound.setVolume(crowdStream, level(.17f), level(.17f));
+                if (effectStream != 0) sound.setVolume(effectStream, level(.55f), level(.55f));
+              }
+
+              public void onStopTrackingTouch(SeekBar bar) {
+                effect(kick, .35f);
+                save();
+              }
+            });
+        block(content, fader, 42);
+        break;
+      case "Hastighed":
+        for (int speed : new int[] {1, 2, 4})
+          block(
+              content,
+              button(
+                  speed + "×",
+                  pitch.speed == speed,
+                  () -> {
+                    pitch.speed = speed;
+                    hud();
+                    showMatchPanel(title);
+                  }),
+              38);
+        break;
+    }
   }
 
   private void plan() {
@@ -1452,7 +1765,10 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
               used = false;
               for (int j = 0; j < 11; j++) if (career.match.players[j].shirt == k + 1) used = true;
             }
-            if (used || career.injury[k] > 0 || (i == 0) != (k == 0 || k == 11)) continue;
+            if (used
+                || (live && (career.withdrawn & (1 << k)) != 0)
+                || career.injury[k] > 0
+                || (i == 0) != (k == 0 || k == 11)) continue;
             indices.add(k);
             labels.add(career.name(k) + " · " + career.fitness[k] + " %");
           }
@@ -1477,7 +1793,9 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
 
   @Override
   protected void onPause() {
+    resumeAfterMenu = false;
     pauseMatch();
+    if (sound != null) sound.autoPause();
     save();
     super.onPause();
   }
@@ -1493,7 +1811,9 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
   public void onBackPressed() {
     switch (screen) {
       case "match":
-        matchMenu();
+        if (matchOverlay == null) matchMenu();
+        else if (menuPage.equals("Kampmenu")) closeMatchPanel(true);
+        else showMatchPanel("Kampmenu");
         break;
       case "stories":
         chooseRole();

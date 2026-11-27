@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /play
-Disallow: /owner-builds/
-Sitemap: https://playtouchline.dk/sitemap.xml

@@ -1,5 +1,0 @@
-import {build} from 'esbuild';
-import {execFileSync} from 'node:child_process';
-import {relative,dirname} from 'node:path';
-const root=process.cwd(),files=new Set(['src/manual-scene.js','src/living-camera.js','src/match-lighting.js','src/rich-match-assets.js','src/pro-player.js','src/asset-player-animation.js','src/player-grounding.js']);
-for(const profile of ['before','after'])await build({entryPoints:['dev/evidence/visual59-entry.mjs'],bundle:true,format:'esm',outdir:'.dev-data/review/visual59-'+profile,loader:{'.json':'json'},define:{__MATCH_ASSET_ROOT__:'"/match-assets55"',__PRO_PLAYER_URL__:'"/assets/models/football-pro.glb"',__PRO_PLAYER_AUTO_URL__:'"/assets/models/football-auto.glb"'},plugins:profile==='before'?[{name:'frozen-test58',setup(build){build.onLoad({filter:/\.js$/},args=>{const file=relative(root,args.path);if(!files.has(file))return;return{contents:execFileSync('git',['show','2084e493041bd0fe395de0f981e3440b251d8dc8:'+file],{encoding:'utf8'}),loader:'js',resolveDir:dirname(args.path)};});}}]:[],logLevel:'silent'});

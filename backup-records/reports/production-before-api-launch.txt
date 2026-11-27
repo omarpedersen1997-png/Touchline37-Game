@@ -1,1 +1,0 @@
-{"open":false,"opensAt":"2027-01-01T09:00:00.000Z","timeZone":"Europe/Copenhagen","apkVersion":"1.0.0","playUrl":"/play","apkUrl":"/downloads/Touchline-1.0.0.apk","serverTime":1794689592015}

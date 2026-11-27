@@ -11,7 +11,8 @@ public final class Motor12 {
     PLAY,
     RESTART,
     KICKOFF_READY,
-    FULL_TIME
+    FULL_TIME,
+    KICKOFF_RUNUP
   }
 
   public static final int HZ = 60, HALF = 90 * HZ;
@@ -34,13 +35,14 @@ public final class Motor12 {
   }
 
   public static final class Input {
-    public double x, y;
+    public double x, y, power = .45;
     public boolean sprint;
     public int action;
 
     public void clear() {
       x = y = 0;
       sprint = false;
+      power = .45;
       action = 0;
     }
   }
@@ -49,6 +51,10 @@ public final class Motor12 {
   public final Player[] players = new Player[22];
   public final int[] goals = new int[2],
       shots = new int[2],
+      onTarget = new int[2],
+      corners = new int[2],
+      cards = new int[2],
+      chances = new int[2],
       passes = new int[2],
       saves = new int[2],
       possession = new int[2],
@@ -73,6 +79,7 @@ public final class Motor12 {
       subCount;
   public double bx, by, bz = R, bvx, bvy, bvz, spin;
   public boolean manual = true;
+  boolean openingPass, shotInFlight, partialStats;
   private int rng, restartWait;
   private double decision, sinceKick, accum, pressureRun;
   double previousBallX, previousBallY, previousBallZ;
@@ -120,9 +127,9 @@ public final class Motor12 {
     return Math.max(a, Math.min(b, n));
   }
 
-  private void record(String s) {
+  void record(String s) {
     log.add(0, clock() + "  " + s);
-    if (log.size() > 30) log.remove(30);
+    if (log.size() > 512) log.remove(512);
   }
 
   public String clock() {
@@ -139,6 +146,7 @@ public final class Motor12 {
     by = y;
     bz = R;
     bvx = bvy = bvz = spin = 0;
+    openingPass = shotInFlight = false;
     owner = last = receiver = assist = -1;
     sinceKick = 0;
   }
@@ -147,6 +155,7 @@ public final class Motor12 {
     kickSide = side;
     phase = first ? Phase.PRE_KICKOFF : Phase.KICKOFF_READY;
     stillBall(0, 0);
+    pressureRun = 0;
     for (int i = 0; i < 22; i++) {
       Player p = players[i];
       int t = team(i), j = i % 11, d = dir(t), f = formations[t];
@@ -156,13 +165,26 @@ public final class Motor12 {
       p.face = d == 1 ? 0 : Math.PI;
       if (t != side && Math.hypot(p.x, p.y) < 9.4) p.x = -9.5 * d;
     }
-    Player kicker = players[side * 11 + 9];
-    kicker.x = -.65 * dir(side);
-    kicker.y = 0;
-    players[side * 11 + 6].x = -6 * dir(side);
-    players[side * 11 + 6].y = 3;
+    int d = dir(side);
+    Player kicker = players[side * 11 + 9], partner = players[side * 11 + 6];
+    kicker.x = -1.22 * d;
+    kicker.y = -.34 * d;
+    kicker.face = Math.atan2(-kicker.y, -kicker.x);
+    partner.x = -2.05 * d;
+    partner.y = 1.65 * d;
+    partner.face = Math.atan2(-partner.y, -partner.x);
     selected = locked >= 0 ? locked : (side == 0 ? 9 : 6);
-    resetClock();
+    restartWait = 0;
+    snapshot();
+  }
+
+  boolean awaitingKickoff() {
+    return phase == Phase.PRE_KICKOFF || phase == Phase.KICKOFF_READY;
+  }
+
+  // TEST75 stored a different arrangement and no countdown while waiting for its button.
+  void restoreLegacyKickoff() {
+    if (awaitingKickoff()) lineUp(kickSide, phase == Phase.PRE_KICKOFF);
   }
 
   public void resetClock() {
@@ -171,18 +193,28 @@ public final class Motor12 {
   }
 
   public boolean kickOff() {
-    if (phase != Phase.PRE_KICKOFF && phase != Phase.KICKOFF_READY) return false;
+    if (!awaitingKickoff()) return false;
+    phase = Phase.KICKOFF_RUNUP;
+    restartWait = 24;
+    resetClock();
+    return true;
+  }
+
+  private void centrePass() {
     int p = kickSide * 11 + 9, r = kickSide * 11 + 6;
     phase = Phase.PLAY;
-    send(p, players[r].x, players[r].y, 10, 0, r);
+    send(p, players[r].x, players[r].y, 5.2, 0, r);
+    openingPass = true;
+    players[p].face = Math.atan2(bvy, bvx);
     passes[kickSide]++;
     players[p].passes++;
+    assist = p;
     record("Afspark");
-    return true;
   }
 
   private void send(int p, double x, double y, double pace, double loft, int target) {
     double dx = x - bx, dy = y - by, h = Math.max(.01, Math.hypot(dx, dy));
+    openingPass = shotInFlight = false;
     bvx = pace * dx / h;
     bvy = pace * dy / h;
     bvz = loft;
@@ -196,7 +228,7 @@ public final class Motor12 {
   }
 
   public void advance(double dt, Input in) {
-    if (phase != Phase.PLAY && phase != Phase.RESTART) {
+    if (phase == Phase.FULL_TIME || awaitingKickoff()) {
       accum = 0;
       in.action = 0;
       return;
@@ -208,7 +240,7 @@ public final class Motor12 {
       Phase before = phase;
       step(in);
       if (before != phase) snapshot();
-      if (phase != Phase.PLAY && phase != Phase.RESTART) {
+      if (phase == Phase.FULL_TIME || awaitingKickoff()) {
         accum = 0;
         break;
       }
@@ -269,6 +301,8 @@ public final class Motor12 {
     double lead = through ? 4.8 : 0,
         x = clamp(q.x + q.vx * .42 + dir(t) * lead, -51, 51),
         y = clamp(q.y + q.vy * .42, -33, 33);
+    double quality = clamp((players[p].skill + .2 * players[p].energy) / 115, .35, 1);
+    y = clamp(y + (random() - .5) * (1 - quality) * (through ? 4 : 1.8), -33, 33);
     double range = Math.hypot(x - bx, y - by);
     send(p, x, y, clamp(7 + range * .41, 8, through ? 24 : 20), through && range > 20 ? 3.7 : 0, r);
     assist = p;
@@ -276,10 +310,14 @@ public final class Motor12 {
     players[p].passes++;
   }
 
-  private void shoot(int p, double sideAim) {
+  private void shoot(int p, double sideAim, double power) {
     int t = team(p), d = dir(t);
     double range = Math.hypot(L * d - bx, by);
-    double aim = sideAim * 3.1 + (random() - .5) * (1.1 + range * .055);
+    double angle = Math.atan2(Math.abs(by), Math.max(1, L - bx * d));
+    double error =
+        (.55 + range * .05 + angle * 1.3 + power * power) * (1.6 - players[p].skill / 100);
+    double aim = sideAim * 3.45 + (random() - .5) * error;
+    if (range < 17) chances[t]++;
     shots[t]++;
     players[p].shots++;
     xg[t] += .61 * Math.exp(-range / 21);
@@ -287,9 +325,10 @@ public final class Motor12 {
         p,
         d * (L + 1),
         aim,
-        clamp(17 + players[p].skill * .09, 18, 28),
+        clamp(11 + 12 * power + players[p].skill * .075, 14, 31),
         clamp(range * (phase == Phase.RESTART ? .205 : .088), .9, 6.4),
         -1);
+    shotInFlight = true;
     spin = -sideAim * d * .16;
     record(range < 17 ? "Stor chance" : "Afslutning");
   }
@@ -297,10 +336,12 @@ public final class Motor12 {
   private void receive(int i) {
     if (receiver >= 0 && last >= 0 && last != i && team(last) == team(i)) players[last].complete++;
     if (last >= 0 && team(last) != team(i)) assist = -1;
-    if (receiver == -1 && last >= 0 && team(last) != team(i) && i % 11 == 0) {
+    if (shotInFlight && last >= 0 && team(last) != team(i) && i % 11 == 0) {
       saves[team(i)]++;
+      onTarget[team(last)]++;
       record("Målmandsredning");
     }
+    openingPass = shotInFlight = false;
     owner = i;
     last = i;
     receiver = -1;
@@ -314,6 +355,7 @@ public final class Motor12 {
     stillBall(x, y);
     phase = Phase.RESTART;
     restartType = type;
+    if (type == 3) corners[side]++;
     restartSide = side;
     restartWait = 55;
     int taker = taker();
@@ -365,6 +407,18 @@ public final class Motor12 {
   private void step(Input in) {
     int action = in.action;
     in.action = 0;
+    if (phase == Phase.KICKOFF_RUNUP) {
+      // The clock stays still while the kicker takes the final step to the ball.
+      if (--restartWait < 24) {
+        Player kicker = players[kickSide * 11 + 9];
+        kicker.vx = 2.2 * dir(kickSide);
+        kicker.vy = .6 * dir(kickSide);
+        kicker.x += kicker.vx * DT;
+        kicker.y += kicker.vy * DT;
+      }
+      if (restartWait <= 0) centrePass();
+      return;
+    }
     pressureRun = Math.max(0, pressureRun - DT);
     if (action == PRESS_BALL) pressureRun = .9;
     if (phase == Phase.RESTART) {
@@ -374,7 +428,7 @@ public final class Motor12 {
       if (!user && --restartWait > 0) return;
       if (user && action == SHOOT && restartType == 2)
         send(p, bx + dir(0) * 45, by + in.y * 23, 28, 7, -1);
-      else if (user && action == SHOOT) shoot(p, in.y);
+      else if (user && action == SHOOT) shoot(p, in.y, in.power);
       else
         pass(
             p,
@@ -480,12 +534,12 @@ public final class Motor12 {
       boolean controlled = manual && holder == selected;
       decision -= DT;
       if (controlled) {
-        if (action == SHOOT) shoot(holder, in.y);
+        if (action == SHOOT) shoot(holder, in.y, in.power);
         else if (action == PASS || action == THROUGH)
           pass(holder, action == THROUGH, in.x, in.y, -1);
       } else if (decision <= 0) {
         if ((L - bx * dir(ballSide)) < 24 && Math.abs(by) < 22 && random() < .78)
-          shoot(holder, (random() - .5) * 1.85);
+          shoot(holder, (random() - .5) * 1.85, .68);
         else if (random() < .70) pass(holder, random() < .28, dir(ballSide), 0, -1);
         else decision = .4 + random() * .8;
       }
@@ -496,7 +550,11 @@ public final class Motor12 {
         boolean tackling = manual && defender == selected && action == TACKLE;
         if (gap < (tackling ? 2.7 : 1.22) && a.delay <= 0 && (tackling || random() < .035)) {
           if (random() < (tackling ? .18 : .055)) {
-            if (random() < .45) b.cards++;
+            if (random() < .45) {
+              b.cards++;
+              cards[team(defender)]++;
+              record("Gult kort · " + (defender < 11 ? "Hjemme" : "Ude") + " #" + b.shirt);
+            }
             restart(1, ballSide, a.x, a.y);
           } else {
             b.tackles++;
@@ -539,6 +597,7 @@ public final class Motor12 {
         int attack = (bx > 0) == (dir(0) > 0) ? 0 : 1;
         if (Math.abs(oldY + (by - oldY) * fx) < 3.66 - R && oldZ + (bz - oldZ) * fx < 2.44 - R) {
           goals[attack]++;
+          if (shotInFlight && last >= 0 && team(last) == attack) onTarget[attack]++;
           if (last >= 0 && team(last) == attack) players[last].goals++;
           if (assist >= 0 && assist != last && team(assist) == attack) players[assist].assists++;
           lineUp(1 - attack, false);
@@ -552,7 +611,7 @@ public final class Motor12 {
       double distance = 2.5;
       for (int i = 0; i < 22; i++) {
         Player p = players[i];
-        if (i == last && sinceKick < .35) continue;
+        if (i == last && (openingPass || sinceKick < .35)) continue;
         boolean keeper = i % 11 == 0 && Math.abs(p.x) > 36;
         double gap = Math.hypot(bx - p.x, by - p.y);
         if (bz < (keeper ? 2.5 : 1.45) && gap < (keeper ? 2 : 1.0) && gap < distance) {
@@ -658,7 +717,7 @@ public final class Motor12 {
     }
     int count = i.readInt();
     if (count < 0
-        || count > 30
+        || count > 512
         || m.tick < 0
         || m.tick > 2 * HALF
         || m.half < 1
