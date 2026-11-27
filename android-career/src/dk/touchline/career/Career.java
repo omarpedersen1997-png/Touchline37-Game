@@ -7,8 +7,8 @@ import java.util.*;
 public final class Career {
   public static final String[] FORMS = {"Spillerkarriere", "Trænerkarriere"},
       FORMATIONS = {"4-3-3", "4-4-2", "3-5-2"},
-      PRESS = {"Lav blok", "Middelpres", "Højt pres"},
-      STYLE = {"Forsigtig", "Balanceret", "Offensiv"};
+      PRESS = {"Lav blok", "Middelpres", "Højt pres", "Genpres"},
+      STYLE = {"Forsigtig", "Balanceret", "Offensiv", "Meget defensiv", "Alle frem"};
   public static final String[][] STORIES = {
     {"Akademiets reserve", "Fra gaden til ligaen", "Landets stortalent", "Fri karriere"},
     {"Assistenten", "Anføreren vender hjem", "Redningsmanden", "Fri karriere"}
@@ -381,7 +381,7 @@ public final class Career {
   public String matchObjective() {
     return role == 0
         ? "Gennemfør fire afleveringer eller bidrag til et mål"
-        : press == 2 ? "Vind med højt pres" : "Hold nullet eller skab tre afslutninger";
+        : press >= 2 ? "Vind med højt pres" : "Hold nullet eller skab tre afslutninger";
   }
 
   public String seasonObjective() {
@@ -594,7 +594,7 @@ public final class Career {
     pressure = cap(pressure + (h >= a ? -2 : 3));
     if (h > a) {
       careerWins++;
-      if (match.press[0] == 2) pressWins++;
+      if (match.press[0] >= 2) pressWins++;
     }
     if (a == 0) cleanSheets++;
     int contributed = 0, completedPersonalPasses = 0;
@@ -618,7 +618,7 @@ public final class Career {
     boolean objective =
         role == 0
             ? completedPersonalPasses >= 4 || contributed > 0
-            : match.press[0] == 2 ? h > a : a == 0 || match.shots[0] >= 3;
+            : match.press[0] >= 2 ? h > a : a == 0 || match.shots[0] >= 3;
     if (objective) {
       matchObjectives++;
       trust = cap(trust + 2);
@@ -854,9 +854,9 @@ public final class Career {
         || c.formation < 0
         || c.formation > 2
         || c.press < 0
-        || c.press > 2
+        || c.press >= PRESS.length
         || c.mentality < 0
-        || c.mentality > 2) throw new IOException("Karrieredata");
+        || c.mentality >= STYLE.length) throw new IOException("Karrieredata");
     c.formerClub = i.readInt();
     c.matchObjectives = i.readInt();
     c.seasonObjectiveWins = i.readInt();

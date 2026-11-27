@@ -332,21 +332,37 @@ final class StadiumView extends View implements Choreographer.FrameCallback {
       Motor12.Player p = game.players[i];
       ink(0x750e231a);
       c.drawOval(a - sz * .25f, b - sz * .07f, a + sz * .32f, b + sz * .09f, paint);
+      double face = p.previousFace + Locomotion.angleDelta(p.previousFace, p.face) * alpha;
+      double stride = p.previousStride + (p.stride - p.previousStride) * alpha;
+      double speed = Math.hypot(p.vx, p.vy);
       int facing =
           Math.floorMod(
               (int)
                   Math.round(
                       Math.atan2(
-                              Math.cos(p.face) * -forwardY + Math.sin(p.face) * forwardX,
-                              -Math.cos(p.face) * forwardX - Math.sin(p.face) * forwardY)
+                              Math.cos(face) * -forwardY + Math.sin(face) * forwardX,
+                              -Math.cos(face) * forwardX - Math.sin(face) * forwardY)
                           / (Math.PI / 4)),
               8);
-      int pose = p.delay > .27 ? 7 : Math.hypot(p.vx, p.vy) < .45 ? 0 : 1 + (game.tick / 5 + i) % 6;
+      int pose = p.delay > .27 ? 7 : speed < .34 ? 0 : 1 + (int) Math.floor(stride * 6) % 6;
       int row = ((i % 11 == 0 ? 2 : i / 11) * 8 + pose) * 80;
       src.set(facing * 80, row, (facing + 1) * 80, row + 80);
-      dst.set(a - sz * .55f, b - sz * 1.04f, a + sz * .55f, b + sz * .06f);
+      float bounce =
+          (float) (Math.min(1, speed / 4) * sz * .024 * Math.abs(Math.sin(stride * 2 * Math.PI)));
+      dst.set(a - sz * .55f, b - sz * 1.04f - bounce, a + sz * .55f, b + sz * .06f - bounce);
       ink(0xffffffff);
-      c.drawBitmap(kits, src, dst, paint);
+      if (p.dive > 0 || p.previousDive > 0) {
+        double extension =
+            Goalkeeping.extension(p.previousDive + (p.dive - p.previousDive) * alpha);
+        double side = p.diveSide;
+        float horizontal = (float) (side * forwardX), depth = (float) (side * forwardY);
+        c.save();
+        c.translate(0, (float) (sz * .22 * extension));
+        c.rotate((float) (horizontal * 65 * extension), a, b - sz * .16f);
+        c.scale(1, 1 - (float) (Math.abs(depth) * .38 * extension), a, b - sz * .22f);
+        c.drawBitmap(kits, src, dst, paint);
+        c.restore();
+      } else c.drawBitmap(kits, src, dst, paint);
       if (game.manual && game.selected == i) {
         ink(0xffb2ffd0);
         path.rewind();

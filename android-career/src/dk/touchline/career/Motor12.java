@@ -15,7 +15,7 @@ public final class Motor12 {
     KICKOFF_RUNUP
   }
 
-  public static final int HZ = 60, HALF = 90 * HZ;
+  public static final int HZ = 120, HALF = 150 * HZ;
   static final double DT = 1.0 / HZ, L = 52.5, W = 34, R = .11;
   static final int[][] DEPTH = {
     {3, 16, 15, 15, 16, 31, 28, 31, 45, 46, 45},
@@ -28,9 +28,31 @@ public final class Motor12 {
     {0, -17, 0, 17, -26, -12, 0, 12, 26, -10, 10}
   };
 
+  enum Attribute {
+    PACE,
+    ACCELERATION,
+    AGILITY,
+    STAMINA,
+    DRIBBLING,
+    PASSING,
+    VISION,
+    SHOOTING,
+    TACKLING,
+    POSITIONING,
+    GOALKEEPING
+  }
+
   public static final class Player {
     public double x, y, vx, vy, face, energy = 100, skill = 65, delay;
-    public double previousX, previousY;
+    public double previousX, previousY, previousFace, previousStride, previousDive;
+    double stride, dive, diveSide, burst, cooldown, fatigue;
+
+    double attribute(Attribute a) {
+      int variation = Math.floorMod((shirt * 43 + 11) * (a.ordinal() * 7 + 19), 19) - 9;
+      return clamp(skill + variation, 1, 99);
+    }
+
+    boolean sprinting;
     public int shirt, goals, assists, passes, complete, shots, tackles, cards;
   }
 
@@ -79,7 +101,11 @@ public final class Motor12 {
       subCount;
   public double bx, by, bz = R, bvx, bvy, bvz, spin;
   public boolean manual = true;
-  boolean openingPass, shotInFlight, partialStats;
+  boolean openingPass, shotInFlight, partialStats, throwInFlight;
+  double topSpin, momentum, counterPress;
+  int deflectedShot = -1;
+  final int[] completed = new int[2];
+  private final TeamShape shape = new TeamShape();
   private int rng, restartWait;
   private double decision, sinceKick, accum, pressureRun;
   double previousBallX, previousBallY, previousBallZ;
@@ -92,6 +118,9 @@ public final class Motor12 {
     for (Player p : players) {
       p.previousX = p.x;
       p.previousY = p.y;
+      p.previousFace = p.face;
+      p.previousStride = p.stride;
+      p.previousDive = p.dive;
     }
     previousBallX = bx;
     previousBallY = by;
@@ -133,7 +162,7 @@ public final class Motor12 {
   }
 
   public String clock() {
-    int s = tick / 2;
+    int s = tick * 18 / HZ;
     return String.format(Locale.ROOT, "%02d:%02d", s / 60, s % 60);
   }
 
@@ -146,6 +175,9 @@ public final class Motor12 {
     by = y;
     bz = R;
     bvx = bvy = bvz = spin = 0;
+    throwInFlight = false;
+    deflectedShot = -1;
+    topSpin = 0;
     openingPass = shotInFlight = false;
     owner = last = receiver = assist = -1;
     sinceKick = 0;
@@ -155,13 +187,14 @@ public final class Motor12 {
     kickSide = side;
     phase = first ? Phase.PRE_KICKOFF : Phase.KICKOFF_READY;
     stillBall(0, 0);
-    pressureRun = 0;
+    pressureRun = counterPress = 0;
     for (int i = 0; i < 22; i++) {
       Player p = players[i];
       int t = team(i), j = i % 11, d = dir(t), f = formations[t];
       p.x = (-L + DEPTH[f][j]) * d;
       p.y = LANE[f][j];
-      p.vx = p.vy = p.delay = 0;
+      p.vx = p.vy = p.delay = p.dive = p.burst = 0;
+      p.sprinting = false;
       p.face = d == 1 ? 0 : Math.PI;
       if (t != side && Math.hypot(p.x, p.y) < 9.4) p.x = -9.5 * d;
     }
@@ -195,7 +228,7 @@ public final class Motor12 {
   public boolean kickOff() {
     if (!awaitingKickoff()) return false;
     phase = Phase.KICKOFF_RUNUP;
-    restartWait = 24;
+    restartWait = (int) (.4 * HZ);
     resetClock();
     return true;
   }
@@ -205,7 +238,6 @@ public final class Motor12 {
     phase = Phase.PLAY;
     send(p, players[r].x, players[r].y, 5.2, 0, r);
     openingPass = true;
-    players[p].face = Math.atan2(bvy, bvx);
     passes[kickSide]++;
     players[p].passes++;
     assist = p;
@@ -214,11 +246,14 @@ public final class Motor12 {
 
   private void send(int p, double x, double y, double pace, double loft, int target) {
     double dx = x - bx, dy = y - by, h = Math.max(.01, Math.hypot(dx, dy));
+    throwInFlight = false;
+    deflectedShot = -1;
+    topSpin = 0;
     openingPass = shotInFlight = false;
     bvx = pace * dx / h;
     bvy = pace * dy / h;
     bvz = loft;
-    bz = R;
+    bz = Math.max(bz, R);
     last = p;
     owner = -1;
     receiver = target;
@@ -285,8 +320,21 @@ public final class Motor12 {
       double dx = b.x - a.x, dy = b.y - a.y, r = Math.max(1, Math.hypot(dx, dy));
       Player marker = players[nearest(1 - t, b.x, b.y, -1, true)];
       double openness = Math.min(8, Math.hypot(marker.x - b.x, marker.y - b.y));
+      double clearance = 8;
+      for (int j = (1 - t) * 11; j < (1 - t) * 11 + 11; j++) {
+        Player defender = players[j];
+        double along = clamp(((defender.x - a.x) * dx + (defender.y - a.y) * dy) / (r * r), 0, 1);
+        clearance =
+            Math.min(
+                clearance,
+                Math.hypot(defender.x - a.x - along * dx, defender.y - a.y - along * dy));
+      }
       double score =
-          (dx * ax + dy * ay) / r * 13 - r * .17 + openness * .65 + (i % 11 == 0 ? -5 : 0);
+          clearance * (.34 + a.attribute(Attribute.VISION) * .007)
+              + (dx * ax + dy * ay) / r * 13
+              - r * .17
+              + openness * .65
+              + (i % 11 == 0 ? -5 : 0);
       if (score > bestScore) {
         bestScore = score;
         best = i;
@@ -298,16 +346,51 @@ public final class Motor12 {
   private void pass(int p, boolean through, double ax, double ay, int requested) {
     int t = team(p), r = requested >= 0 ? requested : target(p, ax, ay);
     Player q = players[r];
-    double lead = through ? 4.8 : 0,
-        x = clamp(q.x + q.vx * .42 + dir(t) * lead, -51, 51),
-        y = clamp(q.y + q.vy * .42, -33, 33);
-    double quality = clamp((players[p].skill + .2 * players[p].energy) / 115, .35, 1);
-    y = clamp(y + (random() - .5) * (1 - quality) * (through ? 4 : 1.8), -33, 33);
+    double distance = Math.hypot(q.x - bx, q.y - by);
+    double travel = clamp(.28 + distance * .025, .34, 1.2);
+    double nx = dir(t), ny = 0;
+    if (Math.hypot(ax, ay) > .25) {
+      double len = Math.hypot(ax, ay);
+      nx = ax / len;
+      ny = ay / len;
+    }
+    double lead = through ? clamp(2 + distance * .12, 2.2, 7) : 0;
+    double x = clamp(q.x + q.vx * travel + nx * lead, -51.4, 51.4);
+    double y = clamp(q.y + q.vy * travel + ny * lead, -33.4, 33.4);
     double range = Math.hypot(x - bx, y - by);
-    send(p, x, y, clamp(7 + range * .41, 8, through ? 24 : 20), through && range > 20 ? 3.7 : 0, r);
+    double error =
+        clamp(
+            1 - (players[p].attribute(Attribute.PASSING) + .16 * players[p].energy) / 112, .08, .7);
+    y = clamp(y + (random() - .5) * error * (through ? 3.5 : 1.4), -33.4, 33.4);
+    send(p, x, y, clamp(5.7 + range * (through ? .54 : .48), 6.5, through ? 25 : 22), 0, r);
+    if (through) record("Stikning · #" + players[p].shirt);
     assist = p;
     passes[t]++;
     players[p].passes++;
+  }
+
+  private void throwIn(int p, int action, double ax, double ay) {
+    int r = target(p, ax, ay);
+    Player q = players[r];
+    double x = q.x + q.vx * .55, y = q.y + q.vy * .55;
+    if (action == THROUGH) {
+      x += dir(team(p)) * 3.5;
+      y += ay * 2;
+    }
+    double dx = x - bx, dy = y - by, range = Math.max(1, Math.hypot(dx, dy));
+    double distance = Math.min(range, action == SHOOT ? 27 : 19);
+    double flight = .69 + .025 * distance;
+    bz = 1.92;
+    send(
+        p,
+        bx + dx,
+        by + dy,
+        distance / flight * 1.025,
+        Math.max(2.1, (.5 * BallPhysics.GRAVITY * flight * flight - 1.15) / flight),
+        r);
+    throwInFlight = true;
+    topSpin = -6;
+    assist = p;
   }
 
   private void shoot(int p, double sideAim, double power) {
@@ -315,7 +398,8 @@ public final class Motor12 {
     double range = Math.hypot(L * d - bx, by);
     double angle = Math.atan2(Math.abs(by), Math.max(1, L - bx * d));
     double error =
-        (.55 + range * .05 + angle * 1.3 + power * power) * (1.6 - players[p].skill / 100);
+        (.55 + range * .05 + angle * 1.3 + power * power)
+            * (1.6 - players[p].attribute(Attribute.SHOOTING) / 100);
     double aim = sideAim * 3.45 + (random() - .5) * error;
     if (range < 17) chances[t]++;
     shots[t]++;
@@ -326,27 +410,41 @@ public final class Motor12 {
         d * (L + 1),
         aim,
         clamp(11 + 12 * power + players[p].skill * .075, 14, 31),
-        clamp(range * (phase == Phase.RESTART ? .205 : .088), .9, 6.4),
+        clamp(range * (phase == Phase.RESTART ? .205 : .17 + .035 * power), .9, 6.4),
         -1);
     shotInFlight = true;
+    topSpin = 4 + power * 8;
     spin = -sideAim * d * .16;
     record(range < 17 ? "Stor chance" : "Afslutning");
   }
 
   private void receive(int i) {
-    if (receiver >= 0 && last >= 0 && last != i && team(last) == team(i)) players[last].complete++;
+    if (receiver >= 0 && last >= 0 && last != i && team(last) == team(i) && !throwInFlight) {
+      players[last].complete++;
+      completed[team(last)]++;
+    }
+    if (last >= 0 && team(last) != team(i)) counterPress = 4;
     if (last >= 0 && team(last) != team(i)) assist = -1;
-    if (shotInFlight && last >= 0 && team(last) != team(i) && i % 11 == 0) {
+    if (shotInFlight
+        && last >= 0
+        && team(last) != team(i)
+        && Goalkeeping.inArea(this, i, players[i].x, players[i].y)) {
       saves[team(i)]++;
       onTarget[team(last)]++;
       record("Målmandsredning");
     }
+    throwInFlight = false;
+    deflectedShot = -1;
+    topSpin = 0;
     openingPass = shotInFlight = false;
     owner = i;
     last = i;
     receiver = -1;
-    bvx = bvy = bvz = spin = 0;
-    bz = R;
+    // Cushion the incoming ball. Its position remains continuous through the first touch.
+    bvx = .21 * bvx + .52 * players[i].vx;
+    bvy = .21 * bvy + .52 * players[i].vy;
+    bvz = Math.min(0, bvz * .22);
+    spin *= .3;
     decision = .38 + random() * .9;
     if (manual && locked < 0 && team(i) == 0) selected = i;
   }
@@ -357,7 +455,7 @@ public final class Motor12 {
     restartType = type;
     if (type == 3) corners[side]++;
     restartSide = side;
-    restartWait = 55;
+    restartWait = 55 * HZ / 60;
     int taker = taker();
     Player p = players[taker];
     p.x = x - dir(side) * .75;
@@ -409,24 +507,31 @@ public final class Motor12 {
     in.action = 0;
     if (phase == Phase.KICKOFF_RUNUP) {
       // The clock stays still while the kicker takes the final step to the ball.
-      if (--restartWait < 24) {
-        Player kicker = players[kickSide * 11 + 9];
-        kicker.vx = 2.2 * dir(kickSide);
-        kicker.vy = .6 * dir(kickSide);
-        kicker.x += kicker.vx * DT;
-        kicker.y += kicker.vy * DT;
-      }
+      int ticks = (int) (.4 * HZ);
+      double u = clamp((ticks - restartWait + .5) / ticks, 0, 1);
+      restartWait--;
+      Player kicker = players[kickSide * 11 + 9], partner = players[kickSide * 11 + 6];
+      double stride = 6 * u * (1 - u) / .4;
+      kicker.vx = .90 * dir(kickSide) * stride;
+      kicker.vy = .24 * dir(kickSide) * stride;
+      kicker.x += kicker.vx * DT;
+      kicker.y += kicker.vy * DT;
+      kicker.stride += Math.hypot(kicker.vx, kicker.vy) * DT / 1.7;
+      double footAngle = Math.atan2(partner.y - kicker.y, partner.x - kicker.x);
+      kicker.face += clamp(Locomotion.angleDelta(kicker.face, footAngle), -6 * DT, 6 * DT);
       if (restartWait <= 0) centrePass();
       return;
     }
     pressureRun = Math.max(0, pressureRun - DT);
+    counterPress = Math.max(0, counterPress - DT);
     if (action == PRESS_BALL) pressureRun = .9;
     if (phase == Phase.RESTART) {
       int p = taker();
       boolean user = manual && restartSide == 0 && (locked < 0 || locked == p);
       if (user && action != PASS && action != SHOOT && action != THROUGH) return;
       if (!user && --restartWait > 0) return;
-      if (user && action == SHOOT && restartType == 2)
+      if (restartType == 0) throwIn(p, action, user ? in.x : dir(restartSide), user ? in.y : 0);
+      else if (user && action == SHOOT && restartType == 2)
         send(p, bx + dir(0) * 45, by + in.y * 23, 28, 7, -1);
       else if (user && action == SHOOT) shoot(p, in.y, in.power);
       else
@@ -454,7 +559,8 @@ public final class Motor12 {
     }
     int ballSide = owner >= 0 ? team(owner) : last >= 0 ? team(last) : kickSide;
     if (owner >= 0) possession[ballSide]++;
-    int chase0 = nearest(0, bx, by, -1, false), chase1 = nearest(1, bx, by, -1, false);
+    double territory = (ballSide == 0 ? 1 : -1) * (44 + 48 * clamp(bx * dir(ballSide) / L, -1, 1));
+    momentum += (territory - momentum) * (-Math.expm1(-DT / 6));
     if (manual && locked < 0) {
       if (action == SWITCH) selected = nearest(0, bx, by, selected, false);
       else if (owner >= 0 && ballSide == 0) selected = owner;
@@ -469,68 +575,17 @@ public final class Motor12 {
       pass(owner, false, 0, 0, selected);
       action = 0;
     }
-    boolean inFlight = owner < 0;
-    for (int i = 0; i < 22; i++) {
-      Player p = players[i];
-      p.delay = Math.max(0, p.delay - DT);
-      int t = team(i), j = i % 11, d = dir(t), f = formations[t];
-      boolean mine = manual && selected == i;
-      double vx, vy, pace = (4.5 + p.skill * .025) * (.68 + .32 * p.energy / 100);
-      if (mine) {
-        vx = in.x;
-        vy = in.y;
-        if (in.sprint) pace *= 1.34;
-        if (pressureRun > 0 && ballSide == 1 && Math.hypot(vx, vy) < .13) {
-          double gap = Math.max(1, Math.hypot(bx - p.x, by - p.y));
-          vx = (bx - p.x) / gap;
-          vy = (by - p.y) / gap;
-          pace *= 1.15;
-        }
-      } else {
-        double tx, ty;
-        if (j == 0) {
-          tx = d * (-L + 2 + clamp((bx * d + L) * .12, 0, 9));
-          ty = clamp(by * .36, -4.5, 4.5);
-        } else if (i == owner) {
-          tx = L * d;
-          ty = p.y * .48;
-        } else if (i == receiver
-            || (i == (t == 0 ? chase0 : chase1) && (inFlight || ballSide != t))) {
-          tx = bx + bvx * .15;
-          ty = by + bvy * .15;
-          pace *= .94 + press[t] * .13;
-        } else {
-          double possessionLift = ballSide == t ? 4 : -2;
-          tx =
-              clamp(
-                  (DEPTH[f][j] * 1.65 - L + possessionLift + (approach[t] - 1) * 4) * d + bx * .28,
-                  -49,
-                  49);
-          ty = LANE[f][j] * .91 + by * .17;
-        }
-        vx = tx - p.x;
-        vy = ty - p.y;
-        double dist = Math.hypot(vx, vy);
-        if (dist > 1) {
-          vx /= dist;
-          vy /= dist;
-        }
-      }
-      double len = Math.max(1, Math.hypot(vx, vy));
-      double ease = 1 - Math.exp(-DT * 7);
-      p.vx += (vx / len * pace - p.vx) * ease;
-      p.vy += (vy / len * pace - p.vy) * ease;
-      p.x = clamp(p.x + p.vx * DT, -L + .2, L - .2);
-      p.y = clamp(p.y + p.vy * DT, -W + .2, W - .2);
-      double v = Math.hypot(p.vx, p.vy);
-      if (v > .2) p.face = Math.atan2(p.vy, p.vx);
-      p.energy = clamp(p.energy - (v * .028 + (mine && in.sprint ? .1 : 0)) * DT, 24, 100);
-    }
+    shape.prepare(this, ballSide);
+    Goalkeeping.position(this, 0, shape, sinceKick);
+    Goalkeeping.position(this, 1, shape, sinceKick);
+    for (int i = 0; i < 22; i++) movePlayer(i, ballSide, in);
+    TeamShape.resolveBodies(players);
+    double oldX = bx, oldY = by, oldZ = bz;
     if (owner >= 0) {
       int holder = owner;
       Player a = players[holder];
-      bx = a.x + Math.cos(a.face) * .43;
-      by = a.y + Math.sin(a.face) * .43;
+      BallPhysics.dribble(this, a);
+      if (outOfPlay(oldX, oldY, oldZ, ballSide)) return;
       boolean controlled = manual && holder == selected;
       decision -= DT;
       if (controlled) {
@@ -538,9 +593,13 @@ public final class Motor12 {
         else if (action == PASS || action == THROUGH)
           pass(holder, action == THROUGH, in.x, in.y, -1);
       } else if (decision <= 0) {
-        if ((L - bx * dir(ballSide)) < 24 && Math.abs(by) < 22 && random() < .78)
-          shoot(holder, (random() - .5) * 1.85, .68);
-        else if (random() < .70) pass(holder, random() < .28, dir(ballSide), 0, -1);
+        if ((L - bx * dir(ballSide)) < 24 && Math.abs(by) < 22 && random() < .78) {
+          Player keeper = players[(1 - ballSide) * 11];
+          double nearPost = keeper.y + keeper.vy * .25;
+          double side = Math.abs(nearPost) > .3 ? -Math.signum(nearPost) : (random() < .5 ? -1 : 1);
+          if (random() < .16) side = -side;
+          shoot(holder, side * (.78 + .23 * random()), .57 + .38 * random());
+        } else if (random() < .70) pass(holder, random() < .28, dir(ballSide), 0, -1);
         else decision = .4 + random() * .8;
       }
       if (owner == holder) {
@@ -548,7 +607,9 @@ public final class Motor12 {
         Player b = players[defender];
         double gap = Math.hypot(b.x - bx, b.y - by);
         boolean tackling = manual && defender == selected && action == TACKLE;
-        if (gap < (tackling ? 2.7 : 1.22) && a.delay <= 0 && (tackling || random() < .035)) {
+        if (gap < (tackling ? 2.7 : 1.22)
+            && a.delay <= 0
+            && (tackling || random() < .01765 * (.70 + .005 * b.attribute(Attribute.TACKLING)))) {
           if (random() < (tackling ? .18 : .055)) {
             if (random() < .45) {
               b.cards++;
@@ -558,69 +619,239 @@ public final class Motor12 {
             restart(1, ballSide, a.x, a.y);
           } else {
             b.tackles++;
+            record("Bolderobring · #" + b.shirt);
             receive(defender);
             b.delay = .55;
           }
         }
       }
     } else {
-      double oldX = bx, oldY = by, oldZ = bz;
-      double speed = Math.hypot(bvx, bvy),
-          loss = bz > R + .005 ? .0028 * speed * speed : 2.1 + .009 * speed * speed;
-      double scale = speed > .01 ? Math.max(0, 1 - loss * DT / speed) : 0;
-      double sx = bvx;
-      bvx = (bvx - spin * bvy * DT) * scale;
-      bvy = (bvy + spin * sx * DT) * scale;
-      spin *= .995;
-      bx += bvx * DT;
-      by += bvy * DT;
-      bz += bvz * DT;
-      bvz -= 9.81 * DT;
-      if (bz <= R) {
-        bz = R;
-        bvz = bvz < -.9 ? -bvz * .43 : 0;
-      }
-      if (Math.abs(bx) > L + R || Math.abs(by) > W + R) {
-        double fx =
-            Math.abs(bx) > L + R
-                ? (Math.copySign(L + R, bx) - oldX) / (bx - oldX)
-                : Double.POSITIVE_INFINITY;
-        double fy =
-            Math.abs(by) > W + R
-                ? (Math.copySign(W + R, by) - oldY) / (by - oldY)
-                : Double.POSITIVE_INFINITY;
-        if (fy < fx) {
-          restart(
-              0, 1 - ballSide, clamp(oldX + (bx - oldX) * fy, -51, 51), Math.copySign(W - .2, by));
-          return;
-        }
-        int attack = (bx > 0) == (dir(0) > 0) ? 0 : 1;
-        if (Math.abs(oldY + (by - oldY) * fx) < 3.66 - R && oldZ + (bz - oldZ) * fx < 2.44 - R) {
-          goals[attack]++;
-          if (shotInFlight && last >= 0 && team(last) == attack) onTarget[attack]++;
-          if (last >= 0 && team(last) == attack) players[last].goals++;
-          if (assist >= 0 && assist != last && team(assist) == attack) players[assist].assists++;
-          lineUp(1 - attack, false);
-          record("MÅL · " + goals[0] + "–" + goals[1]);
-        } else if (ballSide == attack)
-          restart(2, 1 - attack, Math.signum(bx) * 47, Math.copySign(4, by));
-        else restart(3, attack, Math.signum(bx) * 52, Math.copySign(33.6, by));
-        return;
-      }
-      int best = -1;
-      double distance = 2.5;
-      for (int i = 0; i < 22; i++) {
-        Player p = players[i];
-        if (i == last && (openingPass || sinceKick < .35)) continue;
-        boolean keeper = i % 11 == 0 && Math.abs(p.x) > 36;
-        double gap = Math.hypot(bx - p.x, by - p.y);
-        if (bz < (keeper ? 2.5 : 1.45) && gap < (keeper ? 2 : 1.0) && gap < distance) {
-          distance = gap;
-          best = i;
-        }
-      }
-      if (best >= 0) receive(best);
+      BallPhysics.step(this, DT);
+      double fx = crossing(oldX, bx, L + R), fy = crossing(oldY, by, W + R);
+      if (touchOnPath(oldX, oldY, oldZ, Math.min(1, Math.min(fx, fy)))) return;
+      outOfPlay(oldX, oldY, oldZ, ballSide);
     }
+  }
+
+  private void movePlayer(int i, int ballSide, Input input) {
+    Player p = players[i];
+    int side = team(i);
+    p.delay = Math.max(0, p.delay - DT);
+    boolean mine = manual && selected == i, carrying = owner == i;
+    double dx = shape.x[i] - p.x, dy = shape.y[i] - p.y, distance = Math.hypot(dx, dy);
+    double x, y;
+    boolean pressInput =
+        mine && pressureRun > 0 && ballSide != side && Math.hypot(input.x, input.y) < .13;
+    if (pressInput) {
+      dx = bx - p.x;
+      dy = by - p.y;
+      distance = Math.hypot(dx, dy);
+    }
+    if (mine && !pressInput) {
+      x = input.x;
+      y = input.y;
+    } else {
+      // Arrival steering eases the last few metres into the passing lane.
+      double scale = 1 / Math.max(i == receiver || carrying ? .9 : 2.6, distance);
+      x = dx * scale;
+      y = dy * scale;
+    }
+    boolean sprint =
+        mine
+            ? input.sprint
+            : i % 11 != 0
+                && distance > 5
+                && (i == shape.runner && side == ballSide
+                    || i == shape.first[side] && side != ballSide && press[side] >= 2);
+    double magnitude = Math.hypot(x, y);
+    Locomotion.sprintState(p, sprint, magnitude);
+    double max =
+        (4.65 + p.attribute(Attribute.PACE) * .021)
+            * (i % 11 == 0 ? .83 : 1)
+            * (.68 + .32 * Math.sqrt(clamp(p.energy, 0, 100) / 100));
+    if (p.sprinting) max *= 1.46;
+    if (carrying)
+      max *=
+          p.sprinting
+              ? .90 + .05 * p.attribute(Attribute.DRIBBLING) / 99
+              : .94 + .04 * p.attribute(Attribute.DRIBBLING) / 99;
+    double divisor = Math.max(1, magnitude);
+    double vx = x / divisor * max + shape.avoidX[i], vy = y / divisor * max + shape.avoidY[i];
+    if (i % 11 == 0 && p.dive > 0) {
+      double extension = Goalkeeping.extension(p.dive);
+      vx *= .2;
+      vy = p.diveSide * 6 * extension;
+    }
+    Locomotion.move(p, vx, vy, carrying, i % 11 == 0 && !carrying, bx, by);
+  }
+
+  private static double crossing(double from, double to, double limit) {
+    if (Math.abs(to) <= limit) return Double.POSITIVE_INFINITY;
+    return from == to ? 0 : clamp((Math.copySign(limit, to) - from) / (to - from), 0, 1);
+  }
+
+  private boolean outOfPlay(double oldX, double oldY, double oldZ, int ballSide) {
+    if (Math.abs(bx) > L + R || Math.abs(by) > W + R) {
+      double fx = crossing(oldX, bx, L + R), fy = crossing(oldY, by, W + R);
+      if (fy < fx) {
+        restart(
+            0, 1 - ballSide, clamp(oldX + (bx - oldX) * fy, -51, 51), Math.copySign(W - .2, by));
+        return true;
+      }
+      int attack = (bx > 0) == (dir(0) > 0) ? 0 : 1;
+      if (Math.abs(oldY + (by - oldY) * fx) < 3.66 - R && oldZ + (bz - oldZ) * fx < 2.44 - R) {
+        goals[attack]++;
+        if (shotInFlight && last >= 0 && team(last) == attack) onTarget[attack]++;
+        if (deflectedShot >= 0 && team(deflectedShot) == attack)
+          saves[1 - attack] = Math.max(0, saves[1 - attack] - 1);
+        int scorer = deflectedShot >= 0 ? deflectedShot : last;
+        if (scorer >= 0 && team(scorer) == attack) players[scorer].goals++;
+        if (assist >= 0 && assist != scorer && team(assist) == attack) players[assist].assists++;
+        lineUp(1 - attack, false);
+        record("MÅL · " + goals[0] + "–" + goals[1]);
+      } else if (ballSide == attack)
+        restart(2, 1 - attack, Math.signum(bx) * 47, Math.copySign(4, by));
+      else restart(3, attack, Math.signum(bx) * 52, Math.copySign(33.6, by));
+      return true;
+    }
+    return false;
+  }
+
+  private boolean touchOnPath(double x0, double y0, double z0, double limit) {
+    int best = -1;
+    double first = Double.POSITIVE_INFINITY;
+    for (int i = 0; i < 22; i++) {
+      Player p = players[i];
+      if (i == last && (openingPass || sinceKick < .32)) continue;
+      boolean hands = Goalkeeping.inArea(this, i, p.x, p.y);
+      double stretch = hands ? Goalkeeping.extension(p.dive) : 0;
+      double hx = p.previousX, hy = p.previousY + p.diveSide * stretch * .66;
+      double dx = x0 - hx, dy = y0 - hy;
+      double vx = bx - x0 - (p.x - p.previousX), vy = by - y0 - (p.y - p.previousY);
+      double radius = hands ? .99 + stretch * .46 : .77;
+      // First entry into a moving contact disc, before either boundary is crossed.
+      double vv = vx * vx + vy * vy,
+          along = dx * vx + dy * vy,
+          c = dx * dx + dy * dy - radius * radius;
+      if (c > 0 && (vv < 1e-10 || along >= 0)) continue;
+      double disc = along * along - vv * c;
+      if (c > 0 && disc < 0) continue;
+      double time = c <= 0 ? 0 : (-along - Math.sqrt(disc)) / vv;
+      if (time > limit
+          || time >= first
+          || z0 + (bz - z0) * time > (hands ? 2.03 + stretch * .39 : 1.30)) continue;
+      first = time;
+      best = i;
+    }
+    if (best < 0) return false;
+    bx = x0 + (bx - x0) * first;
+    by = y0 + (by - y0) * first;
+    bz = Math.max(R, z0 + (bz - z0) * first);
+    Player p = players[best];
+    int side = team(best);
+    double pace = Math.hypot(bvx - p.vx, bvy - p.vy);
+    boolean hands = Goalkeeping.inArea(this, best, p.x, p.y);
+    if (hands
+        && shotInFlight
+        && last >= 0
+        && team(last) != side
+        && (pace > 17.5 + p.skill * .045 || (p.dive > 0 && pace > 13))) {
+      saves[side]++;
+      onTarget[1 - side]++;
+      record("Målmandsparade · returbold");
+      double wide = by - p.y;
+      if (Math.abs(wide) < .08) wide = bvy == 0 ? p.y + .01 : bvy;
+      boolean tip = p.dive > 0 && Math.abs(wide) > .35;
+      bvx = dir(side) * (tip ? -1 : 1) * clamp(pace * (tip ? .20 : .29), 3.3, 9);
+      bvy = Math.copySign(clamp(pace * .46, 4.2, 13), wide);
+      bvz = clamp(pace * .12, 1.7, 4.4);
+      spin *= -.33;
+      deflectedShot = last;
+      last = best;
+      receiver = -1;
+      openingPass = shotInFlight = false;
+      sinceKick = 0;
+      p.delay = .38;
+    } else if (!hands && shotInFlight && pace > 13 && last >= 0 && team(last) != side) {
+      // A driven shot striking an outfield body loses its normal velocity and glances off.
+      double nx = bx - p.x, ny = by - p.y, len = Math.hypot(nx, ny);
+      if (len < .01) {
+        nx = -bvx;
+        ny = -bvy;
+        len = Math.max(.01, Math.hypot(nx, ny));
+      }
+      nx /= len;
+      ny /= len;
+      double approach = Math.min(0, (bvx - p.vx) * nx + (bvy - p.vy) * ny);
+      bvx = p.vx + .57 * (bvx - p.vx - 1.35 * approach * nx);
+      bvy = p.vy + .57 * (bvy - p.vy - 1.35 * approach * ny);
+      bvz = .32 * Math.abs(bvz) + 1.1;
+      last = best;
+      sinceKick = 0;
+      receiver = assist = deflectedShot = -1;
+      shotInFlight = false;
+      record("Blokeret skud · #" + p.shirt);
+    } else receive(best);
+    return true;
+  }
+
+  void upgradeClock() {
+    tick = (int) Math.ceil(tick * (double) HALF / (90 * 60));
+    restartWait *= HZ / 60;
+    for (int side = 0; side < 2; side++) {
+      possession[side] *= HZ / 60;
+      for (int j = 0; j < 11; j++) completed[side] += players[side * 11 + j].complete;
+    }
+  }
+
+  void writeMotion(DataOutput out) throws IOException {
+    out.writeDouble(pressureRun);
+    out.writeDouble(counterPress);
+    out.writeDouble(momentum);
+    out.writeDouble(topSpin);
+    out.writeInt(deflectedShot);
+    out.writeBoolean(throwInFlight);
+    for (int count : completed) out.writeInt(count);
+    for (Player p : players) {
+      out.writeDouble(p.stride);
+      out.writeDouble(p.dive);
+      out.writeDouble(p.diveSide);
+      out.writeDouble(p.fatigue);
+      out.writeDouble(p.cooldown);
+      out.writeDouble(p.burst);
+      out.writeBoolean(p.sprinting);
+    }
+  }
+
+  void readMotion(DataInput in) throws IOException {
+    pressureRun = readRange(in, 0, 1);
+    counterPress = readRange(in, 0, 4);
+    momentum = readRange(in, -100, 100);
+    topSpin = readRange(in, -100, 100);
+    deflectedShot = in.readInt();
+    throwInFlight = in.readBoolean();
+    if (deflectedShot < -1 || deflectedShot >= 22) throw new IOException("Sidste skytte");
+    for (int i = 0; i < 2; i++) {
+      completed[i] = in.readInt();
+      if (completed[i] < 0) throw new IOException("Afleveringer");
+    }
+    for (Player p : players) {
+      p.stride = readRange(in, 0, 1e7);
+      p.dive = readRange(in, 0, Goalkeeping.DIVE);
+      p.diveSide = readRange(in, -1, 1);
+      p.fatigue = readRange(in, 0, 100);
+      p.cooldown = readRange(in, 0, 2.4);
+      p.burst = readRange(in, 0, .35);
+      p.sprinting = in.readBoolean();
+    }
+    resetClock();
+  }
+
+  private static double readRange(DataInput in, double low, double high) throws IOException {
+    double value = in.readDouble();
+    if (!Double.isFinite(value) || value < low || value > high)
+      throw new IOException("Bevægelsesdata");
+    return value;
   }
 
   public void write(DataOutput o) throws IOException {
@@ -744,9 +975,9 @@ public final class Motor12 {
       if (m.formations[t] < 0
           || m.formations[t] > 2
           || m.press[t] < 0
-          || m.press[t] > 2
+          || m.press[t] >= Career.PRESS.length
           || m.approach[t] < 0
-          || m.approach[t] > 2) throw new IOException("Kampplan");
+          || m.approach[t] >= Career.STYLE.length) throw new IOException("Kampplan");
     for (int n = 0; n < count; n++) m.log.add(i.readUTF());
     m.resetClock();
     return m;

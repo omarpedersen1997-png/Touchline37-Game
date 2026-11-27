@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dk.touchline.footballidle.test" android:versionCode="76" android:versionName="1.0.0-test-match76">
+    package="dk.touchline.footballidle.test" android:versionCode="77" android:versionName="1.0.0-test-match77">
     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/>
     <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
     <application android:label="Touchline TEST" android:icon="@drawable/club" android:allowBackup="false"

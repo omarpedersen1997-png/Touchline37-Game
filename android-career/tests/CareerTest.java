@@ -159,7 +159,10 @@ public final class CareerTest {
     header.write(body);
     byte[] oldSave = file.toByteArray();
     Motor12 migrated = SaveFormat.decode(new ByteArrayInputStream(oldSave)).match;
-    require(migrated.goals[1] == 1 && migrated.tick == 709 && migrated.locked == oldMatch.locked);
+    require(
+        migrated.goals[1] == 1
+            && migrated.clock().equals("05:54")
+            && migrated.locked == oldMatch.locked);
     waiting(migrated);
     centrePass(migrated);
     receiveCentrePass(migrated);
@@ -315,7 +318,7 @@ public final class CareerTest {
     for (int seed = 1; seed <= 12; seed++) {
       Motor12 sim = new Motor12(seed);
       sim.manual = false;
-      for (int f = 0; f < 30000 && sim.phase != Motor12.Phase.FULL_TIME; f++) {
+      for (int f = 0; f < Motor12.HALF * 3 && sim.phase != Motor12.Phase.FULL_TIME; f++) {
         if (sim.awaitingKickoff()) sim.kickOff();
         sim.advance(Motor12.DT, empty);
       }

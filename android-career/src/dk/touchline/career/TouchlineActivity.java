@@ -1351,25 +1351,27 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
               + "   "
               + (int) p.energy
               + " % · "
-              + (p.energy < 40
-                  ? "Træt"
-                  : pitch.input.sprint
-                      ? "Sprint"
-                      : "Kampform "
-                          + String.format(
-                              Locale.getDefault(),
-                              "%.1f",
-                              Motor12.clamp(
-                                  6
-                                      + p.goals * .9
-                                      + p.assists * .65
-                                      + p.complete * .04
-                                      + p.tackles * .10
-                                      - p.cards * .6,
-                                  1,
-                                  10)))
+              + (p.cooldown > 0
+                  ? "Puster ud"
+                  : p.energy < 40
+                      ? "Træt"
+                      : p.sprinting
+                          ? "Sprint"
+                          : "Kampform "
+                              + String.format(
+                                  Locale.getDefault(),
+                                  "%.1f",
+                                  Motor12.clamp(
+                                      6
+                                          + p.goals * .9
+                                          + p.assists * .65
+                                          + p.complete * .04
+                                          + p.tackles * .10
+                                          - p.cards * .6,
+                                      1,
+                                      10)))
               + "  ");
-      active.setTextColor(p.energy < 40 ? 0xffffa180 : pitch.input.sprint ? GOLD : WHITE);
+      active.setTextColor(p.energy < 40 ? 0xffffa180 : p.sprinting ? GOLD : WHITE);
     } else
       active.setText(
           "  "
@@ -1584,10 +1586,12 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
         break;
       case "Kampstatistik":
         if (m.partialStats)
-          block(
-              content,
-              text("Kampen er fra TEST75. Nye hændelsestal er delvise.", 14, MUTED, false),
-              32);
+          block(content, text("Ældre kamp · nogle hændelsestal er delvise.", 14, MUTED, false), 32);
+        String pressure =
+            Math.abs(m.momentum) < 12
+                ? "Jævnbyrdigt"
+                : m.momentum > 0 ? career.clubName : career.team(career.opposition());
+        block(content, text("Spilovertag · " + pressure, 15, GOLD, true), 24);
         int total = m.possession[0] + m.possession[1],
             home = total == 0 ? 0 : Math.round(100f * m.possession[0] / total);
         String[] labels = {
@@ -1600,10 +1604,21 @@ public final class TouchlineActivity extends Activity implements StadiumView.Lis
           "Afleveringer",
           "Hjørnespark",
           "Gule kort",
-          "Redninger"
+          "Redninger",
+          "Vellykkede afleveringer"
         };
         int[][] values = {
-          m.goals, null, m.chances, m.shots, m.onTarget, null, m.passes, m.corners, m.cards, m.saves
+          m.goals,
+          null,
+          m.chances,
+          m.shots,
+          m.onTarget,
+          null,
+          m.passes,
+          m.corners,
+          m.cards,
+          m.saves,
+          m.completed
         };
         for (int j = 0; j < labels.length; j++) {
           String left, right;

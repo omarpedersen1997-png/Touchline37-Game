@@ -14,7 +14,7 @@ def run(tool,*options):
 def certificate(path):
     return re.search(r'certificate SHA-256 digest: (\w+)',run('apksigner','verify','--print-certs',path)).group(1)
 info=run('aapt','dump','badging',args.apk)
-assert "name='dk.touchline.footballidle.test' versionCode='76'" in info
+assert "name='dk.touchline.footballidle.test' versionCode='77'" in info
 assert "launchable-activity: name='dk.touchline.career.TouchlineActivity'" in info
 assert args.previous!=args.apk and certificate(args.apk)==certificate(args.previous)
 assert 'android.permission.INTERNET' not in run('aapt','dump','permissions',args.apk)

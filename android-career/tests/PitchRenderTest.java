@@ -102,6 +102,57 @@ public class PitchRenderTest {
   }
 
   @Test
+  public void captureCarrierTurnFromManualKickoff() throws Exception {
+    ActivityController<TouchlineActivity> ctl =
+        Robolectric.buildActivity(TouchlineActivity.class).setup();
+    TouchlineActivity activity = ctl.get();
+    AndroidFlowTest.click(activity, "Vælg trænerkarriere");
+    AndroidFlowTest.click(activity, "Start karriere");
+    AndroidFlowTest.click(activity, "Spil selv");
+    draw(activity, "Touchline-Klar-TEST77");
+    StadiumView pitch = find(activity.getWindow().getDecorView(), StadiumView.class);
+    pitch.setCamera(1);
+    AndroidFlowTest.click(activity, "KICK OFF");
+    View root = activity.findViewById(android.R.id.content);
+    Bitmap frame = Bitmap.createBitmap(844, 390, Bitmap.Config.ARGB_8888);
+    Canvas canvas = new Canvas(frame);
+    Field projection = StadiumView.class.getDeclaredField("lastProjection");
+    projection.setAccessible(true);
+    Field field = StadiumView.class.getDeclaredField("game");
+    field.setAccessible(true);
+    Motor12 game = (Motor12) field.get(pitch);
+    String target = System.getProperty("touchline.capture");
+    File dir = target == null ? null : new File(target, "turn");
+    if (dir != null) assertTrue(dir.isDirectory() || dir.mkdirs());
+    long ns = 1000000000L;
+    int receiver = -1;
+    boolean advanced = false, turned = false;
+    for (int n = 0; n < 132; n++) {
+      if (n == 24) {
+        receiver = game.selected;
+        pitch.input.sprint = true;
+        pitch.input.x = -1;
+      }
+      if (n == 71) pitch.input.x = 1;
+      pitch.doFrame(ns += 16666667L);
+      pitch.doFrame(ns += 16666667L);
+      if (n == 65) advanced = game.players[receiver].vx < -2;
+      if (n > 110) turned |= game.players[receiver].vx > 1.5;
+      projection.setLong(pitch, System.nanoTime() - 33333333);
+      root.draw(canvas);
+      if (dir != null)
+        try (OutputStream out =
+            new FileOutputStream(
+                new File(dir, String.format(java.util.Locale.ROOT, "%03d.jpg", n)))) {
+          assertTrue(frame.compress(Bitmap.CompressFormat.JPEG, 89, out));
+        }
+    }
+    assertTrue(
+        "Holdet modtager afspark og fuldfører sprintvending", receiver >= 0 && advanced && turned);
+    ctl.pause().stop().destroy();
+  }
+
+  @Test
   public void nativeFreeKickAndGoalKick() throws Exception {
     ActivityController<TouchlineActivity> ctl =
         Robolectric.buildActivity(TouchlineActivity.class).setup();
@@ -114,7 +165,7 @@ public class PitchRenderTest {
       android.app.AlertDialog pick =
           org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
       pick.getListView().performItemClick(null, i, i);
-      draw(a, i == 0 ? "Touchline-Frispark-TEST76" : "Touchline-Maalspark-TEST76");
+      draw(a, i == 0 ? "Touchline-Frispark-TEST77" : "Touchline-Maalspark-TEST77");
       AndroidFlowTest.click(a, i == 0 ? "A\nSkyd" : "A\nLangt");
       StadiumView pitch = find(a.getWindow().getDecorView(), StadiumView.class);
       for (int f = 0; f < 24; f++) pitch.doFrame(1000000000L + f * 16666667L);
@@ -214,12 +265,12 @@ public class PitchRenderTest {
     ActivityController<TouchlineActivity> ctl =
         Robolectric.buildActivity(TouchlineActivity.class).setup();
     TouchlineActivity a = ctl.get();
-    draw(a, "Touchline-Karriere-TEST76");
+    draw(a, "Touchline-Karriere-TEST77");
     AndroidFlowTest.click(a, "Vælg spillerkarriere");
     AndroidFlowTest.click(a, "Start karriere");
     AndroidFlowTest.click(a, "Spil selv");
     AndroidFlowTest.selectControl(false);
-    draw(a, "Touchline-Afspark-TEST76");
+    draw(a, "Touchline-Afspark-TEST77");
     AndroidFlowTest.click(a, "KICK OFF");
     StadiumView pitch = find(a.getWindow().getDecorView(), StadiumView.class);
     assertNotNull(pitch);
@@ -252,9 +303,9 @@ public class PitchRenderTest {
     AndroidFlowTest.click(a, "C\nStikning");
     assertEquals(Motor12.THROUGH, pitch.input.action);
     for (int i = 0; i < 55; i++) pitch.doFrame(1000000000L + i * 16666667L);
-    draw(a, "Touchline-Kamp-TEST76");
+    draw(a, "Touchline-Kamp-TEST77");
     AndroidFlowTest.click(a, "Kampmenu");
-    draw(a, "Touchline-Kampmenu-TEST76");
+    draw(a, "Touchline-Kampmenu-TEST77");
     AndroidFlowTest.click(a, "Skift kamera");
     AndroidFlowTest.click(a, "Taktisk oversigt");
     AndroidFlowTest.click(a, "Tilbage");
@@ -263,7 +314,7 @@ public class PitchRenderTest {
     ctl.pause().stop().destroy();
     ctl = Robolectric.buildActivity(TouchlineActivity.class).setup();
     a = ctl.get();
-    draw(a, "Touchline-Taktisk-TEST76");
+    draw(a, "Touchline-Taktisk-TEST77");
     ctl.pause().stop().destroy();
   }
 }
