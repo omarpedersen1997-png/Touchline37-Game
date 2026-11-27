@@ -1,0 +1,1 @@
+PASS Android-launcher, version, opdateringscertifikat, native DEX, offline-aktiver og ZIP-justering

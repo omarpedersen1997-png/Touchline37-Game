@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST77",
+    "date": "2026-11-27",
+    "motorVersion": 12,
+    "title": "Antrit, kæder og returbold",
+    "summary": "Motor 12 bruger faste fysiktrin på 1/120 sekund. Spillere bremser og vender med kroppen, støttespillere åbner afleveringsvinkler, og målmanden kan bokse eller gribe et skud.",
+    "sourceCommit": "537a7510bceb419ae0240ce5cb30820af9871782"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor12-TEST77.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 77,
+    "versionName": "1.0.0-test-match77",
+    "bytes": 1287464,
+    "sha256": "a5b9afb518cda6e1babb8b16ec928275014bc35ba6f9ab6fbaa0f687ea43cd62",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/touchline-android/dev/artifacts/Touchline37-Motor12-TEST77.apk"
+  },
+  "tests": {
+    "passed": 49,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "22 karriere- og motorforløb, 13 særskilte fysiktest, 13 Android-testforløb og én pakkekontrol bestod. Android-testene brugte Robolectric på API 28 og 34.",
+    "checks": [
+      "En løber vendte 180 grader fra 8,3 m/s. Fremdriften skiftede fortegn efter 0.942 sekunder. Den fortsatte 4.02 meter frem. En anden løber bremsede fra 5,6 m/s på 1.68 meter.",
+      "En vending på 123 grader, sprintantrit, udmattelseslås og restitution blev afprøvet. En Android-test tegnede 132 billeder af afspark, sprint og vending med den native kampvisning.",
+      "Holdkæderne forskød sig på begge sider. Afstanden mellem presser og sikring, støttepositioner og blød kontakt mellem to spillere blev kontrolleret.",
+      "Indkast fra hovedhøjde, lodret opspring, luft- og græsmodstand, sideskru, topspin, dribletouch og afretning fra en markspiller blev målt. I et målmandsforsøg blev et blødt skud grebet og et hårdt skud pareret efter dyk.",
+      "12 komplette AI-kampe nåede slutfløjt med 248 skud og 23 mål. Ved samme input efter en gemning gav henholdsvis 60 og 120 renderkald identiske gemte kampdata.",
+      "En faktisk TEST76-gemmefil ved 42:22 blev genåbnet med identisk stilling, kampur og kameravalg. Manuelt afspark, halvleg, scoring, tre berøringer samt opdateringssignatur og arkivkontrol bestod."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Spillerens første skridt",
+      "detail": "Locomotion.java begrænser ændringen i hastighed. En skarp vending afvikler først den gamle fart. Fart, smidighed, træthed og boldføring ændrer antrit og topfart. Ansigtsretningen roterer gradvist og de animerede skridt følger tilbagelagt afstand."
+    },
+    {
+      "title": "Kæder, pres og løb",
+      "detail": "TeamShape.java udpeger én presser og én sikringsspiller. Backs, midtbane og angreb indtager positioner efter bold og kampplan. Medspillere tilbyder støtte til hver side og søger rum bag linjen. Modstandere i pasningsbanen påvirker afleveringsvalget."
+    },
+    {
+      "title": "Spark, kast og målmand",
+      "detail": "BallPhysics.java integrerer fart, tyngdekraft, spin og friktion frem til og efter en græskontakt. Motor12.java registrerer berøring langs boldens bane. Goalkeeping.java læser skudretning og ankomsttid. Afstand, højde og fart afgør rækkevidde, greb og returbold."
+    },
+    {
+      "title": "Kampvisning og gemning",
+      "detail": "StadiumView.java interpolerer skridt, orientering og målmandens dyk. SaveFormat.java indlæser TEST75 og TEST76 og gemmer de nye bevægelsesdata. Nye kampe varer fem minutters aktiv spilletid ved 1×. Afspark sker ved et bevidst tryk."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Signeret APK",
+      "before": 1271080,
+      "after": 1287464,
+      "unit": "bytes",
+      "note": "Faktisk filstørrelse for TEST76 og TEST77."
+    },
+    {
+      "label": "Tid til modsat fremdrift",
+      "before": null,
+      "after": 942,
+      "unit": "ms",
+      "note": "Simuleret tid fra vendingens start ved 8,3 m/s, beregnet fra de gennemførte fysiktrin."
+    }
+  ],
+  "preserved": [
+    "APK 37 og tidligere testudgivelser er bevaret. Den signerede TEST77 bruger spillets eksisterende testcertifikat.",
+    "Joysticket, Sprint, A/B/C, spiller- og holdstyring samt manuel KICK OFF ved start, efter mål og ved anden halvleg er videreført."
+  ],
+  "limitations": [
+    "Billedhastighed, touchforsinkelse og varme på en fysisk telefon er ikke målt.",
+    "Videoklippet viser 30 optagne billeder pr. sekund fra Android-testmiljøet. Spillets renderfrekvens på en telefon afhænger af skærm og hardware."
+  ],
+  "installSteps": [
+    "Hent TEST77-APK og vælg Opdater på en telefon med TEST76 eller Installer ved første installation.",
+    "Åbn Kampdag, vælg Spil selv og tryk KICK OFF. Hold Sprint sammen med joysticket og skift retning ved fuld fart.",
+    "Brug B til en jordaflevering eller C til at spille i dybden. A lader et skud fra tryk til slip. Prøv også frispark under dødboldstræning."
+  ],
+  "nextTest": [
+    "En fysisk prøve på Nord 4 kan måle frame-tider og touchforsinkelse gennem en hel kamp."
+  ]
+}

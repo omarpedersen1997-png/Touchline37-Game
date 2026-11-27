@@ -1,0 +1,15 @@
+Vending 0.942 s, sprint 4.02 m, jog 1.68 m
+OK 180° vending og hastighedsafhængig bremselængde
+OK skarp 123° vending
+OK antrit, udmattelseslås og aktiv restitution
+OK begge blokke forskyder sig, én presser, én sikrer, medspillere støtter
+OK kropskontakt uden overlap
+OK luftmodstand, rul, friktion og energitab ved opspring
+OK sideskru og topspin ændrer banen
+OK indkast frigives i hovedhøjde og flyver ind på banen
+OK længere touch ved sprint
+OK hårdt skud bliver afrettet af en markspiller
+OK målmand holder det bløde skud og parerer det hårde efter dyk
+OK save og identisk videre kamp ved 60 og 120 renderkald
+OK autentisk TEST76-fil bevarer tid, score, boldbesiddelse og manuel genstart
+PASS 13 physics
