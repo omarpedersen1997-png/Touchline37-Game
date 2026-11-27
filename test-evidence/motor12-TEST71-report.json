@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST71",
+    "title": "Motor 12 · Spil selv eller simulér",
+    "date": "2026-11-27",
+    "sourceCommit": "29e85acb7d1ff29049c91ae1845a3920df7120f4",
+    "summary": "Vælg kampform i klubmenuen. Den manuelle kamp har et kompakt resultatfelt, live-minikort og trykknapper langs banens kanter."
+  },
+  "apk": {
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 71,
+    "versionName": "1.0.0-test-match71",
+    "fileName": "Touchline37-Motor12-TEST71.apk",
+    "bytes": 50443441,
+    "sha256": "d37a44feda178c5b374457633de81c14b9ac142fe1fc065b96f779e3e74c6de8",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor12-redesign/dev/artifacts/Touchline37-Motor12-TEST71.apk"
+  },
+  "tests": {
+    "passed": 16,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "14 Node-tests og to Chromium-prøver. Fysisk telefonmåling afventer.",
+    "checks": [
+      "Begge indgange til samme ligakamp samt genindlæsning af en simulering.",
+      "AI-kamp til 90:00 med særskilte afspark og halvleg.",
+      "To samtidige berøringer på styrepude og skudknap.",
+      "3D-modeller, kameraskift, kampmenu, pause og udvidet visning.",
+      "Frispark fra cirka 22 meter med fire mand i muren og brugerens skud.",
+      "Signatur, pakkedata og tidligere Android-filer verificeret."
+    ]
+  },
+  "changes": [
+    {
+      "title": "Klubmenu",
+      "detail": "Spil selv og Simulér kampen har hver sin knap. Ved genindlæsning husker den aktive ligakamp dit valg."
+    },
+    {
+      "title": "Kampbillede",
+      "detail": "I liggende udvidet visning ligger ur og stilling over banen. Styrepuden følger kameraet. Minikortet viser spillere og bold, og knapperne skifter mellem angreb og forsvar."
+    },
+    {
+      "title": "Stadion og kamera",
+      "detail": "Tættere TV-vinkel, afrundede tilskuersilhuetter, tydeligere græsstriber og lavere indramning ved målspark og frispark. Egne frispark og målspark afventer spillerens spark. Ved frispark i afslutningsafstand stiller modstanderne en mur."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Android-testpakke",
+      "before": 50443361,
+      "after": 50443441,
+      "unit": "bytes",
+      "note": "Målt filstørrelse for TEST70 og TEST71."
+    },
+    {
+      "label": "Statisk webpakke",
+      "before": 4169826,
+      "after": 4172418,
+      "unit": "bytes",
+      "note": "Målt filstørrelse for TEST70 og TEST71."
+    }
+  ],
+  "preserved": [
+    "Eksisterende klub, historik, samlede point og aktiv kamp kan indlæses.",
+    "Tidligere motorer og APK-filer."
+  ],
+  "limitations": [
+    "Fysisk billedhastighed og tommelfingerbetjening på OnePlus Nord 4 afventer test. Modeller og animationer er Touchlines egne eksisterende kampressourcer."
+  ],
+  "installSteps": [
+    "Installér TEST71 over Touchline TEST.",
+    "Åbn klubmenuen, vælg Spil selv og tryk Kick Off."
+  ],
+  "nextTest": [
+    "Prøv at aflevere og skyde med højre tommel, mens venstre styrer spilleren.",
+    "Gå til klubmenuen og vælg Simulér kampen. Se begge hold spille og vælg eventuelt 4×."
+  ],
+  "screenshots": {
+    "club": {
+      "file": "Touchline-Motor12-TEST71-club.webp",
+      "width": 844,
+      "height": 390
+    },
+    "arena": {
+      "file": "Touchline-Motor12-TEST71-arena.webp",
+      "width": 1080,
+      "height": 510
+    },
+    "frispark": {
+      "file": "Touchline-Motor12-TEST71-frispark.webp",
+      "width": 844,
+      "height": 390
+    }
+  },
+  "web": {
+    "file": "Touchline-Motor12-Web-TEST71.zip",
+    "bytes": 4172418,
+    "sha256": "7ad17d7c06f3d749ae87547e071ebab837477f2a63e01e8f31a77af298cd3dd8"
+  }
+}
