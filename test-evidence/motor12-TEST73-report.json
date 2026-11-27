@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "update": {
+    "id": "TEST73",
+    "date": "2026-11-27",
+    "motorVersion": 12,
+    "title": "Motor 12 · Under stadionlyset",
+    "summary": "Fire stadionscener deler en lokal kamp og en taktiktavle. Klubhuset er indrettet omkring fire faner, med direkte adgang til banen, spillerstyring og kampdata.",
+    "sourceCommit": "5f69dc1fe9d0085478d7d308a7ecd90eb31b8b24"
+  },
+  "apk": {
+    "fileName": "Touchline37-Motor12-TEST73.apk",
+    "appId": "dk.touchline.footballidle.test",
+    "versionCode": 73,
+    "versionName": "1.0.0-test-match73",
+    "bytes": 50386375,
+    "sha256": "608f20b0d2989d320d2ae4dc37cd4e0723e833d518bdf2f1c2531140a11ffb3f",
+    "downloadUrl": "https://github.com/omarpedersen1997-png/Touchline37-Game/blob/codex/motor12-redesign/dev/artifacts/Touchline37-Motor12-TEST73.apk"
+  },
+  "web": {
+    "file": "Touchline-Stadion-Web-TEST73.zip",
+    "bytes": 4111764,
+    "sha256": "0968b9f5e113d7a7ed31df0e0728e09e3f8538c6949fe1d4aa385bd4e182e36f"
+  },
+  "websiteDraft": {
+    "sourceCommit": "b57829b467a730709d4faf2cebfc45db92104922",
+    "sha256": "0968b9f5e113d7a7ed31df0e0728e09e3f8538c6949fe1d4aa385bd4e182e36f"
+  },
+  "tests": {
+    "passed": 31,
+    "phoneModel": "OnePlus Nord 4",
+    "physicalDeviceVerified": false,
+    "note": "21 motortests, 7 funktionstests af webudkastet, 2 Chromium-forløb af spillet samt 1 inspektion af klubhusets og hjemmesidens lokale indgange i APK’en bestod.",
+    "checks": [
+      "Kampen venter på Kick Off, bevarer 45:00 ved pausen og kræver nyt afspark efter mål.",
+      "Faste simulationstrin giver samme resultat ved renderinput på 60 Hz og 120 Hz.",
+      "Spil selv, to samtidige berøringer, skud, ligaforløb, hurtigskift og kampstatistik testet i Chromium.",
+      "WebGL-modeller, TV- og nærkamera, frispark, udvidet bane, pause og retur til 2D kontrolleret.",
+      "Fire scener, rullemenuer på taktiktavlen, hjælpeskuffer, lokalt lagrede aktiver og den danske lanceringstid kontrolleret.",
+      "Certifikat, versionskode, filindhold og ZIP-integritet verificeret. Den separate testpakke opdaterer testappen."
+    ]
+  },
+  "changes": [
+    {
+      "title": "En stadionaften i fire scener",
+      "detail": "Et nyt stadionpanorama åbner showet. Motor 12 driver den lokale kampvisning. Taktiktavle, udskiftninger og banens tredjedele deler samme hold og kamp. Klubscenen viser et frispark direkte fra TEST73 samt support, privatliv og kontosletning."
+    },
+    {
+      "title": "Fire faner i klubhuset",
+      "detail": "Kamp, Taktik, Trup og Klub ligger i et viewportlayout med safe areas. Den brede kampmenu skelner mellem Spil selv og Simulér kampen. En ticker, kampdata og en hurtig udskiftningsskuffe ligger ved banen."
+    },
+    {
+      "title": "Natkamp og manuelt afspark",
+      "detail": "Stadionet har 96 lamper i én instansgruppe, belyst græs, bevægeligt målnet, guldmarkeret afspark og valgfrie fløjt/tribunelyde. Det eksisterende deterministiske kampforløb og saveformat er bevaret."
+    }
+  ],
+  "measurements": [
+    {
+      "label": "Stadionpanorama, WebP",
+      "before": null,
+      "after": 154170,
+      "unit": "bytes",
+      "note": "Ny kampagneillustration på 1774 × 887 pixel."
+    },
+    {
+      "label": "Frispark i TEST73, WebP",
+      "before": null,
+      "after": 30822,
+      "unit": "bytes",
+      "note": "Faktisk skærmbillede fra appens Arena 3D, 844 × 390 pixel."
+    }
+  ],
+  "preserved": [
+    "Main, den offentlige hjemmeside, APK 37, gamle motorer og optagelser er holdt uden for leverancen.",
+    "De eksisterende lokale Motor 12-klubber bruger samme lagringsnøgle. Prøvekampen kører i hukommelsen.",
+    "Lancering fredag den 1. januar 2027 kl. 10.00 i København."
+  ],
+  "limitations": [
+    "Fysisk billedhastighed og varme på OnePlus Nord 4 er ikke målt.",
+    "Sidesceners funktion og indhold er testet lokalt. Selvstændig visuel kontrol af den hostede Sites-visning var utilgængelig."
+  ],
+  "installSteps": [
+    "Hent TEST73 og installér den over den separate Touchline TEST-app.",
+    "Vælg Kamp → Spil selv → Kick Off. Brug venstre styrepude og højre handlingsknapper.",
+    "Vælg Kampmenu i udvidet visning for at skifte kamera eller spiller.",
+    "Tryk Touchline-logoet i klubhuset for at åbne hjemmesidens fire scener offline."
+  ],
+  "nextTest": [
+    "Afprøv bevægelse, panorering og touch i liggende format på en OnePlus Nord 4 med høj opdateringshastighed."
+  ]
+}
