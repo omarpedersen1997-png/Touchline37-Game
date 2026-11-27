@@ -6,11 +6,14 @@ import { build } from 'esbuild';
 const base=dirname(fileURLToPath(import.meta.url));
 const output=resolve(process.argv[2]||base+'/dist');
 const android=process.argv.includes('--android');
+const draftOption=process.argv.indexOf('--website-dir');
+const draftDir=draftOption<0?null:process.argv[draftOption+1];
+if(draftOption>=0&&(!android||!draftDir))throw Error('--website-dir kræver --android og en bygget hjemmesidemappe');
 const siteName='Touchline · Motor 12';
 const published='https://playtouchline.dk';
 const styles='assets/ui.css';
 const header=(base,match=false)=>`<header class="top"><div class="wrap nav"><a class="mark" href="${base}index.html" aria-label="Touchline forside"><i aria-hidden="true">T</i> Touchline<span>.</span></a>${match?'<span class="nav-meta">MOTOR 12 · KLUBHUSET</span>':`<nav aria-label="Hovedmenu"><a href="${base}index.html#motor">Motoren</a><a href="${base}index.html#klub">Klubben</a><a href="${base}contact/index.html">Support</a></nav><a class="button primary nav-play" href="${base}play/index.html?demo=1">Prøvekamp</a>`}</div></header>`;
-const footer=base=>`<footer class="foot"><div class="wrap foot-inner"><span>TOUCHLINE <small>© 2026 OPNext Games</small></span><nav aria-label="Hjælp og vilkår">${android?'<a href="/legacy.html">Motor 11</a>':''}<a href="${base}contact/index.html">Kontakt</a><a href="${base}privacy/index.html">Privatliv</a><a href="${base}delete-account/index.html">Slet konto</a></nav></div></footer>`;
+const footer=base=>`<footer class="foot"><div class="wrap foot-inner"><span>TOUCHLINE <small>© 2026 OPNext Games</small></span><nav aria-label="Hjælp og vilkår">${draftDir?'<a href="/motor12/kampdag/index.html">Hjemmesideudkast</a>':''}${android?'<a href="/legacy.html">Motor 11</a>':''}<a href="${base}contact/index.html">Kontakt</a><a href="${base}privacy/index.html">Privatliv</a><a href="${base}delete-account/index.html">Slet konto</a></nav></div></footer>`;
 const shell=({title,body,base='./',match=false,script='',description='Touchline er et dansk fodboldmanagerspil. Prøv en lokal Motor 12-kamp, og byg din klub på Android og web.'})=>`<!doctype html><html lang="da"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f5efe3"><meta name="description" content="${description}">
@@ -69,6 +72,28 @@ await build({entryPoints:[resolve(base,'src/arena.js')],outfile:resolve(output,'
 for(const[path,html] of pages){
   await mkdir(dirname(resolve(output,path)),{recursive:true});
   await writeFile(resolve(output,path),html);
+}
+if(draftDir){
+  // The website is rooted at / on a web host. In Capacitor / belongs to the
+  // existing app, so mount it under kampdag and reuse the installed match.
+  const dest=resolve(output,'kampdag');
+  const siteRoot='/motor12/kampdag/';
+  function mountedPath(path){
+    if(path.startsWith('/demo/play/'))return '/motor12/'+path.slice('/demo/'.length);
+    if(path==='/'||path.startsWith('/#'))return siteRoot+'index.html'+path.slice(1);
+    if(['/contact','/privacy','/delete-account'].includes(path))return siteRoot+path.slice(1)+'/index.html';
+    return siteRoot+path.slice(1);
+  }
+  for(const file of ['index.html','contact/index.html','privacy/index.html','delete-account/index.html','site.js','site.css']){
+    let text=await readFile(resolve(draftDir,file),'utf8');
+    text=text.replace(/(href|src)="(\/(?!\/)[^"]*)"/g,(_,attr,path)=>attr+'="'+mountedPath(path)+'"')
+      .replace(/url\((\/[^)]+)\)/g,(_,path)=>'url('+mountedPath(path)+')')
+      .replace(/'(\/(?:demo\/play|assets\/motor12)\/[^']*)'/g,(_,path)=>"'"+mountedPath(path)+"'");
+    await mkdir(dirname(resolve(dest,file)),{recursive:true});
+    await writeFile(resolve(dest,file),text);
+  }
+  await cp(resolve(draftDir,'assets'),resolve(dest,'assets'),{recursive:true});
+  await cp(resolve(draftDir,'favicon.svg'),resolve(dest,'favicon.svg'));
 }
 await readFile(resolve(output,'assets/hero.webp'));
 console.log('Touchline Motor 12:',output,'·',pages.length,'sider');

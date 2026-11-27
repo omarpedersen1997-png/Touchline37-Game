@@ -48,7 +48,7 @@ def main():
     parser = argparse.ArgumentParser()
     for name in ('shell','web','sdk','signing','output'):
         parser.add_argument('--'+name, type=Path, required=True)
-    parser.add_argument('--build-number', type=int, choices=[66, 67, 68, 69, 70, 71], default=71)
+    parser.add_argument('--build-number', type=int, choices=[66, 67, 68, 69, 70, 71, 72], default=72)
     args = parser.parse_args()
     assert sha256(args.shell.read_bytes()).hexdigest() == BASELINE
     assert b'/legacy.html' in (args.web/'play/index.html').read_bytes()
@@ -78,6 +78,7 @@ def main():
                 if file.is_file():
                     result.write(file,ASSETS+'motor12/'+file.relative_to(args.web).as_posix())
         run('zipalign','-f','-P','16','4',unsigned,aligned)
+        unsigned.unlink()
         run('apksigner','sign','--ks',args.signing/'touchline-test.jks','--ks-key-alias',props['keyAlias'],
             '--ks-pass','env:MOTOR12_STORE','--key-pass','env:MOTOR12_KEY','--out',args.output,aligned,env=env)
     assert cert(args.shell)==cert(args.output)

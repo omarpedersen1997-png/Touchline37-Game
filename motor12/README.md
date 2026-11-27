@@ -22,6 +22,9 @@ valgfrie browsertest kræver Python Playwright og Chromium og køres med
 `python motor12/tests/browser.py motor12/dist`.
 Kør `python motor12/tests/arena-browser.py motor12/dist` for WebGL-kontrollen.
 Buildet bruger repositoryets installerede esbuild og Three.js til arenaen.
+Android-testpakken kan medtage det statiske hjemmesideudkast. Byg med
+`node motor12/build.mjs /tmp/touchline-android --android --website-dir /sti/til/hjemmesidens/dist`.
+Åbn **Hjemmesideudkast** nederst i klubhuset for at se siden lokalt på telefonen.
 
 ## Kode
 
@@ -52,12 +55,12 @@ Buildet bruger repositoryets installerede esbuild og Three.js til arenaen.
 
 Kampen starter i PRE_KICKOFF med bolden på midterpletten. Nyt afspark efter
 et mål eller i anden halvleg kræver samme aktive valg i KICKOFF_READY.
-Kampuret bevarer aktuel tid ved de senere genstarter. 1×, 2× og 4× ændrer
+Kampuret bevarer aktuel tid ved de senere genstarter. Spil selv kører i 1×. I Simulér kampen ændrer 1×, 2× og 4×
 antal simulationstrin, som bliver afviklet pr. reelt sekund.
 
 Udkastet kan fungere som statisk webside og pakkes i Android-testskallen.
 Pakken har ingen serverkonto, synkronisering eller vandring af gamle
-Motor 11-klubber. Sky-backend, direkte styring af spillere, komplet regelsæt og
+Motor 11-klubber. Sky-backend, komplet regelsæt og
 fysisk FPS-måling er særskilt arbejde. Offentlig produktion og den aftalte
 lancering **1. januar 2027 kl. 10.00 i København** er uden for dette build.
 

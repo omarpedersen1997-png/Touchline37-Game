@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createMatch,kickOff,stepMatch,swapRoles,substitute,setTactics,PHASE,HALF_TICKS,timeLabel} from '../src/engine.js';
-import {FIELD,STEP,integrateBall,kickBall} from '../src/physics.js';
+import {FIELD,STEP,integrateBall,kickBall,integratePlayBall,passSpeed,carryBall,cushionTouch} from '../src/physics.js';
 import {createMatchLoop} from '../src/loop.js';
 import {newClub,trainClub,loadClub,saveClub,nextMatch,settleMatch} from '../src/club.js';
 import {SCENARIOS,scenarioMatch,scenarioResult} from '../src/scenarios.js';
@@ -202,4 +202,118 @@ test('a user free kick waits for a fresh strike and puts four defenders in a wal
   input.action='shoot';stepMatch(s,{},input);
   assert.equal(s.phase,PHASE.PLAYING);assert.equal(s.ball.kind,'shot');
   assert.equal(s.teams[0].stats.shots,1);assert.equal(input.action,'');
+});
+
+test('manual ground passes of 8, 20 and 35 metres arrive at playable speeds and roll to rest',()=>{
+  for(const [range,earliest,latest] of [[8,1.05,1.4],[20,1.95,2.35],[35,2.6,3.15]]){
+    const b={x:0,y:0,z:.11};
+    kickBall(b,range,0,passSpeed(range));
+    let arrival=0;
+    for(let tick=1;tick<=600;tick++){
+      const speed=b.vx;
+      integratePlayBall(b,STEP);
+      assert.ok(b.vx<=speed && b.vx>=0);
+      if(!arrival&&b.x>=range){
+        arrival=tick*STEP;
+        assert.ok(b.vx>4&&b.vx<8.5);
+      }
+    }
+    assert.ok(arrival>earliest&&arrival<latest);
+    assert.equal(b.vx,0);
+    const stopped=b.x;integratePlayBall(b,STEP);assert.equal(b.x,stopped);
+    assert.ok(passSpeed(range,true)>passSpeed(range));
+  }
+});
+
+test('manual reception cushions the incoming ball without snapping it to the foot',()=>{
+  const b={x:0,y:.62,z:.11,spin:.3,vx:15,vy:-2,vz:0};
+  const p={x:0,y:0,vx:3,vy:0,fx:1,fy:0,skill:75,slot:7};
+  cushionTouch(b,p);
+  assert.deepEqual([b.x,b.y],[0,.62]);
+  assert.ok(b.vx>p.vx&&b.vx<7);
+  let min=Infinity,max=-Infinity;
+  for(let tick=0;tick<110;tick++){
+    if(tick===60){p.vx=0;p.vy=3;p.fx=0;p.fy=1;}
+    p.x+=p.vx*STEP;p.y+=p.vy*STEP;
+    const x=b.x,y=b.y;carryBall(b,p,STEP);
+    assert.ok(Math.hypot(b.x-x,b.y-y)<.28);
+    const distance=Math.hypot(b.x-p.x,b.y-p.y);
+    assert.ok(distance<1.5);
+    min=Math.min(min,distance);max=Math.max(max,distance);
+  }
+  assert.ok(max-min>.15);
+});
+
+test('manual shots curl, lose horizontal speed and bounce lower with each impact',()=>{
+  const b={x:0,y:0,z:.11};
+  kickBall(b,25,0,25,5.5,.26);
+  const peaks=[];let peak=b.z;
+  for(let i=0;i<150;i++){
+    const vz=b.vz;integratePlayBall(b,STEP);
+    peak=Math.max(peak,b.z);
+    if(vz<0&&b.vz>=0){peaks.push(peak);peak=b.z;}
+    assert.ok(b.z>=.11);
+  }
+  assert.ok(peaks.length>=2&&peaks[0]>1.4&&peaks[1]<peaks[0]*.5);
+  assert.ok(b.y>1&&b.vx<25);
+});
+
+test('a manual save meets a shot before it crosses the line in the same tick',()=>{
+  const s=createMatch();kickOff(s);
+  const keeper=s.teams[1].players[0];
+  Object.assign(keeper,{x:52.15,y:0,vx:0,vy:0});
+  Object.assign(s.ball,{x:51.95,y:0,z:.8,vx:28,vy:0,vz:0,owner:-1,kind:'shot',age:.4,lastTeam:0});
+  stepMatch(s,{}, {slot:9,x:0,y:0,action:''});
+  assert.equal(s.teams[1].stats.saves,1);
+  assert.equal(s.teams[0].stats.goals,0);
+  assert.ok(s.ball.x<52.5);
+});
+
+test('manual ball motion is identical at 60 and 120 Hz and after a saved first touch',()=>{
+  function play(hz){
+    const s=createMatch();kickOff(s);
+    const loop=createMatchLoop(s), input={slot:5,x:.5,y:0,sprint:false,action:''};
+    for(let i=0;i<=hz*5;i++)loop.advance(i*1000/hz,1,input);
+    return s;
+  }
+  assert.deepEqual(play(60),play(120));
+  const s=createMatch();kickOff(s);
+  const input={slot:-1,x:0,y:0,action:''};
+  for(let n=0;n<150&&s.ball.owner<0;n++)stepMatch(s,{},input);
+  assert.ok(s.ball.owner>=0);
+  const saved=JSON.parse(JSON.stringify(s)), copy={...input};
+  for(let n=0;n<90;n++){stepMatch(s,{},input);stepMatch(saved,{},copy);}
+  assert.deepEqual(s,saved);
+});
+
+test('the Spil selv buttons launch a weighted pass, a leading through ball and a distinct shot',()=>{
+  const strike=(action)=>{
+    const s=createMatch(),team=s.teams[0],kicker=team.players[7],mate=team.players[9];
+    for(const p of team.players){p.x=-30;p.y=-10;}
+    Object.assign(kicker,{x:-.5,y:0});Object.assign(mate,{x:20,y:0,vx:0,vy:0});
+    s.phase=PHASE.DEAD_BALL;s.restart={kind:'free-kick',side:0,slot:7,ready:true};
+    stepMatch(s,{}, {x:1,y:0,slot:7,action});
+    assert.equal(s.phase,PHASE.PLAYING);
+    return s.ball;
+  };
+  const pass=strike('pass'), through=strike('through'), shot=strike('shoot');
+  assert.equal(pass.target,9);assert.equal(through.target,9);
+  assert.ok(Math.abs(pass.vx-12.48)<.01);
+  assert.ok(through.vx>pass.vx+1.5&&through.vx<19);
+  assert.ok(shot.vx>20&&shot.vx<30&&shot.vz>0);
+});
+
+test('a manual match reaches 90:00 with finite positions and bounded ball speed',()=>{
+  const s=createMatch(),scratch={},input={slot:-1,x:0,y:0,sprint:false,action:''};
+  let ticks=0;
+  while(s.phase!==PHASE.FULL_TIME&&ticks++<6500){
+    if(s.phase===PHASE.KICKOFF_READY||s.phase===PHASE.PRE_KICKOFF)kickOff(s);
+    input.action=s.restart?.ready||s.ball.owner>=0&&s.ball.owner<11&&ticks%28===0?'pass':'';
+    stepMatch(s,scratch,input);
+    const b=s.ball;
+    assert.ok(Number.isFinite(b.x+b.y+b.z+b.vx+b.vy+b.vz));
+    assert.ok(Math.hypot(b.vx,b.vy)<36&&b.z>=.11);
+  }
+  assert.equal(s.phase,PHASE.FULL_TIME);
+  assert.equal(timeLabel(s),'90:00');
 });

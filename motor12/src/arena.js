@@ -227,8 +227,16 @@ export async function createArena(canvas){
       const x=previous?THREE.MathUtils.lerp(previous[44],b.x,alpha):b.x;
       const y=previous?THREE.MathUtils.lerp(previous[45],b.y,alpha):b.y;
       const height=previous?THREE.MathUtils.lerp(previous[46],b.z,alpha):b.z;
-      ball.position.set(x,Math.max(.22,height),y);
-      if(!snap){ball.rotation.x+=(y-oldY)*4.5;ball.rotation.z-=(x-oldX)*4.5;}
+      const manual=slot>=0;
+      const radius=manual ? .15 : .22;
+      ball.scale.setScalar(radius/.22);
+      ball.position.set(x,manual ? height+radius-.11 : Math.max(.22,height),y);
+      if(!snap){
+        const roll=manual&&height>.16?1.8:1/radius;
+        ball.rotation.x+=(y-oldY)*roll;
+        ball.rotation.z-=(x-oldX)*roll;
+        if(manual&&running&&height>.16)ball.rotation.y+=b.spin*seconds*12;
+      }
       oldX=x;oldY=y;
       const kick=(b.kind==='pass'||b.kind==='shot')&&b.lastSlot>=0&&b.age<.13;
       const key=kick?b.lastTeam+':'+b.lastSlot+':'+Math.round(state.tick-b.age/STEP):'';

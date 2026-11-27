@@ -70,7 +70,7 @@ with sync_playwright() as playwright:
             page.screenshot(path=sys.argv[2]+'/motor12-kamp-mobil.png')
     if len(sys.argv) > 2:
         page.screenshot(path=sys.argv[2]+'/motor12-kamp.png')
-    page.get_by_role('button', name='4×').click()
+    assert page.get_by_role('group', name='Kamphastighed').count()==0
     page.get_by_role('button', name='Kick Off').click()
     page.clock.run_for(220)
     score_clock = page.locator('#clock')

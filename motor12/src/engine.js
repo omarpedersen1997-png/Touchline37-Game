@@ -1,5 +1,5 @@
 import {HOME, LEAGUE, FORMATIONS, TACTICS, PRESS, makeSquad} from './teams.js';
-import {FIELD, STEP, clamp, distanceSquared, kickBall, integrateBall, movePlayer} from './physics.js';
+import {FIELD, STEP, clamp, distanceSquared, kickBall, integrateBall, integratePlayBall, passSpeed, carryBall, cushionTouch, movePlayer} from './physics.js';
 import {formationSpot, passingOption, pressers} from './tactics.js';
 
 export const VERSION = 12;
@@ -111,7 +111,7 @@ function nearestPressure(team,p) {
   for(const rival of team.players) if(!rival.red)gap=Math.min(gap,distanceSquared(p,rival));
   return Math.sqrt(gap);
 }
-function dribble(s, side, p, opponent) {
+function dribble(s, side, p, opponent, manualMatch) {
   const team=s.teams[side], dir=team.direction, goal=halfLength*dir;
   const distance=Math.hypot(goal-p.x,p.y);
   const pressure=nearestPressure(opponent,p);
@@ -134,7 +134,7 @@ function dribble(s, side, p, opponent) {
     const loft=range>22 && draw(s)<.62;
     const drift=(draw(s)-.5)*clamp((82-p.skill)*.055+(pressure<2?1:0),.25,1.9);
     release(s,side,p,mate.x+mate.vx*.31,mate.y+mate.vy*.31+drift,
-      {speed:Math.min(24,8+range*.52),loft:loft?5.2:0,spin:loft?(draw(s)-.5)*.19:0,kind:'pass',target:playerId(side,mate.slot)});
+      {speed:manualMatch ? passSpeed(range) : Math.min(24,8+range*.52),loft:loft?5.2:0,spin:loft?(draw(s)-.5)*.19:0,kind:'pass',target:playerId(side,mate.slot)});
   }
 }
 function stageRestart(s,kind,side,x,y) {
@@ -162,7 +162,7 @@ function goal(s, side) {
   event(s,'goal',side,'Mål til '+team.name,p?.name||'Selvmål');
   arrange(s,1-side,'goal');
 }
-function afterLine(s,b,previousX,previousY,previousZ) {
+function afterLine(s,b,previousX,previousY,previousZ,manual=false) {
   const crossedX=Math.abs(b.x)>halfLength;
   const crossedY=Math.abs(b.y)>halfWidth;
   if(!crossedX&&!crossedY)return false;
@@ -175,7 +175,23 @@ function afterLine(s,b,previousX,previousY,previousZ) {
   const sideBar=Math.abs(Math.abs(y)-FIELD.goal/2)<.17&&z<FIELD.bar;
   const crossBar=Math.abs(z-FIELD.bar)<.16&&Math.abs(y)<FIELD.goal/2+.15;
   if(sideBar||crossBar){
-    b.x=lineX-Math.sign(lineX)*.12;b.y=y;b.z=z;b.vx*=-.48;b.vy+=(y>0?-1:1)*1.1;b.kind='loose';
+    b.x=lineX-Math.sign(lineX)*.18;b.y=y;b.z=z;
+    if(manual){
+      const offset=crossBar?z-FIELD.bar:y-Math.sign(y)*FIELD.goal/2;
+      const sideNormal=clamp(offset/.17,-.98,.98);
+      const nx=-Math.sign(lineX)*Math.sqrt(1-sideNormal*sideNormal);
+      const impact=Math.min(0,b.vx*nx+(crossBar?b.vz:b.vy)*sideNormal);
+      b.vx=(b.vx-1.67*impact*nx)*.92;
+      if(crossBar)b.vz=(b.vz-1.67*impact*sideNormal)*.92;
+      else b.vy=(b.vy-1.67*impact*sideNormal)*.92;
+      // Place a grazing deflection on its outgoing side of the frame.
+      if(b.vx*Math.sign(lineX)>0){
+        if(crossBar)b.z=FIELD.bar+Math.sign(offset||1)*.18;
+        else b.y=Math.sign(y)*FIELD.goal/2+Math.sign(offset||1)*.18;
+      }
+      b.owner=-1;b.target=-1;
+    }else{b.vx*=-.48;b.vy+=(y>0?-1:1)*1.1;}
+    b.kind='loose';
     event(s,'chance',side,'Træværket',s.teams[side].name);
     return true;
   }
@@ -184,7 +200,7 @@ function afterLine(s,b,previousX,previousY,previousZ) {
   else stageRestart(s,'goal-kick',1-side,lineX*.88,0);
   return true;
 }
-function controlBall(s,side,p) {
+function controlBall(s,side,p,manualMatch) {
   const b=s.ball, team=s.teams[side];
   if(b.kind==='pass'&&b.lastTeam===side&&b.lastSlot!==p.slot){team.stats.complete++;p.impact+=.025;}
   if(b.kind==='shot'&&b.lastTeam!==side&&p.slot===0){
@@ -195,10 +211,46 @@ function controlBall(s,side,p) {
       return;
     }
   }
+  if(manualMatch)cushionTouch(b,p);
   b.owner=playerId(side,p.slot);b.kind='carry';b.age=0;b.target=-1;b.lastTeam=side;b.lastSlot=p.slot;
   p.wait=.22+(100-p.skill)*.004;
 }
-function challenge(s,side,p,owner) {
+// Find the first reachable contact along this tick's flight, including at
+// the goal line. A keeper can meet a shot between two simulation samples.
+function interceptPlayBall(s,x,y,z) {
+  const b=s.ball,dx=b.x-x,dy=b.y-y,dz=b.z-z;
+  const lengthSq=dx*dx+dy*dy;
+  let first=1,catcher=null,side=-1;
+  for(let i=0;i<2;i++)for(const p of s.teams[i].players){
+    if(p.red||(b.age<.24&&i===b.lastTeam&&p.slot===b.lastSlot))continue;
+    const keeper=p.slot===0&&p.x*s.teams[i].direction<=-halfLength+16.5&&Math.abs(p.y)<20.16;
+    const reach=keeper && b.kind==='shot' ? 1.35 : (b.target===playerId(i,p.slot) ? .96 : .82);
+    const height=keeper?2.18:1.24;
+    const ox=p.x-x,oy=p.y-y;
+    let entry=0,exit=1;
+    if(lengthSq>1e-9){
+      const projection=(ox*dx+oy*dy)/lengthSq;
+      const cross=(ox*dy-oy*dx);
+      const slack=reach*reach-cross*cross/lengthSq;
+      if(slack<0)continue;
+      const half=Math.sqrt(slack/lengthSq);
+      entry=Math.max(0,projection-half);exit=Math.min(1,projection+half);
+    }else if(ox*ox+oy*oy>reach*reach)continue;
+    if(z+dz*entry>height){
+      if(dz>=0)continue;
+      entry=Math.max(entry,(height-z)/dz);
+    }
+    if(entry>exit||entry>first)continue;
+    const cx=x+dx*entry,cy=y+dy*entry;
+    if(Math.abs(cx)>halfLength||Math.abs(cy)>halfWidth)continue;
+    first=entry;catcher=p;side=i;
+  }
+  if(!catcher)return false;
+  b.x=x+dx*first;b.y=y+dy*first;b.z=z+dz*first;
+  controlBall(s,side,catcher,true);
+  return true;
+}
+function challenge(s,side,p,owner,manualMatch) {
   const chance=clamp((.73+(p.skill-owner.skill)*.015)*(.7+p.energy*.003),.28,1.04);
   if(draw(s)<.055){
     const team=s.teams[side];
@@ -206,7 +258,7 @@ function challenge(s,side,p,owner) {
     if(p.yellow>1)p.red=true;
     event(s,'card',side,(p.red?'Rødt kort · ':'Gult kort · ')+p.name,team.name);
     stageRestart(s,'free-kick',1-side,owner.x,owner.y);
-  } else if(draw(s)<chance) controlBall(s,side,p);
+  } else if(draw(s)<chance) controlBall(s,side,p,manualMatch);
   else p.wait=.6;
 }
 export function controlledSlot(s,input, cycle=false){
@@ -225,10 +277,19 @@ export function controlledSlot(s,input, cycle=false){
 function userKick(s,p,input,action){
   const team=s.teams[0],dir=team.direction;
   if(action==='shoot'){
-    const aim=clamp((input.y||p.fy)*3.3,-3.5,3.5);
+    const distance=Math.hypot(halfLength*dir-s.ball.x,s.ball.y);
+    const running=Math.hypot(p.vx,p.vy);
+    const balance=clamp((p.fx*dir+1)*.5,.1,1);
+    const sideAim=Math.hypot(input.x,input.y)>.12?input.y:p.fy;
+    const freeKick=s.restart?.kind==='free-kick';
+    const aim=sideAim*3.25+(draw(s)-.5)*(1.05-balance*.48)*(1+distance*.025);
+    const pace=clamp(17+p.skill*.075+running*.35+balance*2+Math.min(distance,28)*.085,19,29);
+    const loft=freeKick?clamp(distance*.24,2.1,6.8):clamp(distance*.088+.55,1,3.8);
+    const spin=-dir*sideAim*(freeKick ? .28 : .065);
     const xg=clamp(.48*Math.exp(-Math.hypot(halfLength*dir-p.x,p.y)/22),.015,.5);
-    team.stats.shots++;team.stats.onTarget++;team.stats.xg+=xg;
-    release(s,0,p,(halfLength+1)*dir,aim,{kind:'shot',speed:29+p.skill*.05,loft:2.6,xg});
+    team.stats.shots++;team.stats.xg+=xg;
+    if(Math.abs(aim)<FIELD.goal/2-.11)team.stats.onTarget++;
+    release(s,0,p,(halfLength+1)*dir,aim,{kind:'shot',speed:pace,loft,spin,xg});
     event(s,'shot',0,'Afslutning · '+p.name);
     return;
   }
@@ -241,8 +302,13 @@ function userKick(s,p,input,action){
     if(score>best){best=score;mate=q;}
   }
   if(mate){
-    const lead=action==='through'?4.5:0, x=mate.x+dir*lead,y=mate.y+mate.vy*.25;
-    release(s,0,p,x,y,{kind:'pass',speed:Math.min(41,7+Math.hypot(x-p.x,y-p.y)*1.25),target:mate.slot});
+    const through=action==='through';
+    const range=Math.hypot(mate.x-s.ball.x,mate.y-s.ball.y);
+    const lead=through?clamp(range*.19,2.8,6.8):0;
+    const flight=clamp(range/16,.22,through?1.15:.75);
+    const x=clamp(mate.x+mate.vx*flight+dir*lead,-halfLength+.6,halfLength-.6);
+    const y=clamp(mate.y+mate.vy*flight,-halfWidth+.6,halfWidth-.6);
+    release(s,0,p,x,y,{kind:'pass',speed:passSpeed(Math.hypot(x-s.ball.x,y-s.ball.y),through),target:mate.slot});
   }
 }
 export function playerRestart(s){
@@ -330,27 +396,31 @@ export function stepMatch(s, scratch={},input=null) {
       }else movePlayer(p,target.x,target.y,speed,dt);
     }
   }
+  const startX=b.x,startY=b.y,startZ=b.z;
   b.age+=dt;
   if(owner){
-    b.x=owner.x+owner.fx*.67;b.y=owner.y+owner.fy*.67;b.z=.11;b.vx=owner.vx;b.vy=owner.vy;
+    if(!input){b.x=owner.x+owner.fx*.67;b.y=owner.y+owner.fy*.67;b.z=.11;b.vx=owner.vx;b.vy=owner.vy;}
     if(b.age>.15){
       for(const p of s.teams[1-ownSide].players) {
         const manual=input&&ownSide===1&&p.slot===input.slot;
         if(!p.red&&p.slot>0&&p.wait===0&&distanceSquared(p,owner)<(manual?2.5:1.95)**2&&(manual?action==='tackle':draw(s)<.17)){
-          challenge(s,1-ownSide,p,owner);break;
+          if(input&&(b.z>1.15||distanceSquared(p,b)>1.85**2))continue;
+          challenge(s,1-ownSide,p,owner,!!input);break;
         }
       }
     }
     if(b.owner===playerId(ownSide,owner.slot)&&s.phase===PHASE.PLAYING){
       if(input&&ownSide===0){
         if(action==='pass'||action==='through'||action==='shoot')userKick(s,owner,input,action);
-      }else dribble(s,ownSide,owner,s.teams[1-ownSide]);
+      }else dribble(s,ownSide,owner,s.teams[1-ownSide],!!input);
     }
   }
   if(!owner||b.owner<0&&s.phase===PHASE.PLAYING){
     const bx=b.x,by=b.y,bz=b.z;
-    integrateBall(b,dt);
-    if(afterLine(s,b,bx,by,bz)){checkClock(s);return true;}
+    if(input)integratePlayBall(b,dt);else integrateBall(b,dt);
+    if(input&&interceptPlayBall(s,bx,by,bz)){checkClock(s);return true;}
+    if(afterLine(s,b,bx,by,bz,!!input)){checkClock(s);return true;}
+    if(input){checkClock(s);return true;}
     let catcher=null, caughtSide=0, closest=Infinity;
     for(let side=0;side<2;side++)for(const p of s.teams[side].players){
       if(p.red||b.age<.24&&side===b.lastTeam&&p.slot===b.lastSlot)continue;
@@ -359,8 +429,17 @@ export function stepMatch(s, scratch={},input=null) {
       const d=distanceSquared(p,b);
       if(d<reach**2&&d<closest&&b.z<(keeper?2.18:1.26)){catcher=p;caughtSide=side;closest=d;}
     }
-    if(catcher)controlBall(s,caughtSide,catcher);
-  } else if(s.phase===PHASE.PLAYING) afterLine(s,b,owner.x,owner.y,.11);
+    if(catcher)controlBall(s,caughtSide,catcher,!!input);
+  } else if(s.phase===PHASE.PLAYING){
+    if(input){
+      const carrier=s.teams[b.owner>>4].players[b.owner%16];
+      carryBall(b,carrier,dt);
+      if(distanceSquared(b,carrier)>2.35**2){
+        b.owner=-1;b.target=-1;b.kind='loose';b.age=0;
+      }
+      afterLine(s,b,startX,startY,startZ,true);
+    }else afterLine(s,b,owner.x,owner.y,.11);
+  }
   checkClock(s);
   return true;
 }

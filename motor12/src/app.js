@@ -103,7 +103,7 @@ function matchMarkup(){
     <button class="broadcast-menu" data-action="broadcast-menu" aria-expanded="false">Kampmenu</button>
     <div class="camera-desk" role="group" aria-label="Kampkamera"><button data-camera="tv" aria-pressed="false">Arena 3D</button><button data-camera="near" aria-pressed="false">Nærkamera</button><button data-camera="2d" aria-pressed="true">Taktisk</button><button data-action="expand" aria-pressed="false">Udvid</button><span id="arena-status" role="status"></span></div>
     <div class="match-desk"><div class="play-state"><span id="phase" role="status"></span><button id="play-control" class="primary" data-action="play">Kick Off</button></div>
-    <div class="controls"><div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div>
+    <div class="controls">${manual?'':`<div class="speeds" role="group" aria-label="Kamphastighed">${[1,2,4].map(n=>`<button data-speed="${n}" aria-pressed="${speed===n}">${n}×</button>`).join('')}</div>`}
     <div class="match-options"><span class="mode-label">${manual?'Spil selv':'Simulering'}</span><button data-action="sound" aria-pressed="${club.sound}">${club.sound?'Lyd til':'Lyd fra'}</button><button data-action="tactics">Taktik</button></div></div></div>
     <div id="match-report">${match.phase===PHASE.FULL_TIME?reportMarkup():''}</div></section>
     <div class="insights"><section class="live-stats"><h2>Kampstatistik</h2><div id="stats"></div><div class="momentum"><span>Momentum</span><meter id="momentum" min="0" max="100" value="50" aria-label="Momentum for hjemmeholdet"></meter></div></section>
@@ -287,7 +287,7 @@ container.addEventListener('click',event=>{
     return;
   }
   if(button.dataset.camera){showCamera(button.dataset.camera);return;}
-  if(button.dataset.speed){
+  if(button.dataset.speed&&!manual){
     speed=Number(button.dataset.speed);
     for(const item of container.querySelectorAll('[data-speed]'))item.setAttribute('aria-pressed',String(Number(item.dataset.speed)===speed));
     return;
